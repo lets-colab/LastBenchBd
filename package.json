@@ -15,6 +15,7 @@
     "lint": "eslint app components constants hooks lib server shared tests scripts --ext .ts,.tsx,.mjs",
     "format": "prettier --write .",
     "test": "vitest run",
+    "release:smoke": "node scripts/release-smoke.mjs",
     "db:push": "drizzle-kit generate && drizzle-kit migrate",
     "android": "expo start --android",
     "ios": "expo start --ios",
