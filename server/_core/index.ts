@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import { rateLimit } from "express-rate-limit";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
@@ -10,6 +11,22 @@ import { createContext } from "./context";
 import { logError } from "../self-healing";
 import { createCorsMiddleware } from "./cors";
 import { assertProductionConfiguration } from "./env";
+
+const trpcLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 180,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many API requests. Please wait and try again." },
+});
+
+const aiGuidanceLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 12,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many AI guidance requests. Please wait a moment and try again." },
+});
 
 function exitAfterFatalError(source: string, error: unknown) {
   console.error(`[api] fatal ${source}; shutting down for a clean restart`);
@@ -75,8 +92,14 @@ async function startServer() {
     res.json({ ok: true, timestamp: Date.now() });
   });
 
+  // Cost-bearing AI requests get a tighter burst limit. All tRPC requests also
+  // pass through the broader API limiter below. These are IP-level safeguards;
+  // product-level per-user/day quotas can be added once usage policy is locked.
+  app.use("/api/trpc/aiGuidance.chat", aiGuidanceLimiter);
+
   app.use(
     "/api/trpc",
+    trpcLimiter,
     createExpressMiddleware({
       router: appRouter,
       createContext,
