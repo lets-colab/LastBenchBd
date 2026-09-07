@@ -6,6 +6,7 @@ Paste it into the system prompt / project instructions of whatever agent you use
 
 Before a production-sensitive change, also read `FOUNDATION_LOCK.md`. It is the
 current database, release, security, repository, and production-truth contract.
+For database work, also read `drizzle/MIGRATION_STATUS.md`.
 
 ---
 
@@ -45,7 +46,7 @@ server/       Express + tRPC v11 — student, tutor, admin, messaging, AI and sy
               cohort, university, skill, notification, admin, aiGuidance, selfHealing
   self-healing.ts  Redacted fingerprinting → safe transient retry → advisory diagnosis
                    stored in errorLogs/errorFixes; generated fixes require approval
-drizzle/      schema.ts + generated/reviewed SQL; migration history requires reconciliation
+drizzle/      schema.ts + reviewed SQL migrations + live-ledger documentation
 landing/      Static cinematic marketing site + CLASS[Λ] conversion surfaces
 scripts/build-site.mjs  Assembles dist/: landing/ at /, Expo web export at /app
 server-dist/  Generated API bundle — Render builds this; never publish it as web content
@@ -66,7 +67,7 @@ point at `/app` (relative — works on any domain/preview URL).
 |---|---|---|---|
 | Whole site (landing at `/`, app at `/app`) | Netlify | `pnpm build:web:production` → generated `dist/` | push to `main` |
 | API server | Render (`render.yaml`, `last-bench-api`, Singapore) | `pnpm build` → `server-dist/index.js`; `pnpm start` | Render git integration |
-| Database | Supabase Postgres | reviewed live schema + deliberate migrations | explicit operator action |
+| Database | Supabase Postgres | reviewed GitHub SQL → explicit Supabase migration | explicit operator action |
 
 - Netlify is the supported web deployment and Render is the supported API deployment.
 - A push, passing CI, or successful static deploy does **not** prove the product is live.
@@ -93,12 +94,27 @@ point at `/app` (relative — works on any domain/preview URL).
   must be supported by the configured AI gateway.
 - `BUILT_IN_FORGE_API_URL` is a project gateway dependency, not automatically an
   Anthropic/OpenAI-compatible public endpoint. Verify the configured provider contract.
-- Do not make current Supabase plan, pause behavior, RLS policy count, live table count,
-  project region, migration status, or direct-SQL history claims from old documentation.
-  Inspect the actual project first. Historical notes are evidence to verify, not truth.
 - Domain target: `www.lastbenchbd.com` for the web front door and
   `api.lastbenchbd.com` for the API. Use the exact DNS targets shown by the active
   Netlify and Render custom-domain screens; do not guess them from old notes.
+
+### Database migration rule
+
+The connected production Supabase project was inspected and reconciled on 7 September
+2026. Repo migrations `0001_gifted_sunspot` and `0002_ai_guide_personas` were restored
+through the Supabase migration workflow after read-only preflight checks. The three
+0001 tables were returned to default-deny RLS and trigger-function search paths were
+hardened. See `drizzle/MIGRATION_STATUS.md` for the exact Supabase ledger.
+
+`drizzle/meta/` snapshots still stop at `0001`, so they are **not** a complete live
+migration ledger. For that reason `pnpm db:push` is intentionally blocked. Do not
+re-enable automated `drizzle-kit generate && drizzle-kit migrate` until the snapshots
+are regenerated from the reconciled baseline and compared with Supabase.
+
+`drizzle/0003_foundation_relations.sql` is the reviewed relational hardening migration:
+it encodes one-profile-per-user uniqueness, cohort membership uniqueness, foreign keys,
+query indexes, default-deny RLS for the 0001 tables, and trigger search-path hardening.
+Apply it only after the PR containing it passes CI/CodeQL and the preflight remains clean.
 
 ---
 
@@ -141,14 +157,13 @@ API response. Verify each active Netlify form receives a real submission.
 - When you find something broken that you can't fix now, SAY SO explicitly in your
   report. Never bury or omit a known gap.
 - Never hardcode placeholder/demo data in user-facing screens (see principle 2).
-- Conventional commits (`fix:`, `feat:`, `build:`, `docs:`, `chore:`, `security:`).
+- Conventional commits (`fix:`, `feat:`, `build:`, `docs:`, `chore:`, `security:`, `db:`).
 - New features need the full chain: schema (if data) → `server/db.ts` helper →
   tRPC procedure in `routers.ts` → UI screen wired via `trpc.<router>.<proc>.useQuery/useMutation` → test.
-- DB changes: reconcile the live database before generating/applying constraints.
-  `scripts/database-foundation-preflight.sql` is read-only and should run before the
-  candidate relational hardening work. **Production server startup and Render deploy
-  commands must never create or alter tables.** Do not point `pnpm db:push` blindly at
-  production and do not add automatic DDL back to startup.
+- DB changes: edit `drizzle/schema.ts`, write/review matching SQL, run the read-only
+  preflight for relational changes, pass CI/CodeQL, then apply the **exact reviewed SQL**
+  through Supabase. Re-run Supabase security/performance advisors after DDL.
+- **Production server startup and Render deploy commands must never create or alter tables.**
 - Cost-bearing/public APIs need abuse controls. OAuth is rate-limited; tRPC has a broad
   edge limiter and AI guidance has a tighter burst limiter. Product-level per-user/day
   quotas should be added once usage policy is approved.
@@ -165,49 +180,56 @@ university directory data; admin surfaces; notifications; privacy-bounded error 
 student dashboard; cinematic landing; CLASS[Λ] masterclass/full-course signup surfaces;
 CI + CodeQL; Netlify and Render deployment contracts.
 
+**Verified production database facts as of 7 September 2026:**
+
+- connected project is healthy
+- repo `0001` is applied: payouts, audit logs, cohort messages and required atomic uniqueness indexes exist
+- repo `0002` is applied: `ai_guide` enum and non-null `aiChatMessages.guide` exist
+- the preflight found no checked duplicates or orphan relationships
+- all checked business/product tables contained 0 rows during reconciliation
+- Supabase security advisor had no remaining ERROR/WARN findings after hardening; only informational default-deny RLS/no-policy notices remain
+- Supabase performance advisor returned no lints at that point
+
+The exact ledger and the remaining Drizzle metadata limitation live in
+`drizzle/MIGRATION_STATUS.md`.
+
 **AI Guides — current implementation:** the three-persona backend lives in
 `server/routers.ts` (`AI_GUIDES` + `aiGuidance.chat/getChatHistory`) and the UI lives at
 `app/(tabs)/ai-guidance.tsx`. Each persona is explicitly constrained not to invent live
 application, university, visa, community, or document facts it does not receive.
 
-**Production facts that must be verified, not assumed:**
+**Production facts still requiring verification:**
 
-- Whether `drizzle/0002_ai_guide_personas.sql` is applied to the live database.
-- The actual live Supabase table/constraint/index inventory.
-- Whether historical direct-SQL changes are fully represented in the Drizzle journal.
-- The real Netlify production OAuth identity values.
-- The real Render environment values and custom-domain state.
-- Successful fresh/returning authentication against canonical domains.
-- Receipt of real landing and CLASS[Λ] form submissions.
+- the real Netlify production OAuth identity values
+- the real Render environment values and custom-domain state
+- successful fresh/returning authentication against canonical domains
+- receipt of real landing and CLASS[Λ] form submissions
+- permanent mobile bundle/package/deep-link identity before store release
 
-Use GitHub issue #34 for live database reconciliation and issue #35 for production
-identity/domain/auth/form verification. Do not turn either issue into a "done" statement
-without evidence from the corresponding infrastructure.
+Use GitHub issue #35 for production identity/domain/auth/form verification and issue #36
+for mobile identity. Issue #34 is the database reconciliation work item and should only
+be closed after `0003_foundation_relations.sql` is merged, applied and advisor-verified.
 
 **Known gaps, in priority order:**
 
-1. **Database source-of-truth reconciliation** — run the read-only preflight, inspect the
-   live Supabase schema, reconcile migration history, then adapt/apply relational
-   uniqueness/FK/index hardening deliberately. `drizzle/FOUNDATION_CONSTRAINTS_CANDIDATE.sql`
-   is an intent document, not an auto-apply migration.
-2. **Production release proof** — real Netlify/Render identity and environment values,
+1. **Production release proof** — real Netlify/Render identity and environment values,
    DNS/custom domains, fresh and returning auth, authenticated API query, logout and
    real Netlify form submissions must pass.
-3. **No complete student file-picker flow** — document/transcript backend plumbing exists,
+2. **Complete student file-picker flow** — document/transcript backend plumbing exists,
    but user-facing picker/upload completion still needs verified implementation and QA.
-4. **Product surface overlap** — hidden `discover.tsx` and `community.tsx` remain alongside
+3. **Product surface overlap** — hidden `discover.tsx` and `community.tsx` remain alongside
    the primary university/AI/community journeys. Decide whether each is a supported deep
    link, redirect, or dead code; do not preserve ambiguity indefinitely.
-5. **Mobile identity is not locked for store release** — current app configuration contains
+4. **Mobile identity is not locked for store release** — current app configuration contains
    template-era package/scheme choices. Before the first public store release, explicitly
    lock display name, slug, iOS bundle ID, Android package, deep-link scheme and EAS owner.
    Do not casually change an identifier if a public release already exists.
-6. **AI/message product quotas** — edge-level abuse protection exists; add persistent
+5. **AI/message product quotas** — edge-level abuse protection exists; add persistent
    per-user/day quotas/usage accounting when the commercial usage policy is decided.
-7. **E2E release automation** — `pnpm release:smoke` proves public routes/health, but the
+6. **E2E release automation** — `pnpm release:smoke` proves public routes/health, but the
    auth/session/application/message/payout/form journeys still need automated browser/API
    coverage or a recorded manual release certification.
-8. Keep dependency alerts visible and triaged. Dependabot is configured weekly; CI blocks
+7. Keep dependency alerts visible and triaged. Dependabot is configured weekly; CI blocks
    critical production dependency findings, while high/moderate findings still require review.
 
 ---
@@ -218,14 +240,15 @@ Paste this (plus this whole file) as the system/project prompt:
 
 > You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`), an AI
 > platform guiding Bangladeshi students through their Malaysia education journey. Read
-> `AGENT.md`, `FOUNDATION_LOCK.md`, `README.md`, and the relevant product/design source
-> before any change. Operate autonomously but honestly: verify every claim; report failures
-> and gaps plainly instead of hiding them; never invent data shown to users; never summarize
-> away a known problem. Work in small verified increments: source of truth → schema/data
-> policy → backend → UI → test → build → rendered QA → commit → PR. When something requires
-> a live credential, production database action, DNS control, app-store identity decision,
-> payment/compliance decision, or other external authority, create/maintain an explicit
-> release gate instead of faking completion.
+> `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md`, `README.md`, and the
+> relevant product/design source before any change. Operate autonomously but honestly:
+> verify every claim; report failures and gaps plainly instead of hiding them; never
+> invent data shown to users; never summarize away a known problem. Work in small
+> verified increments: source of truth → schema/data policy → backend → UI → test → build
+> → rendered QA → commit → PR. For database changes, reviewed GitHub SQL must pass CI/
+> CodeQL before the exact SQL is applied through Supabase. When something requires a
+> live credential, DNS control, app-store identity decision, payment/compliance decision,
+> or other external authority, maintain an explicit release gate instead of faking completion.
 
 **Model guidance:** choose models/tools by task complexity, but do not treat model choice
 as evidence. Repository code, live infrastructure verification, tests, rendered QA, and

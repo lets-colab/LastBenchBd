@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, serial, text, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import { index, integer, pgEnum, pgTable, serial, text, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 
 /**
  * Enum types. Postgres enums are named types in the schema, so each gets a
@@ -61,24 +61,30 @@ export type InsertUser = typeof users.$inferInsert;
 /**
  * Student profiles - extends the users table with study-abroad specific info
  */
-export const students = pgTable("students", {
-  id: serial("id").primaryKey(),
-  userId: integer("userId").notNull(),
-  class: varchar("class", { length: 50 }), // e.g., "HSC Final", "SSC Final"
-  fieldOfInterest: varchar("fieldOfInterest", { length: 100 }), // e.g., "Engineering", "Business"
-  destinationPreference: varchar("destinationPreference", { length: 100 }), // e.g., "Malaysia", "Canada"
-  gpa: varchar("gpa", { length: 10 }), // e.g., "3.8", "4.0"
-  transcriptUrl: text("transcriptUrl"), // S3 URL to uploaded transcript
-  referralCode: varchar("referralCode", { length: 50 }), // Code of referring tutor (if applicable)
-  telegramChatId: varchar("telegramChatId", { length: 100 }),
-  whatsappPhone: varchar("whatsappPhone", { length: 20 }),
-  telegramLinkCode: varchar("telegramLinkCode", { length: 10 }),
-  notifyPush: integer("notifyPush").default(1),
-  notifyTelegram: integer("notifyTelegram").default(0),
-  notifyWhatsapp: integer("notifyWhatsapp").default(0),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
-});
+export const students = pgTable(
+  "students",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId").notNull().references(() => users.id),
+    class: varchar("class", { length: 50 }), // e.g., "HSC Final", "SSC Final"
+    fieldOfInterest: varchar("fieldOfInterest", { length: 100 }), // e.g., "Engineering", "Business"
+    destinationPreference: varchar("destinationPreference", { length: 100 }), // e.g., "Malaysia", "Canada"
+    gpa: varchar("gpa", { length: 10 }), // e.g., "3.8", "4.0"
+    transcriptUrl: text("transcriptUrl"), // S3 URL to uploaded transcript
+    referralCode: varchar("referralCode", { length: 50 }), // Code of referring tutor (if applicable)
+    telegramChatId: varchar("telegramChatId", { length: 100 }),
+    whatsappPhone: varchar("whatsappPhone", { length: 20 }),
+    telegramLinkCode: varchar("telegramLinkCode", { length: 10 }),
+    notifyPush: integer("notifyPush").default(1),
+    notifyTelegram: integer("notifyTelegram").default(0),
+    notifyWhatsapp: integer("notifyWhatsapp").default(0),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdUnique: uniqueIndex("students_userId_unique").on(table.userId),
+  }),
+);
 
 export type Student = typeof students.$inferSelect;
 export type InsertStudent = typeof students.$inferInsert;
@@ -86,23 +92,31 @@ export type InsertStudent = typeof students.$inferInsert;
 /**
  * Applications - tracks each student's university applications
  */
-export const applications = pgTable("applications", {
-  id: serial("id").primaryKey(),
-  studentId: integer("studentId").notNull(),
-  universityName: varchar("universityName", { length: 255 }).notNull(),
-  programName: varchar("programName", { length: 255 }).notNull(),
-  country: varchar("country", { length: 100 }),
-  applicationStatus: applicationStatusEnum("applicationStatus").default("draft").notNull(),
-  estimatedCost: varchar("estimatedCost", { length: 50 }), // e.g., "$15000"
-  visaSuccessRate: varchar("visaSuccessRate", { length: 10 }), // e.g., "95%"
-  acceptanceRate: varchar("acceptanceRate", { length: 10 }), // e.g., "45%"
-  mentorAssigned: integer("mentorAssigned"), // User ID of assigned mentor
-  lastUpdatedBy: integer("lastUpdatedBy"), // User ID who last updated status
-  lastUpdatedAt: timestamp("lastUpdatedAt").defaultNow(),
-  notes: text("notes"), // Internal notes about the application
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
-});
+export const applications = pgTable(
+  "applications",
+  {
+    id: serial("id").primaryKey(),
+    studentId: integer("studentId").notNull().references(() => students.id),
+    universityName: varchar("universityName", { length: 255 }).notNull(),
+    programName: varchar("programName", { length: 255 }).notNull(),
+    country: varchar("country", { length: 100 }),
+    applicationStatus: applicationStatusEnum("applicationStatus").default("draft").notNull(),
+    estimatedCost: varchar("estimatedCost", { length: 50 }), // e.g., "$15000"
+    visaSuccessRate: varchar("visaSuccessRate", { length: 10 }), // e.g., "95%"
+    acceptanceRate: varchar("acceptanceRate", { length: 10 }), // e.g., "45%"
+    mentorAssigned: integer("mentorAssigned").references(() => users.id), // User ID of assigned mentor
+    lastUpdatedBy: integer("lastUpdatedBy").references(() => users.id), // User ID who last updated status
+    lastUpdatedAt: timestamp("lastUpdatedAt").defaultNow(),
+    notes: text("notes"), // Internal notes about the application
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    studentIdIdx: index("applications_studentId_idx").on(table.studentId),
+    mentorAssignedIdx: index("applications_mentorAssigned_idx").on(table.mentorAssigned),
+    lastUpdatedByIdx: index("applications_lastUpdatedBy_idx").on(table.lastUpdatedBy),
+  }),
+);
 
 export type Application = typeof applications.$inferSelect;
 export type InsertApplication = typeof applications.$inferInsert;
@@ -110,15 +124,22 @@ export type InsertApplication = typeof applications.$inferInsert;
 /**
  * Documents - tracks uploaded files for applications
  */
-export const documents = pgTable("documents", {
-  id: serial("id").primaryKey(),
-  applicationId: integer("applicationId").notNull(),
-  documentType: varchar("documentType", { length: 100 }).notNull(), // e.g., "transcript", "essay", "recommendation_letter"
-  fileUrl: text("fileUrl").notNull(), // S3 URL
-  fileName: varchar("fileName", { length: 255 }).notNull(),
-  uploadedBy: integer("uploadedBy").notNull(), // User ID
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+export const documents = pgTable(
+  "documents",
+  {
+    id: serial("id").primaryKey(),
+    applicationId: integer("applicationId").notNull().references(() => applications.id),
+    documentType: varchar("documentType", { length: 100 }).notNull(), // e.g., "transcript", "essay", "recommendation_letter"
+    fileUrl: text("fileUrl").notNull(), // S3 URL
+    fileName: varchar("fileName", { length: 255 }).notNull(),
+    uploadedBy: integer("uploadedBy").notNull().references(() => users.id), // User ID
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    applicationIdIdx: index("documents_applicationId_idx").on(table.applicationId),
+    uploadedByIdx: index("documents_uploadedBy_idx").on(table.uploadedBy),
+  }),
+);
 
 export type Document = typeof documents.$inferSelect;
 export type InsertDocument = typeof documents.$inferInsert;
@@ -126,19 +147,25 @@ export type InsertDocument = typeof documents.$inferInsert;
 /**
  * Tutors/Coaches - referral partners
  */
-export const tutors = pgTable("tutors", {
-  id: serial("id").primaryKey(),
-  userId: integer("userId").notNull(),
-  centerName: varchar("centerName", { length: 255 }).notNull(),
-  location: varchar("location", { length: 255 }),
-  expertiseAreas: text("expertiseAreas"), // JSON array or comma-separated
-  referralCode: varchar("referralCode", { length: 50 }).notNull().unique(),
-  totalReferred: integer("totalReferred").default(0),
-  totalEarned: varchar("totalEarned", { length: 50 }).default("0"), // Total commission earned
-  status: tutorStatusEnum("status").default("active"),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
-});
+export const tutors = pgTable(
+  "tutors",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId").notNull().references(() => users.id),
+    centerName: varchar("centerName", { length: 255 }).notNull(),
+    location: varchar("location", { length: 255 }),
+    expertiseAreas: text("expertiseAreas"), // JSON array or comma-separated
+    referralCode: varchar("referralCode", { length: 50 }).notNull().unique(),
+    totalReferred: integer("totalReferred").default(0),
+    totalEarned: varchar("totalEarned", { length: 50 }).default("0"), // Total commission earned
+    status: tutorStatusEnum("status").default("active"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdUnique: uniqueIndex("tutors_userId_unique").on(table.userId),
+  }),
+);
 
 export type Tutor = typeof tutors.$inferSelect;
 export type InsertTutor = typeof tutors.$inferInsert;
@@ -146,19 +173,26 @@ export type InsertTutor = typeof tutors.$inferInsert;
 /**
  * Referrals - tracks which tutor referred which student
  */
-export const referrals = pgTable("referrals", {
-  id: serial("id").primaryKey(),
-  tutorId: integer("tutorId").notNull(),
-  studentId: integer("studentId").notNull(),
-  referralCode: varchar("referralCode", { length: 50 }).notNull(),
-  commissionPercentage: varchar("commissionPercentage", { length: 10 }).default("5"), // e.g., "5%"
-  commissionAmount: varchar("commissionAmount", { length: 50 }), // e.g., "$500"
-  commissionStatus: commissionStatusEnum("commissionStatus").default("pending"),
-  payoutMethod: varchar("payoutMethod", { length: 50 }), // e.g., "bKash", "Nagad"
-  payoutDetails: text("payoutDetails"), // JSON with phone number, account details, etc.
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
-});
+export const referrals = pgTable(
+  "referrals",
+  {
+    id: serial("id").primaryKey(),
+    tutorId: integer("tutorId").notNull().references(() => tutors.id),
+    studentId: integer("studentId").notNull().references(() => students.id),
+    referralCode: varchar("referralCode", { length: 50 }).notNull(),
+    commissionPercentage: varchar("commissionPercentage", { length: 10 }).default("5"), // e.g., "5%"
+    commissionAmount: varchar("commissionAmount", { length: 50 }), // e.g., "$500"
+    commissionStatus: commissionStatusEnum("commissionStatus").default("pending"),
+    payoutMethod: varchar("payoutMethod", { length: 50 }), // e.g., "bKash", "Nagad"
+    payoutDetails: text("payoutDetails"), // JSON with phone number, account details, etc.
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    tutorIdIdx: index("referrals_tutorId_idx").on(table.tutorId),
+    studentIdIdx: index("referrals_studentId_idx").on(table.studentId),
+  }),
+);
 
 export type Referral = typeof referrals.$inferSelect;
 export type InsertReferral = typeof referrals.$inferInsert;
@@ -166,15 +200,21 @@ export type InsertReferral = typeof referrals.$inferInsert;
 /**
  * Mentors - users who guide students
  */
-export const mentors = pgTable("mentors", {
-  id: serial("id").primaryKey(),
-  userId: integer("userId").notNull(),
-  expertise: text("expertise"), // JSON array of expertise areas
-  bio: text("bio"),
-  verificationStatus: verificationStatusEnum("verificationStatus").default("pending"),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
-});
+export const mentors = pgTable(
+  "mentors",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId").notNull().references(() => users.id),
+    expertise: text("expertise"), // JSON array of expertise areas
+    bio: text("bio"),
+    verificationStatus: verificationStatusEnum("verificationStatus").default("pending"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdUnique: uniqueIndex("mentors_userId_unique").on(table.userId),
+  }),
+);
 
 export type Mentor = typeof mentors.$inferSelect;
 export type InsertMentor = typeof mentors.$inferInsert;
@@ -182,15 +222,30 @@ export type InsertMentor = typeof mentors.$inferInsert;
 /**
  * Messages - direct messaging between students and mentors
  */
-export const messages = pgTable("messages", {
-  id: serial("id").primaryKey(),
-  senderId: integer("senderId").notNull(),
-  recipientId: integer("recipientId").notNull(),
-  content: text("content").notNull(),
-  fileUrl: text("fileUrl"), // Optional file attachment
-  isRead: integer("isRead").default(0), // 0 = unread, 1 = read
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+export const messages = pgTable(
+  "messages",
+  {
+    id: serial("id").primaryKey(),
+    senderId: integer("senderId").notNull().references(() => users.id),
+    recipientId: integer("recipientId").notNull().references(() => users.id),
+    content: text("content").notNull(),
+    fileUrl: text("fileUrl"), // Optional file attachment
+    isRead: integer("isRead").default(0), // 0 = unread, 1 = read
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    senderRecipientCreatedIdx: index("messages_sender_recipient_created_idx").on(
+      table.senderId,
+      table.recipientId,
+      table.createdAt,
+    ),
+    recipientSenderCreatedIdx: index("messages_recipient_sender_created_idx").on(
+      table.recipientId,
+      table.senderId,
+      table.createdAt,
+    ),
+  }),
+);
 
 export type Message = typeof messages.$inferSelect;
 export type InsertMessage = typeof messages.$inferInsert;
@@ -213,12 +268,22 @@ export type InsertCohort = typeof cohorts.$inferInsert;
 /**
  * Cohort members - tracks which students belong to which cohorts
  */
-export const cohortMembers = pgTable("cohort_members", {
-  id: serial("id").primaryKey(),
-  cohortId: integer("cohortId").notNull(),
-  studentId: integer("studentId").notNull(),
-  joinedAt: timestamp("joinedAt").defaultNow().notNull(),
-});
+export const cohortMembers = pgTable(
+  "cohort_members",
+  {
+    id: serial("id").primaryKey(),
+    cohortId: integer("cohortId").notNull().references(() => cohorts.id),
+    studentId: integer("studentId").notNull().references(() => students.id),
+    joinedAt: timestamp("joinedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    cohortStudentUnique: uniqueIndex("cohort_members_cohort_student_unique").on(
+      table.cohortId,
+      table.studentId,
+    ),
+    studentIdIdx: index("cohort_members_studentId_idx").on(table.studentId),
+  }),
+);
 
 export type CohortMember = typeof cohortMembers.$inferSelect;
 export type InsertCohortMember = typeof cohortMembers.$inferInsert;
@@ -245,35 +310,50 @@ export type InsertSkill = typeof skills.$inferInsert;
 /**
  * Notifications - system notifications
  */
-export const notifications = pgTable("notifications", {
-  id: serial("id").primaryKey(),
-  userId: integer("userId").notNull(),
-  type: varchar("type", { length: 100 }).notNull(), // e.g., "status_update", "mentor_message", "offer_received"
-  title: varchar("title", { length: 255 }).notNull(),
-  message: text("message"),
-  relatedEntityId: integer("relatedEntityId"), // e.g., application ID
-  isRead: integer("isRead").default(0),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+export const notifications = pgTable(
+  "notifications",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId").notNull().references(() => users.id),
+    type: varchar("type", { length: 100 }).notNull(), // e.g., "status_update", "mentor_message", "offer_received"
+    title: varchar("title", { length: 255 }).notNull(),
+    message: text("message"),
+    relatedEntityId: integer("relatedEntityId"), // e.g., application ID
+    isRead: integer("isRead").default(0),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    userCreatedIdx: index("notifications_user_created_idx").on(table.userId, table.createdAt),
+  }),
+);
 
 export type Notification = typeof notifications.$inferSelect;
 export type InsertNotification = typeof notifications.$inferInsert;
-
 
 /**
  * AI Chat Messages — persistent memory layer (MemPalace-style)
  * Stores every exchange between student and AI advisor across sessions.
  */
-export const aiChatMessages = pgTable("aiChatMessages", {
-  id: serial("id").primaryKey(),
-  studentId: integer("studentId").notNull(),
-  // Which of the three founder-trained AI advisors this message belongs to.
-  // Defaults to "sayem" (the main journey AI) so existing rows stay valid.
-  guide: aiGuideEnum("guide").notNull().default("sayem"),
-  role: chatRoleEnum("role").notNull(),
-  content: text("content").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+export const aiChatMessages = pgTable(
+  "aiChatMessages",
+  {
+    id: serial("id").primaryKey(),
+    studentId: integer("studentId").notNull().references(() => students.id),
+    // Which of the three founder-trained AI advisors this message belongs to.
+    // Defaults to "sayem" (the main journey AI) so existing rows stay valid.
+    guide: aiGuideEnum("guide").notNull().default("sayem"),
+    role: chatRoleEnum("role").notNull(),
+    content: text("content").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    studentGuideCreatedIdx: index("aiChatMessages_student_guide_created_idx").on(
+      table.studentId,
+      table.guide,
+      table.createdAt,
+    ),
+  }),
+);
 
 export type AiChatMessage = typeof aiChatMessages.$inferSelect;
 export type InsertAiChatMessage = typeof aiChatMessages.$inferInsert;
@@ -286,7 +366,7 @@ export const aiMemories = pgTable(
   "aiMemories",
   {
     id: serial("id").primaryKey(),
-    studentId: integer("studentId").notNull(),
+    studentId: integer("studentId").notNull().references(() => students.id),
     memoryKey: varchar("memoryKey", { length: 100 }).notNull(), // e.g., "target_university", "main_concern"
     memoryValue: text("memoryValue").notNull(),
     updatedAt: timestamp("updatedAt").defaultNow().notNull(),
@@ -294,7 +374,10 @@ export const aiMemories = pgTable(
   },
   (table) => ({
     // One memory per key per student — upsertAIMemory relies on this to stay atomic.
-    studentKeyUnique: uniqueIndex("aiMemories_studentId_memoryKey_unique").on(table.studentId, table.memoryKey),
+    studentKeyUnique: uniqueIndex("aiMemories_studentId_memoryKey_unique").on(
+      table.studentId,
+      table.memoryKey,
+    ),
   }),
 );
 
@@ -308,16 +391,16 @@ export type InsertAiMemory = typeof aiMemories.$inferInsert;
 export const errorLogs = pgTable(
   "errorLogs",
   {
-  id: serial("id").primaryKey(),
-  signature: varchar("signature", { length: 191 }).notNull(), // normalized fingerprint of the error
-  source: varchar("source", { length: 191 }).notNull(), // e.g. "trpc:aiGuidance.chat", "express", "process"
-  message: text("message").notNull(),
-  stack: text("stack"),
-  context: text("context"), // JSON: input shape, user role, etc. (no PII)
-  status: errorStatusEnum("status").default("open").notNull(),
-  occurrences: integer("occurrences").default(1).notNull(),
-  lastSeenAt: timestamp("lastSeenAt").defaultNow().notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
+    id: serial("id").primaryKey(),
+    signature: varchar("signature", { length: 191 }).notNull(), // normalized fingerprint of the error
+    source: varchar("source", { length: 191 }).notNull(), // e.g. "trpc:aiGuidance.chat", "express", "process"
+    message: text("message").notNull(),
+    stack: text("stack"),
+    context: text("context"), // JSON: input shape, user role, etc. (no PII)
+    status: errorStatusEnum("status").default("open").notNull(),
+    occurrences: integer("occurrences").default(1).notNull(),
+    lastSeenAt: timestamp("lastSeenAt").defaultNow().notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
   },
   (table) => ({
     // One log row per signature — logError upserts atomically against this.
@@ -355,18 +438,24 @@ export type InsertErrorFix = typeof errorFixes.$inferInsert;
  * A tutor requests a payout for earned commission; ops approves/rejects and
  * marks it paid once the bKash/Nagad transfer is done.
  */
-export const payouts = pgTable("payouts", {
-  id: serial("id").primaryKey(),
-  tutorId: integer("tutorId").notNull(),
-  amount: varchar("amount", { length: 50 }).notNull(), // in BDT, stored as string like the other money fields
-  method: payoutMethodEnum("method").notNull(),
-  accountNumber: varchar("accountNumber", { length: 30 }).notNull(), // mobile wallet number
-  status: payoutStatusEnum("status").default("requested").notNull(),
-  adminNote: text("adminNote"), // rejection reason or payment reference
-  requestedAt: timestamp("requestedAt").defaultNow().notNull(),
-  resolvedAt: timestamp("resolvedAt"), // set when approved/rejected/paid
-  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
-});
+export const payouts = pgTable(
+  "payouts",
+  {
+    id: serial("id").primaryKey(),
+    tutorId: integer("tutorId").notNull().references(() => tutors.id),
+    amount: varchar("amount", { length: 50 }).notNull(), // in BDT, stored as string like the other money fields
+    method: payoutMethodEnum("method").notNull(),
+    accountNumber: varchar("accountNumber", { length: 30 }).notNull(), // mobile wallet number
+    status: payoutStatusEnum("status").default("requested").notNull(),
+    adminNote: text("adminNote"), // rejection reason or payment reference
+    requestedAt: timestamp("requestedAt").defaultNow().notNull(),
+    resolvedAt: timestamp("resolvedAt"), // set when approved/rejected/paid
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    tutorRequestedIdx: index("payouts_tutor_requested_idx").on(table.tutorId, table.requestedAt),
+  }),
+);
 
 export type Payout = typeof payouts.$inferSelect;
 export type InsertPayout = typeof payouts.$inferInsert;
@@ -375,15 +464,21 @@ export type InsertPayout = typeof payouts.$inferInsert;
  * Audit Logs — immutable trail of privileged state changes
  * (application status, commission status, payout lifecycle).
  */
-export const auditLogs = pgTable("auditLogs", {
-  id: serial("id").primaryKey(),
-  actorUserId: integer("actorUserId").notNull(), // users.id of the admin/user who acted
-  action: varchar("action", { length: 100 }).notNull(), // e.g. "application.status_change"
-  entityType: varchar("entityType", { length: 50 }).notNull(), // e.g. "application", "payout"
-  entityId: integer("entityId").notNull(),
-  detail: text("detail"), // JSON: { from, to, note, ... }
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+export const auditLogs = pgTable(
+  "auditLogs",
+  {
+    id: serial("id").primaryKey(),
+    actorUserId: integer("actorUserId").notNull().references(() => users.id), // users.id of the admin/user who acted
+    action: varchar("action", { length: 100 }).notNull(), // e.g. "application.status_change"
+    entityType: varchar("entityType", { length: 50 }).notNull(), // e.g. "application", "payout"
+    entityId: integer("entityId").notNull(),
+    detail: text("detail"), // JSON: { from, to, note, ... }
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    actorCreatedIdx: index("auditLogs_actor_created_idx").on(table.actorUserId, table.createdAt),
+  }),
+);
 
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type InsertAuditLog = typeof auditLogs.$inferInsert;
@@ -391,13 +486,26 @@ export type InsertAuditLog = typeof auditLogs.$inferInsert;
 /**
  * Cohort Messages — discussion feed inside a cohort space.
  */
-export const cohortMessages = pgTable("cohort_messages", {
-  id: serial("id").primaryKey(),
-  cohortId: integer("cohortId").notNull(),
-  studentId: integer("studentId").notNull(),
-  content: text("content").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+export const cohortMessages = pgTable(
+  "cohort_messages",
+  {
+    id: serial("id").primaryKey(),
+    cohortId: integer("cohortId").notNull().references(() => cohorts.id),
+    studentId: integer("studentId").notNull().references(() => students.id),
+    content: text("content").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    cohortCreatedIdx: index("cohort_messages_cohort_created_idx").on(
+      table.cohortId,
+      table.createdAt,
+    ),
+    studentCreatedIdx: index("cohort_messages_student_created_idx").on(
+      table.studentId,
+      table.createdAt,
+    ),
+  }),
+);
 
 export type CohortMessage = typeof cohortMessages.$inferSelect;
 export type InsertCohortMessage = typeof cohortMessages.$inferInsert;
