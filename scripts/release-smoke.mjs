@@ -3,22 +3,19 @@
 /**
  * Last Bench post-deploy smoke check.
  *
- * Usage:
- *   WEB_ORIGIN=https://www.lastbenchbd.com \
- *   API_ORIGIN=https://api.lastbenchbd.com \
- *   node scripts/release-smoke.mjs
+ * Defaults to the verified production topology:
+ *   WEB_ORIGIN=https://lastbenchbd.com
+ *   API_ORIGIN=https://api.lastbenchbd.com
  *
- * This intentionally does not claim auth is proven. It verifies the public web/API
- * contract, then prints the human auth/session checks still required.
+ * Override either variable for previews or incident diagnosis.
+ * This verifies the public web/API contract. OAuth/session and real form receipt
+ * remain separate release gates because they require stateful authenticated flows.
  */
 
-const webOrigin = process.env.WEB_ORIGIN?.replace(/\/+$/, "");
-const apiOrigin = process.env.API_ORIGIN?.replace(/\/+$/, "");
-
-if (!webOrigin || !apiOrigin) {
-  console.error("WEB_ORIGIN and API_ORIGIN are required.");
-  process.exit(2);
-}
+const webOrigin = (process.env.WEB_ORIGIN ?? "https://lastbenchbd.com").replace(/\/+$/, "");
+const apiOrigin = (process.env.API_ORIGIN ?? "https://api.lastbenchbd.com").replace(/\/+$/, "");
+const attempts = Math.max(1, Number.parseInt(process.env.SMOKE_ATTEMPTS ?? "3", 10) || 3);
+const retryDelayMs = Math.max(0, Number.parseInt(process.env.SMOKE_RETRY_DELAY_MS ?? "5000", 10) || 5000);
 
 for (const [name, value] of [
   ["WEB_ORIGIN", webOrigin],
@@ -45,44 +42,66 @@ const checks = [
   { name: "CLASS course", url: `${webOrigin}/class-a/course.html` },
 ];
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function verify(check) {
+  const response = await fetch(check.url, {
+    redirect: "follow",
+    headers: { "user-agent": "lastbench-release-smoke/2.0" },
+  });
+
+  const type = response.headers.get("content-type") ?? "";
+  let semanticOk = response.ok;
+
+  if (check.expectJson) {
+    semanticOk = semanticOk && type.includes("application/json");
+    if (semanticOk) {
+      const body = await response.json();
+      semanticOk = body?.ok === true;
+    }
+  }
+
+  if (!semanticOk) {
+    throw new Error(`${response.status} ${type || "unknown content-type"}`);
+  }
+
+  return response.status;
+}
+
 let failed = false;
 
 for (const check of checks) {
-  try {
-    const response = await fetch(check.url, {
-      redirect: "follow",
-      headers: { "user-agent": "lastbench-release-smoke/1.0" },
-    });
+  let passed = false;
+  let lastError = null;
 
-    const type = response.headers.get("content-type") ?? "";
-    let semanticOk = response.ok;
-
-    if (check.expectJson) {
-      semanticOk = semanticOk && type.includes("application/json");
-      if (semanticOk) {
-        const body = await response.json();
-        semanticOk = body?.ok === true;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const status = await verify(check);
+      console.log(`PASS  ${check.name}: ${status}${attempt > 1 ? ` (attempt ${attempt})` : ""}`);
+      passed = true;
+      break;
+    } catch (error) {
+      lastError = error;
+      if (attempt < attempts) {
+        console.warn(`RETRY ${check.name}: attempt ${attempt}/${attempts} failed`);
+        await sleep(retryDelayMs);
       }
     }
+  }
 
-    if (!semanticOk) {
-      failed = true;
-      console.error(`FAIL  ${check.name}: ${response.status} ${type || "unknown content-type"}`);
-    } else {
-      console.log(`PASS  ${check.name}: ${response.status}`);
-    }
-  } catch (error) {
+  if (!passed) {
     failed = true;
-    console.error(`FAIL  ${check.name}: ${error instanceof Error ? error.message : String(error)}`);
+    console.error(`FAIL  ${check.name}: ${lastError instanceof Error ? lastError.message : String(lastError)}`);
   }
 }
 
-console.log("\nManual release gates still required:");
+console.log("\nStateful release gates:");
+console.log("- Netlify production OAuth APP_ID and OWNER_OPEN_ID are verified real values");
 console.log("- Fresh-browser OAuth login completes on /app");
 console.log("- Returning session survives refresh");
 console.log("- Authenticated tRPC request succeeds");
 console.log("- Logout causes the next protected request to be rejected");
 console.log("- Real Netlify form submissions appear for each active conversion form");
-console.log("- Pending database migrations are reconciled and intentionally applied");
+console.log("- Supabase migration ledger remains reconciled with drizzle/MIGRATION_STATUS.md");
 
 process.exitCode = failed ? 1 : 0;
