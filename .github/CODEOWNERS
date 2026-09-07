@@ -1,0 +1,16 @@
+# Default owner
+* @lets-colab
+
+# High-trust backend and data surfaces
+/server/ @lets-colab
+/drizzle/ @lets-colab
+/tests/ @lets-colab
+/.github/workflows/ @lets-colab
+/render.yaml @lets-colab
+/netlify.toml @lets-colab
+/.env.example @lets-colab
+
+# Brand and public conversion surfaces
+/landing/ @lets-colab
+/assets/branding/ @lets-colab
+/design-system/ @lets-colab
