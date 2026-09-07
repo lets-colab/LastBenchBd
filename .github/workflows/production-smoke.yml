@@ -1,0 +1,74 @@
+name: Production Smoke
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "15 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: production-smoke
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      WEB_ORIGIN: https://lastbenchbd.com
+      API_ORIGIN: https://api.lastbenchbd.com
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Allow production deploy to settle
+        if: github.event_name == 'push'
+        run: sleep 90
+
+      - name: Run production smoke gate
+        id: smoke
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          node scripts/release-smoke.mjs 2>&1 | tee production-smoke.log
+
+      - name: Report production smoke state
+        shell: bash
+        run: |
+          set -euo pipefail
+          title="Production smoke gate"
+          issue_number="$(gh issue list --state open --search 'Production smoke gate in:title' --json number,title --jq '.[] | select(.title == "Production smoke gate") | .number' | head -n 1)"
+
+          if [[ "${{ steps.smoke.outcome }}" != "success" ]]; then
+            {
+              echo "Automated production smoke verification failed."
+              echo
+              echo "Run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+              echo "Commit: ${GITHUB_SHA}"
+              echo
+              echo '```text'
+              cat production-smoke.log
+              echo '```'
+              echo
+              echo "This issue is maintained automatically and will be closed after a later smoke run succeeds."
+            } > /tmp/production-smoke-issue.md
+
+            if [[ -n "$issue_number" ]]; then
+              gh issue comment "$issue_number" --body-file /tmp/production-smoke-issue.md
+            else
+              gh issue create --title "$title" --body-file /tmp/production-smoke-issue.md
+            fi
+            exit 1
+          fi
+
+          if [[ -n "$issue_number" ]]; then
+            gh issue comment "$issue_number" --body "Production smoke verification recovered on commit ${GITHUB_SHA}. Closing automatically."
+            gh issue close "$issue_number" --reason completed
+          fi
