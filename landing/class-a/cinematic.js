@@ -1,81 +1,113 @@
 (() => {
   const root = document.documentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = window.matchMedia('(pointer: fine)');
   const scene = document.querySelector('[data-scene]');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (scene && !reduceMotion && window.matchMedia('(pointer:fine)').matches) {
-    window.addEventListener('pointermove', (event) => {
-      const x = event.clientX / window.innerWidth - 0.5;
-      const y = event.clientY / window.innerHeight - 0.5;
-      root.style.setProperty('--ry', `${x * 5.5}deg`);
-      root.style.setProperty('--rx', `${-y * 3.5}deg`);
-    }, { passive: true });
+  if (scene && !reduceMotion.matches && finePointer.matches) {
+    let frame = 0;
+    const updateScene = (event) => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        const x = event.clientX / window.innerWidth - 0.5;
+        const y = event.clientY / window.innerHeight - 0.5;
+        root.style.setProperty('--scene-x', `${x * 10}px`);
+        root.style.setProperty('--scene-y', `${y * 7}px`);
+        root.style.setProperty('--scene-rotate-x', `${-y * 2.4}deg`);
+        root.style.setProperty('--scene-rotate-y', `${x * 3.8}deg`);
+        frame = 0;
+      });
+    };
+    window.addEventListener('pointermove', updateScene, { passive: true });
+  }
+
+  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  if (reduceMotion.matches || !('IntersectionObserver' in window)) {
+    reveals.forEach((item) => item.classList.add('is-visible'));
+  } else {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach((item, index) => {
+      item.style.setProperty('--reveal-delay', `${Math.min(index % 5, 4) * 60}ms`);
+      observer.observe(item);
+    });
   }
 
   const form = document.querySelector('[data-signup-form]');
   if (!form) return;
 
-  const success = document.querySelector('[data-success]');
-  const errorBox = document.querySelector('[data-error]');
+  const success = form.querySelector('[data-success]');
+  const errorBox = form.querySelector('[data-error]');
   const submit = form.querySelector('button[type="submit"]');
   const honeypot = form.querySelector('[name="company"]');
+  const program = form.dataset.program;
+  const source = program === 'course' ? 'class-a-cinematic-course' : 'class-a-cinematic-masterclass';
+  const supabaseUrl = 'https://tocxdyqlrvzthpexnmxe.supabase.co';
+  const publishableKey = 'sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_';
 
-  const SUPABASE_URL = 'https://tocxdyqlrvzthpexnmxe.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRvY3hkeXFscnZ6dGhwZXhubXhlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMzNjUxMTQsImV4cCI6MjA5ODk0MTExNH0.oC6AfVgAAMUht1HDWxlehurMjDVE5praY-WAlSTFMMY';
+  const setStatus = (target) => {
+    [success, errorBox].forEach((box) => {
+      if (!box) return;
+      const active = box === target;
+      box.hidden = !active;
+      box.classList.toggle('show', active);
+    });
+    if (target) {
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: false });
+    }
+  };
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
     if (honeypot && honeypot.value) return;
 
-    if (success) success.classList.remove('show');
-    if (errorBox) errorBox.classList.remove('show');
-
-    const original = submit ? submit.textContent : '';
+    setStatus(null);
+    const originalLabel = submit ? submit.textContent : '';
     if (submit) {
       submit.disabled = true;
-      submit.textContent = 'RESERVING…';
+      submit.setAttribute('aria-busy', 'true');
+      submit.textContent = form.dataset.loadingLabel || 'SAVING…';
     }
 
     const data = new FormData(form);
     const payload = {
-      program: 'masterclass',
+      program,
       full_name: String(data.get('name') || '').trim(),
       phone: String(data.get('phone') || '').trim(),
       email: String(data.get('email') || '').trim(),
       skill_level: String(data.get('skill') || '').trim() || null,
-      source: 'class-a-cinematic-masterclass'
+      source,
     };
 
     try {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/class_a_registrations`, {
+      const response = await fetch(`${supabaseUrl}/rest/v1/class_a_registrations`, {
         method: 'POST',
         headers: {
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          apikey: publishableKey,
           'Content-Type': 'application/json',
-          Prefer: 'return=minimal'
+          Prefer: 'return=minimal',
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error(`Registration failed: ${response.status}`);
+      if (!response.ok) throw new Error(`Registration failed with ${response.status}`);
       form.reset();
-      if (success) {
-        success.classList.add('show');
-        success.setAttribute('tabindex', '-1');
-        success.focus();
-      }
-    } catch (_) {
-      if (errorBox) {
-        errorBox.classList.add('show');
-        errorBox.setAttribute('tabindex', '-1');
-        errorBox.focus();
-      }
+      setStatus(success);
+    } catch (error) {
+      console.error('CLASS A registration failed', error);
+      setStatus(errorBox);
     } finally {
       if (submit) {
         submit.disabled = false;
-        submit.textContent = original;
+        submit.removeAttribute('aria-busy');
+        submit.textContent = originalLabel;
       }
     }
   });

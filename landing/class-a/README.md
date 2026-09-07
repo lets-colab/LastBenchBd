@@ -1,29 +1,30 @@
-# CLASS[Λ] signup surfaces
+# CLASS[Λ] signup funnel
 
-Two conversion pages share one visual and interaction system:
+Three date-free conversion routes share one cinematic design, motion and registration system:
 
-- `masterclass.html` — free CLASS[Λ] Masterclass / Class 0 registration.
-- `course.html` — paid 20-Class One-Person Venture Builder registration.
+- `/class-a/` — entry hub for choosing the free masterclass or full course.
+- `/class-a/masterclass.html` — free CLASS[Λ] Masterclass / Class 0 registration.
+- `/class-a/course.html` — paid 20-Class One-Person Venture Builder registration.
 
-## Product rules
+## Product contract
 
-- No event dates are hardcoded into either page.
-- Masterclass is clearly marked **FREE**.
-- Full course is clearly marked **৳5,000**.
-- Both pages use `ACQUIRE. APPLY. ADVANCE.` and the CLASS[Λ] one-person AI team positioning.
-- Pages cross-link so the masterclass acts as the top-of-funnel entry and the full course is the conversion destination.
-- Both forms are configured for Netlify Forms and include honeypot spam protection.
-- The course page registers interest only; payment is explicitly handled separately.
-- The masterclass page does not request or imply payment.
+- Masterclass is explicitly **FREE** and requests no payment.
+- Full course is **৳5,000** and captures an application only; payment is handled separately.
+- The full course presents all 20 classes and all 20 proof-of-work outputs.
+- All pages cross-link through the same `CLASS[Λ] · ACQUIRE. APPLY. ADVANCE.` system.
+- No dates are hardcoded.
+- Motion is lightweight, progressively enhanced and disabled for reduced-motion users.
+- Both registration forms use the same Supabase table and RLS-protected insert route.
+- Static Netlify form markup remains present as a no-JavaScript fallback and deploy-time form declaration.
 
-These files are copied automatically into the production web artifact by `scripts/build-site.mjs` because that build recursively copies `landing/` into `dist/`.
+## Data contract
 
-## Production routes after deployment
+Table: `public.class_a_registrations`
 
-- `/class-a/masterclass.html`
-- `/class-a/course.html`
+- Masterclass `program`: `masterclass`
+- Full course `program`: `course`
+- Source values: `class-a-cinematic-masterclass`, `class-a-cinematic-course`
 
-Form names used by Netlify:
+The browser uses the project’s publishable key. RLS permits validated inserts for `anon` and `authenticated` while preventing public row reads.
 
-- `class-a-masterclass`
-- `class-a-course`
+These files are copied into the production artifact by `scripts/build-site.mjs`.

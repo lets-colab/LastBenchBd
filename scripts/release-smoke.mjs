@@ -38,6 +38,7 @@ const checks = [
   { name: "API health", url: `${apiOrigin}/api/health`, expectJson: true },
   { name: "Landing", url: `${webOrigin}/` },
   { name: "Student app", url: `${webOrigin}/app/` },
+  { name: "CLASS signup hub", url: `${webOrigin}/class-a/` },
   { name: "CLASS masterclass", url: `${webOrigin}/class-a/masterclass.html` },
   { name: "CLASS course", url: `${webOrigin}/class-a/course.html` },
 ];
