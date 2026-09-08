@@ -8,44 +8,28 @@
 [build.environment]
   NODE_VERSION = "20"
   PNPM_VERSION = "9.12.0"
-  # This repository is an Expo/static site, never a Next.js runtime.
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
-# Pull-request previews remain reviewable before production OAuth/API identifiers
-# exist. These .invalid values intentionally put the app into its honest
-# service-unavailable state rather than pretending a backend is live.
+# Pull-request previews use non-production endpoints so review builds stay
+# deterministic without touching the real student identity store.
 [context.deploy-preview.environment]
   EXPO_PUBLIC_API_BASE_URL = "https://api.example.invalid"
-  EXPO_PUBLIC_OAUTH_PORTAL_URL = "https://portal.example.invalid"
-  EXPO_PUBLIC_OAUTH_SERVER_URL = "https://oauth.example.invalid"
-  EXPO_PUBLIC_APP_ID = "netlify-preview-app"
-  EXPO_PUBLIC_OWNER_OPEN_ID = "netlify-preview-owner"
-  EXPO_PUBLIC_OWNER_NAME = "Last Bench Preview"
+  EXPO_PUBLIC_SUPABASE_URL = "https://preview-project.supabase.co"
+  EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "preview-publishable-key"
 
-# Production web builds need these public values to assemble the landing site
-# and Expo web bundle. The two identity values below are deliberately marked
-# unconfigured: they only unblock the static production build and must be
-# replaced with real OAuth identifiers before production login is enabled.
+# Public client configuration. Supabase publishable keys are intentionally safe
+# to expose to clients; authorization is enforced by Auth + RLS, never by hiding
+# this value in the static bundle.
 [context.production.environment]
   EXPO_PUBLIC_API_BASE_URL = "https://api.lastbenchbd.com"
-  EXPO_PUBLIC_OAUTH_PORTAL_URL = "https://manus.space"
-  EXPO_PUBLIC_OAUTH_SERVER_URL = "https://oauth.manus.space"
-  EXPO_PUBLIC_APP_ID = "lastbenchbd-app-unconfigured"
-  EXPO_PUBLIC_OWNER_OPEN_ID = "lastbenchbd-owner-unconfigured"
-  EXPO_PUBLIC_OWNER_NAME = "Last Bench"
+  EXPO_PUBLIC_SUPABASE_URL = "https://tocxdyqlrvzthpexnmxe.supabase.co"
+  EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_"
 
 # SPA fallback for the app's client-side routes (/app/profile, /app/admin, …).
-# Order matters: this must match before the landing catch-all below.
 [[redirects]]
   from = "/app/*"
   to = "/app/index.html"
   status = 200
-
-# The OAuth portal may still return users to the app's old root callback path.
-[[redirects]]
-  from = "/oauth/callback"
-  to = "/app/oauth/callback"
-  status = 301
 
 # Landing catch-all (real files — thanks.html, assets, vendor — win automatically).
 [[redirects]]

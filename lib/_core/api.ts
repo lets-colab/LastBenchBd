@@ -13,18 +13,31 @@ export class ApiRequestError extends Error {
   }
 }
 
+type ApiUser = {
+  id: number;
+  openId: string;
+  name: string | null;
+  email: string | null;
+  loginMethod: string | null;
+  role?: "user" | "admin" | "tutor" | "mentor";
+  lastSignedIn: string;
+};
+
+type NativeSessionFields = {
+  accessToken?: string;
+  refreshToken?: string;
+};
+
 export async function apiCall<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     ...((options.headers as Record<string, string>) || {}),
   };
 
-  // Native uses a bearer token; web uses the backend's HTTP-only cookie.
   if (Platform.OS !== "web") {
+    headers["x-lastbench-client"] = "native";
     const sessionToken = await Auth.getSessionToken();
-    if (sessionToken) {
-      headers["Authorization"] = `Bearer ${sessionToken}`;
-    }
+    if (sessionToken) headers.Authorization = `Bearer ${sessionToken}`;
   }
 
   const baseUrl = getApiBaseUrl();
@@ -38,30 +51,27 @@ export async function apiCall<T>(endpoint: string, options: RequestInit = {}): P
 
   const cleanBaseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
   const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
-  const url = `${cleanBaseUrl}${cleanEndpoint}`;
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(`${cleanBaseUrl}${cleanEndpoint}`, {
       ...options,
       headers,
       credentials: "include",
     });
 
+    const contentType = response.headers.get("content-type") ?? "";
+    const isJson = contentType.toLowerCase().includes("application/json");
+    const body = isJson ? await response.json().catch(() => null) : null;
+
     if (!response.ok) {
-      const errorText = await response.text();
-      let errorMessage = `Student services returned ${response.status}.`;
-      try {
-        const errorJson = JSON.parse(errorText);
-        errorMessage = errorJson.error || errorJson.message || errorMessage;
-      } catch {
-        // Keep the safe message when an upstream returns HTML or plain text.
-      }
+      const errorMessage =
+        (body as { error?: string; message?: string } | null)?.error ||
+        (body as { error?: string; message?: string } | null)?.message ||
+        `Student services returned ${response.status}.`;
       throw new ApiRequestError(errorMessage, response.status);
     }
 
-    const contentType = response.headers.get("content-type") ?? "";
-    if (!contentType.toLowerCase().includes("application/json")) {
-      await response.body?.cancel().catch(() => {});
+    if (!isJson) {
       throw new ApiRequestError(
         "Student services returned an invalid response. Please try again later.",
         response.status,
@@ -69,54 +79,84 @@ export async function apiCall<T>(endpoint: string, options: RequestInit = {}): P
       );
     }
 
-    return (await response.json()) as T;
+    return body as T;
   } catch (error) {
-    if (error instanceof ApiRequestError) {
-      throw error;
-    }
+    if (error instanceof ApiRequestError) throw error;
     throw new ApiRequestError(
       error instanceof Error ? error.message : "Student services are unavailable.",
     );
   }
 }
 
-// OAuth callback handler - exchange code for session token
-// Calls /api/oauth/mobile endpoint which returns JSON with app_session_id and user
-export async function exchangeOAuthCode(
-  code: string,
-  state: string,
-): Promise<{ sessionToken: string; user: any }> {
-  const params = new URLSearchParams({ code, state });
-  const endpoint = `/api/oauth/mobile?${params.toString()}`;
-  const result = await apiCall<{ app_session_id: string; user: any }>(endpoint);
+async function persistNativeSession(result: NativeSessionFields) {
+  if (Platform.OS === "web") return;
+  if (result.accessToken && result.refreshToken) {
+    await Auth.setSessionTokens(result.accessToken, result.refreshToken);
+  }
+}
 
+export async function signIn(email: string, password: string): Promise<ApiUser> {
+  const result = await apiCall<{ user: ApiUser } & NativeSessionFields>("/api/auth/sign-in", {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+  });
+  await persistNativeSession(result);
+  return result.user;
+}
+
+export async function signUp(
+  email: string,
+  password: string,
+  name: string,
+): Promise<{ user: ApiUser | null; requiresEmailConfirmation: boolean }> {
+  const result = await apiCall<{
+    user: ApiUser | null;
+    requiresEmailConfirmation: boolean;
+  } & NativeSessionFields>("/api/auth/sign-up", {
+    method: "POST",
+    body: JSON.stringify({ email, password, name }),
+  });
+  await persistNativeSession(result);
   return {
-    sessionToken: result.app_session_id,
     user: result.user,
+    requiresEmailConfirmation: result.requiresEmailConfirmation,
   };
 }
 
-// Logout
-export async function logout(): Promise<void> {
-  await apiCall<void>("/api/auth/logout", {
-    method: "POST",
-  });
+export async function refreshSession(): Promise<ApiUser | null> {
+  const refreshToken = Platform.OS === "web" ? null : await Auth.getRefreshToken();
+  if (Platform.OS !== "web" && !refreshToken) return null;
+
+  try {
+    const result = await apiCall<{ user: ApiUser } & NativeSessionFields>("/api/auth/refresh", {
+      method: "POST",
+      body: JSON.stringify(refreshToken ? { refreshToken } : {}),
+    });
+    await persistNativeSession(result);
+    return result.user;
+  } catch (error) {
+    if (error instanceof ApiRequestError && error.status === 401) {
+      await Auth.removeSessionToken();
+      return null;
+    }
+    throw error;
+  }
 }
 
-// Get current authenticated user (web uses cookie-based auth)
-export async function getMe(): Promise<{
-  id: number;
-  openId: string;
-  name: string | null;
-  email: string | null;
-  loginMethod: string | null;
-  lastSignedIn: string;
-} | null> {
+export async function logout(): Promise<void> {
+  await apiCall<{ success: boolean }>("/api/auth/logout", { method: "POST" }).catch(() => {});
+  await Promise.all([Auth.removeSessionToken(), Auth.clearUserInfo()]);
+}
+
+export async function getMe(): Promise<ApiUser | null> {
   try {
-    const result = await apiCall<{ user: any }>("/api/auth/me");
+    const result = await apiCall<{ user: ApiUser }>("/api/auth/me");
     return result.user || null;
   } catch (error) {
     if (error instanceof ApiRequestError && error.status === 401) {
+      if (Platform.OS !== "web" && (await Auth.getRefreshToken())) {
+        return refreshSession();
+      }
       return null;
     }
     throw error;

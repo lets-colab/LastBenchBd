@@ -50,13 +50,13 @@ jobs:
           test -s server-dist/index.js
           test -s server-dist/data/malaysia-universities.json
 
-      - name: Start built API in degraded mode and verify fail-closed auth
+      - name: Start built API with Supabase auth and AI intentionally disabled
         env:
           NODE_ENV: production
           PORT: "3000"
           DATABASE_URL: postgres://ci:ci@db.example.invalid:5432/postgres
-          JWT_SECRET: ci-release-smoke-secret-that-is-at-least-32-characters
-          OAUTH_SERVER_URL: https://oauth.example.invalid
+          SUPABASE_URL: https://ci-project.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: ci-publishable-key
           FRONTEND_URL: https://web.example.invalid
           CORS_ALLOWED_ORIGINS: https://web.example.invalid
         run: |
@@ -73,14 +73,15 @@ jobs:
             if health="$(curl --fail --silent http://127.0.0.1:3000/api/health)"; then
               echo "$health" | grep -q '"ok":true'
               echo "$health" | grep -q '"degraded":true'
-              echo "$health" | grep -q '"authConfigured":false'
-              echo "$health" | grep -q '"forgeConfigured":false'
+              echo "$health" | grep -q '"authConfigured":true'
+              echo "$health" | grep -q '"storageConfigured":true'
+              echo "$health" | grep -q '"aiConfigured":false'
 
               auth_status="$(curl --silent --output /tmp/auth-me.json --write-out '%{http_code}' http://127.0.0.1:3000/api/auth/me)"
-              test "$auth_status" = "503"
-              grep -q 'Authentication is not configured' /tmp/auth-me.json
+              test "$auth_status" = "401"
+              grep -q 'Not authenticated' /tmp/auth-me.json
 
-              echo "Built API degraded startup smoke passed"
+              echo "Built API Supabase startup smoke passed"
               exit 0
             fi
             if ! kill -0 "$pid" 2>/dev/null; then
@@ -97,11 +98,8 @@ jobs:
         run: pnpm build:web:production
         env:
           EXPO_PUBLIC_API_BASE_URL: https://api.example.invalid
-          EXPO_PUBLIC_OAUTH_PORTAL_URL: https://portal.example.invalid
-          EXPO_PUBLIC_OAUTH_SERVER_URL: https://oauth.example.invalid
-          EXPO_PUBLIC_APP_ID: ci-app-id
-          EXPO_PUBLIC_OWNER_OPEN_ID: ci-owner-id
-          EXPO_PUBLIC_OWNER_NAME: Last Bench
+          EXPO_PUBLIC_SUPABASE_URL: https://ci-project.supabase.co
+          EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-publishable-key
 
       - name: Check patch integrity
         run: git diff --check

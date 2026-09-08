@@ -38,10 +38,10 @@ afterEach(() => {
 });
 
 describe("AI guidance model configuration", () => {
-  it("uses the documented Sonnet default when no model is configured", () => {
+  it("uses the configured OpenAI default when no model is supplied", () => {
     expect(resolveAiGuidanceModel(undefined)).toBe(DEFAULT_AI_GUIDANCE_MODEL);
     expect(resolveAiGuidanceModel("   ")).toBe(DEFAULT_AI_GUIDANCE_MODEL);
-    expect(DEFAULT_AI_GUIDANCE_MODEL).toBe("claude-sonnet-4-6");
+    expect(DEFAULT_AI_GUIDANCE_MODEL).toBe("gpt-5.6-terra");
   });
 
   it("accepts a configured model without surrounding whitespace", () => {
@@ -53,18 +53,16 @@ describe("production environment gate", () => {
   const coreProductionEnv = {
     NODE_ENV: "production",
     DATABASE_URL: "postgres://project:password@db.example.com:5432/postgres",
-    JWT_SECRET: "a-secure-secret-with-at-least-32-characters",
-    OAUTH_SERVER_URL: "https://oauth.example.com",
+    SUPABASE_URL: "https://project.supabase.co",
+    SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test_key",
     FRONTEND_URL: "https://lastbenchbd.com",
     CORS_ALLOWED_ORIGINS: "https://lastbenchbd.com",
   } satisfies NodeJS.ProcessEnv;
 
   const completeProductionEnv = {
     ...coreProductionEnv,
-    VITE_APP_ID: "last-bench",
-    OWNER_OPEN_ID: "owner-id",
-    BUILT_IN_FORGE_API_URL: "https://forge.example.com",
-    BUILT_IN_FORGE_API_KEY: "forge-key",
+    OPENAI_API_KEY: "test-openai-key",
+    OPENAI_API_BASE_URL: "https://api.openai.com/v1",
     AI_GUIDANCE_MODEL: "configured-model",
   } satisfies NodeJS.ProcessEnv;
 
@@ -76,13 +74,13 @@ describe("production environment gate", () => {
     );
   });
 
-  it("allows the core API to start while optional integrations remain unavailable", () => {
+  it("allows the core API to start while AI remains unavailable", () => {
     expect(() => assertProductionConfiguration(coreProductionEnv)).not.toThrow();
     expect(getMissingProductionEnv(coreProductionEnv)).toEqual([]);
     expect(getProductionIntegrationStatus(coreProductionEnv)).toEqual({
-      authConfigured: false,
-      ownerConfigured: false,
-      forgeConfigured: false,
+      authConfigured: true,
+      storageConfigured: true,
+      aiConfigured: false,
     });
   });
 
@@ -90,8 +88,8 @@ describe("production environment gate", () => {
     expect(() => assertProductionConfiguration(completeProductionEnv)).not.toThrow();
     expect(getProductionIntegrationStatus(completeProductionEnv)).toEqual({
       authConfigured: true,
-      ownerConfigured: true,
-      forgeConfigured: true,
+      storageConfigured: true,
+      aiConfigured: true,
     });
   });
 });
