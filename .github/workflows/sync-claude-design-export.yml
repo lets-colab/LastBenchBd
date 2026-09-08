@@ -21,11 +21,14 @@ jobs:
           ref: design-sync/claude-lastbench-2026-09-08
           fetch-depth: 0
 
+      - name: Validate import script
+        run: python -m py_compile scripts/import-claude-design-export.py
+
       - name: Download verified Claude Design export
         run: |
           set -euo pipefail
           python -m pip install --quiet gdown
-          gdown --id '1GlFQ6t0A9W3KbDq_7uEIsODZZXP77VbR' -O /tmp/lastbench-claude-design.zip
+          gdown '1GlFQ6t0A9W3KbDq_7uEIsODZZXP77VbR' -O /tmp/lastbench-claude-design.zip
           test -s /tmp/lastbench-claude-design.zip
           echo '658020389ad977a436e6308fe2fa7948f1d7e3a79547be18f290459ec6df9ff9  /tmp/lastbench-claude-design.zip' | sha256sum -c -
 
