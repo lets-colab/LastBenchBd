@@ -1,4 +1,4 @@
-export const DEFAULT_AI_GUIDANCE_MODEL = "gpt-5";
+export const DEFAULT_AI_GUIDANCE_MODEL = "gpt-5.6-terra";
 
 export function resolveAiGuidanceModel(value = process.env.AI_GUIDANCE_MODEL) {
   const configuredModel = value?.trim();
