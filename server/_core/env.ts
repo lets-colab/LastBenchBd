@@ -1,36 +1,34 @@
-export const DEFAULT_AI_GUIDANCE_MODEL = "claude-sonnet-4-6";
+export const DEFAULT_AI_GUIDANCE_MODEL = "gpt-5";
 
 export function resolveAiGuidanceModel(value = process.env.AI_GUIDANCE_MODEL) {
   const configuredModel = value?.trim();
   return configuredModel || DEFAULT_AI_GUIDANCE_MODEL;
 }
 
-// These values are required for the API process itself to start safely.
-// OAuth identity and Forge are feature integrations: when absent they must
-// fail closed at the feature boundary rather than taking the whole API down.
 const REQUIRED_PRODUCTION_ENV = [
   "DATABASE_URL",
-  "JWT_SECRET",
-  "OAUTH_SERVER_URL",
+  "SUPABASE_URL",
+  "SUPABASE_PUBLISHABLE_KEY",
   "FRONTEND_URL",
   "CORS_ALLOWED_ORIGINS",
 ] as const;
 
 export type ProductionIntegrationStatus = {
   authConfigured: boolean;
-  ownerConfigured: boolean;
-  forgeConfigured: boolean;
+  storageConfigured: boolean;
+  aiConfigured: boolean;
 };
 
 export function getProductionIntegrationStatus(
   env: NodeJS.ProcessEnv = process.env,
 ): ProductionIntegrationStatus {
+  const supabaseConfigured = Boolean(
+    env.SUPABASE_URL?.trim() && env.SUPABASE_PUBLISHABLE_KEY?.trim(),
+  );
   return {
-    authConfigured: Boolean(env.OAUTH_SERVER_URL?.trim() && env.VITE_APP_ID?.trim()),
-    ownerConfigured: Boolean(env.OWNER_OPEN_ID?.trim()),
-    forgeConfigured: Boolean(
-      env.BUILT_IN_FORGE_API_URL?.trim() && env.BUILT_IN_FORGE_API_KEY?.trim(),
-    ),
+    authConfigured: supabaseConfigured,
+    storageConfigured: supabaseConfigured,
+    aiConfigured: Boolean(env.OPENAI_API_KEY?.trim()),
   };
 }
 
@@ -51,23 +49,17 @@ export function assertProductionConfiguration(
 
   if (env.NODE_ENV !== "production") return;
 
-  if ((env.JWT_SECRET?.trim().length ?? 0) < 32) {
-    throw new Error("JWT_SECRET must contain at least 32 characters in production");
-  }
-
-  // OAUTH_SERVER_URL and FRONTEND_URL are part of the core routing/auth boundary.
-  // Forge is optional, but if supplied its URL still has to be production-safe.
-  for (const name of ["OAUTH_SERVER_URL", "FRONTEND_URL"] as const) {
+  for (const name of ["SUPABASE_URL", "FRONTEND_URL"] as const) {
     const url = new URL(env[name]!);
     if (url.protocol !== "https:") {
       throw new Error(`${name} must use HTTPS in production`);
     }
   }
 
-  if (env.BUILT_IN_FORGE_API_URL?.trim()) {
-    const forgeUrl = new URL(env.BUILT_IN_FORGE_API_URL);
-    if (forgeUrl.protocol !== "https:") {
-      throw new Error("BUILT_IN_FORGE_API_URL must use HTTPS in production");
+  if (env.OPENAI_API_BASE_URL?.trim()) {
+    const url = new URL(env.OPENAI_API_BASE_URL);
+    if (url.protocol !== "https:") {
+      throw new Error("OPENAI_API_BASE_URL must use HTTPS in production");
     }
   }
 
@@ -77,13 +69,15 @@ export function assertProductionConfiguration(
 }
 
 export const ENV = {
-  appId: process.env.VITE_APP_ID ?? "",
-  cookieSecret: process.env.JWT_SECRET ?? "",
   databaseUrl: process.env.DATABASE_URL ?? "",
-  oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
-  ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
+  supabaseUrl: process.env.SUPABASE_URL ?? "",
+  supabasePublishableKey: process.env.SUPABASE_PUBLISHABLE_KEY ?? "",
+  // Compatibility property used by the existing DB upsert path. It now means
+  // the explicitly configured Supabase Auth user UUID that should receive the
+  // platform-admin role; it is no longer a Manus/OpenID identity.
+  ownerOpenId: process.env.ADMIN_AUTH_USER_ID ?? "",
   isProduction: process.env.NODE_ENV === "production",
-  forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
-  forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+  openAiApiUrl: (process.env.OPENAI_API_BASE_URL ?? "https://api.openai.com/v1").replace(/\/+$/, ""),
+  openAiApiKey: process.env.OPENAI_API_KEY ?? "",
   aiGuidanceModel: resolveAiGuidanceModel(),
 };
