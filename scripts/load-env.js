@@ -1,7 +1,6 @@
 /**
- * Custom environment loader that prioritizes system environment variables
- * over .env file values. This ensures that Manus platform-injected variables
- * are not overridden by placeholder values in .env
+ * Local environment loader. Production values come from Render/Netlify.
+ * Existing process environment always wins over values from .env.
  */
 import fs from "fs";
 import path from "path";
@@ -9,37 +8,26 @@ import path from "path";
 const envPath = path.resolve(process.cwd(), ".env");
 
 if (fs.existsSync(envPath)) {
-  const envContent = fs.readFileSync(envPath, "utf8");
-  const lines = envContent.split("\n");
-
-  lines.forEach((line) => {
-    // Skip comments and empty lines
-    if (!line || line.trim().startsWith("#")) return;
+  for (const line of fs.readFileSync(envPath, "utf8").split("\n")) {
+    if (!line || line.trim().startsWith("#")) continue;
 
     const match = line.match(/^([^=]+)=(.*)$/);
-    if (match) {
-      const key = match[1].trim();
-      const value = match[2].trim().replace(/^["']|["']$/g, ""); // Remove quotes
+    if (!match) continue;
 
-      // Only set if not already defined in environment
-      if (!process.env[key]) {
-        process.env[key] = value;
-      }
-    }
-  });
+    const key = match[1].trim();
+    const value = match[2].trim().replace(/^["']|["']$/g, "");
+    if (!process.env[key]) process.env[key] = value;
+  }
 }
 
-// Map system variables to Expo public variables
-const mappings = {
-  VITE_APP_ID: "EXPO_PUBLIC_APP_ID",
-  VITE_OAUTH_PORTAL_URL: "EXPO_PUBLIC_OAUTH_PORTAL_URL",
-  OAUTH_SERVER_URL: "EXPO_PUBLIC_OAUTH_SERVER_URL",
-  OWNER_OPEN_ID: "EXPO_PUBLIC_OWNER_OPEN_ID",
-  OWNER_NAME: "EXPO_PUBLIC_OWNER_NAME",
+// These Supabase values are publishable client configuration, not secrets.
+const publicMappings = {
+  SUPABASE_URL: "EXPO_PUBLIC_SUPABASE_URL",
+  SUPABASE_PUBLISHABLE_KEY: "EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
 };
 
-for (const [systemVar, expoVar] of Object.entries(mappings)) {
-  if (process.env[systemVar] && !process.env[expoVar]) {
-    process.env[expoVar] = process.env[systemVar];
+for (const [serverVar, publicVar] of Object.entries(publicMappings)) {
+  if (process.env[serverVar] && !process.env[publicVar]) {
+    process.env[publicVar] = process.env[serverVar];
   }
 }
