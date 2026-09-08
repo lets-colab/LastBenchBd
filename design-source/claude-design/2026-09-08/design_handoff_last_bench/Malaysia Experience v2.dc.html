@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Last Bench — From Last Bench. To The World.</title>
+<link rel="icon" href="assets/logo-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#070b16;}
+body{overflow-x:hidden;-webkit-text-size-adjust:100%;}
+a,a:hover{color:inherit;}
+button,a,input,[role="button"]{-webkit-tap-highlight-color:transparent;}
+button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-visible{outline:2px solid #00E676;outline-offset:2px;}
+@keyframes lbBob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
+@keyframes lbFlicker{0%,92%,100%{opacity:1}93%{opacity:.4}96%{opacity:.9}}
+@keyframes lbGrain{0%{transform:translate(0,0)}25%{transform:translate(-2%,1%)}50%{transform:translate(1%,-2%)}75%{transform:translate(-1%,2%)}100%{transform:translate(2%,-1%)}}
+@keyframes sonarRing{from{transform:translate(-50%,-50%) scale(.3);opacity:.9}to{transform:translate(-50%,-50%) scale(5);opacity:0}}
+@keyframes lbSpin{to{transform:rotate(360deg)}}
+@keyframes lbSpinR{to{transform:rotate(-360deg)}}
+@keyframes lbPulse{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes lbEqA{0%,100%{height:4px}50%{height:13px}}
+@keyframes lbEqB{0%,100%{height:12px}45%{height:5px}}
+@keyframes lbEqC{0%,100%{height:6px}40%{height:14px}}
+@keyframes gateIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes beyondFlip{0%{opacity:0;transform:perspective(560px) rotateX(92deg) scale(.84);filter:blur(8px)}56%{opacity:1;filter:blur(0)}100%{opacity:1;transform:perspective(560px) rotateX(0) scale(1)}}
+@keyframes beyondResolve{0%{opacity:0;transform:perspective(700px) rotateX(26deg) scale(.94);filter:blur(9px)}100%{opacity:1;transform:perspective(700px) rotateX(0) scale(1);filter:blur(0)}}
+::selection{background:#00C853;color:#04140b;}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}}
+</style>
+</helmet>
+
+<div style="position:relative;background:#070b16;color:#F2F7F3;font-family:'Sora','Hind Siliguri',system-ui,sans-serif;">
+
+  <sc-if value="{{ webglOk }}" hint-placeholder-val="{{ true }}">
+    <div ref="{{ mountRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;"></div>
+    <div ref="{{ scrimRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(12,22,44,.28),transparent 26%,transparent 72%,rgba(4,10,8,.42));"></div>
+    <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 118% 88% at 50% 42%,transparent 44%,rgba(0,0,0,.62) 100%);mix-blend-mode:multiply;"></div>
+    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%22.82%22 numOctaves=%223%22 stitchTiles=%22stitch%22/><feColorMatrix type=%22saturate%22 values=%220%22/></filter><rect width=%22256%22 height=%22256%22 filter=%22url(%23n)%22/></svg>');"></div>
+  </sc-if>
+  <sc-if value="{{ webglFailed }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;background:radial-gradient(120% 55% at 50% 0%,rgba(20,44,74,.9),transparent 60%),linear-gradient(180deg,#0a0e1a 0%,#0d1420 32%,#0f1c14 64%,#123321 100%);"></div>
+  </sc-if>
+
+  <sc-if value="{{ showBars }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed;top:0;left:0;right:0;height:42px;background:linear-gradient(#000 55%,transparent);z-index:4;pointer-events:none;"></div>
+    <div style="position:fixed;bottom:0;left:0;right:0;height:42px;background:linear-gradient(transparent,#000 55%);z-index:4;pointer-events:none;"></div>
+  </sc-if>
+
+  <!-- ============ ENTRY GATE ============ -->
+  <sc-if value="{{ showGate }}" hint-placeholder-val="{{ true }}">
+    <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:100;background:radial-gradient(1200px 700px at 50% 12%,rgba(0,60,30,.5),transparent 60%),radial-gradient(900px 600px at 50% 120%,rgba(255,179,0,.08),transparent 55%),#040a08;overflow-y:auto;overflow-x:hidden;">
+      <div style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;text-align:center;padding:5vh 22px;">
+        <img src="assets/logo-full.png" alt="Last Bench — Creating a Lasting Benchmark" style="width:min(268px,64vw);height:auto;display:block;filter:drop-shadow(0 0 30px rgba(0,200,83,.32));">
+        <h1 style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(23px,4.6vw,36px);line-height:1.14;letter-spacing:-.01em;margin:16px 0 0;color:#fff;max-width:18ch;text-wrap:balance;">{{ t.gateHead }}</h1>
+        <p style="max-width:400px;font-size:13.5px;line-height:1.65;color:rgba(242,247,243,.72);margin:0 0 6px;text-wrap:pretty;">{{ t.gateSub }}</p>
+
+        <div style="display:flex;flex-direction:column;gap:17px;width:min(400px,100%);background:rgba(5,16,10,.55);border:1px solid rgba(0,200,83,.24);border-radius:22px;padding:20px 18px;backdrop-filter:blur(12px);animation:gateIn .6s ease both;box-sizing:border-box;">
+          <div style="text-align:left;">
+            <div style="font-size:9.5px;font-weight:600;letter-spacing:.28em;color:rgba(242,247,243,.55);margin-bottom:9px;">{{ t.langLabel }}</div>
+            <div style="display:flex;gap:9px;">
+              <button data-lang="en" onClick="{{ setLang }}" style="flex:1;min-height:48px;padding:12px 8px;border-radius:12px;border:{{ enBd }};background:{{ enBg }};color:{{ enFg }};font-family:'General Sans','Sora',system-ui,sans-serif;font-size:14px;font-weight:600;cursor:pointer;">English</button>
+              <button data-lang="bn" onClick="{{ setLang }}" style="flex:1;min-height:48px;padding:12px 8px;border-radius:12px;border:{{ bnBd }};background:{{ bnBg }};color:{{ bnFg }};font-family:'Hind Siliguri',sans-serif;font-size:15px;font-weight:600;cursor:pointer;">বাংলা</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;">
+            <div style="display:flex;align-items:center;gap:11px;min-width:0;">
+              <svg width="18" height="18" viewBox="0 0 16 16" style="flex:none;"><path d="M2 6 H5 L9 2.5 V13.5 L5 10 H2 Z" fill="#00E676"></path><path d="M11.4 5.4 Q13.4 8 11.4 10.6" stroke="#00E676" stroke-width="1.3" fill="none" stroke-linecap="round"></path></svg>
+              <div style="min-width:0;">
+                <div style="font-size:13px;font-weight:600;color:#fff;">{{ t.radioLabel }}</div>
+                <div style="font-size:10px;line-height:1.4;color:rgba(242,247,243,.55);">{{ t.radioHint }}</div>
+                <sc-if value="{{ hitzBlocked }}" hint-placeholder-val="{{ false }}">
+                  <a href="https://syok.my/radio/hitz" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:34px;margin-top:8px;padding:0 15px;border:1px solid rgba(255,179,0,.6);border-radius:999px;background:rgba(255,179,0,.12);color:#FFB300;text-decoration:none;font-size:10.5px;font-weight:600;letter-spacing:.12em;" style-hover="border-color:#FFB300;background:rgba(255,179,0,.2);">{{ t.radioOpen }}</a>
+                </sc-if>
+                <sc-if value="{{ hitzLive }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:inline-flex;align-items:center;gap:7px;margin-top:8px;font-size:10px;font-weight:600;letter-spacing:.14em;color:#00E676;"><span style="width:6px;height:6px;border-radius:50%;background:#00E676;box-shadow:0 0 8px #00E676;"></span>ON AIR</div>
+                </sc-if>
+              </div>
+            </div>
+            <button onClick="{{ toggleIntroRadio }}" role="switch" aria-checked="{{ introRadio }}" aria-label="{{ t.radioLabel }}" style="flex:none;width:56px;height:32px;border-radius:999px;border:1px solid {{ introRadioBd }};background:{{ introRadioBg }};position:relative;cursor:pointer;transition:background .25s ease,border-color .25s ease;">
+              <span style="position:absolute;top:3px;left:{{ introRadioX }};width:24px;height:24px;border-radius:50%;background:{{ introRadioKnob }};transition:left .25s cubic-bezier(.3,1.4,.5,1);box-shadow:0 2px 6px rgba(0,0,0,.4);"></span>
+            </button>
+          </div>
+          <button onClick="{{ enterExperience }}" style="min-height:52px;background:#00C853;color:#04140b;border:0;border-radius:14px;padding:15px;font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-size:15px;font-weight:600;letter-spacing:.02em;cursor:pointer;box-shadow:0 0 38px rgba(0,200,83,.45);" style-hover="background:#00E676;box-shadow:0 0 56px rgba(0,230,118,.65);">{{ t.enter }} →</button>
+        </div>
+        <div style="margin-top:4px;font-size:10px;font-weight:600;letter-spacing:.28em;color:rgba(242,247,243,.4);animation:lbPulse 1.8s ease-in-out infinite;">{{ t.loading }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FAST-TRAVEL / CAMPUS ARRIVAL -->
+  <sc-if value="{{ travelActive }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:50;background:#000;overflow:hidden;">
+      <div style="position:absolute;top:50%;left:50%;z-index:1;pointer-events:none;">
+        <div style="position:absolute;width:80px;height:80px;border:1px solid rgba(0,230,118,.7);border-radius:50%;animation:sonarRing 1.4s ease-out 0s 3 forwards;"></div>
+        <div style="position:absolute;width:80px;height:80px;border:1px solid rgba(0,230,118,.5);border-radius:50%;animation:sonarRing 1.4s ease-out .35s 3 forwards;"></div>
+        <div style="position:absolute;width:80px;height:80px;border:1px solid rgba(0,230,118,.3);border-radius:50%;animation:sonarRing 1.4s ease-out .7s 3 forwards;"></div>
+      </div>
+      <div ref="{{ warpRef }}" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:2;">
+        <sc-for list="{{ warpLines }}" as="wl" hint-placeholder-count="28">
+          <div style="position:absolute;top:50%;left:50%;height:2px;background:linear-gradient(90deg,transparent,{{ wl.color }},transparent);width:{{ wl.len }}px;will-change:transform,opacity;transform:translate(-50%,-50%) rotate({{ wl.deg }}deg);"></div>
+        </sc-for>
+      </div>
+      <div ref="{{ destImgRef }}" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:3;opacity:0;background-size:cover;background-position:center;will-change:opacity,transform;transform:scale(1.14);"></div>
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:4;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,transparent 24%,transparent 44%,rgba(0,0,0,.94) 100%);"></div>
+      <div ref="{{ destTextRef }}" style="position:absolute;bottom:0;left:0;right:0;z-index:5;max-height:100%;overflow-y:auto;padding:0 clamp(18px,4vw,56px) clamp(24px,5vh,52px);opacity:0;will-change:opacity,transform;transform:translateY(30px);">
+        <div style="font-size:9px;font-weight:600;letter-spacing:.4em;color:#00E676;margin-bottom:12px;">{{ t.arrived }}</div>
+        <h2 ref="{{ destNameRef }}" style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(24px,4.4vw,58px);line-height:1.04;letter-spacing:-.015em;margin:0 0 6px;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.9);"></h2>
+        <p ref="{{ destLocRef }}" style="font-size:12.5px;letter-spacing:.14em;color:rgba(242,247,243,.62);margin:0 0 14px;"></p>
+        <div style="display:flex;gap:clamp(14px,3vw,28px);align-items:flex-start;flex-wrap:wrap;">
+          <div style="flex:1;min-width:min(100%,260px);max-width:560px;background:rgba(5,16,10,.8);border:1px solid rgba(0,200,83,.32);border-radius:14px;padding:8px;backdrop-filter:blur(14px);box-sizing:border-box;">
+            <iframe ref="{{ destMapRef }}" title="Campus Street View 360" allow="accelerometer; gyroscope" style="width:100%;height:{{ svHeight }};border:0;border-radius:8px;display:block;"></iframe>
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;padding:8px 4px 2px;">
+              <span style="font-size:8px;font-weight:600;letter-spacing:.2em;color:rgba(242,247,243,.45);">{{ t.svHint }}</span>
+              <a ref="{{ destExploreRef }}" target="_blank" rel="noopener" style="font-size:9px;font-weight:600;letter-spacing:.14em;color:#00E676;text-decoration:none;">{{ t.exploreL }} ↗</a>
+            </div>
+          </div>
+          <div style="flex:1;min-width:min(100%,240px);max-width:420px;display:flex;flex-direction:column;gap:12px;">
+            <div ref="{{ destStatsRef }}" style="display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;"></div>
+            <p ref="{{ destProgRef }}" style="font-size:12.5px;line-height:1.6;color:rgba(242,247,243,.78);margin:0;"></p>
+            <div style="font-size:9px;line-height:1.5;color:rgba(242,247,243,.4);">{{ t.dataNote }}</div>
+            <button onClick="{{ closeTravelTo }}" style="align-self:flex-start;min-height:48px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:500;font-size:13px;letter-spacing:.08em;padding:13px 28px;border-radius:999px;cursor:pointer;backdrop-filter:blur(10px);font-family:'Sora','Hind Siliguri',sans-serif;" style-hover="border-color:#00C853;color:#00E676;">{{ t.returnJourney }}</button>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute;top:0;left:0;right:0;z-index:5;padding:16px 24px;font-size:9px;font-weight:600;letter-spacing:.32em;color:rgba(255,255,255,.5);">{{ t.engaged }}</div>
+    </div>
+  </sc-if>
+
+  <!-- FOUNDER MANDATE MODAL -->
+  <sc-if value="{{ founderOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeFounder }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:60;background:rgba(2,10,6,.86);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:20px;">
+      <div onClick="{{ stopProp }}" style="width:min(620px,100%);max-height:86vh;overflow-y:auto;background:rgba(5,16,10,.94);border:1px solid rgba(0,200,83,.38);border-radius:24px;padding:clamp(20px,4vw,36px);text-align:left;display:flex;flex-direction:column;gap:17px;box-shadow:0 30px 90px rgba(0,0,0,.7);box-sizing:border-box;">
+        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+          <div style="width:104px;height:130px;border-radius:16px;padding:3px;background:linear-gradient(150deg,#00C853,#FFB300);flex:none;box-sizing:border-box;">
+            <image-slot id="{{ founderSlotId }}" shape="rounded" radius="13" placeholder="{{ founderPhotoPh }}" style="width:98px;height:124px;"></image-slot>
+          </div>
+          <div style="min-width:180px;flex:1;">
+            <div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(22px,3.6vw,32px);line-height:1.08;letter-spacing:-.01em;color:#fff;">{{ founderName }}</div>
+            <div style="font-size:10.5px;font-weight:600;letter-spacing:.18em;color:#00E676;margin-top:8px;text-transform:uppercase;">{{ founderRole }}</div>
+            <div style="font-size:12px;color:rgba(242,247,243,.6);margin-top:6px;">{{ founderTag }}</div>
+          </div>
+        </div>
+        <div style="border:1px solid rgba(0,200,83,.25);border-radius:14px;padding:15px 17px;background:rgba(0,200,83,.06);">
+          <div style="font-size:9px;font-weight:600;letter-spacing:.24em;color:#00E676;margin-bottom:9px;">{{ t.mandate }}</div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <sc-for list="{{ founderDuties }}" as="fd" hint-placeholder-count="3">
+              <div style="display:flex;gap:9px;align-items:flex-start;font-size:13px;line-height:1.55;color:rgba(242,247,243,.88);">
+                <span style="color:#00E676;flex:none;">Λ</span><span>{{ fd.text }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <p style="margin:0;font-size:13.5px;line-height:1.65;color:rgba(242,247,243,.82);text-wrap:pretty;">{{ founderLine }}</p>
+        <div style="font-size:10.5px;line-height:1.5;color:rgba(242,247,243,.42);">{{ t.photoNote }}</div>
+        <button onClick="{{ closeFounder }}" style="align-self:flex-start;min-height:48px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:500;font-size:13px;letter-spacing:.08em;padding:13px 28px;border-radius:999px;cursor:pointer;font-family:'Sora','Hind Siliguri',sans-serif;" style-hover="border-color:#00C853;color:#00E676;">{{ t.backBench }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- HUD -->
+  <div style="position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px clamp(14px,3vw,28px);pointer-events:none;">
+    <div style="display:flex;align-items:center;gap:10px;min-width:0;">
+      <img src="assets/logo-icon.png" alt="Last Bench" style="width:62px;height:auto;display:block;filter:drop-shadow(0 0 8px rgba(0,200,83,.55));">
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;font-size:10.5px;font-weight:500;letter-spacing:.2em;color:rgba(242,247,243,.65);">
+      <button onClick="{{ toggleRadio }}" aria-label="Toggle sound" aria-pressed="{{ soundOn }}" style="pointer-events:auto;display:flex;align-items:center;gap:8px;min-height:36px;background:rgba(5,16,10,.6);border:1px solid {{ radioBd }};border-radius:999px;padding:7px 13px;color:{{ radioFg }};font-family:'Sora','Hind Siliguri',sans-serif;font-size:9.5px;font-weight:600;letter-spacing:.18em;cursor:pointer;backdrop-filter:blur(8px);white-space:nowrap;" style-hover="border-color:#00E676;background:rgba(0,200,83,.12);">
+        <sc-if value="{{ radioPlaying }}" hint-placeholder-val="{{ false }}">
+          <span style="display:flex;align-items:flex-end;gap:2px;height:14px;">
+            <span style="width:2.5px;background:currentColor;border-radius:2px;animation:lbEqA .9s ease-in-out infinite;"></span>
+            <span style="width:2.5px;background:currentColor;border-radius:2px;animation:lbEqB .9s ease-in-out infinite;"></span>
+            <span style="width:2.5px;background:currentColor;border-radius:2px;animation:lbEqC .9s ease-in-out infinite;"></span>
+          </span>
+        </sc-if>
+        <sc-if value="{{ radioIdle }}" hint-placeholder-val="{{ true }}">
+          <svg width="13" height="13" viewBox="0 0 16 16"><path d="M13 4.6 L4 7.8 M13 4.6 V11.8 M4 7.8 V13" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"></path><circle cx="12" cy="12.2" r="1.5" fill="currentColor"></circle><circle cx="3" cy="13.2" r="1.2" fill="currentColor"></circle></svg>
+        </sc-if>
+        <span>{{ radioLabel }}</span>
+      </button>
+      <sc-if value="{{ hitzBlocked }}" hint-placeholder-val="{{ false }}">
+        <a href="https://radioonline.my/hitz/" target="_blank" rel="noopener" style="pointer-events:auto;display:flex;align-items:center;min-height:36px;padding:0 13px;border:1px solid rgba(255,179,0,.5);border-radius:999px;color:#FFB300;text-decoration:none;font-size:10px;font-weight:600;letter-spacing:.16em;background:rgba(5,16,10,.6);backdrop-filter:blur(8px);" style-hover="border-color:#FFB300;background:rgba(255,179,0,.12);">HITZ FM ↗</a>
+      </sc-if>
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+        <span ref="{{ chapterRef }}" style="white-space:nowrap;">00 — DHAKA · DEPARTURE</span>
+      </sc-if>
+    </div>
+  </div>
+  <div style="position:fixed;top:0;left:0;right:0;height:2px;z-index:7;background:rgba(255,255,255,.08);">
+    <div ref="{{ progressRef }}" style="height:100%;width:100%;background:#00C853;transform:scaleX(0);transform-origin:left;box-shadow:0 0 12px #00C853;"></div>
+  </div>
+
+  <!-- LEG 00 · DEPARTURE — BANGLADESH TO MALAYSIA -->
+  <section ref="{{ departRef }}" data-screen-label="Departure — Bangladesh to Malaysia" style="position:relative;z-index:3;background:#04140B;min-height:210vh;">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;padding:104px 22px 96px;">
+      <canvas ref="{{ globeRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 46%, transparent 34%, rgba(4,20,11,.72) 76%);"></div>
+      <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:18px;">{{ t.legKicker }}</div>
+        <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,78px);line-height:1.04;letter-spacing:-.025em;margin:0;color:#fff;max-width:16ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);">IT STARTS IN BANGLADESH.<br><span style="color:#00C853;">IT DOESN'T END THERE.</span></h2>
+        </sc-if>
+        <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
+          <h2 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(27px,4.8vw,66px);line-height:1.16;margin:0;color:#fff;max-width:17ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);">{{ t.legL1 }}<br><span style="color:#00C853;">{{ t.legL2 }}</span></h2>
+        </sc-if>
+        <p style="max-width:520px;font-size:clamp(14px,1.4vw,17px);line-height:1.62;color:rgba(242,247,243,.85);margin:24px 0 0;text-wrap:pretty;text-shadow:0 2px 18px rgba(0,0,0,.9);">{{ t.legSub }}</p>
+      </div>
+      <div style="position:absolute;left:0;right:0;bottom:34px;z-index:2;display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,34px);flex-wrap:wrap;padding:0 22px;">
+        <div style="text-align:right;min-width:96px;">
+          <div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:15px;color:#fff;letter-spacing:.04em;">{{ t.cityFrom }}</div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:.16em;color:rgba(242,247,243,.45);margin-top:4px;">23.81°N 90.41°E</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:7px;min-width:150px;">
+          <div ref="{{ routeRef }}" style="font-size:10px;font-weight:600;letter-spacing:.2em;color:#00E676;">2,730 KM</div>
+          <div style="position:relative;width:clamp(110px,22vw,220px);height:2px;background:rgba(255,255,255,.14);border-radius:2px;">
+            <div ref="{{ routeBarRef }}" style="position:absolute;inset:0;width:0%;background:#00C853;border-radius:2px;box-shadow:0 0 10px #00C853;"></div>
+          </div>
+          <div style="font-size:8.5px;font-weight:600;letter-spacing:.18em;color:rgba(242,247,243,.4);">{{ t.flightTime }}</div>
+        </div>
+        <div style="text-align:left;min-width:96px;">
+          <div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:15px;color:#fff;letter-spacing:.04em;">{{ t.cityTo }}</div>
+          <div style="font-size:9px;font-weight:600;letter-spacing:.16em;color:rgba(242,247,243,.45);margin-top:4px;">3.14°N 101.69°E</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 1 · HERO -->
+  <section data-screen-label="Hero — KL Skyline" style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 22px 64px;">
+    <div style="flex:none;font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:20px;">{{ t.heroKicker }}</div>
+    <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
+      <h1 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(34px,6.2vw,92px);line-height:1.03;letter-spacing:-.025em;margin:0;color:#fff;text-shadow:0 8px 60px rgba(0,0,0,.8);flex:none;max-width:15ch;text-wrap:balance;" aria-label="From where you are. To what you can build.">FROM WHERE YOU ARE.<br><span style="color:#00C853;">TO WHAT YOU CAN BUILD.</span></h1>
+    </sc-if>
+    <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
+      <h1 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,76px);line-height:1.14;margin:0;color:#fff;text-shadow:0 8px 60px rgba(0,0,0,.8);flex:none;max-width:16ch;text-wrap:balance;">{{ t.heroL1 }}<br><span style="color:#00C853;">{{ t.heroL2 }}</span></h1>
+    </sc-if>
+    <p style="flex:none;max-width:560px;font-size:clamp(14.5px,1.5vw,18px);line-height:1.62;color:rgba(242,247,243,.85);margin:28px 0 32px;text-wrap:pretty;text-shadow:0 2px 18px rgba(0,0,0,.85);">{{ t.heroSub }}</p>
+    <div style="flex:none;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <a href="#signup" style="display:inline-flex;align-items:center;min-height:52px;background:#00C853;color:#04140b;font-weight:600;font-size:15px;letter-spacing:.02em;padding:16px 30px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;box-shadow:0 0 50px rgba(0,230,118,.7);">{{ t.ctaSignup }}</a>
+      <a href="#universities" style="display:inline-flex;align-items:center;min-height:52px;border:1px solid rgba(255,255,255,.35);color:#fff;font-weight:500;font-size:15px;padding:16px 30px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);background:rgba(0,0,0,.28);" style-hover="border-color:#00C853;color:#00E676;">{{ t.ctaExplore }}</a>
+    </div>
+    <div style="position:absolute;bottom:54px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:lbBob 2.4s ease-in-out infinite;">
+      <span style="font-size:9.5px;font-weight:600;letter-spacing:.28em;color:rgba(242,247,243,.6);">{{ t.flyIn }}</span>
+      <svg width="14" height="22" viewBox="0 0 14 22"><path d="M7 2 V18 M2 13 L7 19 L12 13" stroke="#00C853" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </div>
+  </section>
+
+  <div style="height:90vh;"></div>
+
+  <!-- ACT 2 · THE JOURNEY -->
+  <section data-screen-label="Jalan Alor — The Journey" style="position:relative;z-index:2;min-height:120vh;display:flex;align-items:center;padding:80px 22px;">
+    <div style="max-width:1060px;margin:0 auto;width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:clamp(32px,5vw,54px);align-items:center;">
+      <div data-reveal>
+        <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#FFB300;margin-bottom:14px;animation:lbFlicker 5s linear infinite;">{{ t.a2Kicker }}</div>
+        <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);" aria-label="The city is awake. So is your journey.">THE CITY IS AWAKE.<br><span style="color:#FFB300;">SO IS YOUR JOURNEY.</span></h2>
+        </sc-if>
+        <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
+          <h2 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.14;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);">{{ t.a2L1 }}<br><span style="color:#FFB300;">{{ t.a2L2 }}</span></h2>
+        </sc-if>
+        <p style="font-size:15.5px;line-height:1.68;color:rgba(242,247,243,.85);max-width:440px;text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.85);">{{ t.a2Sub }}</p>
+      </div>
+      <div data-reveal style="background:rgba(8,6,10,.72);border:1px solid rgba(255,179,0,.22);border-radius:18px;padding:clamp(22px,3vw,30px) clamp(22px,3vw,32px);backdrop-filter:blur(12px);">
+        <sc-for list="{{ stages }}" as="st" hint-placeholder-count="5">
+          <div style="display:flex;gap:16px;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div style="width:11px;height:11px;border-radius:50%;background:{{ st.dot }};box-shadow:0 0 12px {{ st.dot }};margin-top:5px;flex:none;"></div>
+              <div style="width:2px;flex:1;background:linear-gradient(rgba(0,200,83,.5),rgba(0,200,83,.12));min-height:24px;"></div>
+            </div>
+            <div style="padding-bottom:20px;">
+              <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:600;font-size:14.5px;color:#fff;">{{ st.title }}</div>
+              <div style="font-size:12.5px;line-height:1.5;color:rgba(242,247,243,.55);margin-top:3px;">{{ st.meta }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <div style="height:60vh;"></div>
+
+  <!-- ACT 3 · UNIVERSITIES -->
+  <section id="universities" data-screen-label="Above the Towers — Universities" style="position:relative;z-index:2;min-height:140vh;display:flex;align-items:center;padding:80px 22px;">
+    <div style="max-width:1180px;margin:0 auto;width:100%;">
+      <div data-reveal style="max-width:660px;margin-bottom:36px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:14px;">{{ t.a3Kicker }}</div>
+        <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);" aria-label="Fifteen campuses. One honest list.">FIFTEEN CAMPUSES.<br><span style="color:#00C853;">ONE HONEST LIST.</span></h2>
+        </sc-if>
+        <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
+          <h2 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.14;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);">{{ t.a3L1 }}<br><span style="color:#00C853;">{{ t.a3L2 }}</span></h2>
+        </sc-if>
+        <p style="font-size:15.5px;line-height:1.68;color:rgba(242,247,243,.85);text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.85);">{{ t.a3Sub }}</p>
+      </div>
+      <div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,238px),1fr));gap:13px;">
+        <sc-for list="{{ unis }}" as="u" hint-placeholder-count="15">
+          <div onClick="{{ travelTo }}" onKeyDown="{{ travelToKey }}" onMouseEnter="{{ preloadCampus }}" data-uni="{{ u.k }}" role="button" tabIndex="0" aria-label="{{ u.aria }}" style="cursor:pointer;background:rgba(5,16,10,.68);border:1px solid rgba(0,200,83,.22);border-radius:16px;padding:18px;backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:10px;min-height:196px;box-sizing:border-box;transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s ease,box-shadow .3s ease;" style-hover="border-color:rgba(0,230,118,.65);transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.5);">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;">
+              <span style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:20px;letter-spacing:-.01em;color:#00E676;">{{ u.short }}</span>
+              <span style="font-size:9px;font-weight:600;letter-spacing:.14em;color:rgba(242,247,243,.5);">{{ u.typeLabel }}</span>
+            </div>
+            <div>
+              <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:600;font-size:13px;color:#fff;line-height:1.35;">{{ u.name }}</div>
+              <div style="font-size:11.5px;color:rgba(242,247,243,.55);margin-top:2px;">{{ u.city }}</div>
+            </div>
+            <div style="display:flex;gap:10px;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;margin-top:auto;">
+              <div style="flex:1;min-width:0;"><div style="font-size:8.5px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.costL }}</div><div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-top:2px;">{{ u.cost }}</div></div>
+              <div style="flex:none;"><div style="font-size:8.5px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.ieltsL }}</div><div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-size:13px;font-weight:600;color:#00E676;margin-top:2px;">{{ u.ielts }}</div></div>
+              <div style="flex:none;"><div style="font-size:8.5px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.intakeL }}</div><div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-top:2px;">{{ u.intakes }}</div></div>
+            </div>
+            <div style="font-size:8.5px;font-weight:600;letter-spacing:.18em;color:#00E676;display:flex;align-items:center;gap:7px;">{{ t.visitL }} <svg width="10" height="9" viewBox="0 0 10 9"><path d="M1 4.5h7M5 1l3.5 3.5L5 8" stroke="#00E676" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+          </div>
+        </sc-for>
+      </div>
+      <div data-reveal style="margin-top:16px;font-size:10.5px;line-height:1.6;color:rgba(242,247,243,.42);max-width:640px;">{{ t.dataNote }}</div>
+    </div>
+  </section>
+
+  <div style="height:60vh;"></div>
+
+  <!-- ACT 4 · KLCC PARK — kinetic BEYOND lockup, content high, bench left clear below -->
+  <section data-screen-label="KLCC Park — Beyond" style="position:relative;z-index:2;min-height:112vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;text-align:center;padding:14vh 22px 0;">
+    <div data-reveal style="perspective:640px;display:flex;flex-direction:column;align-items:center;max-width:760px;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#FFB300;margin-bottom:12px;">{{ t.a4Kicker }}</div>
+      <div style="min-height:clamp(150px,22vw,230px);display:flex;align-items:center;justify-content:center;">
+        <sc-if value="{{ beyondActive }}" hint-placeholder-val="{{ true }}">
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(28px,5vw,68px);line-height:1.04;letter-spacing:-.025em;margin:0;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.95);">BEYOND<br><span style="color:#00C853;">
+            <sc-if value="{{ isW0 }}" hint-placeholder-val="{{ true }}"><span style="display:inline-block;animation:beyondFlip .6s cubic-bezier(.2,.8,.2,1) both;" aria-label="Marks.">MARKS.</span></sc-if>
+            <sc-if value="{{ isW1 }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;animation:beyondFlip .6s cubic-bezier(.2,.8,.2,1) both;" aria-label="Grades.">GRADES.</span></sc-if>
+            <sc-if value="{{ isW2 }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;animation:beyondFlip .6s cubic-bezier(.2,.8,.2,1) both;">LIMITS.</span></sc-if>
+            <sc-if value="{{ isW3 }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;animation:beyondFlip .6s cubic-bezier(.2,.8,.2,1) both;">BORDERS.</span></sc-if>
+            <sc-if value="{{ isW4 }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;animation:beyondFlip .6s cubic-bezier(.2,.8,.2,1) both;">YOURSELF.</span></sc-if>
+          </span></h2>
+        </sc-if>
+        <sc-if value="{{ beyondResolved }}" hint-placeholder-val="{{ false }}">
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(25px,4.4vw,58px);line-height:1.08;letter-spacing:-.02em;margin:0;color:#fff;text-align:center;text-shadow:0 8px 56px rgba(0,0,0,.95);animation:beyondResolve .9s cubic-bezier(.16,1,.3,1) both;" aria-label="Creating a lasting benchmark.">CREATING A LASTING<br><span style="color:#00C853;">BENCHMARK.</span></h2>
+        </sc-if>
+      </div>
+      <p style="max-width:520px;font-size:14.5px;line-height:1.65;color:rgba(242,247,243,.85);margin:16px 0 20px;text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.9);">{{ t.a4Sub }}</p>
+      <a href="https://www.google.com/maps/search/?api=1&query=3.1553,101.7145" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;min-height:44px;background:rgba(5,16,10,.55);border:1px solid rgba(0,200,83,.4);border-radius:999px;padding:12px 20px;color:#00E676;text-decoration:none;font-weight:600;font-size:11px;letter-spacing:.1em;backdrop-filter:blur(8px);" style-hover="border-color:#00E676;background:rgba(0,200,83,.12);color:#fff;">
+        <svg width="11" height="14" viewBox="0 0 11 14"><path d="M5.5 0 C2.4 0 0 2.4 0 5.4 C0 9.4 5.5 14 5.5 14 S11 9.4 11 5.4 C11 2.4 8.6 0 5.5 0 Z M5.5 7.4 A2 2 0 1 1 5.5 3.4 A2 2 0 0 1 5.5 7.4 Z" fill="currentColor"></path></svg>
+        {{ t.pin }}
+      </a>
+    </div>
+  </section>
+
+  <!-- unobstructed bench reveal -->
+  <div style="height:70vh;"></div>
+
+  <!-- ACT 5 · TAKE YOUR SEAT -->
+  <section id="signup" data-screen-label="Take Your Seat" style="position:relative;z-index:2;min-height:130vh;display:flex;flex-direction:column;padding:10vh 22px 36px;">
+    <div data-reveal style="text-align:center;max-width:680px;margin:0 auto;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:13px;">{{ t.a5Kicker }}</div>
+      <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
+        <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(27px,4.2vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.9);" aria-label="You won’t sit here alone.">YOU WON’T SIT <span style="color:#00C853;">HERE ALONE.</span></h2>
+      </sc-if>
+      <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
+        <h2 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(25px,3.8vw,48px);line-height:1.14;margin:0;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.9);">{{ t.a5L1 }} <span style="color:#00C853;">{{ t.a5L2 }}</span></h2>
+      </sc-if>
+      <p style="max-width:520px;margin:15px auto 0;font-size:14px;line-height:1.65;color:rgba(242,247,243,.8);text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.85);">{{ t.a5Sub }}</p>
+    </div>
+
+    <div style="flex:1;min-height:{{ seatGap }};"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:22px;flex-wrap:wrap;max-width:1180px;margin:0 auto;width:100%;">
+      <div data-reveal style="display:flex;gap:12px;flex-wrap:wrap;flex:1;min-width:min(100%,280px);">
+        <sc-for list="{{ founders }}" as="f" hint-placeholder-count="3">
+          <div role="button" tabindex="0" data-founder="{{ f.key }}" onClick="{{ openFounder }}" onKeyDown="{{ openFounderKey }}" style="width:{{ f.cardW }};cursor:pointer;background:rgba(5,16,10,.66);border:1px solid rgba(0,200,83,.26);border-radius:16px;padding:9px 9px 12px;backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;gap:7px;box-sizing:border-box;transition:transform .35s ease,border-color .35s ease;" style-hover="transform:translateY(-5px);border-color:#00E676;">
+            <div style="width:100%;aspect-ratio:3/4;border-radius:12px;padding:2px;background:linear-gradient(150deg,#00C853,#FFB300);box-sizing:border-box;">
+              <image-slot id="founder-{{ f.key }}" shape="rounded" radius="11" placeholder="{{ f.photoPh }}" style="width:100%;height:100%;"></image-slot>
+            </div>
+            <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:600;font-size:13.5px;color:#fff;text-align:center;line-height:1.18;">{{ f.name }}</div>
+            <sc-if value="{{ showRole }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size:8px;font-weight:600;letter-spacing:.16em;color:#00E676;text-align:center;line-height:1.3;">{{ f.role }}</div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ compactSeat }}" hint-placeholder-val="{{ false }}">
+        <div data-reveal style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <button onClick="{{ openForm }}" style="min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 26px;border-radius:999px;border:0;cursor:pointer;font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;box-shadow:0 0 30px rgba(0,200,83,.45);" style-hover="background:#00E676;">{{ t.ctaSignup }} →</button>
+        </div>
+      </sc-if>
+      <div data-reveal style="width:min(390px,100%);background:rgba(5,16,10,.82);border:1px solid rgba(0,200,83,.3);border-radius:20px;padding:22px 20px;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.55);box-sizing:border-box;display:{{ seatDisplay }};">
+        <sc-if value="{{ notJoined }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:10px;text-align:left;">
+            <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:700;font-size:21px;letter-spacing:-.01em;color:#fff;">{{ t.signupTitle }}</div>
+            <div style="font-size:12px;line-height:1.55;color:rgba(242,247,243,.65);">{{ t.signupSub }}</div>
+            <input value="{{ seatName }}" onChange="{{ setSeatName }}" placeholder="{{ t.phName }}" style="min-height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;" style-focus="border-color:#00C853;">
+            <input value="{{ seatContact }}" onChange="{{ setSeatContact }}" placeholder="{{ t.phEmail }}" style="min-height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;" style-focus="border-color:#00C853;">
+            <sc-if value="{{ hasSeatErr }}" hint-placeholder-val="{{ false }}">
+              <div role="alert" style="display:flex;align-items:center;gap:8px;font-size:12px;color:#FFB300;line-height:1.4;">
+                <svg width="13" height="13" viewBox="0 0 14 14" style="flex:none;"><circle cx="7" cy="7" r="6" stroke="#FFB300" stroke-width="1.3" fill="none"></circle><path d="M7 4 V7.6 M7 9.6 V10" stroke="#FFB300" stroke-width="1.4" stroke-linecap="round"></path></svg>
+                <span>{{ seatErr }}</span>
+              </div>
+            </sc-if>
+            <button onClick="{{ signUp }}" style="margin-top:3px;min-height:52px;background:#00C853;color:#04140b;font-weight:600;font-size:15px;padding:15px;border-radius:12px;border:0;cursor:pointer;font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;box-shadow:0 0 34px rgba(0,200,83,.45);" style-hover="background:#00E676;box-shadow:0 0 52px rgba(0,230,118,.65);">{{ t.ctaSignup }}</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{ joined }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:11px;text-align:center;">
+            <div style="width:48px;height:48px;border-radius:50%;background:rgba(0,200,83,.14);border:1px solid #00C853;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 22 22"><path d="M4 11.5 L9 16.5 L18 6" stroke="#00E676" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:700;font-size:19px;color:#fff;">{{ joinedTitleName }}</div>
+            <div style="font-size:12.5px;line-height:1.6;color:rgba(242,247,243,.7);">{{ t.joinedSub }}</div>
+            <a href="Last Bench Dashboard.dc.html" style="display:inline-flex;align-items:center;min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 28px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;">{{ t.enterDash }}</a>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <footer style="margin-top:36px;display:flex;justify-content:center;align-items:center;gap:clamp(12px,3vw,24px);font-size:10.5px;letter-spacing:.14em;color:rgba(242,247,243,.45);font-weight:500;flex-wrap:wrap;text-align:center;">
+      <span>{{ t.foot1 }}</span>
+      <span>{{ t.foot2 }}</span>
+      <span>{{ t.foot3 }}</span>
+    </footer>
+  </section>
+
+  <audio ref="{{ radioRef }}" preload="none" crossorigin="anonymous" playsinline style="display:none;"></audio>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;atmosphere&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Monsoon&quot;,&quot;Clear Night&quot;,&quot;Heavy Rain&quot;],&quot;default&quot;:&quot;Monsoon&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;World&quot;},&quot;grade&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Emerald Night&quot;,&quot;Amber Monsoon&quot;,&quot;Cobalt Night&quot;],&quot;default&quot;:&quot;Emerald Night&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;World&quot;},&quot;cameraFeel&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Cinematic Drift&quot;,&quot;Handheld&quot;,&quot;Locked Off&quot;],&quot;default&quot;:&quot;Cinematic Drift&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;World&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.mount = null;
+    this.p = 0;
+    this.mouse = { x: 0, y: 0 };
+    this.mouseS = { x: 0, y: 0 };
+    this.disposed = false;
+    this.reducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const w = typeof window !== 'undefined' ? window.innerWidth : 1200;
+
+    // Universities — Last Bench's own dataset (server/data/malaysia-universities.json)
+    this.UNIS = [
+      { k:'UM',    short:'UM',    name:'Universiti Malaya', city:'Kuala Lumpur', type:'Public', prog:'Computer Science · Engineering · Medicine · Law', usd:9500, bdt:'৳10.45L', ielts:'6.0', intakes:2, emgs:'Category 1', weeks:'6–8', gpa:'3.5 min · 3.8+ typical (of 5.0)', note:'Most competitive public university in Malaysia. Strong engineering and medicine.', lat:3.1213, lng:101.6559, head:40 },
+      { k:'UKM',   short:'UKM',   name:'Universiti Kebangsaan Malaysia', city:'Bangi, Selangor', type:'Public', prog:'IT · Engineering · Science · Health Sciences', usd:8300, bdt:'৳9.13L', ielts:'5.5', intakes:2, emgs:'Category 1', weeks:'5–7', gpa:'3.2 min · 3.5+ typical (of 5.0)', note:'Strong research university. More accessible than UM for Bangladeshi students.', lat:2.9296, lng:101.7776, head:80 },
+      { k:'UPM',   short:'UPM',   name:'Universiti Putra Malaysia', city:'Serdang, Selangor', type:'Public', prog:'Agriculture · Engineering · Food Tech · Veterinary', usd:7700, bdt:'৳8.47L', ielts:'5.5', intakes:2, emgs:'Category 1', weeks:'5–7', gpa:'3.0 min · 3.3+ typical (of 5.0)', note:'Large campus, strong facilities, very active Bangladeshi student community.', lat:2.9986, lng:101.7070, head:60 },
+      { k:'UTM',   short:'UTM',   name:'Universiti Teknologi Malaysia', city:'Johor Bahru, Johor', type:'Public', prog:'Engineering (all) · Architecture · Computer Science', usd:7400, bdt:'৳8.14L', ielts:'5.5', intakes:2, emgs:'Category 1', weeks:'5–8', gpa:'3.0 min · 3.4+ typical (of 5.0)', note:'Malaysia’s premier engineering university. Strong industry connections.', lat:1.5594, lng:103.6381, head:200 },
+      { k:'UITM',  short:'UiTM',  name:'Universiti Teknologi MARA', city:'Shah Alam, Selangor', type:'Public', prog:'Business · Accountancy · Law · Mass Communication', usd:6300, bdt:'৳6.93L', ielts:'5.0', intakes:2, emgs:'Category 2', weeks:'4–6', gpa:'2.5 min · 3.0+ typical (of 5.0)', note:'Most affordable public option. Business and accounting are highly ranked.', lat:3.0678, lng:101.4967, head:120 },
+      { k:'MMU',   short:'MMU',   name:'Multimedia University', city:'Cyberjaya, Selangor', type:'Private', prog:'Software Engineering · IT · Multimedia Design', usd:9700, bdt:'৳10.67L', ielts:'5.0', intakes:3, emgs:'Category 1', weeks:'4–5', gpa:'2.5 min · 2.8+ typical (of 5.0)', note:'Best private university for tech, in Malaysia’s Silicon Valley. 3 intakes a year.', lat:2.9285, lng:101.6410, head:90 },
+      { k:'HELP',  short:'HELP',  name:'HELP University', city:'Kuala Lumpur', type:'Private', prog:'Business · Economics · Psychology · Finance', usd:10000, bdt:'৳11.00L', ielts:'5.0', intakes:3, emgs:'Category 1', weeks:'4–5', gpa:'2.3 min · 2.5+ typical (of 5.0)', note:'Known for business, economics and social sciences. Flexible entry, central KL.', lat:3.1116, lng:101.6266, head:90 },
+      { k:'TAYLORS', short:'Taylor’s', name:'Taylor’s University', city:'Subang Jaya, Selangor', type:'Private', prog:'Hospitality · Culinary Arts · Business · Law', usd:13000, bdt:'৳14.30L', ielts:'5.5', intakes:4, emgs:'Category 1', weeks:'3–5', gpa:'2.5 min · 3.0+ typical (of 5.0)', note:'Malaysia’s highest-ranked private university. Premium cost, strong placement.', lat:3.0641, lng:101.6168, head:90 },
+      { k:'SUNWAY', short:'Sunway', name:'Sunway University', city:'Subang Jaya, Selangor', type:'Private', prog:'Business · Accounting · Computing · Nursing', usd:11800, bdt:'৳12.98L', ielts:'5.0', intakes:4, emgs:'Category 1', weeks:'3–4', gpa:'2.3 min · 2.7+ typical (of 5.0)', note:'Set in Sunway City township. Strong Bangladeshi alumni network.', lat:3.0685, lng:101.6039, head:200 },
+      { k:'APU',   short:'APU',   name:'Asia Pacific University', city:'Technology Park, Kuala Lumpur', type:'Private', prog:'Software Eng. · Data Science · Cyber Security', usd:10000, bdt:'৳11.00L', ielts:'4.5', intakes:4, emgs:'Category 1', weeks:'3–4', gpa:'2.0 min · 2.5+ typical (of 5.0)', note:'Most popular choice for Bangladeshi tech students. Four intakes a year.', lat:3.0498, lng:101.7005, head:120 },
+      { k:'UCSI',  short:'UCSI',  name:'UCSI University', city:'Cheras, Kuala Lumpur', type:'Private', prog:'Medicine (MBBS) · Pharmacy · Architecture · Music', usd:14000, bdt:'৳15.40L', ielts:'6.0', intakes:2, emgs:'Category 1', weeks:'5–7', gpa:'3.0 min · 3.5+ typical (of 5.0)', note:'Top choice for medical aspirants. MBBS recognised by BMDC.', lat:3.0837, lng:101.7333, head:60 },
+      { k:'UOC',   short:'UoC',   name:'University of Cyberjaya', city:'Cyberjaya, Selangor', type:'Private', prog:'Medicine (MBBS) · Dentistry · Pharmacy · Nursing', usd:12000, bdt:'৳13.20L', ielts:'5.5', intakes:2, emgs:'Category 1', weeks:'5–6', gpa:'2.8 min · 3.2+ typical (of 5.0)', note:'Strong health sciences, BMDC recognised. More affordable medicine route.', lat:2.9226, lng:101.6549, head:120 },
+      { k:'LINCOLN', short:'Lincoln', name:'Lincoln University College', city:'Petaling Jaya, Selangor', type:'Private', prog:'Medicine (MBBS) · Engineering · IT · Pharmacy', usd:9000, bdt:'৳9.90L', ielts:'5.0', intakes:3, emgs:'Category 2', weeks:'4–5', gpa:'2.5 min · 2.8+ typical (of 5.0)', note:'Accessible requirements and a dedicated Bangladeshi student support office.', lat:3.0810, lng:101.5860, head:90 },
+      { k:'MSU',   short:'MSU',   name:'Management and Science University', city:'Shah Alam, Selangor', type:'Private', prog:'Business · IT · Engineering · Health Sciences', usd:8000, bdt:'৳8.80L', ielts:'4.5', intakes:3, emgs:'Category 2', weeks:'4–6', gpa:'2.0 min · 2.3+ typical (of 5.0)', note:'Very accessible entry. Practical, industry-focused programs.', lat:3.0725, lng:101.5545, head:120 },
+      { k:'LIMKOKWING', short:'Limkokwing', name:'Limkokwing University', city:'Cyberjaya, Selangor', type:'Private', prog:'Graphic & Fashion Design · Film · Animation · Media', usd:8500, bdt:'৳9.35L', ielts:'4.5', intakes:4, emgs:'Category 2', weeks:'4–5', gpa:'2.0 min · 2.2+ typical · portfolio', note:'The creative route — design, animation and media, portfolio-friendly.', lat:2.9298, lng:101.6520, head:60 },
+    ];
+    const pool = [
+      'https://images.unsplash.com/photo-1596496181861-5fc9f0d1a75e?w=1920&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=1920&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1920&q=85&auto=format&fit=crop',
+    ];
+    this.UNIS.forEach((u, i) => { u.img = pool[i % pool.length]; u.explore = 'https://www.google.com/search?q=' + encodeURIComponent(u.name + ' Malaysia international student admissions'); });
+    this.byKey = {};
+    this.UNIS.forEach((u) => { this.byKey[u.k] = u; });
+
+    this.state = { hitzBlocked: false, travelActive: false, warpLines: [], founder: null, joined: false, lang: 'en', entered: false, introRadio: false, radio: 'off', station: '', beyondStep: 0, webglFailed: false, vw: w, vh: typeof window !== 'undefined' ? window.innerHeight : 900, formOpen: false };
+
+    this.HITZ_STREAMS = [
+      { name: 'HITZ FM', url: 'https://audio1.syok.my/hitz' },
+      { name: 'HITZ FM', url: 'https://audio1.syok.my/hitz/master.m3u8' },
+      { name: 'HITZ FM', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/HITZ_FMAAC.aac' },
+      { name: 'HITZ FM', url: 'https://playerservices.streamtheworld.com/api/livestream-redirect/HITZ_FMAAC/HLS/playlist.m3u8' },
+    ];
+
+    this.ATMOS = {
+      'Monsoon':     { rain: 1.0, fogMul: 1.0,  star: 1.0,  wet: 0.16, haze: 1.0 },
+      'Clear Night': { rain: 0.0, fogMul: 1.45, star: 1.45, wet: 0.05, haze: 0.6 },
+      'Heavy Rain':  { rain: 2.0, fogMul: 0.68, star: 0.35, wet: 0.30, haze: 1.5 },
+    };
+    this.GRADES = {
+      'Emerald Night': { hemi: 0x6a8fc0, moon: 0xbcd2ff, tint: 0x0e2a1c, dawn: '#FFB300', lantern: '#FF4D2E', seat: '#00E676' },
+      'Amber Monsoon': { hemi: 0xc0895a, moon: 0xffd2a4, tint: 0x2a1d10, dawn: '#FF7A18', lantern: '#FFB300', seat: '#FFC246' },
+      'Cobalt Night':  { hemi: 0x5a7ec8, moon: 0xa8c8ff, tint: 0x101c34, dawn: '#7AA8FF', lantern: '#00E5FF', seat: '#6FE3FF' },
+    };
+    this.FEELS = {
+      'Cinematic Drift': { sway: 1.0, bob: 1.0, par: 1.0, bars: true,  grain: 0.08, jitter: 0 },
+      'Handheld':        { sway: 2.1, bob: 2.0, par: 1.5, bars: true,  grain: 0.15, jitter: 1 },
+      'Locked Off':      { sway: 0.0, bob: 0.0, par: 0.3, bars: false, grain: 0.03, jitter: 0 },
+    };
+
+    // Founders — verified titles and operating mandates only. No inferred personal biography.
+    this.FOUNDERS = {
+      en: {
+        sayem: { name: 'Sayem Ahmed', role: 'Co-founder & Chief Executive Officer', tag: 'The trust-builder', duties: ['Vision and capital', 'Academic partnerships', 'Public trust and accountability'], line: 'Sayem protects the promise Last Bench makes to every student and parent who takes it seriously.' },
+        fahim: { name: 'Fahim Shahbaz Mahmud', role: 'Co-founder & Chief Operating Officer', tag: 'Makes it repeatable', duties: ['Student journey operations', 'Guidance quality and consistency', 'Turning one good outcome into a process'], line: 'Fahim makes the journey repeatable, so the student after you gets the same clarity you did.' },
+        erfan: { name: 'Erfan Uddin', role: 'Co-founder & Chief Business and Innovation Officer', tag: 'Turns the journey into a system', duties: ['Community and cohorts', 'New capability and partnerships', 'Expanding what the platform can carry'], line: 'Erfan turns the journey into an expandable system — the bench is longer than it looks.' },
+      },
+      bn: {
+        sayem: { name: 'Sayem Ahmed', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান নির্বাহী কর্মকর্তা', tag: 'আস্থার নির্মাতা', duties: ['ভিশন ও মূলধন', 'একাডেমিক পার্টনারশিপ', 'জনআস্থা ও জবাবদিহি'], line: 'লাস্ট বেঞ্চ প্রতিটি শিক্ষার্থী ও অভিভাবককে যে প্রতিশ্রুতি দেয়, সায়েম তা রক্ষা করেন।' },
+        fahim: { name: 'Fahim Shahbaz Mahmud', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান পরিচালন কর্মকর্তা', tag: 'যাত্রাকে পুনরাবৃত্তিযোগ্য করেন', duties: ['শিক্ষার্থী যাত্রার পরিচালনা', 'গাইডেন্সের গুণমান ও ধারাবাহিকতা', 'একটি ভালো ফলাফলকে প্রক্রিয়ায় রূপ দেওয়া'], line: 'ফাহিম যাত্রাকে পুনরাবৃত্তিযোগ্য করেন, যেন আপনার পরের শিক্ষার্থীও একই স্পষ্টতা পায়।' },
+        erfan: { name: 'Erfan Uddin', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান ব্যবসা ও উদ্ভাবন কর্মকর্তা', tag: 'যাত্রাকে সিস্টেমে রূপ দেন', duties: ['কমিউনিটি ও কোহর্ট', 'নতুন সক্ষমতা ও পার্টনারশিপ', 'প্ল্যাটফর্মের ধারণক্ষমতা বাড়ানো'], line: 'এরফান যাত্রাকে একটি বিস্তারযোগ্য সিস্টেমে রূপ দেন — বেঞ্চটি দেখতে যতটা, তার চেয়ে লম্বা।' },
+      },
+    };
+
+    this.I18N = {
+      en: {
+        gateHead: 'Before we begin.',
+        gateSub: 'Pick your language, and tune in a live Malaysian station if you’d like. Both are up to you, and you can change them anytime.',
+        langLabel: 'LANGUAGE', radioLabel: 'HITZ FM · 92.9 — live from Kuala Lumpur', radioHint: 'Astro Radio’s English hit station, on air daily · ambience plays if the stream is blocked', radioOpen: 'LISTEN ON HITZ FM ↗',
+        enter: 'Enter the experience', loading: 'PREPARING KUALA LUMPUR…',
+        heroKicker: 'STUDY. SETTLE. SUCCEED. · BANGLADESH → MALAYSIA',
+        heroL1: 'FROM WHERE YOU ARE.', heroL2: 'TO WHAT YOU CAN BUILD.',
+        heroSub: 'A transparent student journey from Bangladesh to Malaysia — designed to continue after you arrive. Scroll to fly it.',
+        ctaSignup: 'Begin the journey', ctaExplore: 'See where it leads', flyIn: 'FLY IN',
+        legKicker: 'LEG 00 — DEPARTURE', legL1: '', legL2: '',
+        legSub: 'Two thousand seven hundred kilometres. About four and a half hours in the air. Follow the route your degree takes, from where you are to where it lands.',
+        cityFrom: 'DHAKA', cityTo: 'KUALA LUMPUR', flightTime: '≈ 4H 30M NONSTOP', toGo: 'KM TO GO', arrived: 'ARRIVED',
+        a2Kicker: '02 — JALAN ALOR, 11:48 PM', a2L1: 'THE CITY IS AWAKE.', a2L2: 'SO IS YOUR JOURNEY.',
+        a2Sub: 'Your application becomes a journey with visible stages, updated by a named mentor. Never a black box — you always know where you stand and what comes next.',
+        a3Kicker: '03 — ABOVE THE TOWERS, 452 M', a3L1: 'FIFTEEN CAMPUSES.', a3L2: 'ONE HONEST LIST.',
+        a3Sub: 'You’re flying between the Petronas Towers. Below you: the fifteen campuses Last Bench works with, with what they cost and what they ask. Tap any card to walk its campus in 360°.',
+        costL: 'TOTAL / YR', ieltsL: 'IELTS', intakeL: 'INTAKES', visitL: 'VISIT CAMPUS', exploreL: 'OFFICIAL DETAILS',
+        dataNote: 'Figures are Last Bench’s own planning estimates for Bangladeshi students, covering tuition and living costs. They are not quotes and not guarantees — always confirm current fees, entry requirements and visa rules with the university and EMGS before you decide.',
+        a4Kicker: '04 — KLCC PARK, 7:03 AM',
+        a4Sub: 'This bench sits in KLCC Park, at the foot of the towers you just flew through. We’ve kept it clear — look around.',
+        pin: 'OPEN THE REAL KLCC BENCH IN MAPS →',
+        a5Kicker: '05 — TAKE YOUR SEAT', a5L1: 'YOU WON’T SIT', a5L2: 'HERE ALONE.',
+        a5Sub: 'Three founders keep this bench. Tap one to read what they’re accountable for.',
+        signupTitle: 'TAKE YOUR SEAT', signupSub: 'From Bangladesh to Malaysia — the journey starts with a name.',
+        phName: 'Full name', phEmail: 'Email or phone',
+        joinedTitle: 'WELCOME TO THE BENCH.', joinedSub: 'Your seat is reserved. Your dashboard is ready.', enterDash: 'Enter your dashboard →',
+        foot1: 'LAST BENCH © 2026', foot2: 'FROM LAST BENCH. TO THE WORLD.', foot3: 'CHITTAGONG · KUALA LUMPUR',
+        mandate: 'ACCOUNTABLE FOR', backBench: '← Back to the bench',
+        photoNote: 'Placeholder portrait — a real approved photo will replace this. Titles and mandates are verified; nothing here is inferred.',
+        arrived: 'ARRIVED · FAST-TRAVEL COMPLETE', engaged: 'FAST-TRAVEL ENGAGED',
+        svHint: 'STREET VIEW 360 · DRAG TO LOOK AROUND', returnJourney: '← Return to the journey',
+        sCost: 'TOTAL / YEAR', sIelts: 'IELTS', sEmgs: 'EMGS', sWeeks: 'PROCESSING', sGpa: 'GRADES',
+        stages: [
+          { title: 'Documents received', meta: 'Logged and reviewed by a named mentor' },
+          { title: 'Profile reviewed', meta: 'You see the reasoning, not just the result' },
+          { title: 'University shortlist', meta: 'Matched to your grades, budget and goals' },
+          { title: 'Application submitted', meta: 'Tracked stage by stage' },
+          { title: 'Visa guidance', meta: 'EMGS-guided support through your application' },
+        ],
+        chapters: ['00 — DHAKA · DEPARTURE', '01 — KUALA LUMPUR · ARRIVAL', '02 — JALAN ALOR · 11:48 PM', '03 — ABOVE THE TOWERS · 5:14 AM', '04 — KLCC PARK · 7:03 AM', '05 — THE JOURNEY CONTINUES'],
+        radioOff: 'OFF', radioTuning: 'TUNING…', hitzBlocked: 'HITZ FM BLOCKED HERE · AMBIENCE', ambienceTag: 'AMBIENCE', liveTag: 'LIVE',
+      },
+      bn: {
+        gateHead: 'শুরু করার আগে।',
+        gateSub: 'আপনার ভাষা বেছে নিন, এবং চাইলে একটি লাইভ মালয়েশিয়ান স্টেশন চালু করুন। দুটোই আপনার ইচ্ছা, যেকোনো সময় বদলাতে পারবেন।',
+        langLabel: 'ভাষা', radioOpen: 'HITZ FM-এ শুনুন ↗', radioLabel: 'HITZ FM · ৯২.৯ — কুয়ালালামপুর থেকে লাইভ', radioHint: 'লাইভ স্টেশন · না পেলে সিন্থেসাইজড পরিবেশ ধ্বনি',
+        enter: 'অভিজ্ঞতায় প্রবেশ করুন', loading: 'কুয়ালালামপুর প্রস্তুত হচ্ছে…',
+        heroKicker: 'পড়ুন। থিতু হোন। সফল হোন। · বাংলাদেশ → মালয়েশিয়া',
+        heroL1: 'আপনি যেখানে আছেন,', heroL2: 'সেখান থেকে যা গড়তে পারেন।',
+        heroSub: 'বাংলাদেশ থেকে মালয়েশিয়া — একটি স্বচ্ছ শিক্ষার্থী যাত্রা, যা পৌঁছানোর পরেও চলতে থাকে। উড়ে দেখতে স্ক্রল করুন।',
+        ctaSignup: 'যাত্রা শুরু করুন', ctaExplore: 'কোথায় পৌঁছায় দেখুন', flyIn: 'উড়ে চলুন',
+        legKicker: 'পর্ব ০০ — যাত্রা শুরু', legL1: 'শুরু বাংলাদেশে।', legL2: 'শেষ সেখানেই নয়।',
+        legSub: 'দুই হাজার সাতশো কিলোমিটার। আকাশে প্রায় সাড়ে চার ঘণ্টা। আপনার ডিগ্রি যে পথে যায়, সেই পথটাই দেখুন।',
+        cityFrom: 'ঢাকা', cityTo: 'কুয়ালালামপুর', flightTime: '≈ ৪ ঘ ৩০ মি ননস্টপ', toGo: 'কিমি বাকি', arrived: 'পৌঁছে গেছি',
+        a2Kicker: '০২ — জালান আলোর, রাত ১১:৪৮', a2L1: 'শহর জেগে আছে।', a2L2: 'আপনার যাত্রাও।',
+        a2Sub: 'আপনার আবেদন হয়ে ওঠে দৃশ্যমান ধাপে ভরা একটি যাত্রা, যা একজন নির্দিষ্ট মেন্টর আপডেট করেন। কখনো অন্ধকার বাক্স নয় — আপনি সবসময় জানেন আপনি কোথায় আছেন।',
+        a3Kicker: '০৩ — টাওয়ারের উপরে, ৪৫২ মিটার', a3L1: 'পনেরোটি ক্যাম্পাস।', a3L2: 'একটি সৎ তালিকা।',
+        a3Sub: 'আপনি পেট্রোনাস টাওয়ারের মাঝ দিয়ে উড়ছেন। নিচে: লাস্ট বেঞ্চ যে পনেরোটি ক্যাম্পাসে কাজ করে — খরচ ও শর্তসহ। যেকোনো কার্ডে ট্যাপ করে ৩৬০° ঘুরে দেখুন।',
+        costL: 'মোট / বছর', ieltsL: 'IELTS', intakeL: 'ইনটেক', visitL: 'ক্যাম্পাস দেখুন', exploreL: 'অফিসিয়াল তথ্য',
+        dataNote: 'এই সংখ্যাগুলো বাংলাদেশি শিক্ষার্থীদের জন্য লাস্ট বেঞ্চের নিজস্ব পরিকল্পনা-অনুমান, যাতে টিউশন ও জীবনযাত্রার খরচ ধরা আছে। এগুলো কোটেশন নয়, নিশ্চয়তা নয় — সিদ্ধান্তের আগে বিশ্ববিদ্যালয় ও EMGS থেকে বর্তমান ফি, ভর্তির শর্ত ও ভিসা নিয়ম যাচাই করুন।',
+        a4Kicker: '০৪ — কেএলসিসি পার্ক, সকাল ৭:০৩',
+        a4Sub: 'এই বেঞ্চটি কেএলসিসি পার্কে, সেই টাওয়ারগুলোর পায়ের কাছে যেগুলোর মধ্য দিয়ে আপনি উড়ে এলেন। আমরা এটি পরিষ্কার রেখেছি — চারপাশ দেখুন।',
+        pin: 'মানচিত্রে বাস্তব কেএলসিসি বেঞ্চ খুলুন →',
+        a5Kicker: '০৫ — আপনার আসন নিন', a5L1: 'আপনি একা', a5L2: 'বসবেন না।',
+        a5Sub: 'তিনজন প্রতিষ্ঠাতা এই বেঞ্চ রক্ষা করেন। তাঁরা কী কাজের জন্য দায়বদ্ধ, পড়তে ট্যাপ করুন।',
+        signupTitle: 'আপনার আসন নিন', signupSub: 'বাংলাদেশ থেকে মালয়েশিয়া — যাত্রা শুরু হয় একটি নাম দিয়ে।',
+        phName: 'পূর্ণ নাম', phEmail: 'ইমেইল বা ফোন',
+        joinedTitle: 'বেঞ্চে স্বাগতম।', joinedSub: 'আপনার আসন সংরক্ষিত। আপনার ড্যাশবোর্ড প্রস্তুত।', enterDash: 'ড্যাশবোর্ডে যান →',
+        foot1: 'লাস্ট বেঞ্চ © ২০২৬', foot2: 'লাস্ট বেঞ্চ থেকে। বিশ্বের পথে।', foot3: 'চট্টগ্রাম · কুয়ালালামপুর',
+        mandate: 'যার জন্য দায়বদ্ধ', backBench: '← বেঞ্চে ফিরে যান',
+        photoNote: 'প্লেসহোল্ডার ছবি — অনুমোদিত বাস্তব ছবি এটি প্রতিস্থাপন করবে। পদবি ও দায়িত্ব যাচাইকৃত; এখানে কিছুই অনুমান করা নয়।',
+        arrived: 'পৌঁছে গেছেন · ফাস্ট-ট্রাভেল সম্পন্ন', engaged: 'ফাস্ট-ট্রাভেল চালু',
+        svHint: 'স্ট্রিট ভিউ ৩৬০ · ঘুরে দেখতে টেনে দেখুন', returnJourney: '← যাত্রায় ফিরে যান',
+        sCost: 'মোট / বছর', sIelts: 'IELTS', sEmgs: 'EMGS', sWeeks: 'প্রসেসিং', sGpa: 'গ্রেড',
+        stages: [
+          { title: 'ডকুমেন্ট গৃহীত', meta: 'একজন নির্দিষ্ট মেন্টর দেখে নথিভুক্ত করেন' },
+          { title: 'প্রোফাইল পর্যালোচিত', meta: 'শুধু ফলাফল নয়, যুক্তিটাও আপনি দেখেন' },
+          { title: 'বিশ্ববিদ্যালয় শর্টলিস্ট', meta: 'আপনার গ্রেড, বাজেট ও লক্ষ্যের সাথে মেলানো' },
+          { title: 'আবেদন জমা', meta: 'ধাপে ধাপে ট্র্যাক করা' },
+          { title: 'ভিসা গাইডেন্স', meta: 'EMGS-নির্দেশিত সহায়তা আপনার আবেদন জুড়ে' },
+        ],
+        chapters: ['০০ — ঢাকা · যাত্রা শুরু', '০১ — কুয়ালালামপুর · পৌঁছানো', '০২ — জালান আলোর', '০৩ — টাওয়ারের উপরে', '০৪ — কেএলসিসি পার্ক', '০৫ — যাত্রা চলছে'],
+        radioOff: 'বন্ধ', radioTuning: 'টিউন হচ্ছে…', hitzBlocked: 'HITZ FM এখানে বন্ধ · অ্যাম্বিয়েন্স', ambienceTag: 'পরিবেশ ধ্বনি', liveTag: 'লাইভ',
+      },
+    };
+  }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const t = this.I18N[lang];
+    const fset = this.FOUNDERS[lang];
+    const f = fset[this.state.founder] || {};
+    const step = this.state.beyondStep;
+    const rs = this.state.radio;
+    const feel = this.FEELS[this.props.cameraFeel] || this.FEELS['Cinematic Drift'];
+    const vw = this.state.vw;
+    const narrow = vw < 760;
+    // Short viewports: the finale collapses to a slim bottom bar so the bench stays unobstructed.
+    const short = this.state.vh < 700;
+    const compact = short && !this.state.formOpen && !this.state.joined;
+    const roleShort = {
+      sayem: lang === 'bn' ? 'সিইও' : 'CEO',
+      fahim: lang === 'bn' ? 'সিওও' : 'COO',
+      erfan: lang === 'bn' ? 'সিবিআইও' : 'CBIO',
+    };
+    return {
+      t,
+      isEN: lang === 'en', isBN: lang === 'bn',
+      wide: !narrow,
+      svHeight: narrow ? '220px' : '320px',
+      showGate: !this.state.entered,
+      setLang: (e) => this.setState({ lang: e.currentTarget.dataset.lang }),
+      enBd: lang === 'en' ? '1px solid #00C853' : '1px solid rgba(255,255,255,.2)',
+      enBg: lang === 'en' ? 'rgba(0,200,83,.16)' : 'rgba(255,255,255,.03)',
+      enFg: lang === 'en' ? '#00E676' : 'rgba(242,247,243,.75)',
+      bnBd: lang === 'bn' ? '1px solid #00C853' : '1px solid rgba(255,255,255,.2)',
+      bnBg: lang === 'bn' ? 'rgba(0,200,83,.16)' : 'rgba(255,255,255,.03)',
+      bnFg: lang === 'bn' ? '#00E676' : 'rgba(242,247,243,.75)',
+      introRadio: this.state.introRadio,
+      toggleIntroRadio: () => this.setState({ introRadio: !this.state.introRadio }),
+      introRadioBg: this.state.introRadio ? 'rgba(0,200,83,.4)' : 'rgba(255,255,255,.08)',
+      introRadioBd: this.state.introRadio ? '#00C853' : 'rgba(255,255,255,.25)',
+      introRadioX: this.state.introRadio ? '29px' : '3px',
+      introRadioKnob: this.state.introRadio ? '#04140b' : '#F2F7F3',
+      enterExperience: () => this.enterExperience(),
+
+      toggleRadio: () => this.toggleRadio(),
+      soundOn: rs === 'live' || rs === 'ambience',
+      radioPlaying: rs === 'live' || rs === 'ambience',
+      radioIdle: rs === 'off' || rs === 'tuning',
+      radioLabel: (() => {
+        const st = (this.state.station || '').toUpperCase();
+        if (rs === 'live') return (st || 'HITZ FM').slice(0, narrow ? 12 : 22) + ' · ' + t.liveTag;
+        if (rs === 'ambience') return this.state.hitzBlocked ? t.hitzBlocked : t.ambienceTag;
+        if (rs === 'tuning') return 'HITZ FM · ' + t.radioTuning;
+        return narrow ? 'HITZ FM' : 'HITZ FM · ' + t.radioOff;
+      })(),
+      radioBd: rs === 'live' ? 'rgba(0,230,118,.55)' : rs === 'ambience' ? 'rgba(255,179,0,.5)' : 'rgba(0,200,83,.35)',
+      radioFg: rs === 'ambience' ? '#FFB300' : '#00E676',
+      radioRef: (el) => { this.radioAudio = el; },
+      hitzBlocked: this.state.hitzBlocked && rs === 'ambience',
+      hitzLive: rs === 'live',
+
+      founders: ['sayem', 'fahim', 'erfan'].map((key) => ({
+        key, name: fset[key].name, role: roleShort[key],
+        cardW: short ? '74px' : (narrow ? 'calc(33.333% - 8px)' : '132px'),
+        photoPh: fset[key].name + ' — photo coming soon',
+      })),
+      showRole: !short,
+      compactSeat: compact,
+      seatDisplay: compact ? 'none' : 'block',
+      openForm: () => this.setState({ formOpen: true }),
+      openFounder: (e) => this.setState({ founder: e.currentTarget.dataset.founder }),
+      openFounderKey: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.setState({ founder: e.currentTarget.dataset.founder }); } },
+      closeFounder: () => this.setState({ founder: null }),
+      stopProp: (e) => e.stopPropagation(),
+      founderOpen: !!this.state.founder,
+      founderSlotId: 'founder-' + (this.state.founder || 'sayem'),
+      founderPhotoPh: f.name ? f.name + ' — photo coming soon' : '',
+      founderName: f.name, founderRole: f.role, founderTag: f.tag, founderLine: f.line,
+      founderDuties: (f.duties || []).map((d, i) => ({ key: i, text: d })),
+
+      seatName: this.state.seatName || '', seatContact: this.state.seatContact || '',
+      setSeatName: (e) => this.setState({ seatName: e.target.value, seatErr: '' }),
+      setSeatContact: (e) => this.setState({ seatContact: e.target.value, seatErr: '' }),
+      seatErr: this.state.seatErr || '', hasSeatErr: !!this.state.seatErr,
+      signUp: () => {
+        const nm = (this.state.seatName || '').trim();
+        const ct = (this.state.seatContact || '').trim();
+        const T = this.state.lang === 'bn';
+        if (nm.length < 2) return this.setState({ seatErr: T ? 'আপনার পূর্ণ নাম লিখুন।' : 'Please enter your full name.' });
+        const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ct);
+        const okPhone = /^[+]?[\d\s-]{9,}$/.test(ct);
+        if (!okEmail && !okPhone) return this.setState({ seatErr: T ? 'একটি সঠিক ইমেইল বা ফোন নম্বর দিন।' : 'Enter a valid email or phone number.' });
+        try {
+          localStorage.setItem('lb_student_name', nm);
+          localStorage.setItem('lb_lang', this.state.lang);
+        } catch (_) {}
+        this.setState({ joined: true, seatErr: '' });
+      },
+      joined: this.state.joined, notJoined: !this.state.joined,
+      joinedTitleName: (() => {
+        const f = (this.state.seatName || '').trim().split(/\s+/)[0];
+        if (!f) return t.joinedTitle;
+        return this.state.lang === 'bn' ? f + ', বেঞ্চে স্বাগতম।' : 'WELCOME TO THE BENCH, ' + f.toUpperCase() + '.';
+      })(),
+      webglOk: !this.state.webglFailed,
+      webglFailed: this.state.webglFailed,
+      showBars: feel.bars && !narrow && !short,
+      seatGap: short ? '6vh' : '16vh',
+      scrimRef: (el) => { this.scrimEl = el; },
+      grainRef: (el) => { this.grainEl = el; if (el) el.style.opacity = String(feel.grain); },
+      travelActive: this.state.travelActive, warpLines: this.state.warpLines,
+      travelTo: (e) => this.travelTo(e),
+      travelToKey: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.travelTo(e); } },
+      preloadCampus: (e) => this.preloadCampus(e),
+      closeTravelTo: () => this.closeTravelTo(),
+
+      isW0: step === 0, isW1: step === 1, isW2: step === 2, isW3: step === 3, isW4: step === 4,
+      beyondActive: step < 5, beyondResolved: step === 5,
+
+      departRef: (el) => { this.departEl = el; },
+      globeRef: (el) => { if (el && el !== this.globeCanvas) { this.globeCanvas = el; this.initGlobe(); } },
+      routeRef: (el) => { this.routeEl = el; },
+      routeBarRef: (el) => { this.routeBarEl = el; },
+      mountRef: (el) => { this.mount = el; },
+      chapterRef: (el) => { this.chapterEl = el; },
+      progressRef: (el) => { this.progressEl = el; },
+      warpRef: (el) => { this.warpEl = el; },
+      destImgRef: (el) => { this.destImgEl = el; },
+      destTextRef: (el) => { this.destTextEl = el; },
+      destNameRef: (el) => { this.destNameEl = el; },
+      destLocRef: (el) => { this.destLocEl = el; },
+      destProgRef: (el) => { this.destProgEl = el; },
+      destStatsRef: (el) => { this.destStatsEl = el; },
+      destMapRef: (el) => { this.destMapEl = el; },
+      destExploreRef: (el) => { this.destExploreEl = el; },
+
+      stages: t.stages.map((s, i) => ({ title: s.title, meta: s.meta, dot: i < 3 ? '#00E676' : i === 3 ? '#FFB300' : 'rgba(255,255,255,.5)' })),
+      unis: this.UNIS.map((u) => ({
+        k: u.k, short: u.short, name: u.name, city: u.city, prog: u.prog,
+        cost: '$' + u.usd.toLocaleString(), ielts: u.ielts, intakes: u.intakes + '×',
+        typeLabel: lang === 'bn' ? (u.type === 'Public' ? 'সরকারি' : 'বেসরকারি') : u.type.toUpperCase(),
+        aria: (lang === 'bn' ? 'ফাস্ট-ট্রাভেল: ' : 'Fast-travel to ') + u.name,
+      })),
+    };
+  }
+
+  componentDidMount() {
+    document.body.style.overflow = 'hidden';
+    let tries = 0;
+    const wait = () => {
+      if (this.disposed) return;
+      if (window.THREE && this.mount) {
+        try { this.init(); } catch (err) { this.setState({ webglFailed: true }); }
+      } else if (tries++ < 100) setTimeout(wait, 100);
+      else this.setState({ webglFailed: true });
+    };
+    wait();
+    this.setupReveals();
+    this.scheduleBeyond();
+    this.onKeyDown = (e) => { if (e.key === 'Escape') { if (this.state.travelActive) this.closeTravelTo(); else if (this.state.founder) this.setState({ founder: null }); } };
+    window.addEventListener('keydown', this.onKeyDown);
+    this.onVw = () => {
+      const dw = Math.abs(window.innerWidth - this.state.vw) > 40;
+      const dh = Math.abs(window.innerHeight - this.state.vh) > 60;
+      if (dw || dh) this.setState({ vw: window.innerWidth, vh: window.innerHeight });
+    };
+    window.addEventListener('resize', this.onVw);
+  }
+
+  componentWillUnmount() {
+    this.disposed = true;
+    if (this._travelTimer) clearTimeout(this._travelTimer);
+    if (this._beyondTO) clearTimeout(this._beyondTO);
+    if (this.raf) cancelAnimationFrame(this.raf);
+    this.killHls();
+    if (this.radioAudio) try { this.radioAudio.pause(); } catch (_) {}
+    if (this.renderer) this.renderer.dispose();
+    if (this.birdTimer) clearInterval(this.birdTimer);
+    if (this.actx) try { this.actx.close(); } catch (_) {}
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('resize', this.onVw);
+    window.removeEventListener('mousemove', this.onMouse);
+    if (this.onLeave) { document.removeEventListener('mouseleave', this.onLeave); window.removeEventListener('blur', this.onLeave); }
+    if (this.onTilt) window.removeEventListener('deviceorientation', this.onTilt);
+    window.removeEventListener('keydown', this.onKeyDown);
+    document.body.style.overflow = '';
+  }
+
+  enterExperience() {
+    document.body.style.overflow = '';
+    const wantRadio = this.state.introRadio;
+    this.setState({ entered: true });
+    if (wantRadio) setTimeout(() => this.startRadio(), 120);
+  }
+
+  scheduleBeyond() {
+    if (this.disposed) return;
+    const dwell = this.reducedMotion ? 2000 : (this.state.beyondStep === 5 ? 2800 : 1450);
+    this._beyondTO = setTimeout(() => {
+      if (this.disposed) return;
+      this.setState({ beyondStep: (this.state.beyondStep + 1) % 6 });
+      this.scheduleBeyond();
+    }, dwell);
+  }
+
+  // ─── SOUND: live Malaysian radio (opt-in), synthesized ambience fallback ──
+  toggleRadio() { if (this.state.radio === 'off') this.startRadio(); else this.stopRadio(); }
+  killHls() { if (this.hls) { try { this.hls.destroy(); } catch (_) {} this.hls = null; } }
+
+  playStream(url) {
+    return new Promise((resolve) => {
+      const audio = this.radioAudio;
+      if (!audio) return resolve(false);
+      let settled = false;
+      const cleanup = () => { clearTimeout(to); audio.removeEventListener('playing', ok); audio.removeEventListener('error', bad); audio.removeEventListener('stalled', bad); };
+      const ok = () => { if (settled) return; settled = true; cleanup(); resolve(true); };
+      const bad = () => { if (settled) return; settled = true; cleanup(); this.killHls(); try { audio.pause(); } catch (_) {} resolve(false); };
+      const to = setTimeout(bad, 7000);
+      audio.addEventListener('playing', ok);
+      audio.addEventListener('error', bad);
+      audio.addEventListener('stalled', bad);
+      this.killHls();
+      audio.volume = 0.8;
+      const isHls = /\.m3u8(\?|$)/i.test(url);
+      if (isHls && !audio.canPlayType('application/vnd.apple.mpegurl') && window.Hls && window.Hls.isSupported()) {
+        const hls = new window.Hls({ enableWorker: true, manifestLoadingTimeOut: 6000 });
+        this.hls = hls;
+        hls.on(window.Hls.Events.ERROR, (e, d) => { if (d && d.fatal) bad(); });
+        hls.on(window.Hls.Events.MANIFEST_PARSED, () => { audio.play().catch(bad); });
+        hls.loadSource(url);
+        hls.attachMedia(audio);
+      } else {
+        audio.src = url;
+        audio.play().catch(bad);
+      }
+    });
+  }
+
+  async startRadio() {
+    if (this._tuning) return;
+    this._tuning = true;
+    this.setState({ hitzBlocked: false });
+    this.setState({ radio: 'tuning', station: '' });
+    try {
+      const list = this.HITZ_STREAMS;    // HITZ FM only — no substitutions
+      for (let i = 0; i < list.length; i++) {
+        if (this.disposed || this.state.radio === 'off') { this._tuning = false; return; }
+        if (await this.playStream(list[i].url)) {
+          this._tuning = false;
+          this.setState({ hitzBlocked: false });
+          this.suspendAmbience();
+          this.setState({ radio: 'live', station: list[i].name });
+          return;
+        }
+      }
+    } catch (_) {}
+    this._tuning = false;
+    if (this.disposed || this.state.radio === 'off') return;
+    this.setState({ hitzBlocked: true });
+    this.startAmbience();
+  }
+
+  stopRadio() {
+    this._tuning = false;
+    this.killHls();
+    if (this.radioAudio) { try { this.radioAudio.pause(); this.radioAudio.removeAttribute('src'); this.radioAudio.load(); } catch (_) {} }
+    this.suspendAmbience();
+    this.setState({ radio: 'off', station: '' });
+  }
+
+  startAmbience() {
+    if (!this.actx) this.initAudio();
+    if (this.actx) try { this.actx.resume(); } catch (_) {}
+    this.setState({ radio: 'ambience', station: '' });
+  }
+  suspendAmbience() { if (this.actx) try { this.actx.suspend(); } catch (_) {} }
+
+  initAudio() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    const ctx = new AC();
+    this.actx = ctx;
+    const master = ctx.createGain(); master.gain.value = 0.55; master.connect(ctx.destination);
+    const mkBuf = (brown) => {
+      const len = ctx.sampleRate * 2, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
+      let last = 0;
+      for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; if (brown) { last = (last + 0.02 * w) / 1.02; d[i] = last * 3.5; } else d[i] = w; }
+      return buf;
+    };
+    const layer = (buf, type, freq, q, gain) => {
+      const src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
+      const fl = ctx.createBiquadFilter(); fl.type = type; fl.frequency.value = freq; fl.Q.value = q;
+      const g = ctx.createGain(); g.gain.value = gain;
+      src.connect(fl); fl.connect(g); g.connect(master); src.start();
+      return g;
+    };
+    const brown = mkBuf(true), white = mkBuf(false);
+    this.gHum = layer(brown, 'lowpass', 240, 0.7, 0.4);
+    this.gRain = layer(white, 'bandpass', 2800, 0.5, 0);
+    this.gMarket = layer(white, 'bandpass', 900, 1.2, 0);
+    const drone = ctx.createOscillator(); drone.type = 'sawtooth'; drone.frequency.value = 52;
+    const df = ctx.createBiquadFilter(); df.type = 'lowpass'; df.frequency.value = 110;
+    this.gDrone = ctx.createGain(); this.gDrone.gain.value = 0.05;
+    drone.connect(df); df.connect(this.gDrone); this.gDrone.connect(master); drone.start();
+    this.birdTimer = setInterval(() => {
+      if (this.state.radio !== 'ambience' || this.p < 0.78 || ctx.state !== 'running') return;
+      const t0 = ctx.currentTime + Math.random() * 0.8;
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.setValueAtTime(2600 + Math.random() * 900, t0);
+      o.frequency.exponentialRampToValueAtTime(3400 + Math.random() * 800, t0 + 0.14);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.09, t0 + 0.04);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.3);
+      o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + 0.35);
+    }, 2200);
+  }
+
+  // ─── FAST TRAVEL ────────────────────────────────────────────────────────
+  preloadCampus(e) {
+    const u = this.byKey[e.currentTarget && e.currentTarget.getAttribute('data-uni')];
+    if (!u || u._pre) return;
+    u._pre = true;
+    const img = new Image(); img.src = u.img;
+  }
+
+  makeWarpLines() {
+    return Array.from({ length: 28 }, (_, i) => {
+      const deg = (i / 28) * 360 + (Math.random() - .5) * 12;
+      return { key: i, deg, len: 52 + Math.random() * 90, color: Math.random() > .4 ? 'rgba(0,230,118,.7)' : 'rgba(255,255,255,.4)' };
+    });
+  }
+
+  travelTo(e) {
+    const card = e.currentTarget || (e.target && e.target.closest('[data-uni]'));
+    const u = this.byKey[card && card.getAttribute('data-uni')];
+    if (!u) return;
+    const t = this.I18N[this.state.lang];
+    document.body.style.overflow = 'hidden';
+    if (this.destImgEl) { this.destImgEl.style.transition = 'none'; this.destImgEl.style.opacity = '0'; this.destImgEl.style.transform = 'scale(1.14)'; }
+    if (this.destTextEl) { this.destTextEl.style.opacity = '0'; this.destTextEl.style.transform = 'translateY(30px)'; }
+    this.setState({ travelActive: true, warpLines: this.makeWarpLines() });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (!this.warpEl) return;
+      this.warpEl.style.opacity = '1';
+      this.warpEl.style.transition = 'none';
+      this.warpEl.querySelectorAll('div').forEach((l, i) => {
+        const m = l.style.transform.match(/rotate\(([-\d.]+)deg\)/);
+        const deg = m ? parseFloat(m[1]) : (i / 28) * 360;
+        l.style.transition = 'transform .88s cubic-bezier(.12,.55,.2,1), opacity .88s ease';
+        l.style.transform = 'translate(-50%,-50%) rotate(' + deg + 'deg) translateX(' + (820 + Math.random() * 520) + 'px)';
+        l.style.opacity = '0';
+      });
+    }));
+    this._travelTimer = setTimeout(() => {
+      if (this.destImgEl) { this.destImgEl.style.backgroundImage = 'url(' + u.img + ')'; this.destImgEl.style.transition = 'opacity .95s ease, transform 7s ease-out'; this.destImgEl.style.opacity = '1'; this.destImgEl.style.transform = 'scale(1)'; }
+      if (this.destNameEl) this.destNameEl.textContent = u.name.toUpperCase();
+      if (this.destLocEl) this.destLocEl.textContent = u.city + ' · ' + u.type;
+      if (this.destProgEl) this.destProgEl.textContent = u.prog + ' — ' + u.note;
+      if (this.destExploreEl) this.destExploreEl.href = u.explore;
+      if (this.destMapEl) this.destMapEl.src = 'https://maps.google.com/maps?layer=c&cbll=' + u.lat + ',' + u.lng + '&cbp=12,' + u.head + ',,0,0&output=svembed';
+      if (this.destStatsEl) {
+        const stats = [
+          { l: t.sCost, v: '$' + u.usd.toLocaleString() + ' · ' + u.bdt },
+          { l: t.sIelts, v: u.ielts },
+          { l: t.sEmgs, v: u.emgs },
+          { l: t.sWeeks, v: u.weeks + ' wks' },
+          { l: t.sGpa, v: u.gpa },
+        ];
+        this.destStatsEl.innerHTML = stats.map((s, i) => '<div style="display:flex;flex-direction:column;gap:3px;' + (i === 4 ? 'grid-column:1 / -1;' : '') + '"><div style="font-size:8.5px;font-weight:600;letter-spacing:.2em;color:rgba(242,247,243,.42);">' + s.l + '</div><div style="font-family:\'General Sans\',sans-serif;font-size:13.5px;font-weight:600;color:#fff;line-height:1.35;">' + s.v + '</div></div>').join('');
+      }
+      if (this.destTextEl) { this.destTextEl.style.transition = 'opacity .85s ease .2s, transform .85s cubic-bezier(.2,.7,.2,1) .2s'; this.destTextEl.style.opacity = '1'; this.destTextEl.style.transform = 'translateY(0)'; }
+      if (this.warpEl) { this.warpEl.style.transition = 'opacity .4s ease'; this.warpEl.style.opacity = '0'; }
+    }, 850);
+  }
+
+  closeTravelTo() {
+    document.body.style.overflow = '';
+    if (this._travelTimer) clearTimeout(this._travelTimer);
+    this.setState({ travelActive: false });
+  }
+
+  setupReveals() {
+    setTimeout(() => {
+      this.revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
+      this.revealEls.forEach((el) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1)';
+      });
+    }, 400);
+  }
+
+  checkReveals() {
+    if (!this.revealEls || !this.revealEls.length) return;
+    const limit = window.innerHeight * 0.9;
+    this.revealEls = this.revealEls.filter((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < limit && r.bottom > 0) { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; return false; }
+      return true;
+    });
+  }
+
+  // ─── 3D WORLD ───────────────────────────────────────────────────────────
+  texCanvas(w, h, draw) { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d')); return new THREE.CanvasTexture(c); }
+  sRGB(t) { if ('colorSpace' in t) t.colorSpace = THREE.SRGBColorSpace; return t; }
+  windowTex(density, warmth) {
+    return this.sRGB(this.texCanvas(128, 256, (ctx) => {
+      ctx.fillStyle = '#05080e'; ctx.fillRect(0, 0, 128, 256);
+      for (let i = 0; i < 8; i++) for (let j = 0; j < 20; j++) {
+        if (Math.random() > density) continue;
+        const warm = Math.random() < warmth;
+        ctx.fillStyle = warm ? 'rgba(255,205,120,' + (0.55 + Math.random() * 0.45) + ')' : 'rgba(150,215,255,' + (0.45 + Math.random() * 0.5) + ')';
+        ctx.fillRect(6 + i * 15, 6 + j * 12, 8, 6);
+      }
+    }));
+  }
+  latLngVec(lat, lng) {
+    const T = window.THREE;
+    const phi = (90 - lat) * Math.PI / 180, theta = (lng + 180) * Math.PI / 180;
+    return new T.Vector3(-Math.sin(phi) * Math.cos(theta), Math.cos(phi), Math.sin(phi) * Math.sin(theta));
+  }
+
+  initGlobe() {
+    const T = window.THREE;
+    if (!T || !this.globeCanvas || this.globeRenderer) return;
+    const cv = this.globeCanvas;
+    const r = new T.WebGLRenderer({ canvas: cv, alpha: true, antialias: true });
+    r.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.globeRenderer = r;
+    const scene = new T.Scene();
+    const cam = new T.PerspectiveCamera(38, 1, 1, 4000);
+    this.globeScene = scene; this.globeCam = cam;
+
+    const R = 100;
+    const shell = new T.Mesh(new T.SphereGeometry(R, 48, 36), new T.MeshBasicMaterial({ color: 0x061b10 }));
+    scene.add(shell);
+    const wire = new T.Mesh(new T.SphereGeometry(R * 1.004, 36, 24), new T.MeshBasicMaterial({ color: 0x00c853, wireframe: true, transparent: true, opacity: 0.14 }));
+    scene.add(wire); this.globeWire = wire;
+
+    const glow = this.glowTex();
+    const halo = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#00E676', transparent: true, opacity: 0.3, depthWrite: false, blending: T.AdditiveBlending }));
+    halo.scale.set(R * 3.4, R * 3.4, 1); scene.add(halo);
+
+    // Dhaka → Kuala Lumpur, interpolated along the great circle
+    this.A = this.latLngVec(23.8103, 90.4125);
+    this.B = this.latLngVec(3.1390, 101.6869);
+    const pts = [];
+    this.ARC_N = 160;
+    for (let i = 0; i < this.ARC_N; i++) {
+      const t = i / (this.ARC_N - 1);
+      const v = this.A.clone().lerp(this.B, t).normalize();
+      pts.push(v.multiplyScalar(R * (1 + 0.13 * Math.sin(Math.PI * t))));
+    }
+    const arcGeo = new T.BufferGeometry().setFromPoints(pts);
+    const arc = new T.Line(arcGeo, new T.LineBasicMaterial({ color: 0x00e676, transparent: true, opacity: 0.95 }));
+    arcGeo.setDrawRange(0, 2); scene.add(arc); this.arc = arc; this.arcPts = pts;
+
+    const pin = (v, color, size) => {
+      const s = new T.Sprite(new T.SpriteMaterial({ map: glow, color, transparent: true, opacity: 0.95, depthWrite: false, blending: T.AdditiveBlending }));
+      s.scale.set(size, size, 1); s.position.copy(v.clone().multiplyScalar(R * 1.01)); scene.add(s); return s;
+    };
+    pin(this.A, '#FFB300', 26);
+    pin(this.B, '#00E676', 26);
+    const plane = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ffffff', transparent: true, opacity: 1, depthWrite: false, blending: T.AdditiveBlending }));
+    plane.scale.set(15, 15, 1); scene.add(plane); this.planeSprite = plane;
+    this.resizeGlobe();
+  }
+
+  resizeGlobe() {
+    if (!this.globeRenderer || !this.globeCanvas) return;
+    const w = this.globeCanvas.clientWidth || 1, h = this.globeCanvas.clientHeight || 1;
+    this.globeRenderer.setSize(w, h, false);
+    this.globeCam.aspect = w / h; this.globeCam.updateProjectionMatrix();
+  }
+
+  drawGlobe(prog, time) {
+    if (!this.globeRenderer) return;
+    const T = window.THREE;
+    const e = prog < 0.5 ? 2 * prog * prog : 1 - Math.pow(-2 * prog + 2, 2) / 2;
+    const focus = this.A.clone().lerp(this.B, e).normalize();
+    const dist = 300 - 34 * Math.sin(Math.PI * e);
+    this.globeCam.position.copy(focus.clone().multiplyScalar(dist));
+    this.globeCam.position.y += 46 + this.mouseS.y * 10;
+    this.globeCam.position.x += this.mouseS.x * 16;
+    this.globeCam.lookAt(0, 0, 0);
+    const n = Math.max(2, Math.floor(this.ARC_N * Math.min(1, e + 0.02)));
+    this.arc.geometry.setDrawRange(0, n);
+    this.planeSprite.position.copy(this.arcPts[Math.min(this.ARC_N - 1, n - 1)]);
+    this.planeSprite.material.opacity = 0.7 + Math.sin(time * 5) * 0.3;
+    if (this.globeWire) this.globeWire.rotation.y = time * 0.012;
+    this.globeRenderer.render(this.globeScene, this.globeCam);
+    const t = this.I18N[this.state.lang];
+    if (this.routeEl) {
+      const left = Math.round(2730 * (1 - e));
+      const txt = left < 12 ? t.arrived : left.toLocaleString(this.state.lang === 'bn' ? 'bn-BD' : 'en-US') + ' ' + t.toGo;
+      if (this._routeTxt !== txt) { this.routeEl.textContent = txt; this._routeTxt = txt; }
+    }
+    if (this.routeBarEl) this.routeBarEl.style.width = (e * 100).toFixed(1) + '%';
+  }
+
+  glowTex() { return this.texCanvas(128, 128, (ctx) => { const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.35, 'rgba(255,255,255,.45)'); g.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, 128, 128); }); }
+  streakTex() { return this.texCanvas(16, 64, (ctx) => { const g = ctx.createLinearGradient(0, 0, 0, 64); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.5, 'rgba(255,255,255,.9)'); g.addColorStop(1, 'rgba(255,255,255,0)'); ctx.fillStyle = g; ctx.fillRect(6, 0, 4, 64); }); }
+  neonTex(text, color) {
+    return this.sRGB(this.texCanvas(512, 128, (ctx) => {
+      ctx.clearRect(0, 0, 512, 128);
+      ctx.font = '600 60px "General Sans", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.shadowColor = color; ctx.shadowBlur = 28; ctx.fillStyle = color; ctx.fillText(text, 256, 64);
+      ctx.shadowBlur = 8; ctx.fillStyle = '#fff'; ctx.globalAlpha = 0.75; ctx.fillText(text, 256, 64);
+    }));
+  }
+  facadeTex(base) {
+    return this.sRGB(this.texCanvas(128, 128, (ctx) => {
+      ctx.fillStyle = base; ctx.fillRect(0, 0, 128, 128);
+      ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(0, 0, 128, 8);
+      for (let i = 0; i < 3; i++) {
+        const x = 14 + i * 38;
+        ctx.fillStyle = 'rgba(255,190,110,.9)'; ctx.beginPath(); ctx.arc(x + 10, 46, 10, Math.PI, 0); ctx.fill(); ctx.fillRect(x, 46, 20, 26);
+        ctx.fillStyle = 'rgba(255,190,110,.65)'; ctx.fillRect(x, 92, 20, 30);
+      }
+    }));
+  }
+  facadeEmis() {
+    return this.sRGB(this.texCanvas(128, 128, (ctx) => {
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 128, 128);
+      for (let i = 0; i < 3; i++) {
+        const x = 14 + i * 38;
+        ctx.fillStyle = 'rgba(255,180,95,1)'; ctx.beginPath(); ctx.arc(x + 10, 46, 10, Math.PI, 0); ctx.fill(); ctx.fillRect(x, 46, 20, 26);
+        ctx.fillStyle = 'rgba(255,170,90,.85)'; ctx.fillRect(x, 92, 20, 30);
+      }
+    }));
+  }
+  roadTex() {
+    return this.sRGB(this.texCanvas(64, 256, (ctx) => {
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, 64, 256);
+      const g1 = ctx.createLinearGradient(0, 0, 0, 256); g1.addColorStop(0, 'rgba(0,220,110,0)'); g1.addColorStop(.5, 'rgba(0,220,110,.5)'); g1.addColorStop(1, 'rgba(0,220,110,0)');
+      ctx.fillStyle = g1; ctx.fillRect(6, 0, 5, 256);
+      const g2 = ctx.createLinearGradient(0, 0, 0, 256); g2.addColorStop(0, 'rgba(255,190,110,0)'); g2.addColorStop(.5, 'rgba(255,190,110,.45)'); g2.addColorStop(1, 'rgba(255,190,110,0)');
+      ctx.fillStyle = g2; ctx.fillRect(52, 0, 5, 256);
+    }));
+  }
+
+  init() {
+    const T = window.THREE;
+    const small = window.innerWidth < 760;
+    this.small = small;
+    const renderer = new T.WebGLRenderer({ antialias: !small, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, small ? 1.5 : 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    if ('outputColorSpace' in renderer) renderer.outputColorSpace = T.SRGBColorSpace;
+    renderer.toneMapping = T.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    renderer.domElement.style.cssText = 'position:absolute;top:0;left:0;display:block;';
+    this.mount.appendChild(renderer.domElement);
+    this.renderer = renderer;
+
+    this.hemiNight = new T.Color(0x6a8fc0); this.hemiDay = new T.Color(0xdfeeff);
+    this.moonNight = new T.Color(0xbcd2ff); this.sunDay = new T.Color(0xfff2dc);
+    const scene = new T.Scene();
+    scene.background = new T.Color('#070b16');
+    scene.fog = new T.Fog('#0a0e1a', 30, 520);
+    this.scene = scene;
+
+    const camera = new T.PerspectiveCamera(small ? 68 : 58, window.innerWidth / window.innerHeight, 0.1, 3000);
+    this.camera = camera;
+
+    this.hemi = new T.HemisphereLight(0x6a8fc0, 0x0a1a10, 0.9); scene.add(this.hemi);
+    this.amb = new T.AmbientLight(0x2a3550, 0.45); scene.add(this.amb);
+    this.moon = new T.DirectionalLight(0xbcd2ff, 1.0); this.moon.position.set(-60, 120, 40); scene.add(this.moon);
+    this.fillWarm = new T.PointLight(0xffb060, 0, 600, 2); this.fillWarm.position.set(0, 40, -1200); scene.add(this.fillWarm);
+
+    const glow = this.glowTex();
+    this.cars = [];
+    this.people = [];
+
+    this.roadMat = new T.MeshPhysicalMaterial({ color: 0x0b0f13, roughness: 0.32, metalness: 0.12, clearcoat: 0.65, clearcoatRoughness: 0.28, emissive: 0xffffff, emissiveMap: this.roadTex(), emissiveIntensity: 0.16 });
+    const road = new T.Mesh(new T.PlaneGeometry(46, 1150), this.roadMat);
+    road.rotation.x = -Math.PI / 2; road.position.set(0, 0, -515); scene.add(road);
+
+    // Traffic: KL never empties. Two directions, headlights toward camera, tails away.
+    {
+      const bodyMats = [0x14181d, 0x1b1f26, 0x101418, 0x22181a].map((c) => new T.MeshLambertMaterial({ color: c }));
+      const lampWhite = new T.SpriteMaterial({ map: glow, color: '#fff4e0', transparent: true, opacity: 0.95, depthWrite: false, blending: T.AdditiveBlending });
+      const lampRed = new T.SpriteMaterial({ map: glow, color: '#ff3b2e', transparent: true, opacity: 0.9, depthWrite: false, blending: T.AdditiveBlending });
+      const LANES = [-15.5, -9.5, -3.5, 3.5, 9.5, 15.5];
+      for (let i = 0; i < 34; i++) {
+        const g = new T.Group();
+        const bus = Math.random() < 0.16;
+        const w = bus ? 3.4 : 2.5, h = bus ? 4.0 : 1.85, len = bus ? 12.5 : 5.4;
+        const body = new T.Mesh(new T.BoxGeometry(w, h, len), bodyMats[i % bodyMats.length]);
+        body.position.y = h / 2 + 0.32; g.add(body);
+        if (!bus) {
+          const cab = new T.Mesh(new T.BoxGeometry(w * 0.86, 1.05, len * 0.5), new T.MeshLambertMaterial({ color: 0x0a0d11 }));
+          cab.position.set(0, h + 0.3, -0.2); g.add(cab);
+        } else {
+          const strip = new T.Mesh(new T.BoxGeometry(w * 1.01, 0.9, len * 0.9), new T.MeshBasicMaterial({ color: 0x1d3b4a }));
+          strip.position.set(0, h * 0.72, 0); g.add(strip);
+        }
+        const lane = LANES[i % LANES.length];
+        const dir = lane < 0 ? 1 : -1;                       // left lanes travel toward the camera
+        [-w * 0.34, w * 0.34].forEach((dx) => {
+          const front = new T.Sprite(dir > 0 ? lampWhite : lampRed);
+          front.scale.set(bus ? 5 : 4, bus ? 5 : 4, 1);
+          front.position.set(dx, bus ? 1.5 : 1.0, dir > 0 ? len / 2 + 0.4 : -len / 2 - 0.4);
+          g.add(front);
+          const rear = new T.Sprite(dir > 0 ? lampRed : lampWhite);
+          rear.scale.set(3, 3, 1);
+          rear.position.set(dx, 1.15, dir > 0 ? -len / 2 - 0.4 : len / 2 + 0.4);
+          g.add(rear);
+        });
+        g.position.set(lane, 0, -60 - Math.random() * 1020);
+        scene.add(g);
+        this.cars.push({ g, lane, dir, speed: (bus ? 26 : 40 + Math.random() * 42), len });
+      }
+    }
+
+    // Street life: people along the Jalan Alor stretch, under the lanterns
+    {
+      const tones = [0x2a1f18, 0x33251b, 0x241a14];
+      const tops = [0x0d2c1c, 0x1d3340, 0x3a2418, 0x2c2c30, 0x123a2a];
+      for (let i = 0; i < 46; i++) {
+        const g = new T.Group();
+        const skinM = new T.MeshLambertMaterial({ color: tones[i % tones.length] });
+        const topM = new T.MeshLambertMaterial({ color: tops[i % tops.length] });
+        const head = new T.Mesh(new T.SphereGeometry(0.34, 10, 8), skinM); head.position.y = 5.0; g.add(head);
+        const torso = new T.Mesh(new T.BoxGeometry(0.86, 1.7, 0.5), topM); torso.position.y = 3.95; g.add(torso);
+        const legs = new T.Mesh(new T.BoxGeometry(0.78, 2.9, 0.46), new T.MeshLambertMaterial({ color: 0x121519 })); legs.position.y = 1.6; g.add(legs);
+        const side = i % 2 === 0 ? -1 : 1;
+        const x = side * (25 + Math.random() * 9);
+        const z = -150 - Math.random() * 560;
+        g.position.set(x, 0, z);
+        g.rotation.y = side > 0 ? -1.5 : 1.5;
+        g.scale.setScalar(0.9 + Math.random() * 0.25);
+        scene.add(g);
+        this.people.push({ g, side, speed: 3.2 + Math.random() * 3.4, phase: Math.random() * 6.28, z0: z });
+      }
+    }
+    const ground = new T.Mesh(new T.PlaneGeometry(1600, 2200), new T.MeshLambertMaterial({ color: 0x0a0f14 }));
+    ground.rotation.x = -Math.PI / 2; ground.position.set(0, -0.3, -800); scene.add(ground);
+    const lawn = new T.Mesh(new T.PlaneGeometry(520, 360), new T.MeshLambertMaterial({ color: 0x0c2214 }));
+    lawn.rotation.x = -Math.PI / 2; lawn.position.set(0, -0.1, -1330); scene.add(lawn);
+    const path = new T.Mesh(new T.PlaneGeometry(9, 190), new T.MeshLambertMaterial({ color: 0x1c241d }));
+    path.rotation.x = -Math.PI / 2; path.position.set(0, 0.02, -1290); scene.add(path);
+
+    const winTexes = [this.windowTex(0.4, 0.55), this.windowTex(0.28, 0.35), this.windowTex(0.5, 0.7), this.windowTex(0.33, 0.45)];
+    const wallCols = [0x0c1220, 0x0a1018, 0x0e1424, 0x0b111c];
+    const bMats = winTexes.map((t, i) => new T.MeshLambertMaterial({ color: wallCols[i], emissive: 0xffffff, emissiveMap: t, emissiveIntensity: 1.15 }));
+    const nBuild = small ? 120 : 210;
+    for (let i = 0; i < nBuild; i++) {
+      const side = Math.random() < 0.5 ? -1 : 1;
+      const z = -60 - Math.random() * 1080;
+      let xOff = 26 + Math.random() * 260;
+      if (z < -760) xOff = 90 + Math.random() * 220;
+      const x = side * xOff;
+      const w = 10 + Math.random() * 16;
+      const h = 14 + Math.pow(Math.random(), 2) * (Math.abs(x) < 60 ? 60 : 150);
+      const m = new T.Mesh(new T.BoxGeometry(w, h, w), bMats[i % 4]);
+      m.position.set(x, h / 2, z); scene.add(m);
+    }
+    for (let i = 0; i < (small ? 26 : 46); i++) {
+      const h = 60 + Math.random() * 180;
+      const w = 16 + Math.random() * 22;
+      const m = new T.Mesh(new T.BoxGeometry(w, h, w), bMats[i % 4]);
+      m.position.set((Math.random() - 0.5) * 1100, h / 2, -1580 - Math.random() * 120); scene.add(m);
+    }
+
+    const towerMat = new T.MeshLambertMaterial({ color: 0x0c1424, emissive: 0xffffff, emissiveMap: this.windowTex(0.75, 0.15), emissiveIntensity: 1.0 });
+    const mkTower = (x) => {
+      const gp = new T.Group();
+      const tiers = [[11, 34], [9.5, 30], [8, 26], [6.5, 22], [5, 16], [3.6, 12]];
+      let y = 0;
+      tiers.forEach(([r, hh]) => { const c = new T.Mesh(new T.CylinderGeometry(r * 0.82, r, hh, 8), towerMat); c.position.y = y + hh / 2; gp.add(c); y += hh; });
+      const spire = new T.Mesh(new T.ConeGeometry(1.4, 26, 8), new T.MeshLambertMaterial({ color: 0x9fc4e8, emissive: 0x9fc4e8, emissiveIntensity: 0.7 }));
+      spire.position.y = y + 13; gp.add(spire);
+      const s = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#8fd6ff', transparent: true, opacity: 0.5, depthWrite: false }));
+      s.scale.set(46, 46, 1); s.position.y = y + 8; gp.add(s);
+      gp.position.set(x, 0, -1180); scene.add(gp);
+    };
+    mkTower(-34); mkTower(34);
+    const bridge = new T.Mesh(new T.BoxGeometry(52, 3.4, 5), new T.MeshLambertMaterial({ color: 0xb9dcf2, emissive: 0x6a8fb5, emissiveIntensity: 0.4 }));
+    bridge.position.set(0, 62, -1180); scene.add(bridge);
+
+    const klt = new T.Group();
+    const shaft = new T.Mesh(new T.CylinderGeometry(2.2, 3.4, 120, 8), new T.MeshLambertMaterial({ color: 0x141b24 }));
+    shaft.position.y = 60; klt.add(shaft);
+    const pod = new T.Mesh(new T.SphereGeometry(8, 12, 10), new T.MeshLambertMaterial({ color: 0x0e1420, emissive: 0xffffff, emissiveMap: winTexes[2], emissiveIntensity: 1.0 }));
+    pod.position.y = 122; klt.add(pod);
+    const podGlow = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ffd27a', transparent: true, opacity: 0.5, depthWrite: false }));
+    podGlow.scale.set(34, 34, 1); podGlow.position.y = 122; klt.add(podGlow);
+    klt.position.set(-210, 0, -1060); scene.add(klt);
+
+    {
+      const n = small ? 480 : 900, pos = new Float32Array(n * 3);
+      for (let i = 0; i < n; i++) { pos[i * 3] = (Math.random() - 0.5) * 2400; pos[i * 3 + 1] = 160 + Math.random() * 560; pos[i * 3 + 2] = -Math.random() * 2000; }
+      const gm = new T.BufferGeometry(); gm.setAttribute('position', new T.BufferAttribute(pos, 3));
+      this.stars = new T.Points(gm, new T.PointsMaterial({ color: '#c2d6ea', size: 1.7, transparent: true, opacity: 0.8, depthWrite: false })); scene.add(this.stars);
+    }
+    const moonSprite = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#eaf2ff', transparent: true, opacity: 0.85, depthWrite: false, blending: T.AdditiveBlending }));
+    moonSprite.scale.set(120, 120, 1); moonSprite.position.set(-320, 430, -1700); scene.add(moonSprite); this.moonSprite = moonSprite;
+    const moonDisc = new T.Mesh(new T.CircleGeometry(26, 32), new T.MeshBasicMaterial({ color: 0xf4f8ff }));
+    moonDisc.position.set(-320, 430, -1701); scene.add(moonDisc); this.moonDisc = moonDisc; moonDisc.material.transparent = true;
+
+    this.godRays = [];
+    for (let i = 0; i < 5; i++) {
+      const s = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ffd9a0', transparent: true, opacity: 0, depthWrite: false, blending: T.AdditiveBlending, rotation: (i - 2) * 0.16 }));
+      s.scale.set(16 + i * 2, 240, 1); s.position.set((i - 2) * 40, 150, -1640);
+      scene.add(s); this.godRays.push(s);
+    }
+
+    {
+      const primary = [], gold = [];
+      for (let z = -240; z > -500; z -= 20) for (let i = 0; i <= 10; i++) {
+        const tt = i / 10; const x = -19 + tt * 38; const sag = 3.4 * (1 - Math.pow(tt * 2 - 1, 2));
+        ((i % 2 === 0) ? primary : gold).push(x, 13.5 - sag, z + (Math.random() - 0.5) * 2);
+      }
+      const mk = (arr, color, size) => { const gm = new T.BufferGeometry(); gm.setAttribute('position', new T.BufferAttribute(new Float32Array(arr), 3)); const pts = new T.Points(gm, new T.PointsMaterial({ map: glow, color, size, transparent: true, opacity: 0.95, depthWrite: false, blending: T.AdditiveBlending })); scene.add(pts); return pts; };
+      this.lanterns = mk(primary, (this.GRADES[this.props.grade] || this.GRADES['Emerald Night']).lantern, 5.2);
+      this.lanternsGold = mk(gold, '#FFB300', 4.4);
+    }
+
+    {
+      const signs = [['JALAN ALOR', '#FF4D2E', -1, -262, 11], ['MAKAN 24 JAM', '#00E5FF', 1, -300, 14], ['NASI LEMAK', '#FFB300', -1, -340, 9], ['TEH TARIK', '#FF4DA6', 1, -378, 12], ['RESTORAN', '#00E676', -1, -420, 13], ['KOPITIAM', '#FFD54F', 1, -458, 10]];
+      signs.forEach(([txt, col, side, z, y]) => {
+        const tx = this.neonTex(txt, col);
+        const m = new T.Mesh(new T.PlaneGeometry(20, 5), new T.MeshBasicMaterial({ map: tx, transparent: true, depthWrite: false, blending: T.AdditiveBlending, side: T.DoubleSide }));
+        m.position.set(side * 21.5, y, z); m.rotation.y = side * -Math.PI / 2 + side * 0.18; scene.add(m);
+        const r = m.clone(); r.position.y = 0.15; r.rotation.set(-Math.PI / 2, 0, side * 0.14); r.position.x = side * 14; r.material = m.material.clone(); r.material.opacity = 0.18; scene.add(r);
+        if (!small) { const lamp = new T.PointLight(col, 0.5, 26, 2); lamp.position.set(side * 20, y, z); scene.add(lamp); }
+      });
+    }
+
+    {
+      const cols = ['#7a4a3a', '#2c6e63', '#7a3b5e', '#3e5c7a', '#907040', '#4a6b3a'];
+      const emis = this.facadeEmis();
+      let idx = 0;
+      for (let z = -520; z > -760; z -= 15) {
+        [-1, 1].forEach((side) => {
+          const h = 12 + Math.random() * 5;
+          const m = new T.Mesh(new T.BoxGeometry(12, h, 14), new T.MeshLambertMaterial({ map: this.facadeTex(cols[idx++ % cols.length]), emissive: 0xffffff, emissiveMap: emis, emissiveIntensity: 0.9 }));
+          m.position.set(side * 29, h / 2, z); scene.add(m);
+        });
+        if (z % 45 === 0) {
+          const lamp = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ffbe6e', transparent: true, opacity: 0.85, depthWrite: false, blending: T.AdditiveBlending }));
+          lamp.scale.set(7, 7, 1); lamp.position.set((Math.random() < 0.5 ? -1 : 1) * 20, 6.5, z); scene.add(lamp);
+        }
+      }
+    }
+
+    {
+      const treeMat = new T.MeshLambertMaterial({ color: 0x0a2013 });
+      const treeMat2 = new T.MeshLambertMaterial({ color: 0x0d2a19 });
+      for (let z = -780; z > -1010; z -= (small ? 20 : 12)) [-1, 1].forEach((side) => {
+        const n = 2 + Math.floor(Math.random() * 3);
+        for (let k = 0; k < n; k++) { const r = 5 + Math.random() * 10; const h = 16 + Math.random() * 30; const cone = new T.Mesh(new T.ConeGeometry(r, h, 7), Math.random() < 0.5 ? treeMat : treeMat2); cone.position.set(side * (26 + Math.random() * 80), h / 2, z + (Math.random() - 0.5) * 8); scene.add(cone); }
+      });
+      const trunkMat = new T.MeshLambertMaterial({ color: 0x17130d });
+      const canopyMats = [new T.MeshLambertMaterial({ color: 0x123522 }), new T.MeshLambertMaterial({ color: 0x174028 }), new T.MeshLambertMaterial({ color: 0x0e2c1b })];
+      for (let i = 0; i < (small ? 24 : 42); i++) {
+        const x = (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 160);
+        const z = -1215 - Math.random() * 210;
+        if (Math.hypot(x, z + 1268) < 26) continue;
+        const th = 3 + Math.random() * 3;
+        const trunk = new T.Mesh(new T.CylinderGeometry(0.5, 0.7, th, 6), trunkMat); trunk.position.set(x, th / 2, z); scene.add(trunk);
+        const r = 3.5 + Math.random() * 4.5; const canopy = new T.Mesh(new T.SphereGeometry(r, 8, 7), canopyMats[i % 3]); canopy.position.set(x, th + r * 0.7, z); scene.add(canopy);
+      }
+      const n = small ? 90 : 170, pos = new Float32Array(n * 3);
+      for (let i = 0; i < n; i++) { pos[i * 3] = (Math.random() - 0.5) * 140; pos[i * 3 + 1] = 1.5 + Math.random() * 10; pos[i * 3 + 2] = -1200 - Math.random() * 220; }
+      const gm = new T.BufferGeometry(); gm.setAttribute('position', new T.BufferAttribute(pos, 3));
+      this.fireflies = new T.Points(gm, new T.PointsMaterial({ map: glow, color: '#7CFF9E', size: 2.4, transparent: true, opacity: 0.9, depthWrite: false, blending: T.AdditiveBlending })); scene.add(this.fireflies);
+    }
+
+    // THE BENCH — clean and empty. A warm glow marks the seat kept for you.
+    {
+      const bench = new T.Group();
+      const benchMat = new T.MeshLambertMaterial({ color: 0x00b04c, emissive: 0x043f1d, emissiveIntensity: 0.5 });
+      const darkMat = new T.MeshLambertMaterial({ color: 0x046a30 });
+      for (let i = 0; i < 4; i++) { const s = new T.Mesh(new T.BoxGeometry(7.2, 0.22, 0.6), benchMat); s.position.set(0, 2.1, -0.9 + i * 0.62); bench.add(s); }
+      for (let i = 0; i < 4; i++) { const s = new T.Mesh(new T.BoxGeometry(7.2, 0.55, 0.2), benchMat); s.position.set(0, 2.9 + i * 0.72, 1.15 + i * 0.12); s.rotation.x = -0.18; bench.add(s); }
+      [-3.1, 3.1].forEach((x) => {
+        const l1 = new T.Mesh(new T.BoxGeometry(0.35, 2.1, 0.35), darkMat); l1.position.set(x, 1.05, -0.7); bench.add(l1);
+        const l2 = new T.Mesh(new T.BoxGeometry(0.35, 2.1, 0.35), darkMat); l2.position.set(x, 1.05, 1.1); bench.add(l2);
+      });
+      // Sayem, Fahim, Erfan — two seated, one standing, keeping the seat
+      const skin = new T.MeshLambertMaterial({ color: 0x2a1f18 });
+      const shirtA = new T.MeshLambertMaterial({ color: 0x0d2c1c, emissive: 0x03150c, emissiveIntensity: 0.4 });
+      const shirtB = new T.MeshLambertMaterial({ color: 0x14303d });
+      const shirtC = new T.MeshLambertMaterial({ color: 0x2b2118 });
+      const legMat = new T.MeshLambertMaterial({ color: 0x101418 });
+      this.founderFigs = [];
+      const seatedFig = (x, shirt, lean) => {
+        const g = new T.Group();
+        const head = new T.Mesh(new T.SphereGeometry(0.42, 16, 14), skin); head.position.set(0, 4.62, 0.42); g.add(head);
+        const hair = new T.Mesh(new T.SphereGeometry(0.44, 16, 12, 0, Math.PI * 2, 0, Math.PI * 0.62), new T.MeshLambertMaterial({ color: 0x0b0a0a })); hair.position.set(0, 4.68, 0.42); g.add(hair);
+        const neck = new T.Mesh(new T.CylinderGeometry(0.14, 0.17, 0.3, 8), skin); neck.position.set(0, 4.24, 0.4); g.add(neck);
+        const torso = new T.Mesh(new T.BoxGeometry(1.02, 1.55, 0.62), shirt); torso.position.set(0, 3.38, 0.3); torso.rotation.x = -0.12 + lean; g.add(torso);
+        [-0.3, 0.3].forEach((dx) => {
+          const thigh = new T.Mesh(new T.BoxGeometry(0.42, 0.4, 1.5), legMat); thigh.position.set(dx, 2.42, 0.98); g.add(thigh);
+          const shin = new T.Mesh(new T.BoxGeometry(0.38, 1.95, 0.42), legMat); shin.position.set(dx, 1.3, 1.66); g.add(shin);
+          const shoe = new T.Mesh(new T.BoxGeometry(0.42, 0.24, 0.72), new T.MeshLambertMaterial({ color: 0x07090b })); shoe.position.set(dx, 0.22, 1.86); g.add(shoe);
+          const arm = new T.Mesh(new T.BoxGeometry(0.26, 1.28, 0.3), shirt); arm.position.set(dx * 2.3, 3.42, 0.46); arm.rotation.x = -0.16; g.add(arm);
+          const fore = new T.Mesh(new T.CylinderGeometry(0.11, 0.1, 1.05, 8), skin); fore.position.set(dx * 2.3, 2.62, 0.86); fore.rotation.x = -0.5; g.add(fore);
+        });
+        g.position.set(x, 0, 0);
+        this.founderFigs.push({ g, base: g.position.y, phase: Math.random() * 6.28 });
+        bench.add(g);
+      };
+      seatedFig(-2.3, shirtA, 0);
+      seatedFig(1.15, shirtB, 0.05);
+      {
+        const g = new T.Group();
+        const head = new T.Mesh(new T.SphereGeometry(0.44, 16, 14), skin); head.position.set(0, 6.18, 0); g.add(head);
+        const hair = new T.Mesh(new T.SphereGeometry(0.46, 16, 12, 0, Math.PI * 2, 0, Math.PI * 0.6), new T.MeshLambertMaterial({ color: 0x0b0a0a })); hair.position.set(0, 6.25, 0); g.add(hair);
+        const neck = new T.Mesh(new T.CylinderGeometry(0.15, 0.18, 0.32, 8), skin); neck.position.set(0, 5.8, 0); g.add(neck);
+        const torso = new T.Mesh(new T.BoxGeometry(1.08, 1.95, 0.62), shirtC); torso.position.set(0, 4.66, 0); g.add(torso);
+        [-0.3, 0.3].forEach((dx) => {
+          const leg = new T.Mesh(new T.BoxGeometry(0.4, 3.5, 0.44), legMat); leg.position.set(dx, 1.9, 0); g.add(leg);
+          const shoe = new T.Mesh(new T.BoxGeometry(0.44, 0.24, 0.76), new T.MeshLambertMaterial({ color: 0x07090b })); shoe.position.set(dx, 0.14, 0.14); g.add(shoe);
+          const arm = new T.Mesh(new T.BoxGeometry(0.26, 1.9, 0.3), shirtC); arm.position.set(dx * 2.4, 4.6, 0.02); g.add(arm);
+        });
+        g.position.set(4.6, 0, 0.5); g.rotation.y = -0.32;
+        this.founderFigs.push({ g, base: 0, phase: 1.7, standing: true });
+        bench.add(g);
+      }
+      bench.position.set(0, 0, -1268); scene.add(bench);
+
+      const seat = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#00E676', transparent: true, opacity: 0.5, depthWrite: false, blending: T.AdditiveBlending }));
+      seat.scale.set(9, 5.5, 1); seat.position.set(1.6, 3.3, -1267.4); scene.add(seat); this.seatGlow = seat;
+      const halo = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#00C853', transparent: true, opacity: 0.4, depthWrite: false, blending: T.AdditiveBlending }));
+      halo.scale.set(30, 17, 1); halo.position.set(0, 3.4, -1269.5); scene.add(halo); this.benchHalo = halo;
+      const lampGlow = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ffd9a0', transparent: true, opacity: 0.8, depthWrite: false, blending: T.AdditiveBlending }));
+      lampGlow.scale.set(13, 13, 1); lampGlow.position.set(6.5, 8.5, -1272); scene.add(lampGlow);
+      const lampLight = new T.PointLight(0xffcf8f, 1.1, 90, 2); lampLight.position.set(6.5, 8.5, -1270); scene.add(lampLight);
+      const pole = new T.Mesh(new T.CylinderGeometry(0.16, 0.22, 8.5, 6), new T.MeshLambertMaterial({ color: 0x101410 })); pole.position.set(6.5, 4.25, -1272); scene.add(pole);
+    }
+
+    this.dawn = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#FFB300', transparent: true, opacity: 0, depthWrite: false })); this.dawn.scale.set(1000, 460, 1); this.dawn.position.set(0, 40, -1720); scene.add(this.dawn);
+    this.dawnGreen = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#00C853', transparent: true, opacity: 0, depthWrite: false })); this.dawnGreen.scale.set(1600, 800, 1); this.dawnGreen.position.set(0, 140, -1800); scene.add(this.dawnGreen);
+
+    {
+      const n = small ? 800 : 1600; const pos = new Float32Array(n * 3); this.rainVel = new Float32Array(n);
+      for (let i = 0; i < n; i++) { pos[i * 3] = (Math.random() - 0.5) * 240; pos[i * 3 + 1] = Math.random() * 160; pos[i * 3 + 2] = (Math.random() - 0.5) * 240; this.rainVel[i] = 90 + Math.random() * 80; }
+      const gm = new T.BufferGeometry(); gm.setAttribute('position', new T.BufferAttribute(pos, 3));
+      this.rain = new T.Points(gm, new T.PointsMaterial({ map: this.streakTex(), color: '#bcd8e8', size: 5, transparent: true, opacity: 0.28, depthWrite: false, blending: T.AdditiveBlending })); scene.add(this.rain);
+    }
+
+    this.keys = [
+      { p: 0.00, pos: [0, 175, 130], look: [0, 95, -1180] },
+      { p: 0.10, pos: [0, 105, -50], look: [0, 62, -1180] },
+      { p: 0.22, pos: [0, 9, -235], look: [0, 9, -470] },
+      { p: 0.38, pos: [0, 8, -460], look: [0, 8, -690] },
+      { p: 0.50, pos: [0, 14, -680], look: [0, 45, -1000] },
+      { p: 0.62, pos: [0, 48, -900], look: [0, 85, -1180] },
+      { p: 0.70, pos: [0, 82, -1100], look: [0, 76, -1300] },
+      { p: 0.80, pos: [0, 40, -1210], look: [0, 10, -1272] },
+      { p: 0.88, pos: [-3, 12, -1292], look: [0, 5.5, -1266] },
+      { p: 0.94, pos: [-4, 6.5, -1305], look: [0, 4.8, -1265] },
+      { p: 1.00, pos: [-4, 6.0, -1306], look: [0, 4.6, -1265] },
+    ];
+    // Night → first light → tropical Malaysian morning
+    this.skyKeys = [
+      { p: 0.00, sky: '#070b16', fog: '#0a0e1a', far: 560 },   // deep night over KL
+      { p: 0.25, sky: '#130b13', fog: '#1a1016', far: 420 },   // neon haze, Jalan Alor
+      { p: 0.48, sky: '#141024', fog: '#191430', far: 460 },   // last of the night
+      { p: 0.66, sky: '#22243f', fog: '#2a2c4a', far: 1000 },  // sky lifting above the towers
+      { p: 0.78, sky: '#4a3a52', fog: '#5a4658', far: 900 },   // astronomical dawn
+      { p: 0.86, sky: '#8a5a4e', fog: '#a06a52', far: 820 },   // horizon burns amber
+      { p: 0.93, sky: '#c98a5f', fog: '#d9a172', far: 900 },   // sunrise over KLCC
+      { p: 1.00, sky: '#8fbcd8', fog: '#bcd8e4', far: 1400 },  // full tropical morning
+    ];
+
+    this.onResize = () => {
+      this.resizeGlobe(); camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); };
+    this.onMouse = (e) => { this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1; this.mouse.y = (e.clientY / window.innerHeight) * 2 - 1; };
+    this.onLeave = () => { this.mouse.x = 0; this.mouse.y = 0; };
+    this.onTilt = (e) => { if (e.gamma == null || e.beta == null) return; this.mouse.x = Math.max(-1, Math.min(1, e.gamma / 28)); this.mouse.y = Math.max(-1, Math.min(1, (e.beta - 45) / 32)); };
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('mousemove', this.onMouse);
+    document.addEventListener('mouseleave', this.onLeave);
+    window.addEventListener('blur', this.onLeave);
+    window.addEventListener('deviceorientation', this.onTilt);
+
+    this.colA = new T.Color(); this.colB = new T.Color(); this.gradeCol = new T.Color();
+    this.clock = new T.Clock();
+    this.chapterText = '';
+    this.loop();
+  }
+
+  lerpKeys(keys, p) {
+    let a = keys[0], b = keys[keys.length - 1];
+    for (let i = 0; i < keys.length - 1; i++) { if (p >= keys[i].p && p <= keys[i + 1].p) { a = keys[i]; b = keys[i + 1]; break; } }
+    const span = b.p - a.p || 1; let t = (p - a.p) / span; t = t * t * (3 - 2 * t);
+    return { a, b, t };
+  }
+
+  loop() {
+    if (this.disposed) return;
+    this.raf = requestAnimationFrame(() => this.loop());
+    const dt = Math.min(this.clock.getDelta(), 0.05);
+    const time = this.clock.elapsedTime;
+
+    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const target = Math.min(1, Math.max(0, window.scrollY / max));
+    this.p += (target - this.p) * Math.min(1, dt * 4.5);
+    const praw = this.p;
+    const dh = this.departEl ? this.departEl.offsetHeight : 0;
+    const dOff = Math.min(0.6, dh / (max + window.innerHeight));
+    const p = dOff > 0.001 ? Math.min(1, Math.max(0, (praw - dOff) / (1 - dOff))) : praw;
+    if (this.globeRenderer) {
+      const vis = praw < dOff + 0.03;
+      if (this.globeCanvas.style.visibility !== (vis ? 'visible' : 'hidden')) this.globeCanvas.style.visibility = vis ? 'visible' : 'hidden';
+      if (vis) this.drawGlobe(dOff > 0.001 ? Math.min(1, praw / dOff) : 0, this.clock.elapsedTime);
+    }
+
+    const rm = this.reducedMotion;
+    const atm = this.ATMOS[this.props.atmosphere] || this.ATMOS['Monsoon'];
+    const gr = this.GRADES[this.props.grade] || this.GRADES['Emerald Night'];
+    const feel = this.FEELS[this.props.cameraFeel] || this.FEELS['Cinematic Drift'];
+    if (this.grainEl && this._lastGrain !== feel.grain) { this.grainEl.style.opacity = String(feel.grain); this._lastGrain = feel.grain; }
+
+    this.mouseS.x += (this.mouse.x - this.mouseS.x) * Math.min(1, dt * 3.5);
+    this.mouseS.y += (this.mouse.y - this.mouseS.y) * Math.min(1, dt * 3.5);
+
+    const { a, b, t } = this.lerpKeys(this.keys, p);
+    const lerp = (i, j, k) => i + (j - i) * k;
+    const jit = feel.jitter ? (Math.sin(time * 11.3) * 0.18 + Math.sin(time * 7.1) * 0.12) : 0;
+    const sway = rm ? 0 : (Math.sin(time * 0.55) * 0.55 + jit) * feel.sway;
+    const bob = rm ? 0 : (Math.sin(time * 0.9) * 0.3 + jit * 0.5) * feel.bob;
+    const par = rm ? 0 : feel.par;
+    const swayAmp = p > 0.95 ? 0.12 : (p > 0.15 ? 0.7 : 1.4);
+    this.camera.position.set(lerp(a.pos[0], b.pos[0], t) + sway * swayAmp, Math.max(3.5, lerp(a.pos[1], b.pos[1], t) + bob * (p > 0.95 ? 0.2 : 1)), lerp(a.pos[2], b.pos[2], t));
+    this.camera.lookAt(lerp(a.look[0], b.look[0], t) + this.mouseS.x * 10 * par, lerp(a.look[1], b.look[1], t) - this.mouseS.y * 6 * par, lerp(a.look[2], b.look[2], t));
+
+    const sk = this.lerpKeys(this.skyKeys, p);
+    this.colA.set(sk.a.sky); this.colB.set(sk.b.sky); this.scene.background.copy(this.colA).lerp(this.colB, sk.t);
+    this.colA.set(sk.a.fog); this.colB.set(sk.b.fog); this.scene.fog.color.copy(this.colA).lerp(this.colB, sk.t);
+    this.gradeCol.set(gr.tint);
+    const dayMix = Math.max(0, Math.min(1, (p - 0.74) / 0.26));
+    this.scene.fog.color.lerp(this.gradeCol, 0.45 * (1 - dayMix * 0.92));
+    this.scene.background.lerp(this.gradeCol, 0.28 * (1 - dayMix * 0.95));
+    this.scene.fog.far = (sk.a.far + (sk.b.far - sk.a.far) * sk.t) * atm.fogMul;
+
+    const d = Math.max(0, (p - 0.78) / 0.22);
+    const day = Math.max(0, Math.min(1, (p - 0.74) / 0.26));       // 0 = night, 1 = morning
+    const dayE = day * day * (3 - 2 * day);                          // eased sunrise
+    const sunArc = Math.sin(Math.min(1, d) * Math.PI * 0.86);
+    this.dawn.material.opacity = sunArc * 0.9 * atm.haze;
+    this.dawnGreen.material.opacity = d * 0.28 * (1 - d * 0.5);
+    if (this._lastGrade !== this.props.grade) {
+      this._lastGrade = this.props.grade;
+      this.dawn.material.color.set(gr.dawn);
+      this.hemiNight.set(gr.hemi);
+      this.moonNight.set(gr.moon);
+      if (this.seatGlow) this.seatGlow.material.color.set(gr.seat);
+      if (this.lanterns) this.lanterns.material.color.set(gr.lantern);
+    }
+    const moonFade = Math.max(0, 1 - dayE * 1.3);
+    if (this.moonSprite) this.moonSprite.material.opacity = 0.85 * moonFade;
+    if (this.moonDisc) this.moonDisc.material.opacity = moonFade;
+    this.stars.material.opacity = 0.8 * Math.max(0, 1 - Math.max(0, (p - 0.68) / 0.20)) * atm.star;
+    if (this.benchHalo) this.benchHalo.material.opacity = 0.25 + d * 0.35 + Math.sin(time * 1.6) * 0.08;
+    if (this.seatGlow) this.seatGlow.material.opacity = 0.35 + d * 0.3 + Math.sin(time * 2.1) * 0.12;
+    if (this.moon) { this.moon.intensity = 1.0 + dayE * 1.9; this.moon.color.lerpColors(this.moonNight, this.sunDay, dayE); }
+    if (this.hemi) { this.hemi.intensity = 0.9 + dayE * 1.5; this.hemi.color.lerpColors(this.hemiNight, this.hemiDay, dayE); }
+    if (this.fillWarm) this.fillWarm.intensity = dayE * 2.2;
+    if (this.godRays) { const gd = Math.max(0, Math.min(1, (p - 0.74) / 0.26)) * (1 - Math.max(0, (p - 0.97) / 0.03)); this.godRays.forEach((s) => { s.material.opacity = gd * 0.22; }); }
+
+    if (this.scrimEl) {
+      const k = 0.28 + dayE * 0.34, b = 0.42 + dayE * 0.30;
+      this.scrimEl.style.background = 'linear-gradient(180deg,rgba(12,22,44,' + k.toFixed(3) + '),transparent 26%,transparent ' + (72 - dayE * 16).toFixed(0) + '%,rgba(4,10,8,' + b.toFixed(3) + '))';
+    }
+    const ri = atm.rain;
+    this.rain.visible = ri > 0.02 && dayE < 0.92;
+    this.rain.material.opacity = 0.3 * ri * Math.max(0, 1 - dayE * 1.15);
+    if (this.roadMat) this.roadMat.emissiveIntensity = atm.wet;
+    if (this.state.radio === 'ambience' && this.actx && this.actx.state === 'running') {
+      const at = this.actx.currentTime + 0.15;
+      const mkt = Math.max(0, 1 - Math.abs(p - 0.32) / 0.14);
+      this.gRain.gain.linearRampToValueAtTime(0.3 * ri * (1 - d * 0.9), at);
+      this.gMarket.gain.linearRampToValueAtTime(0.16 * mkt, at);
+      this.gHum.gain.linearRampToValueAtTime(0.38 * (1 - d * 0.75), at);
+      this.gDrone.gain.linearRampToValueAtTime(0.05 * (1 - d), at);
+    }
+    if (this.rain.visible) {
+      this.rain.position.set(this.camera.position.x, 0, this.camera.position.z);
+      const rp = this.rain.geometry.attributes.position;
+      for (let i = 0; i < rp.count; i++) { let y = rp.getY(i) - this.rainVel[i] * dt * (0.5 + ri * 0.6); if (y < 0) y = 150 + Math.random() * 10; rp.setY(i, y); }
+      rp.needsUpdate = true;
+    }
+
+    if (this.fireflies) { this.fireflies.material.opacity = 0.55 + Math.sin(time * 2.2) * 0.35; this.fireflies.position.y = rm ? 0 : Math.sin(time * 0.5) * 1.2; }
+    if (this.lanterns) this.lanterns.material.opacity = 0.85 + (rm ? 0 : Math.sin(time * 7) * 0.1);
+
+    if (this.cars && !rm) {
+      const flow = 0.35 + (1 - dayE) * 0.65;                 // thins out toward morning
+      for (let i = 0; i < this.cars.length; i++) {
+        const c = this.cars[i];
+        c.g.position.z += c.dir * c.speed * dt * flow;
+        if (c.dir > 0 && c.g.position.z > 40) c.g.position.z = -1090 - Math.random() * 60;
+        if (c.dir < 0 && c.g.position.z < -1100) c.g.position.z = 30 + Math.random() * 60;
+      }
+    }
+    if (this.people) {
+      const lively = Math.max(0, 1 - Math.abs(p - 0.3) / 0.34);   // busiest on the Jalan Alor stretch
+      for (let i = 0; i < this.people.length; i++) {
+        const q = this.people[i];
+        if (!rm) {
+          q.g.position.z += (q.side > 0 ? 1 : -1) * q.speed * dt;
+          if (q.g.position.z > -120) q.g.position.z = -720;
+          if (q.g.position.z < -730) q.g.position.z = -130;
+          q.g.position.y = Math.abs(Math.sin(time * 4.6 + q.phase)) * 0.16;   // walk bob
+        }
+        q.g.visible = lively > 0.06;
+      }
+    }
+    if (this.founderFigs && !rm) {
+      for (let i = 0; i < this.founderFigs.length; i++) {
+        const f = this.founderFigs[i];
+        f.g.position.y = f.base + Math.sin(time * 1.15 + f.phase) * 0.045;    // breathing
+        if (f.standing) f.g.rotation.y = -0.32 + Math.sin(time * 0.4) * 0.05;
+      }
+    }
+
+    this.checkReveals();
+
+    if (this.progressEl) this.progressEl.style.transform = 'scaleX(' + praw.toFixed(4) + ')';
+    if (this.chapterEl) {
+      const chapters = this.I18N[this.state.lang].chapters;
+      const ch = praw < dOff ? chapters[0] : chapters[p < 0.16 ? 1 : p < 0.45 ? 2 : p < 0.74 ? 3 : p < 0.92 ? 4 : 5];
+      if (this.chapterText !== ch) { this.chapterEl.textContent = ch; this.chapterText = ch; }
+    }
+
+    this.renderer.render(this.scene, this.camera);
+  }
+}
+</script>
+</body>
+</html>

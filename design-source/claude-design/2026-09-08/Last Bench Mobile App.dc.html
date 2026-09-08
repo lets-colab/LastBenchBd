@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="ds/styles.css">
+<link rel="stylesheet" href="ds/tokens/tokens.css">
+<link rel="stylesheet" href="ds/app-theme.css">
+<style>
+html,body{margin:0;padding:0;background:var(--lb-color-charcoal, #111111);}
+[data-lb-scroll]::-webkit-scrollbar{width:0;height:0;}
+a,a:hover{color:var(--lb-app-primary, #00C853);}
+button{font:inherit;}
+input,textarea{font:inherit;}
+@keyframes lbUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+@keyframes lbSheet{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:none;}}
+@keyframes lbDot{0%,60%,100%{opacity:.25;}30%{opacity:1;}}
+</style>
+</helmet>
+
+<div style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:34px 20px;background:radial-gradient(120% 80% at 50% 0%,#1E1E1E 0%,var(--lb-color-charcoal, #111111) 60%);box-sizing:border-box;">
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" width="{{ devW }}" height="{{ devH }}" hint-size="402px,874px">
+
+  <div style="height:100%;display:flex;flex-direction:column;background:var(--lb-app-background, #FAFAF8);font-family:var(--lb-font-body,'Sora'),system-ui,sans-serif;">
+
+    <!-- ═══ SCROLL BODY ═══ -->
+    <div ref="{{ scrollRef }}" data-lb-scroll="1" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+
+      <!-- ── HOME ── -->
+      <sc-if value="{{ vHome }}" hint-placeholder-val="{{ true }}">
+        <div style="animation:lbUp .4s ease both;">
+          <div style="padding:56px 22px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+            <div style="min-width:0;">
+              <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--lb-app-foreground, #111111);">{{ t.homeTitle }}</div>
+              <div style="font-size:14px;line-height:1.5;color:var(--lb-app-muted, #6B6F76);margin-top:7px;">{{ t.homeSub }}</div>
+            </div>
+            <button onClick="{{ cycleLang }}" aria-label="Switch language" style="flex:none;min-width:52px;min-height:44px;padding:0 12px;border-radius:999px;background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);color:var(--lb-app-foreground, #111111);font-size:11.5px;font-weight:600;letter-spacing:.1em;cursor:pointer;" style-hover="border-color:var(--lb-app-primary, #00C853);">{{ langLabel }}</button>
+          </div>
+
+          <div style="padding:0 22px 26px;display:flex;flex-direction:column;gap:14px;">
+            <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:16px;padding:18px 19px;display:flex;flex-direction:column;gap:13px;">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;">
+                <div style="font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--lb-app-muted, #6B6F76);">{{ t.progress }}</div>
+                <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:19px;font-weight:700;color:var(--lb-app-foreground, #111111);">{{ stageLabel }}</div>
+              </div>
+              <div style="height:8px;border-radius:999px;background:var(--lb-app-border, #E6F2E9);overflow:hidden;">
+                <div style="height:100%;width:{{ stagePct }};background:var(--lb-app-primary, #00C853);border-radius:999px;"></div>
+              </div>
+              <div style="font-size:12.5px;line-height:1.6;color:var(--lb-app-muted, #6B6F76);text-wrap:pretty;">{{ t.previewNote }}</div>
+            </div>
+
+            <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:16px;padding:6px 19px;">
+              <sc-for list="{{ stages }}" as="st" hint-placeholder-count="5">
+                <div style="display:flex;gap:14px;padding:14px 0;align-items:flex-start;">
+                  <div style="flex:none;display:flex;flex-direction:column;align-items:center;padding-top:3px;">
+                    <div style="width:11px;height:11px;border-radius:50%;background:{{ st.dot }};"></div>
+                    <div style="width:2px;flex:1;min-height:{{ st.railH }};background:var(--lb-app-border, #E6F2E9);margin-top:5px;"></div>
+                  </div>
+                  <div style="min-width:0;flex:1;">
+                    <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:15px;font-weight:600;color:{{ st.titleCol }};line-height:1.3;">{{ st.title }}</div>
+                    <div style="font-size:12.5px;line-height:1.5;color:var(--lb-app-muted, #6B6F76);margin-top:3px;">{{ st.meta }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:16px;padding:18px 19px;">
+              <div style="font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--lb-app-muted, #6B6F76);margin-bottom:8px;">{{ t.target }}</div>
+              <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:19px;font-weight:700;color:var(--lb-app-foreground, #111111);line-height:1.24;">{{ target }}</div>
+              <button data-tab="universities" onClick="{{ setTab }}" style="margin-top:14px;min-height:44px;padding:0 20px;border-radius:10px;background:var(--lb-app-primary, #00C853);border:0;color:var(--lb-app-background, #FAFAF8);font-size:12.5px;font-weight:700;cursor:pointer;" style-hover="opacity:.85;">{{ t.browseCta }}</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ── APPLICATIONS ── -->
+      <sc-if value="{{ vApps }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:lbUp .4s ease both;">
+          <div style="padding:56px 22px 20px;">
+            <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--lb-app-foreground, #111111);">{{ t.appsTitle }}</div>
+            <div style="font-size:14px;line-height:1.5;color:var(--lb-app-muted, #6B6F76);margin-top:7px;">{{ appsCount }}</div>
+          </div>
+
+          <div style="padding:0 22px 18px;">
+            <div style="font-size:13px;font-weight:600;color:var(--lb-app-muted, #6B6F76);margin-bottom:11px;">{{ t.filterByStatus }}</div>
+            <div data-lb-scroll="1" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;">
+              <sc-for list="{{ appFilters }}" as="f" hint-placeholder-count="4">
+                <button data-status="{{ f.k }}" onClick="{{ setAppFilter }}" style="flex:none;min-height:44px;padding:0 16px;border-radius:999px;background:{{ f.bg }};border:1px solid {{ f.bd }};color:{{ f.fg }};font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">{{ f.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="padding:0 22px 26px;display:flex;flex-direction:column;gap:12px;">
+            <sc-for list="{{ apps }}" as="a" hint-placeholder-count="3">
+              <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:16px;padding:19px;">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px;">
+                  <div style="min-width:0;flex:1;">
+                    <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:17px;font-weight:700;color:var(--lb-app-foreground, #111111);line-height:1.28;">{{ a.uni }}</div>
+                    <div style="font-size:13.5px;color:var(--lb-app-muted, #6B6F76);margin-top:4px;">{{ a.program }}</div>
+                    <div style="font-size:12px;color:var(--lb-app-muted, #6B6F76);margin-top:5px;">{{ a.country }}</div>
+                  </div>
+                  <div style="flex:none;padding:6px 12px;border-radius:999px;background:{{ a.badgeBg }};border:1.5px solid {{ a.badgeBd }};color:{{ a.badgeFg }};font-size:12px;font-weight:700;white-space:nowrap;">{{ a.badge }}</div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px;">
+                  <div style="font-size:12px;font-weight:600;color:var(--lb-app-muted, #6B6F76);">{{ a.statusLabel }}</div>
+                  <div style="font-size:12px;font-weight:700;color:var(--lb-app-foreground, #111111);">{{ a.pctLabel }}</div>
+                </div>
+                <div style="height:8px;border-radius:999px;background:var(--lb-app-border, #E6F2E9);overflow:hidden;">
+                  <div style="height:100%;width:{{ a.pct }};background:{{ a.badgeBd }};border-radius:999px;"></div>
+                </div>
+                <div style="border-top:1px solid var(--lb-app-border, #E6F2E9);margin-top:16px;padding-top:14px;">
+                  <div style="font-size:12px;line-height:1.6;color:var(--lb-app-muted, #6B6F76);text-wrap:pretty;">{{ t.appStatsNote }}</div>
+                </div>
+                <button style="width:100%;min-height:46px;margin-top:14px;border-radius:10px;background:var(--lb-app-primary, #00C853);border:0;color:var(--lb-app-background, #FAFAF8);font-size:12.5px;font-weight:700;cursor:pointer;" style-hover="opacity:.85;">{{ a.cta }}</button>
+              </div>
+            </sc-for>
+            <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:14px;padding:14px 15px;font-size:12px;line-height:1.6;color:var(--lb-app-muted, #6B6F76);text-wrap:pretty;">{{ t.appsNote }}</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ── UNIVERSITIES ── -->
+      <sc-if value="{{ vUnis }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:lbUp .4s ease both;">
+          <div style="padding:56px 22px 18px;">
+            <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--lb-app-foreground, #111111);">{{ t.unisTitle }}</div>
+            <div style="font-size:14px;line-height:1.5;color:var(--lb-app-muted, #6B6F76);margin-top:7px;">{{ unisCount }}</div>
+          </div>
+          <div data-lb-scroll="1" style="display:flex;gap:8px;overflow-x:auto;padding:0 22px 16px;scrollbar-width:none;">
+            <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+              <button data-filter="{{ f.k }}" onClick="{{ setFilter }}" style="flex:none;min-height:44px;padding:0 18px;border-radius:999px;background:{{ f.bg }};border:1px solid {{ f.bd }};color:{{ f.fg }};font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;">{{ f.label }}</button>
+            </sc-for>
+          </div>
+          <div style="padding:0 22px 26px;display:flex;flex-direction:column;gap:12px;">
+            <sc-for list="{{ campuses }}" as="u" hint-placeholder-count="6">
+              <div data-uni="{{ u.k }}" role="button" tabIndex="0" onClick="{{ openSv }}" onKeyDown="{{ keySv }}" aria-label="{{ u.aria }}" style="cursor:pointer;background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:16px;padding:17px;display:flex;flex-direction:column;gap:9px;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;" style-hover="border-color:var(--lb-app-primary, #00C853);box-shadow:0 10px 26px rgba(17,17,17,.08);transform:translateY(-2px);">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+                  <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:18px;font-weight:700;color:var(--lb-app-foreground, #111111);">{{ u.k }}</div>
+                  <div style="flex:none;font-size:11.5px;font-weight:600;letter-spacing:.1em;color:var(--lb-app-muted, #6B6F76);">{{ u.type }}</div>
+                </div>
+                <div>
+                  <div style="font-size:13.5px;font-weight:600;color:var(--lb-app-foreground, #111111);line-height:1.35;">{{ u.name }}</div>
+                  <div style="font-size:12.5px;color:var(--lb-app-muted, #6B6F76);margin-top:3px;">{{ u.city }}</div>
+                </div>
+                <div style="font-size:12.5px;line-height:1.55;color:var(--lb-app-muted, #6B6F76);text-wrap:pretty;">{{ u.prog }}</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--lb-app-border, #E6F2E9);padding-top:11px;">
+                  <div style="font-size:11.5px;font-weight:600;letter-spacing:.08em;color:{{ u.fitCol }};">{{ u.fitLabel }}</div>
+                  <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:var(--lb-app-foreground, #111111);">{{ t.view360 }}
+                    <svg width="11" height="9" viewBox="0 0 11 9" aria-hidden="true"><path d="M1 4.5h8M6.5 1L10 4.5 6.5 8" stroke="var(--lb-app-foreground, #111111)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+            <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:14px;padding:14px 15px;font-size:12px;line-height:1.6;color:var(--lb-app-muted, #6B6F76);text-wrap:pretty;">{{ t.campusNote }}</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ── AI GUIDES ── -->
+      <sc-if value="{{ vGuides }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:lbUp .4s ease both;">
+          <div style="padding:56px 22px 16px;">
+            <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--lb-app-foreground, #111111);">{{ t.guidesTitle }}</div>
+            <div style="font-size:14px;line-height:1.5;color:var(--lb-app-muted, #6B6F76);margin-top:7px;">{{ t.guidesSub }}</div>
+          </div>
+          <div data-lb-scroll="1" style="display:flex;gap:8px;overflow-x:auto;padding:0 22px 14px;scrollbar-width:none;">
+            <sc-for list="{{ guides }}" as="g" hint-placeholder-count="3">
+              <button data-guide="{{ g.k }}" onClick="{{ setGuide }}" style="flex:none;display:flex;align-items:center;gap:9px;min-height:44px;padding:0 15px 0 7px;border-radius:999px;background:{{ g.bg }};border:1px solid {{ g.bd }};cursor:pointer;">
+                <span style="width:31px;height:31px;border-radius:50%;background:{{ g.avBg }};color:{{ g.avFg }};font-size:11.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;">{{ g.init }}</span>
+                <span style="text-align:left;">
+                  <span style="display:block;font-size:12.5px;font-weight:600;color:{{ g.fg }};line-height:1.2;">{{ g.name }}</span>
+                  <span style="display:block;font-size:11px;font-weight:600;letter-spacing:.08em;color:{{ g.roleCol }};margin-top:2px;">{{ g.role }}</span>
+                </span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="padding:0 22px 22px;display:flex;flex-direction:column;gap:11px;">
+            <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:14px;padding:13px 15px;font-size:12px;line-height:1.6;color:var(--lb-app-muted, #6B6F76);text-wrap:pretty;">{{ t.guideNote }}</div>
+            <sc-for list="{{ msgs }}" as="m" hint-placeholder-count="2">
+              <div style="align-self:{{ m.align }};max-width:84%;background:{{ m.bg }};border:1px solid {{ m.bd }};border-radius:16px;padding:12px 15px;">
+                <div style="font-size:11px;font-weight:700;letter-spacing:.1em;color:{{ m.tagCol }};margin-bottom:6px;">{{ m.tag }}</div>
+                <div style="font-size:13.5px;line-height:1.6;color:{{ m.fg }};text-wrap:pretty;white-space:pre-wrap;">{{ m.text }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ typing }}" hint-placeholder-val="{{ false }}">
+              <div style="align-self:flex-start;display:flex;gap:5px;padding:13px 16px;background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:16px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:var(--lb-app-primary, #00C853);animation:lbDot 1.2s infinite;"></span>
+                <span style="width:6px;height:6px;border-radius:50%;background:var(--lb-app-primary, #00C853);animation:lbDot 1.2s .2s infinite;"></span>
+                <span style="width:6px;height:6px;border-radius:50%;background:var(--lb-app-primary, #00C853);animation:lbDot 1.2s .4s infinite;"></span>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ── PROFILE ── -->
+      <sc-if value="{{ vProfile }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:lbUp .4s ease both;">
+          <div style="background:var(--lb-app-primary, #00C853);padding:52px 22px 30px;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:14px;">
+              <div style="width:88px;height:88px;border-radius:50%;background:rgba(250,250,248,.28);border:2px solid rgba(250,250,248,.5);display:flex;align-items:center;justify-content:center;font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:31px;font-weight:700;color:var(--lb-app-background, #FAFAF8);">{{ myInit }}</div>
+              <div style="text-align:center;">
+                <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:23px;font-weight:700;color:var(--lb-app-background, #FAFAF8);line-height:1.2;">{{ myName }}</div>
+                <div style="font-size:13px;color:rgba(250,250,248,.85);margin-top:4px;">{{ myEmail }}</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:22px;">
+              <sc-for list="{{ profileStats }}" as="ps" hint-placeholder-count="3">
+                <div style="flex:1;background:rgba(250,250,248,.2);border-radius:12px;padding:11px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;">
+                  <div style="font-size:11.5px;color:rgba(250,250,248,.85);">{{ ps.label }}</div>
+                  <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:19px;font-weight:700;color:var(--lb-app-background, #FAFAF8);">{{ ps.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:22px;">
+            <div style="display:flex;flex-direction:column;gap:11px;">
+              <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:17px;font-weight:700;color:var(--lb-app-foreground, #111111);">{{ t.quickAccess }}</div>
+              <sc-for list="{{ quickRows }}" as="q" hint-placeholder-count="3">
+                <button data-sheet="{{ q.sheet }}" onClick="{{ openSheet }}" style="text-align:left;width:100%;min-height:48px;background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:14px;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;transition:border-color .2s ease;" style-hover="border-color:var(--lb-app-primary, #00C853);">
+                  <span style="min-width:0;flex:1;">
+                    <span style="display:block;font-size:14px;font-weight:600;color:var(--lb-app-foreground, #111111);">{{ q.title }}</span>
+                    <span style="display:block;font-size:12.5px;color:var(--lb-app-muted, #6B6F76);margin-top:3px;">{{ q.meta }}</span>
+                  </span>
+                  <span style="flex:none;display:flex;align-items:center;justify-content:center;width:26px;height:26px;">
+                    <svg width="9" height="14" viewBox="0 0 9 14" aria-hidden="true"><path d="M1.5 1L7.5 7l-6 6" stroke="var(--lb-app-muted, #6B6F76)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </span>
+                </button>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:11px;">
+              <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:17px;font-weight:700;color:var(--lb-app-foreground, #111111);">{{ t.studyProfile }}</div>
+              <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:14px;padding:17px 18px;display:flex;flex-direction:column;gap:0;">
+                <sc-for list="{{ studyRows }}" as="sr" hint-placeholder-count="3">
+                  <div style="padding:{{ sr.pad }};border-top:{{ sr.rule }};">
+                    <div style="font-size:11.5px;font-weight:600;letter-spacing:.08em;color:var(--lb-app-muted, #6B6F76);">{{ sr.label }}</div>
+                    <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:17px;font-weight:700;color:var(--lb-app-foreground, #111111);margin-top:5px;">{{ sr.value }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="font-size:12px;line-height:1.6;color:var(--lb-app-muted, #6B6F76);text-wrap:pretty;">{{ t.profileNote }}</div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:11px;">
+              <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:17px;font-weight:700;color:var(--lb-app-foreground, #111111);">{{ t.preferences }}</div>
+              <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:14px;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                <div style="min-width:0;flex:1;">
+                  <div style="font-size:14px;font-weight:600;color:var(--lb-app-foreground, #111111);">{{ t.notifications }}</div>
+                  <div style="font-size:12.5px;color:var(--lb-app-muted, #6B6F76);margin-top:3px;">{{ t.notificationsMeta }}</div>
+                </div>
+                <button onClick="{{ toggleNotif }}" role="switch" aria-checked="{{ notif }}" aria-label="Notifications" style="flex:none;width:52px;height:32px;border-radius:999px;background:{{ notifBg }};border:0;cursor:pointer;padding:0;position:relative;transition:background .22s ease;">
+                  <span style="position:absolute;top:3px;left:{{ notifX }};width:26px;height:26px;border-radius:50%;background:var(--lb-app-surface, #ffffff);box-shadow:0 2px 6px rgba(17,17,17,.22);transition:left .22s cubic-bezier(.2,.8,.2,1);"></span>
+                </button>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding-top:18px;border-top:1px solid var(--lb-app-border, #E6F2E9);">
+              <div style="font-size:11.5px;color:var(--lb-app-muted, #6B6F76);">{{ t.version }}</div>
+              <div style="font-size:11.5px;color:var(--lb-app-muted, #6B6F76);text-align:center;">{{ t.motto }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <!-- ═══ GUIDES COMPOSER (pinned) ═══ -->
+    <sc-if value="{{ vGuides }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:none;display:flex;gap:9px;align-items:center;padding:12px 22px;background:var(--lb-app-surface, #ffffff);border-top:1px solid var(--lb-app-border, #E6F2E9);">
+        <input value="{{ draft }}" onChange="{{ setDraft }}" onKeyDown="{{ keyDraft }}" aria-label="Message your guide" placeholder="{{ t.askPlaceholder }}" style="flex:1;min-width:0;box-sizing:border-box;min-height:48px;background:var(--lb-app-background, #FAFAF8);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:999px;padding:0 18px;color:var(--lb-app-foreground, #111111);font-size:13.5px;outline:none;" style-focus="border-color:var(--lb-app-primary, #00C853);">
+        <button onClick="{{ send }}" aria-label="Send" style="flex:none;width:48px;height:48px;border-radius:50%;background:{{ sendBg }};border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+          <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="{{ sendFg }}"></path></svg>
+        </button>
+      </div>
+    </sc-if>
+
+    <!-- ═══ TAB BAR — five tabs, titles, icons and metrics from app/(tabs)/_layout.tsx ═══ -->
+    <div style="flex:none;display:flex;background:var(--lb-app-background, #FAFAF8);border-top:0.5px solid var(--lb-app-border, #E6F2E9);padding:8px 0 12px;height:68px;box-sizing:border-box;">
+      <button data-tab="home" onClick="{{ setTab }}" aria-label="Home" style="flex:1;background:transparent;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="{{ tab.home }}"></path></svg>
+        <span style="font-size:11px;font-weight:600;color:{{ tab.home }};margin-top:4px;">{{ t.tabHome }}</span>
+      </button>
+      <button data-tab="applications" onClick="{{ setTab }}" aria-label="Applications" style="flex:1;background:transparent;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="{{ tab.applications }}"></path></svg>
+        <span style="font-size:11px;font-weight:600;color:{{ tab.applications }};margin-top:4px;">{{ t.tabApps }}</span>
+      </button>
+      <button data-tab="universities" onClick="{{ setTab }}" aria-label="Universities" style="flex:1;background:transparent;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" fill="{{ tab.universities }}"></path></svg>
+        <span style="font-size:11px;font-weight:600;color:{{ tab.universities }};margin-top:4px;">{{ t.tabUnis }}</span>
+      </button>
+      <button data-tab="guides" onClick="{{ setTab }}" aria-label="AI Guides" style="flex:1;background:transparent;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" fill="{{ tab.guides }}"></path></svg>
+        <span style="font-size:11px;font-weight:600;color:{{ tab.guides }};margin-top:4px;">{{ t.tabGuides }}</span>
+      </button>
+      <button data-tab="profile" onClick="{{ setTab }}" aria-label="Profile" style="flex:1;background:transparent;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="{{ tab.profile }}"></path></svg>
+        <span style="font-size:11px;font-weight:600;color:{{ tab.profile }};margin-top:4px;">{{ t.tabProfile }}</span>
+      </button>
+    </div>
+
+    <!-- ═══ CAMPUS 360 SHEET ═══ -->
+    <sc-if value="{{ svOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:60;background:rgba(17,17,17,.55);display:flex;align-items:flex-end;">
+        <div data-lb-scroll="1" style="width:100%;max-height:88%;overflow-y:auto;scrollbar-width:none;background:var(--lb-app-background, #FAFAF8);border-radius:24px 24px 0 0;padding:18px 22px 32px;animation:lbSheet .34s cubic-bezier(.2,.8,.2,1) both;">
+          <div style="width:42px;height:4px;border-radius:999px;background:var(--lb-app-border, #E6F2E9);margin:0 auto 16px;"></div>
+          <div style="font-size:11.5px;font-weight:700;letter-spacing:.14em;color:var(--lb-app-muted, #6B6F76);margin-bottom:8px;">{{ t.campus360 }}</div>
+          <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:21px;font-weight:700;color:var(--lb-app-foreground, #111111);line-height:1.22;">{{ sv.name }}</div>
+          <div style="font-size:12.5px;color:var(--lb-app-muted, #6B6F76);margin-top:5px;">{{ sv.city }} · {{ sv.type }}</div>
+          <iframe src="{{ sv.url }}" title="Campus Street View 360" allow="accelerometer; gyroscope" style="width:100%;height:212px;border:0;border-radius:14px;margin-top:15px;display:block;background:var(--lb-app-border, #E6F2E9);"></iframe>
+          <div style="font-size:12px;line-height:1.6;color:var(--lb-app-muted, #6B6F76);margin-top:11px;text-wrap:pretty;">{{ sv.pinNote }}</div>
+          <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:14px;padding:15px 16px;margin-top:15px;">
+            <div style="font-size:11.5px;font-weight:600;letter-spacing:.1em;color:var(--lb-app-muted, #6B6F76);margin-bottom:7px;">{{ t.programs }}</div>
+            <div style="font-size:13.5px;line-height:1.6;color:var(--lb-app-foreground, #111111);text-wrap:pretty;">{{ sv.prog }}</div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:15px;flex-wrap:wrap;">
+            <a href="{{ sv.official }}" target="_blank" rel="noopener" style="flex:1;min-width:130px;min-height:48px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--lb-app-primary, #00C853);color:var(--lb-app-background, #FAFAF8);font-size:12.5px;font-weight:700;text-decoration:none;">{{ t.official }}</a>
+            <button onClick="{{ closeSheet }}" style="flex:1;min-width:130px;min-height:48px;border-radius:10px;background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);color:var(--lb-app-foreground, #111111);font-size:12.5px;font-weight:700;cursor:pointer;">{{ t.close }}</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ═══ COMMUNITY ROOM SHEET (deep-link only — `href: null` in _layout.tsx) ═══ -->
+    <sc-if value="{{ roomOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:60;background:rgba(17,17,17,.55);display:flex;align-items:flex-end;">
+        <div data-lb-scroll="1" style="width:100%;height:92%;overflow-y:auto;scrollbar-width:none;background:var(--lb-app-background, #FAFAF8);border-radius:24px 24px 0 0;padding:18px 22px 32px;animation:lbSheet .34s cubic-bezier(.2,.8,.2,1) both;">
+          <div style="width:42px;height:4px;border-radius:999px;background:var(--lb-app-border, #E6F2E9);margin:0 auto 16px;"></div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;">
+            <div style="min-width:0;">
+              <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:21px;font-weight:700;color:var(--lb-app-foreground, #111111);line-height:1.2;">{{ t.roomTitle }}</div>
+              <div style="font-size:12.5px;color:var(--lb-app-muted, #6B6F76);margin-top:4px;">{{ t.roomSub }}</div>
+            </div>
+            <button onClick="{{ closeSheet }}" aria-label="Close" style="flex:none;width:44px;height:44px;border-radius:50%;background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);color:var(--lb-app-foreground, #111111);font-size:17px;cursor:pointer;">×</button>
+          </div>
+
+          <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:16px;padding:15px 16px;display:flex;gap:11px;align-items:flex-start;">
+            <div style="width:34px;height:34px;border-radius:50%;background:var(--lb-app-primary, #00C853);color:var(--lb-app-background, #FAFAF8);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;">{{ myInit }}</div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;">
+              <textarea value="{{ postDraft }}" onChange="{{ setPostDraft }}" onKeyDown="{{ keyPost }}" rows="2" aria-label="Write a post to the room" placeholder="{{ t.postPlaceholder }}" style="width:100%;box-sizing:border-box;resize:vertical;min-height:52px;background:var(--lb-app-background, #FAFAF8);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:12px;padding:11px 13px;color:var(--lb-app-foreground, #111111);font-size:13.5px;line-height:1.55;outline:none;" style-focus="border-color:var(--lb-app-primary, #00C853);"></textarea>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+                <span style="font-size:11.5px;line-height:1.5;color:var(--lb-app-muted, #6B6F76);">{{ t.postNote }}</span>
+                <button onClick="{{ submitPost }}" style="flex:none;min-height:44px;padding:0 22px;border-radius:10px;background:{{ postBg }};border:0;color:{{ postFg }};font-size:12.5px;font-weight:700;cursor:pointer;">{{ t.post }}</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
+            <sc-for list="{{ posts }}" as="p" hint-placeholder-count="3">
+              <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:16px;padding:16px 17px;">
+                <div style="display:flex;gap:11px;align-items:center;">
+                  <div style="width:34px;height:34px;border-radius:50%;background:{{ p.avBg }};color:{{ p.avFg }};font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none;">{{ p.init }}</div>
+                  <div style="min-width:0;flex:1;">
+                    <div style="font-size:13.5px;font-weight:600;color:var(--lb-app-foreground, #111111);">{{ p.name }}</div>
+                    <div style="font-size:11.5px;font-weight:600;letter-spacing:.06em;color:var(--lb-app-muted, #6B6F76);margin-top:2px;">{{ p.tag }} · {{ p.time }}</div>
+                  </div>
+                </div>
+                <div style="font-size:13.5px;line-height:1.6;color:var(--lb-app-foreground, #111111);margin-top:11px;text-wrap:pretty;">{{ p.text }}</div>
+                <div style="display:flex;gap:9px;margin-top:13px;flex-wrap:wrap;">
+                  <button data-id="{{ p.id }}" onClick="{{ toggleLike }}" style="min-height:44px;padding:0 16px;border-radius:999px;background:{{ p.likeBg }};border:1px solid {{ p.likeBd }};color:{{ p.likeFg }};font-size:11.5px;font-weight:700;letter-spacing:.06em;cursor:pointer;">▲ {{ p.likeLabel }}</button>
+                  <button data-id="{{ p.id }}" onClick="{{ toggleReply }}" style="min-height:44px;padding:0 16px;border-radius:999px;background:{{ p.replyBg }};border:1px solid {{ p.replyBd }};color:{{ p.replyFg }};font-size:11.5px;font-weight:700;letter-spacing:.06em;cursor:pointer;">{{ p.replyLabel }}</button>
+                </div>
+                <sc-if value="{{ p.hasReplies }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-direction:column;gap:10px;margin-top:13px;padding-left:14px;border-left:2px solid var(--lb-app-border, #E6F2E9);">
+                    <sc-for list="{{ p.replies }}" as="r" hint-placeholder-count="1">
+                      <div>
+                        <div style="font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--lb-app-foreground, #111111);margin-bottom:4px;">{{ r.who }}</div>
+                        <div style="font-size:13px;line-height:1.55;color:var(--lb-app-foreground, #111111);text-wrap:pretty;">{{ r.text }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ p.replyOpen }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap;">
+                    <input value="{{ replyDraft }}" onChange="{{ setReplyDraft }}" onKeyDown="{{ keyReply }}" aria-label="Write a reply" placeholder="{{ t.replyPlaceholder }}" style="flex:1;min-width:150px;box-sizing:border-box;min-height:44px;background:var(--lb-app-background, #FAFAF8);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:999px;padding:0 15px;color:var(--lb-app-foreground, #111111);font-size:13px;outline:none;" style-focus="border-color:var(--lb-app-primary, #00C853);">
+                    <button onClick="{{ submitReply }}" style="flex:none;min-height:44px;padding:0 18px;border-radius:10px;background:var(--lb-app-primary, #00C853);border:0;color:var(--lb-app-background, #FAFAF8);font-size:11.5px;font-weight:700;letter-spacing:.06em;cursor:pointer;">{{ t.reply }}</button>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ═══ DOCUMENTS SHEET (no screen exists in app/ yet — placed here pending a decision) ═══ -->
+    <sc-if value="{{ docsOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:60;background:rgba(17,17,17,.55);display:flex;align-items:flex-end;">
+        <div data-lb-scroll="1" style="width:100%;max-height:92%;overflow-y:auto;scrollbar-width:none;background:var(--lb-app-background, #FAFAF8);border-radius:24px 24px 0 0;padding:18px 22px 32px;animation:lbSheet .34s cubic-bezier(.2,.8,.2,1) both;">
+          <div style="width:42px;height:4px;border-radius:999px;background:var(--lb-app-border, #E6F2E9);margin:0 auto 16px;"></div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;">
+            <div style="min-width:0;">
+              <div style="font-family:var(--lb-font-display,'General Sans'),system-ui,sans-serif;font-size:21px;font-weight:700;color:var(--lb-app-foreground, #111111);line-height:1.2;">{{ t.docsTitle }}</div>
+              <div style="font-size:12.5px;color:var(--lb-app-muted, #6B6F76);margin-top:4px;">{{ docsLabel }}</div>
+            </div>
+            <button onClick="{{ closeSheet }}" aria-label="Close" style="flex:none;width:44px;height:44px;border-radius:50%;background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);color:var(--lb-app-foreground, #111111);font-size:17px;cursor:pointer;">×</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:11px;">
+            <sc-for list="{{ docs }}" as="d" hint-placeholder-count="6">
+              <button data-id="{{ d.id }}" onClick="{{ toggleDoc }}" aria-pressed="{{ d.done }}" style="text-align:left;background:var(--lb-app-surface, #ffffff);border:1px solid {{ d.bd }};border-radius:14px;padding:15px 16px;display:flex;gap:13px;align-items:center;cursor:pointer;min-height:48px;transition:border-color .2s ease;">
+                <span style="width:23px;height:23px;border-radius:7px;background:{{ d.boxBg }};border:1.5px solid {{ d.boxBd }};flex:none;display:flex;align-items:center;justify-content:center;color:var(--lb-app-background, #FAFAF8);font-size:13px;font-weight:700;">{{ d.mark }}</span>
+                <span style="min-width:0;flex:1;">
+                  <span style="display:block;font-size:13.5px;font-weight:600;color:var(--lb-app-foreground, #111111);line-height:1.35;">{{ d.name }}</span>
+                  <span style="display:block;font-size:12.5px;color:var(--lb-app-muted, #6B6F76);margin-top:3px;">{{ d.meta }}</span>
+                </span>
+              </button>
+            </sc-for>
+            <div style="background:var(--lb-app-surface, #ffffff);border:1px solid var(--lb-app-border, #E6F2E9);border-radius:14px;padding:14px 15px;font-size:12px;line-height:1.6;color:var(--lb-app-muted, #6B6F76);text-wrap:pretty;">{{ t.docsNote }}</div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:960},&quot;studentName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Adiba Rahman&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Student&quot;},&quot;studentEmail&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;adiba@example.com&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Student&quot;},&quot;targetUni&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Universiti Malaya&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Student&quot;},&quot;journeyStage&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:4,&quot;min&quot;:1,&quot;max&quot;:5,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Student&quot;},&quot;startTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;applications&quot;,&quot;universities&quot;,&quot;guides&quot;,&quot;profile&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;App&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+
+    // Campus dataset — same 15 as the landing and the desktop dashboard.
+    this.UNIS = [
+      { k:'UM', name:'Universiti Malaya', city:'Kuala Lumpur', type:'PUBLIC', prog:'Computer Science · Engineering · Medicine · Law', sv:[3.1213,101.6559,40], fit:'strong' },
+      { k:'UKM', name:'Universiti Kebangsaan Malaysia', city:'Bangi, Selangor', type:'PUBLIC', prog:'IT · Engineering · Science · Health Sciences', sv:[2.9296,101.7776,80], fit:'strong' },
+      { k:'UPM', name:'Universiti Putra Malaysia', city:'Serdang, Selangor', type:'PUBLIC', prog:'Agriculture · Engineering · Food Tech · Veterinary', sv:[2.9986,101.7070,60], fit:'strong' },
+      { k:'UTM', name:'Universiti Teknologi Malaysia', city:'Johor Bahru, Johor', type:'PUBLIC', prog:'Engineering (all) · Architecture · Computer Science', sv:[1.5594,103.6381,200], fit:'good' },
+      { k:'UiTM', name:'Universiti Teknologi MARA', city:'Shah Alam, Selangor', type:'PUBLIC', prog:'Business · Accountancy · Law · Mass Communication', sv:[3.0678,101.4967,120], fit:'good', approx:true },
+      { k:'MMU', name:'Multimedia University', city:'Cyberjaya, Selangor', type:'PRIVATE', prog:'Software Engineering · IT · Multimedia Design', sv:[2.9285,101.6410,90], fit:'strong' },
+      { k:'HELP', name:'HELP University', city:'Kuala Lumpur', type:'PRIVATE', prog:'Business · Economics · Psychology · Finance', sv:[3.1116,101.6266,90], fit:'good', approx:true },
+      { k:'Taylor\u2019s', name:'Taylor\u2019s University', city:'Subang Jaya, Selangor', type:'PRIVATE', prog:'Hospitality · Culinary Arts · Business · Law', sv:[3.0641,101.6168,90], fit:'explore' },
+      { k:'Sunway', name:'Sunway University', city:'Subang Jaya, Selangor', type:'PRIVATE', prog:'Business · Accounting · Computing · Nursing', sv:[3.0685,101.6039,200], fit:'good' },
+      { k:'APU', name:'Asia Pacific University', city:'Technology Park, Kuala Lumpur', type:'PRIVATE', prog:'Software Eng. · Data Science · Cyber Security', sv:[3.0498,101.7005,120], fit:'strong' },
+      { k:'UCSI', name:'UCSI University', city:'Cheras, Kuala Lumpur', type:'PRIVATE', prog:'Medicine (MBBS) · Pharmacy · Architecture · Music', sv:[3.0837,101.7333,60], fit:'explore' },
+      { k:'UoC', name:'University of Cyberjaya', city:'Cyberjaya, Selangor', type:'PRIVATE', prog:'Medicine (MBBS) · Dentistry · Pharmacy · Nursing', sv:[2.9226,101.6549,120], fit:'good', approx:true },
+      { k:'Lincoln', name:'Lincoln University College', city:'Petaling Jaya, Selangor', type:'PRIVATE', prog:'Medicine (MBBS) · Engineering · IT · Pharmacy', sv:[3.0810,101.5860,90], fit:'good', approx:true },
+      { k:'MSU', name:'Management and Science University', city:'Shah Alam, Selangor', type:'PRIVATE', prog:'Business · IT · Engineering · Health Sciences', sv:[3.0725,101.5545,120], fit:'good', approx:true },
+      { k:'Limkokwing', name:'Limkokwing University', city:'Cyberjaya, Selangor', type:'PRIVATE', prog:'Graphic & Fashion Design · Film · Animation · Media', sv:[2.9298,101.6520,60], fit:'explore', approx:true },
+    ];
+    this.byKey = {};
+    this.UNIS.forEach((u) => { this.byKey[u.k] = u; });
+
+    // Status config lifted verbatim from app/(tabs)/applications.tsx, including
+    // the status order that drives the progress percentage.
+    this.STATUS = {
+      draft: { label:'Draft', color:'#6b7280', bgLight:'#f3f4f6' },
+      documents_received: { label:'Documents Received', color:'#3b82f6', bgLight:'#eff6ff' },
+      profile_analyzed: { label:'Profile Analyzed', color:'#8b5cf6', bgLight:'#faf5ff' },
+      shortlisted: { label:'Shortlisted', color:'#f59e0b', bgLight:'#fffbeb' },
+      application_drafted: { label:'Application Drafted', color:'#06b6d4', bgLight:'#ecfdf5' },
+      submitted_to_university: { label:'Submitted', color:'#3b82f6', bgLight:'#eff6ff' },
+      under_review: { label:'Under Review', color:'#f59e0b', bgLight:'#fffbeb' },
+      offer_received: { label:'Offer Received', color:'#10b981', bgLight:'#f0fdf4' },
+      visa_application_filed: { label:'Visa Filed', color:'#06b6d4', bgLight:'#ecfdf5' },
+      visa_decision: { label:'Visa Decision', color:'#10b981', bgLight:'#f0fdf4' },
+      pre_departure: { label:'Pre-Departure', color:'#10b981', bgLight:'#f0fdf4' },
+      rejected: { label:'Rejected', color:'#ef4444', bgLight:'#fef2f2' },
+    };
+    this.STATUS_ORDER = ['draft','documents_received','profile_analyzed','shortlisted','application_drafted','submitted_to_university','under_review','offer_received','visa_application_filed','visa_decision','pre_departure'];
+
+    this.PROMPTS = {
+      sayem: "You are an AI guide on the Last Bench platform, answering in the voice of Sayem Ahmed, Last Bench's co-founder focused on the student journey and application process. Last Bench is a transparent student accelerator and community helping Bangladeshi students explore studying in Malaysia — it is NOT a consultancy and never guarantees visas, admissions, fees or timelines. This is a design prototype with no connected backend, so you do not have access to any real user's documents or application status — never invent specific personal statuses, dates or outcomes; if asked about 'my application', explain this is a preview and describe what the real product would show. Never state specific tuition fees, visa approval rates, or processing times as fact. Keep replies warm and concise (2-4 sentences).",
+      fahim: "You are an AI guide on the Last Bench platform, answering in the voice of Fahim Shahbaz, Last Bench's co-founder focused on career and university-fit guidance for Bangladeshi students exploring Malaysia. Reason in general terms about matching grades, budget and goals to Malaysian universities and programs. Never state specific tuition fees, visa approval rates, or guaranteed outcomes as fact — you don't have verified current data, and Last Bench never guarantees admissions or visas. This is a design prototype with no real user data behind it. Keep replies warm, concise (2-4 sentences), and suggest checking official university sources for current figures.",
+      erfan: "You are an AI guide on the Last Bench platform, answering in the voice of Erfan Uddin, Last Bench's co-founder focused on community. Talk about the community room, connecting with other students, and general encouragement for Bangladeshi students exploring studying in Malaysia. This is a design prototype — don't invent specific real posts, people or events beyond what's generic and illustrative. Never guarantee outcomes. Keep replies warm and concise (2-4 sentences).",
+    };
+
+    this.GUIDES = [
+      { k:'sayem', name:'Sayem Ahmed', role:'CEO', init:'SA' },
+      { k:'fahim', name:'Fahim Shahbaz', role:'COO', init:'FS' },
+      { k:'erfan', name:'Erfan Uddin', role:'CBIO', init:'EU' },
+    ];
+
+    this.STAGES = [
+      { title:'Documents Received', meta:'Transcripts and passport on file', bnTitle:'নথি গৃহীত', bnMeta:'ট্রান্সক্রিপ্ট ও পাসপোর্ট জমা' },
+      { title:'Profile Analyzed', meta:'Grades and budget matched to programmes', bnTitle:'প্রোফাইল বিশ্লেষিত', bnMeta:'ফলাফল ও বাজেট প্রোগ্রামের সাথে মিলানো' },
+      { title:'Shortlisted', meta:'Five campuses shortlisted with you', bnTitle:'শর্টলিস্ট সম্পন্ন', bnMeta:'আপনার সাথে পাঁচটি ক্যাম্পাস বাছাই' },
+      { title:'Submitted', meta:'Sent to your first-choice university', bnTitle:'আবেদন জমা', bnMeta:'প্রথম পছন্দের বিশ্ববিদ্যালয়ে পাঠানো' },
+      { title:'Offer & Visa', meta:'Not started', bnTitle:'অফার ও ভিসা', bnMeta:'শুরু হয়নি' },
+    ];
+
+    this.I18N = {
+      en: {
+        tabHome:'Home', tabApps:'Applications', tabUnis:'Universities', tabGuides:'AI Guides', tabProfile:'Profile',
+        homeTitle:'Your journey', homeSub:'Four steps done. One to go.',
+        progress:'PROGRESS', target:'TARGET UNIVERSITY', browseCta:'Browse universities',
+        previewNote:'This tracker is a design preview. No real application record is connected yet.',
+        appsTitle:'Applications', filterByStatus:'Filter by Status',
+        appsNote:'Sample applications, shown to demonstrate the status flow. Your real applications appear here once an account is connected.',
+        appStatsNote:'Acceptance and visa figures appear here only when a university supplies verified numbers. Last Bench does not estimate them.',
+        unisTitle:'Universities', view360:'VIEW 360', campus360:'CAMPUS 360', programs:'PROGRAMMES', official:'Official site', close:'Close',
+        campusNote:'Programme lists come from Last Bench\u2019s own research. Confirm current intakes, fees and entry requirements with each university directly.',
+        guidesTitle:'AI Guides', guidesSub:'Three founders. Ask any of them.',
+        guideNote:'This is a design preview \u2014 no real file or profile is loaded, so nothing said here is advice about your actual application.',
+        askPlaceholder:'Ask about your journey\u2026',
+        quickAccess:'Quick Access', studyProfile:'Study Profile', preferences:'Preferences',
+        notifications:'Notifications', notificationsMeta:'Receive updates and messages',
+        profileNote:'Preview values. Your real profile fills these in once an account is connected.',
+        roomTitle:'Community Room', roomSub:'Students further along answer the ones just starting.',
+        postPlaceholder:'Ask the room, or share what you worked out\u2026',
+        postNote:'Preview room \u2014 posts stay on this device.', post:'Post', reply:'Reply', replyPlaceholder:'Write a reply\u2026',
+        docsTitle:'My Documents', docsNote:'Checklist items are illustrative preview data, not real records.',
+        fitStrong:'STRONG FIT', fitGood:'GOOD FIT', fitExplore:'WORTH EXPLORING',
+        approxPin:'Approximate pin \u2014 this drops you in the campus vicinity, not at a verified gate.',
+        exactPin:'Verified campus pin. Drag inside Street View to look around.',
+        version:'last bench v1.0.0', motto:'For Those Who Last, To Create a Benchmark',
+        qRoom:'Community Room', qRoomMeta:'Deep-linked \u2014 not a tab in the shipped app',
+        qDocs:'My Documents', qDocsMeta:'Checklist for your application file',
+        qMessages:'All Messages', qMessagesMeta:'Preview \u2014 no real threads connected',
+        stAll:'All', you:'YOU', system:'SYSTEM', helpful:'HELPFUL', replies:'REPLIES',
+        srClass:'CLASS', srField:'FIELD OF INTEREST', srDest:'DESTINATION',
+        psApps:'Applications', psGuides:'Guides', psRoom:'Room',
+      },
+      bn: {
+        tabHome:'হোম', tabApps:'আবেদন', tabUnis:'বিশ্ববিদ্যালয়', tabGuides:'গাইড', tabProfile:'প্রোফাইল',
+        homeTitle:'আপনার যাত্রা', homeSub:'চারটি ধাপ শেষ। একটি বাকি।',
+        progress:'অগ্রগতি', target:'লক্ষ্য বিশ্ববিদ্যালয়', browseCta:'বিশ্ববিদ্যালয় দেখুন',
+        previewNote:'এই ট্র্যাকারটি একটি ডিজাইন প্রিভিউ। এখনো কোনো আসল আবেদনের রেকর্ড যুক্ত নেই।',
+        appsTitle:'আবেদন', filterByStatus:'অবস্থা অনুযায়ী ছাঁকুন',
+        appsNote:'অবস্থার ধারা বোঝাতে নমুনা আবেদন দেখানো হচ্ছে। অ্যাকাউন্ট যুক্ত হলে আপনার আসল আবেদন এখানে আসবে।',
+        appStatsNote:'বিশ্ববিদ্যালয় যাচাই করা সংখ্যা দিলে কেবল তখনই ভর্তি ও ভিসার হার এখানে দেখানো হবে। লাস্ট বেঞ্চ এগুলো অনুমান করে না।',
+        unisTitle:'বিশ্ববিদ্যালয়', view360:'৩৬০ দেখুন', campus360:'ক্যাম্পাস ৩৬০', programs:'প্রোগ্রাম', official:'অফিসিয়াল সাইট', close:'বন্ধ করুন',
+        campusNote:'প্রোগ্রামের তালিকা লাস্ট বেঞ্চের নিজস্ব গবেষণা থেকে নেওয়া। ইনটেক, ফি ও ভর্তির শর্ত সরাসরি বিশ্ববিদ্যালয় থেকে যাচাই করুন।',
+        guidesTitle:'এআই গাইড', guidesSub:'তিনজন প্রতিষ্ঠাতা। যাকে খুশি জিজ্ঞাসা করুন।',
+        guideNote:'এটি একটি ডিজাইন প্রিভিউ \u2014 কোনো আসল ফাইল বা প্রোফাইল লোড করা নেই।',
+        askPlaceholder:'আপনার যাত্রা নিয়ে জিজ্ঞাসা করুন\u2026',
+        quickAccess:'দ্রুত প্রবেশ', studyProfile:'পড়াশোনার প্রোফাইল', preferences:'পছন্দসমূহ',
+        notifications:'বিজ্ঞপ্তি', notificationsMeta:'আপডেট ও বার্তা পান',
+        profileNote:'প্রিভিউ মান। অ্যাকাউন্ট যুক্ত হলে আপনার আসল প্রোফাইল এখানে আসবে।',
+        roomTitle:'কমিউনিটি রুম', roomSub:'যারা এগিয়ে আছে, তারাই নতুনদের উত্তর দেয়।',
+        postPlaceholder:'রুমে জিজ্ঞাসা করুন, বা যা জেনেছেন শেয়ার করুন\u2026',
+        postNote:'প্রিভিউ রুম \u2014 পোস্ট এই ডিভাইসেই থাকে।', post:'পোস্ট', reply:'উত্তর', replyPlaceholder:'উত্তর লিখুন\u2026',
+        docsTitle:'আমার নথি', docsNote:'চেকলিস্টের আইটেমগুলো উদাহরণমাত্র, আসল রেকর্ড নয়।',
+        fitStrong:'দৃঢ় মিল', fitGood:'ভালো মিল', fitExplore:'দেখার মতো',
+        approxPin:'আনুমানিক পিন \u2014 এটি ক্যাম্পাসের আশপাশে নামায়, যাচাই করা গেটে নয়।',
+        exactPin:'যাচাই করা ক্যাম্পাস পিন। চারপাশ দেখতে স্ট্রিট ভিউ ঘোরান।',
+        version:'last bench v1.0.0', motto:'For Those Who Last, To Create a Benchmark',
+        qRoom:'কমিউনিটি রুম', qRoomMeta:'ডিপ-লিংক \u2014 অ্যাপের ট্যাব নয়',
+        qDocs:'আমার নথি', qDocsMeta:'আপনার আবেদন ফাইলের চেকলিস্ট',
+        qMessages:'সব বার্তা', qMessagesMeta:'প্রিভিউ \u2014 আসল থ্রেড যুক্ত নেই',
+        stAll:'সব', you:'আপনি', system:'সিস্টেম', helpful:'সহায়ক', replies:'উত্তর',
+        srClass:'শ্রেণি', srField:'আগ্রহের বিষয়', srDest:'গন্তব্য',
+        psApps:'আবেদন', psGuides:'গাইড', psRoom:'রুম',
+      },
+    };
+
+    let lang = 'en';
+    try { lang = localStorage.getItem('lb_lang') === 'bn' ? 'bn' : 'en'; } catch (e) {}
+
+    this.state = {
+      lang,
+      tab: props.startTab || 'home',
+      sheet: null,
+      filter: 'all',
+      appFilter: 'all',
+      guide: 'sayem',
+      draft: '',
+      typing: false,
+      sv: null,
+      notif: true,
+      postDraft: '',
+      openReply: null,
+      replyDraft: '',
+      msgs: {
+        sayem: [{ who:'ai', text:'Assalamu alaikum. I look after the journey from first question to boarding pass. Ask me how the process works \u2014 just know this is a design preview, so I can\u2019t see a real file for you yet.' }],
+        fahim: [{ who:'ai', text:'I work on fit: grades, budget, and what you actually want to do. Tell me what you\u2019re studying now and what you\u2019re aiming at, and I\u2019ll reason it through with you.' }],
+        erfan: [{ who:'ai', text:'I look after the room. Students further along answer the ones just starting. Ask me anything about the community, or what to post first.' }],
+      },
+      apps: [
+        { id:'a1', uni:'Universiti Malaya', program:'BSc Computer Science', country:'Malaysia', status:'under_review' },
+        { id:'a2', uni:'Asia Pacific University', program:'BSc Software Engineering', country:'Malaysia', status:'shortlisted' },
+        { id:'a3', uni:'Multimedia University', program:'BSc Information Technology', country:'Malaysia', status:'documents_received' },
+      ],
+      posts: [
+        { id:'p1', init:'RC', name:'Rahim Chowdhury', tag:'Sample post', time:'2h', likes:48, liked:false, seed:12, replies:[], text:'Starting a thread on the EMGS medical check \u2014 happy to share what mine looked like if people have questions.' },
+        { id:'p2', init:'NJ', name:'Nusrat Jahan', tag:'Sample post', time:'5h', likes:36, liked:false, seed:9, replies:[], text:'Does anyone have tips on researching scholarship options before intake deadlines? Compiling what I find into a thread.' },
+        { id:'p3', init:'EA', name:'Community Team', tag:'PINNED', time:'pinned', likes:104, liked:false, seed:40, replies:[], text:'New here? Start with the \u201cDhaka \u2192 KL checklist\u201d thread, then introduce yourself \u2014 people further along the journey are around to answer.' },
+      ],
+      docs: [
+        { id:'d1', name:'SSC & HSC Transcripts', meta:'Attested copies', done:true, bnName:'এসএসসি ও এইচএসসি ট্রান্সক্রিপ্ট', bnMeta:'সত্যায়িত কপি' },
+        { id:'d2', name:'Passport \u2014 valid 18+ months', meta:'Scan of the data page', done:true, bnName:'পাসপোর্ট \u2014 ১৮+ মাস বৈধ', bnMeta:'তথ্য পাতার স্ক্যান' },
+        { id:'d3', name:'Statement of Purpose', meta:'One page, your own words', done:true, bnName:'স্টেটমেন্ট অফ পারপাস', bnMeta:'এক পাতা, নিজের ভাষায়' },
+        { id:'d4', name:'Recommendation Letter', meta:'From a teacher who knows your work', done:false, bnName:'সুপারিশপত্র', bnMeta:'আপনাকে চেনেন এমন শিক্ষকের কাছ থেকে' },
+        { id:'d5', name:'IELTS Result', meta:'Or the university\u2019s own English test', done:false, bnName:'আইইএলটিএস ফলাফল', bnMeta:'অথবা বিশ্ববিদ্যালয়ের ইংরেজি পরীক্ষা' },
+        { id:'d6', name:'Financial Statement', meta:'Bank solvency for the visa file', done:false, bnName:'আর্থিক বিবরণী', bnMeta:'ভিসা ফাইলের জন্য ব্যাংক সচ্ছলতা' },
+      ],
+    };
+  }
+
+  toBottom() {
+    const el = this.scrollEl;
+    if (!el) return;
+    requestAnimationFrame(() => { el.scrollTop = el.scrollHeight; });
+  }
+
+  myName() { const n = String(this.props.studentName ?? 'Adiba Rahman').trim(); return n || 'Adiba Rahman'; }
+  myInitials() { return this.myName().split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase(); }
+  isBn() { return this.state.lang === 'bn'; }
+
+  cycleLang() {
+    const lang = this.isBn() ? 'en' : 'bn';
+    try { localStorage.setItem('lb_lang', lang); } catch (e) {}
+    this.setState({ lang });
+  }
+
+  submitPost() {
+    const t = (this.state.postDraft || '').trim();
+    if (!t) return;
+    const post = { id:'me' + Date.now(), init:this.myInitials(), name:this.myName(), tag:'YOU', time:'just now', likes:0, liked:false, seed:0, replies:[], text:t };
+    this.setState({ posts: [post, ...this.state.posts], postDraft: '' });
+  }
+
+  submitReply() {
+    const t = (this.state.replyDraft || '').trim();
+    const id = this.state.openReply;
+    if (!t || !id) return;
+    const me = this.myName();
+    this.setState({
+      posts: this.state.posts.map((p) => (p.id === id ? { ...p, replies: [...p.replies, { id: p.id + '-r' + p.replies.length, who: me, text: t }] } : p)),
+      replyDraft: '',
+    });
+  }
+
+  async send() {
+    const t = (this.state.draft || '').trim();
+    if (!t || this.state.typing) return;
+    const who = this.state.guide;
+    const hist = [...(this.state.msgs[who] || []), { who:'you', text:t }];
+    this.setState({ msgs: { ...this.state.msgs, [who]: hist }, draft:'', typing:true }, () => this.toBottom());
+    try {
+      let seq = hist.filter((m) => m.who !== 'error').slice(-8).map((m) => ({ role: m.who === 'you' ? 'user' : 'assistant', content: m.text }));
+      while (seq.length && seq[0].role !== 'user') seq = seq.slice(1);
+      const out = await window.claude.complete({ messages: seq, system: this.PROMPTS[who], max_tokens: 400 });
+      const next = [...(this.state.msgs[who] || []), { who:'ai', text: String(out || '').trim() || 'I didn\u2019t catch that \u2014 try asking again.' }];
+      this.setState({ msgs: { ...this.state.msgs, [who]: next }, typing:false }, () => this.toBottom());
+    } catch (err) {
+      console.error('Guide chat failed:', err);
+      const next = [...(this.state.msgs[who] || []), { who:'error', text:'That reply didn\u2019t come through. Check the connection and try again.' }];
+      this.setState({ msgs: { ...this.state.msgs, [who]: next }, typing:false }, () => this.toBottom());
+    }
+  }
+
+  renderVals() {
+    const s = this.state;
+    const bn = this.isBn();
+    const t = this.I18N[s.lang];
+
+    // App chrome colours mirror theme.config.js (light scheme) via ds/app-theme.css.
+    const PRIMARY = 'var(--lb-app-primary, #00C853)';
+    const BG = 'var(--lb-app-background, #FAFAF8)';
+    const SURFACE = 'var(--lb-app-surface, #ffffff)';
+    const FG = 'var(--lb-app-foreground, #111111)';
+    const MUTED = 'var(--lb-app-muted, #6B6F76)';
+    const BORDER = 'var(--lb-app-border, #E6F2E9)';
+    const WARNING = 'var(--lb-app-warning, #F59E0B)';
+    const num = (n) => (bn ? n.toLocaleString('bn-BD') : String(n));
+
+    const stageMax = this.STAGES.length;
+    const stageNow = Math.max(1, Math.min(stageMax, parseInt(this.props.journeyStage, 10) || 4));
+
+    const fitLabel = { strong: t.fitStrong, good: t.fitGood, explore: t.fitExplore };
+    const list = this.UNIS.filter((u) => s.filter === 'all' || u.type.toLowerCase() === s.filter);
+    const openU = s.sv ? this.byKey[s.sv] : null;
+    const doneCount = s.docs.filter((d) => d.done).length;
+
+    // Applications: status filter + progress, both following applications.tsx
+    const appStatuses = [...new Set(s.apps.map((a) => a.status))];
+    const shown = s.appFilter === 'all' ? s.apps : s.apps.filter((a) => a.status === s.appFilter);
+    const pctFor = (st) => { const i = this.STATUS_ORDER.indexOf(st); return i >= 0 ? ((i + 1) / this.STATUS_ORDER.length) * 100 : 0; };
+
+    const tabCol = (k) => (s.tab === k ? PRIMARY : MUTED);
+
+    return {
+      devW: 402,
+      devH: 874,
+      scrollRef: (el) => { this.scrollEl = el; },
+      t,
+      langLabel: bn ? 'EN' : 'বাং',
+      cycleLang: () => this.cycleLang(),
+      setTab: (e) => this.setState({ tab: e.currentTarget.dataset.tab, sheet: null, sv: null }),
+      tab: { home: tabCol('home'), applications: tabCol('applications'), universities: tabCol('universities'), guides: tabCol('guides'), profile: tabCol('profile') },
+      vHome: s.tab === 'home', vApps: s.tab === 'applications', vUnis: s.tab === 'universities',
+      vGuides: s.tab === 'guides', vProfile: s.tab === 'profile',
+
+      openSheet: (e) => this.setState({ sheet: e.currentTarget.dataset.sheet }),
+      closeSheet: () => this.setState({ sheet: null, sv: null }),
+      roomOpen: s.sheet === 'room',
+      docsOpen: s.sheet === 'docs',
+
+      stageLabel: num(stageNow) + ' / ' + num(stageMax),
+      stagePct: Math.round((stageNow / stageMax) * 100) + '%',
+      target: String(this.props.targetUni ?? 'Universiti Malaya'),
+      stages: this.STAGES.map((st, i) => ({
+        title: bn ? st.bnTitle : st.title,
+        meta: bn ? st.bnMeta : st.meta,
+        dot: i < stageNow - 1 ? PRIMARY : i === stageNow - 1 ? WARNING : BORDER,
+        titleCol: i < stageNow ? FG : MUTED,
+        railH: i === this.STAGES.length - 1 ? '0px' : '10px',
+      })),
+
+      appsCount: num(s.apps.length) + ' ' + (s.apps.length === 1 ? 'application' : 'applications') + ' · ' + num(shown.length) + ' shown',
+      appFilters: [{ k:'all', label: t.stAll + ' (' + num(s.apps.length) + ')' }].concat(
+        appStatuses.map((k) => ({ k, label: (this.STATUS[k] || { label:k }).label + ' (' + num(s.apps.filter((a) => a.status === k).length) + ')' }))
+      ).map((f) => ({
+        ...f,
+        bg: s.appFilter === f.k ? PRIMARY : SURFACE,
+        bd: s.appFilter === f.k ? PRIMARY : BORDER,
+        fg: s.appFilter === f.k ? BG : FG,
+      })),
+      setAppFilter: (e) => this.setState({ appFilter: e.currentTarget.dataset.status }),
+      apps: shown.map((a) => {
+        const cfg = this.STATUS[a.status] || { label:a.status, color:'#6b7280', bgLight:'#f3f4f6' };
+        const p = pctFor(a.status);
+        return {
+          uni: a.uni, program: a.program, country: '📍 ' + a.country,
+          statusLabel: cfg.label, badge: cfg.label, badgeBg: cfg.bgLight, badgeBd: cfg.color, badgeFg: cfg.color,
+          pct: Math.round(p) + '%', pctLabel: num(Math.round(p)) + '%',
+          cta: a.status === 'draft' ? 'Continue Application' : 'View Details',
+        };
+      }),
+
+      unisCount: num(this.UNIS.length) + ' campuses · ' + num(list.length) + ' shown',
+      filters: [
+        { k:'all', label: bn ? 'সব ১৫' : 'All 15' },
+        { k:'public', label: bn ? 'পাবলিক' : 'Public' },
+        { k:'private', label: bn ? 'প্রাইভেট' : 'Private' },
+      ].map((f) => ({
+        ...f,
+        bg: s.filter === f.k ? PRIMARY : SURFACE,
+        bd: s.filter === f.k ? PRIMARY : BORDER,
+        fg: s.filter === f.k ? BG : FG,
+      })),
+      setFilter: (e) => this.setState({ filter: e.currentTarget.dataset.filter }),
+      campuses: list.map((u) => ({
+        k: u.k, name: u.name, city: u.city, type: u.type, prog: u.prog,
+        fitLabel: fitLabel[u.fit], fitCol: u.fit === 'strong' ? FG : MUTED,
+        aria: u.name + ', ' + u.city + ', ' + u.type.toLowerCase() + '. Open campus Street View.',
+      })),
+      openSv: (e) => this.setState({ sv: e.currentTarget.dataset.uni, sheet: 'sv' }),
+      keySv: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.setState({ sv: e.currentTarget.dataset.uni, sheet: 'sv' }); } },
+      svOpen: s.sheet === 'sv' && !!openU,
+      sv: openU ? {
+        name: openU.name, city: openU.city, type: openU.type, prog: openU.prog,
+        url: 'https://maps.google.com/maps?layer=c&cbll=' + openU.sv[0] + ',' + openU.sv[1] + '&cbp=12,' + openU.sv[2] + ',,0,0&output=svembed',
+        official: 'https://www.google.com/search?q=' + encodeURIComponent(openU.name + ' Malaysia international student admissions'),
+        pinNote: openU.approx ? t.approxPin : t.exactPin,
+      } : { name:'', city:'', type:'', prog:'', url:'', official:'', pinNote:'' },
+
+      guides: this.GUIDES.map((g) => ({
+        ...g,
+        bg: s.guide === g.k ? PRIMARY : SURFACE,
+        bd: s.guide === g.k ? PRIMARY : BORDER,
+        fg: s.guide === g.k ? BG : FG,
+        roleCol: s.guide === g.k ? 'rgba(250,250,248,.85)' : MUTED,
+        avBg: s.guide === g.k ? BG : BORDER,
+        avFg: FG,
+      })),
+      setGuide: (e) => this.setState({ guide: e.currentTarget.dataset.guide }),
+      msgs: (s.msgs[s.guide] || []).map((m) => ({
+        text: m.text,
+        align: m.who === 'you' ? 'flex-end' : 'flex-start',
+        bg: m.who === 'you' ? FG : SURFACE,
+        bd: m.who === 'you' ? FG : (m.who === 'error' ? WARNING : BORDER),
+        fg: m.who === 'you' ? BG : FG,
+        tag: m.who === 'you' ? t.you : (m.who === 'error' ? t.system : (this.GUIDES.find((g) => g.k === s.guide) || {}).name),
+        tagCol: m.who === 'you' ? 'rgba(250,250,248,.8)' : MUTED,
+      })),
+      typing: s.typing,
+      draft: s.draft,
+      setDraft: (e) => this.setState({ draft: e.target.value }),
+      keyDraft: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.send(); } },
+      send: () => this.send(),
+      sendBg: s.draft.trim() && !s.typing ? PRIMARY : BORDER,
+      sendFg: s.draft.trim() && !s.typing ? BG : MUTED,
+
+      myName: this.myName(),
+      myInit: this.myInitials(),
+      myEmail: String(this.props.studentEmail ?? 'adiba@example.com'),
+      profileStats: [
+        { label: t.psApps, value: num(s.apps.length) },
+        { label: t.psGuides, value: num(this.GUIDES.length) },
+        { label: t.psRoom, value: num(s.posts.length) },
+      ],
+      quickRows: [
+        { sheet:'room', title: t.qRoom, meta: t.qRoomMeta },
+        { sheet:'docs', title: t.qDocs, meta: t.qDocsMeta },
+        { sheet:'room', title: t.qMessages, meta: t.qMessagesMeta },
+      ],
+      studyRows: [
+        { label: t.srClass, value: 'HSC 2025', pad: '0 0 14px', rule: 'none' },
+        { label: t.srField, value: 'Computer Science', pad: '14px 0', rule: '1px solid ' + BORDER },
+        { label: t.srDest, value: 'Malaysia', pad: '14px 0 0', rule: '1px solid ' + BORDER },
+      ],
+      notif: s.notif,
+      notifBg: s.notif ? PRIMARY : BORDER,
+      notifX: s.notif ? '23px' : '3px',
+      toggleNotif: () => this.setState({ notif: !s.notif }),
+
+      postDraft: s.postDraft,
+      setPostDraft: (e) => this.setState({ postDraft: e.target.value }),
+      keyPost: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.submitPost(); } },
+      submitPost: () => this.submitPost(),
+      postBg: s.postDraft.trim() ? PRIMARY : BORDER,
+      postFg: s.postDraft.trim() ? BG : MUTED,
+      replyDraft: s.replyDraft,
+      setReplyDraft: (e) => this.setState({ replyDraft: e.target.value }),
+      keyReply: (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); this.submitReply(); } },
+      submitReply: () => this.submitReply(),
+      toggleLike: (e) => {
+        const id = e.currentTarget.dataset.id;
+        this.setState({ posts: s.posts.map((p) => (p.id === id ? { ...p, liked: !p.liked } : p)) });
+      },
+      toggleReply: (e) => {
+        const id = e.currentTarget.dataset.id;
+        this.setState({ openReply: s.openReply === id ? null : id, replyDraft: '' });
+      },
+      posts: s.posts.map((p) => ({
+        ...p,
+        avBg: BORDER, avFg: FG,
+        likeLabel: num(p.likes + (p.liked ? 1 : 0)) + ' ' + t.helpful,
+        likeBg: p.liked ? PRIMARY : 'transparent',
+        likeFg: p.liked ? BG : MUTED,
+        likeBd: p.liked ? PRIMARY : BORDER,
+        replyLabel: num(p.seed + p.replies.length) + ' ' + t.replies,
+        replyBg: s.openReply === p.id ? PRIMARY : 'transparent',
+        replyFg: s.openReply === p.id ? BG : MUTED,
+        replyBd: s.openReply === p.id ? PRIMARY : BORDER,
+        replyOpen: s.openReply === p.id,
+        hasReplies: p.replies.length > 0,
+      })),
+
+      docsLabel: num(doneCount) + ' / ' + num(s.docs.length),
+      docs: s.docs.map((d) => ({
+        id: d.id,
+        name: bn ? d.bnName : d.name,
+        meta: bn ? d.bnMeta : d.meta,
+        done: d.done,
+        mark: d.done ? '✓' : '',
+        boxBg: d.done ? PRIMARY : SURFACE,
+        boxBd: d.done ? PRIMARY : BORDER,
+        bd: d.done ? PRIMARY : BORDER,
+      })),
+      toggleDoc: (e) => {
+        const id = e.currentTarget.dataset.id;
+        this.setState({ docs: s.docs.map((d) => (d.id === id ? { ...d, done: !d.done } : d)) });
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
