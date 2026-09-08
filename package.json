@@ -7,7 +7,7 @@
     "dev": "concurrently -k \"pnpm dev:server\" \"pnpm dev:metro\"",
     "dev:server": "cross-env NODE_ENV=development tsx watch server/_core/index.ts",
     "dev:metro": "cross-env EXPO_USE_METRO_WORKSPACE_ROOT=1 npx expo start --web --port ${EXPO_PORT:-8081}",
-    "build": "esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=server-dist",
+    "build": "esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=server-dist && node -e \"require('fs').cpSync('server/data','server-dist/data',{recursive:true})\"",
     "build:web": "node scripts/build-site.mjs",
     "build:web:production": "node scripts/validate-public-env.mjs && node scripts/build-site.mjs",
     "start": "NODE_ENV=production node server-dist/index.js",
