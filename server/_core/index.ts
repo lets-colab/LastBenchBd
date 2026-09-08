@@ -10,7 +10,7 @@ import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { logError } from "../self-healing";
 import { createCorsMiddleware } from "./cors";
-import { assertProductionConfiguration } from "./env";
+import { assertProductionConfiguration, getProductionIntegrationStatus } from "./env";
 
 const trpcLimiter = rateLimit({
   windowMs: 60 * 1000,
@@ -89,7 +89,13 @@ async function startServer() {
   registerOAuthRoutes(app);
 
   app.get("/api/health", (_req, res) => {
-    res.json({ ok: true, timestamp: Date.now() });
+    const integrations = getProductionIntegrationStatus();
+    res.json({
+      ok: true,
+      timestamp: Date.now(),
+      integrations,
+      degraded: !integrations.authConfigured || !integrations.ownerConfigured || !integrations.forgeConfigured,
+    });
   });
 
   // Cost-bearing AI requests get a tighter burst limit. All tRPC requests also
