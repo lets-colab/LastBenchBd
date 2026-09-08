@@ -51,11 +51,14 @@ async function supabaseFetch<T>(path: string, init: RequestInit = {}): Promise<T
   });
 
   if (!response.ok) {
-    const body = await response.json().catch(() => null) as
+    const body = (await response.json().catch(() => null)) as
       | { msg?: string; message?: string; error_description?: string; error?: string }
       | null;
     const safeMessage =
-      body?.msg || body?.message || body?.error_description || body?.error ||
+      body?.msg ||
+      body?.message ||
+      body?.error_description ||
+      body?.error ||
       `Supabase Auth returned ${response.status}`;
     const error = new Error(safeMessage) as Error & { status?: number };
     error.status = response.status;
@@ -84,7 +87,16 @@ function bearerToken(req: Request): string | undefined {
 }
 
 export function getRequestAccessToken(req: Request): string | undefined {
-  return bearerToken(req) || readCookie(req, ACCESS_COOKIE_NAME);
+  const bearer = bearerToken(req);
+  if (bearer) return bearer;
+
+  // Cookie-backed web sessions are treated as a pair. This prevents a legacy
+  // logout path that clears the refresh cookie from being silently revived by
+  // a still-valid access cookie. Native clients use Authorization bearer tokens
+  // and are unaffected by this requirement.
+  const refreshToken = readCookie(req, REFRESH_COOKIE_NAME);
+  if (!refreshToken) return undefined;
+  return readCookie(req, ACCESS_COOKIE_NAME);
 }
 
 export function getRequestRefreshToken(req: Request): string | undefined {
