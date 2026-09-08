@@ -62,7 +62,10 @@ def build_preview(src: Path, repo: Path) -> None:
 
     shutil.copy2(require(src / "support.js"), landing / "claude-design-support.js")
     shutil.copy2(require(src / "image-slot.js"), landing / "claude-design-image-slot.js")
-    shutil.copy2(require(src / "_ds" / DS_ID / "tokens" / "tokens.css"), ds_out / "tokens.css")
+    shutil.copy2(
+        require(src / "_ds" / DS_ID / "tokens" / "tokens.css"),
+        ds_out / "tokens.css",
+    )
     shutil.copy2(require(src / "_ds" / DS_ID / "styles.css"), ds_out / "styles.css")
 
     out = require(src / "Malaysia Experience v2.dc.html").read_text(encoding="utf-8")
@@ -95,8 +98,11 @@ def build_preview(src: Path, repo: Path) -> None:
         '<input type="hidden" name="form-name" value="signup">\n'
         '<input name="bot-field"><input name="name"><input name="whatsapp">'
         '<input name="email"><input name="stage"><input name="field">'
-        '<input name="contact_consent">\n'</n        '</form>\n'
+        '<input name="contact_consent">\n'
+        '</form>\n'
     )
+    if '<body>\n' not in out:
+        raise SystemExit("Could not locate body tag in Claude Design page")
     out = out.replace('<body>\n', '<body>\n' + detector, 1)
 
     replacement = r'''
