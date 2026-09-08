@@ -20,20 +20,24 @@ Do not infer live migration state from filenames or `drizzle/meta/_journal.json`
 | `20260907045642` | `lastbench_repo_0002_ai_guide_personas` | Repo `0002` — `ai_guide` enum + `aiChatMessages.guide` |
 | `20260907045717` | `foundation_security_hardening` | RLS on 0001 tables + trigger search-path hardening |
 | `20260907051323` | `foundation_relational_integrity` | Repo `0003` — explicit FKs, profile/cohort uniqueness and query-path indexes |
+| `20260907114150` | `create_class_a_registrations` | CLASS[Λ] registration intake table |
+| `20260908090907` | `lastbench_api_runtime_role` | Dedicated server runtime database role |
+| `20260908102639` | `lastbench_repo_0004_supabase_identity_storage` | Repo `0004` — Supabase Auth identity contract + private student document storage |
 
-## Pending reviewed migration
+## Supabase identity + storage verification
 
-`drizzle/0004_supabase_identity_storage.sql` is the next migration. It must not be marked live until the exact merged SQL is applied through Supabase and verified.
+`drizzle/0004_supabase_identity_storage.sql` was merged in PR #50 and then applied as the exact production migration above.
 
-Purpose:
+Verified live after application:
 
-- document `public.users.openId` as a compatibility external-auth subject that now stores the Supabase Auth UUID
-- create the private `student-documents` Storage bucket
-- enforce a 10 MB file limit
-- allow PDF/JPEG/PNG content types
-- add authenticated `SELECT`, `INSERT`, `UPDATE` and `DELETE` policies restricted to a first folder segment equal to `auth.uid()::text`
-
-Before `0004` is applied, production `storage.buckets` had **0 rows** and `auth.users` had **0 rows**. No production user or file is fabricated as migration evidence.
+- `public.users.openId` remains a compatibility column and is documented as the Supabase Auth external subject UUID
+- private bucket `student-documents` exists
+- bucket public access is disabled
+- maximum object size is 10 MB
+- allowed MIME types are PDF, JPEG and PNG
+- four `storage.objects` RLS policies exist for authenticated `SELECT`, `INSERT`, `UPDATE` and `DELETE`
+- every policy restricts access to the top-level folder matching `auth.uid()::text`
+- `auth.users` still contained 0 users at verification time; no production account was fabricated for testing
 
 ## Relational foundation verification
 
@@ -58,11 +62,21 @@ After `0003`:
 
 ## Security and performance posture
 
-After the relational foundation migration, Supabase's security advisor reported no foundation `ERROR` or `WARN` findings. Remaining public-table notices were informational `RLS Enabled No Policy` notices, matching the server-only database posture.
+Supabase advisors were re-run after `0004`.
 
-The performance advisor reported expected informational `unused_index` notices because the production business tables had no representative traffic at reconciliation time. Reassess those indexes only after real traffic exists.
+Security:
 
-Migration `0004` introduces direct authenticated access only to `storage.objects` for the `student-documents` bucket; it does **not** open direct authenticated access to the public product tables.
+- no `ERROR` findings
+- no `WARN` findings
+- 19 informational `RLS Enabled No Policy` notices remain on server-only public product tables; this is intentional default-deny behavior
+- the new `student-documents` storage path has explicit authenticated RLS policies and is not part of those notices
+
+Performance:
+
+- only informational `unused_index` findings remain for relational foundation indexes
+- these are expected while the production product tables have no representative traffic and should not be removed solely from zero historical usage
+
+`0004` introduces direct authenticated access only to `storage.objects` for the private student-document bucket. It does **not** open direct authenticated access to the public product tables.
 
 ## Required workflow for schema changes
 
