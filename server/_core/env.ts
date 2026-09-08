@@ -5,18 +5,34 @@ export function resolveAiGuidanceModel(value = process.env.AI_GUIDANCE_MODEL) {
   return configuredModel || DEFAULT_AI_GUIDANCE_MODEL;
 }
 
+// These values are required for the API process itself to start safely.
+// OAuth identity and Forge are feature integrations: when absent they must
+// fail closed at the feature boundary rather than taking the whole API down.
 const REQUIRED_PRODUCTION_ENV = [
   "DATABASE_URL",
   "JWT_SECRET",
   "OAUTH_SERVER_URL",
-  "VITE_APP_ID",
-  "OWNER_OPEN_ID",
   "FRONTEND_URL",
   "CORS_ALLOWED_ORIGINS",
-  "BUILT_IN_FORGE_API_URL",
-  "BUILT_IN_FORGE_API_KEY",
-  "AI_GUIDANCE_MODEL",
 ] as const;
+
+export type ProductionIntegrationStatus = {
+  authConfigured: boolean;
+  ownerConfigured: boolean;
+  forgeConfigured: boolean;
+};
+
+export function getProductionIntegrationStatus(
+  env: NodeJS.ProcessEnv = process.env,
+): ProductionIntegrationStatus {
+  return {
+    authConfigured: Boolean(env.OAUTH_SERVER_URL?.trim() && env.VITE_APP_ID?.trim()),
+    ownerConfigured: Boolean(env.OWNER_OPEN_ID?.trim()),
+    forgeConfigured: Boolean(
+      env.BUILT_IN_FORGE_API_URL?.trim() && env.BUILT_IN_FORGE_API_KEY?.trim(),
+    ),
+  };
+}
 
 export function getMissingProductionEnv(
   env: NodeJS.ProcessEnv = process.env,
@@ -39,10 +55,19 @@ export function assertProductionConfiguration(
     throw new Error("JWT_SECRET must contain at least 32 characters in production");
   }
 
-  for (const name of ["OAUTH_SERVER_URL", "FRONTEND_URL", "BUILT_IN_FORGE_API_URL"] as const) {
+  // OAUTH_SERVER_URL and FRONTEND_URL are part of the core routing/auth boundary.
+  // Forge is optional, but if supplied its URL still has to be production-safe.
+  for (const name of ["OAUTH_SERVER_URL", "FRONTEND_URL"] as const) {
     const url = new URL(env[name]!);
     if (url.protocol !== "https:") {
       throw new Error(`${name} must use HTTPS in production`);
+    }
+  }
+
+  if (env.BUILT_IN_FORGE_API_URL?.trim()) {
+    const forgeUrl = new URL(env.BUILT_IN_FORGE_API_URL);
+    if (forgeUrl.protocol !== "https:") {
+      throw new Error("BUILT_IN_FORGE_API_URL must use HTTPS in production");
     }
   }
 

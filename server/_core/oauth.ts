@@ -3,11 +3,18 @@ import type { Express, Request, Response } from "express";
 import { rateLimit } from "express-rate-limit";
 import { getUserByOpenId, upsertUser } from "../db";
 import { getSessionCookieOptions } from "./cookies";
+import { ENV } from "./env";
 import { sdk } from "./sdk";
 
 function getQueryParam(req: Request, key: string): string | undefined {
   const value = req.query[key];
   return typeof value === "string" ? value : undefined;
+}
+
+function ensureOAuthConfigured(res: Response): boolean {
+  if (ENV.oAuthServerUrl && ENV.appId) return true;
+  res.status(503).json({ error: "Authentication is not configured" });
+  return false;
 }
 
 async function syncUser(userInfo: {
@@ -73,6 +80,8 @@ const oauthExchangeLimiter = rateLimit({
 
 export function registerOAuthRoutes(app: Express) {
   app.get("/api/oauth/callback", oauthExchangeLimiter, async (req: Request, res: Response) => {
+    if (!ensureOAuthConfigured(res)) return;
+
     const code = getQueryParam(req, "code");
     const state = getQueryParam(req, "state");
 
@@ -93,12 +102,6 @@ export function registerOAuthRoutes(app: Express) {
       const cookieOptions = getSessionCookieOptions(req);
       res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
 
-      // Redirect back to the app. In production the built app is served under
-      // /app (see netlify.toml + scripts/build-site.mjs) at the FRONTEND_URL
-      // origin (e.g. https://www.lastbenchbd.com) — without FRONTEND_URL set,
-      // this used to fall back to http://localhost:8081 for every real user.
-      // In local dev (`pnpm dev`), Expo serves the app at the dev-server root,
-      // not under /app, so the dev fallbacks are left unsuffixed.
       const frontendUrl = process.env.FRONTEND_URL;
       const redirectTo = frontendUrl
         ? frontendUrl.replace(/\/+$/, "") + "/app"
@@ -115,6 +118,8 @@ export function registerOAuthRoutes(app: Express) {
   });
 
   app.get("/api/oauth/mobile", oauthExchangeLimiter, async (req: Request, res: Response) => {
+    if (!ensureOAuthConfigured(res)) return;
+
     const code = getQueryParam(req, "code");
     const state = getQueryParam(req, "state");
 
@@ -152,8 +157,10 @@ export function registerOAuthRoutes(app: Express) {
     res.json({ success: true });
   });
 
-  // Get current authenticated user - works with both cookie (web) and Bearer token (mobile)
+  // Get current authenticated user - works with both cookie (web) and Bearer token (mobile).
   app.get("/api/auth/me", async (req: Request, res: Response) => {
+    if (!ensureOAuthConfigured(res)) return;
+
     try {
       const user = await sdk.authenticateRequest(req);
       res.json({ user: buildUserResponse(user) });
@@ -161,5 +168,4 @@ export function registerOAuthRoutes(app: Express) {
       res.status(401).json({ error: "Not authenticated", user: null });
     }
   });
-
 }
