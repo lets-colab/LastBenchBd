@@ -3,6 +3,127 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(pointer: fine)');
   const scene = document.querySelector('[data-scene]');
+  const hero = document.querySelector('.hero, .hub-hero');
+  const curriculum = document.querySelector('.phase-list');
+  const phases = Array.from(document.querySelectorAll('.phase'));
+  const stickyAction = document.querySelector('.mobile-stick');
+  const registerSection = document.querySelector('#register');
+  const brandIntro = document.querySelector('[data-brand-intro]');
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+  if (brandIntro) {
+    const removeIntro = () => brandIntro.remove();
+    const handleIntroEnd = (event) => {
+      if (event.target !== brandIntro) return;
+      brandIntro.removeEventListener('animationend', handleIntroEnd);
+      removeIntro();
+    };
+    brandIntro.addEventListener('animationend', handleIntroEnd);
+    window.setTimeout(removeIntro, reduceMotion.matches ? 0 : 2400);
+  }
+
+  const progress = document.createElement('div');
+  progress.className = 'journey-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  progress.innerHTML = '<span></span>';
+  document.body.prepend(progress);
+
+  const motionRows = Array.from(document.querySelectorAll('.module-list li, .signal, .stage, .path-card'));
+  motionRows.forEach((item, index) => {
+    item.classList.add('motion-row');
+    item.style.setProperty('--row-delay', `${Math.min(index % 5, 4) * 70}ms`);
+  });
+
+  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  let revealObserver;
+  if (!reduceMotion.matches && 'IntersectionObserver' in window) {
+    document.body.classList.add('motion-ready');
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -7% 0px' });
+
+    [...reveals, ...motionRows].forEach((item, index) => {
+      if (item.classList.contains('reveal')) {
+        item.style.setProperty('--reveal-delay', `${Math.min(index % 5, 4) * 70}ms`);
+      }
+      revealObserver.observe(item);
+    });
+  } else {
+    [...reveals, ...motionRows].forEach((item) => item.classList.add('is-visible'));
+  }
+
+  let sceneInView = Boolean(scene);
+  if (scene && 'IntersectionObserver' in window) {
+    const sceneObserver = new IntersectionObserver(([entry]) => {
+      sceneInView = entry.isIntersecting;
+      root.style.setProperty('--scene-play-state', sceneInView && !document.hidden && !reduceMotion.matches ? 'running' : 'paused');
+    }, { rootMargin: '12% 0px 12% 0px' });
+    sceneObserver.observe(scene);
+  }
+
+  if (phases.length && 'IntersectionObserver' in window) {
+    const phaseObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-current', entry.isIntersecting));
+    }, { threshold: 0.18, rootMargin: '-20% 0px -52% 0px' });
+    phases.forEach((phase) => phaseObserver.observe(phase));
+  }
+
+  let scrollFrame = 0;
+  const updateScroll = () => {
+    scrollFrame = 0;
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const pageProgress = clamp(window.scrollY / maxScroll);
+    root.style.setProperty('--journey-progress', pageProgress.toFixed(4));
+
+    if (!reduceMotion.matches && hero) {
+      const rect = hero.getBoundingClientRect();
+      const heroProgress = clamp(-rect.top / Math.max(1, rect.height * .82));
+      root.style.setProperty('--hero-scroll-y', `${heroProgress * -34}px`);
+      root.style.setProperty('--scene-scroll-y', `${heroProgress * 72}px`);
+      root.style.setProperty('--scene-scroll-scale', `${1 - heroProgress * .075}`);
+      root.style.setProperty('--scene-scroll-rotate', `${heroProgress * 1.4}deg`);
+    }
+
+    if (curriculum) {
+      const rect = curriculum.getBoundingClientRect();
+      const curriculumProgress = clamp((window.innerHeight * .68 - rect.top) / Math.max(1, rect.height));
+      curriculum.style.setProperty('--curriculum-progress', curriculumProgress.toFixed(4));
+    }
+
+    if (stickyAction && hero && registerSection) {
+      const pastHeroAction = hero.getBoundingClientRect().bottom < window.innerHeight * .58;
+      const approachingForm = registerSection.getBoundingClientRect().top < window.innerHeight * .55;
+      stickyAction.classList.toggle('is-active', pastHeroAction && !approachingForm);
+    }
+  };
+
+  const requestScrollUpdate = () => {
+    if (scrollFrame) return;
+    scrollFrame = window.requestAnimationFrame(updateScroll);
+  };
+
+  window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+  window.addEventListener('resize', requestScrollUpdate, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    root.style.setProperty('--scene-play-state', sceneInView && !document.hidden && !reduceMotion.matches ? 'running' : 'paused');
+  });
+  reduceMotion.addEventListener('change', () => {
+    document.body.classList.toggle('motion-ready', !reduceMotion.matches && Boolean(revealObserver));
+    [...reveals, ...motionRows].forEach((item) => item.classList.add('is-visible'));
+    root.style.setProperty('--scene-play-state', sceneInView && !document.hidden && !reduceMotion.matches ? 'running' : 'paused');
+    if (reduceMotion.matches) {
+      root.style.setProperty('--hero-scroll-y', '0px');
+      root.style.setProperty('--scene-scroll-y', '0px');
+      root.style.setProperty('--scene-scroll-scale', '1');
+      root.style.setProperty('--scene-scroll-rotate', '0deg');
+    }
+    requestScrollUpdate();
+  });
+  updateScroll();
 
   if (scene && !reduceMotion.matches && finePointer.matches) {
     let frame = 0;
@@ -19,23 +140,6 @@
       });
     };
     window.addEventListener('pointermove', updateScene, { passive: true });
-  }
-
-  const reveals = Array.from(document.querySelectorAll('.reveal'));
-  if (reduceMotion.matches || !('IntersectionObserver' in window)) {
-    reveals.forEach((item) => item.classList.add('is-visible'));
-  } else {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
-    reveals.forEach((item, index) => {
-      item.style.setProperty('--reveal-delay', `${Math.min(index % 5, 4) * 60}ms`);
-      observer.observe(item);
-    });
   }
 
   const form = document.querySelector('[data-signup-form]');

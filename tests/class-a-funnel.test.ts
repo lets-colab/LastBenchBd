@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 
 const classRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../landing/class-a");
 const read = (name: string) => readFileSync(resolve(classRoot, name), "utf8");
+const landing = readFileSync(resolve(classRoot, "../index.html"), "utf8");
 
 const hub = read("index.html");
 const masterclass = read("masterclass.html");
@@ -14,6 +15,8 @@ const styles = read("cinematic.css");
 
 describe("CLASS A signup funnel", () => {
   it("keeps all three routes linked", () => {
+    expect(landing).toContain('href="/class-a/"');
+    expect(landing).toContain("ENTER CLASS[Λ]");
     expect(hub).toContain('href="./masterclass.html"');
     expect(hub).toContain('href="./course.html"');
     expect(masterclass).toContain('href="./course.html"');
@@ -52,9 +55,14 @@ describe("CLASS A signup funnel", () => {
   it("preserves cinematic art direction and reduced-motion support", () => {
     for (const page of [hub, masterclass, course]) {
       expect(page).toContain("./assets/class-a-20-orbit.jpg");
+      expect(page).toContain('./assets/class-a-logo.jpg');
+      expect(page).toContain('./assets/class-a-favicon.jpg');
       expect(page).toContain("ACQUIRE. APPLY. ADVANCE.");
     }
+    expect(hub).toContain('data-brand-intro');
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
+    expect(script).toContain("--journey-progress");
+    expect(script).toContain("visibilitychange");
   });
 
   it("contains no hardcoded event date", () => {
