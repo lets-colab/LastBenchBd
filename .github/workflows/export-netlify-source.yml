@@ -1,0 +1,25 @@
+name: Export Netlify Source
+
+on:
+  push:
+    paths:
+      - .github/workflows/export-netlify-source.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload source artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lastbench-netlify-source
+          path: .
+          if-no-files-found: error
+          retention-days: 1
