@@ -22,9 +22,12 @@ jobs:
         with:
           ref: design-sync/claude-lastbench-2026-09-08
 
-      - name: Install Playwright and Chromium
+      - name: Install isolated Playwright and Chromium
         run: |
-          npm install --no-save --ignore-scripts playwright@1.55.0
+          mkdir -p /tmp/lb-pw
+          cd /tmp/lb-pw
+          npm init -y >/dev/null 2>&1
+          npm install --no-audit --no-fund playwright@1.55.0
           npx playwright install --with-deps chromium
 
       - name: Start static site
@@ -41,7 +44,7 @@ jobs:
 
       - name: Render and exercise homepage candidates
         run: |
-          cat >qa.mjs <<'JS'
+          cat >/tmp/lb-pw/qa.mjs <<'JS'
           import { chromium } from 'playwright';
           import fs from 'node:fs';
           const browser = await chromium.launch({headless:true});
@@ -69,14 +72,29 @@ jobs:
               await page.waitForTimeout(500);
               interaction='url='+page.url();
             }
-            await page.screenshot({path:`qa-${c.name}.png`,fullPage:false});
-            report.push({name:c.name,status:response?.status(),title,bodyChars:bodyText.length,errors,interaction,url:page.url()});
+            let benchAi='not expected';
+            if (c.path === '/index.html') {
+              const launcher=page.locator('.lb-ai-launcher');
+              if (await launcher.count()) {
+                await launcher.click();
+                await page.waitForTimeout(200);
+                const panel=page.locator('.lb-ai-panel[data-open="true"]');
+                benchAi=(await panel.count()) ? 'opened' : 'failed to open';
+              } else {
+                benchAi='launcher missing';
+              }
+            }
+            const out=`${process.env.GITHUB_WORKSPACE}/qa-${c.name}.png`;
+            await page.screenshot({path:out,fullPage:false});
+            report.push({name:c.name,status:response?.status(),title,bodyChars:bodyText.length,errors,interaction,benchAi,url:page.url()});
             await context.close();
           }
-          fs.writeFileSync('qa-report.json',JSON.stringify(report,null,2));
+          fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/qa-report.json`,JSON.stringify(report,null,2));
           await browser.close();
           JS
+          cd /tmp/lb-pw
           node qa.mjs
+          cd "$GITHUB_WORKSPACE"
           cat qa-report.json
 
       - name: Upload visual evidence
@@ -89,5 +107,3 @@ jobs:
             qa-report.json
           if-no-files-found: warn
           retention-days: 3
-
-# This commit intentionally re-runs QA against the promoted production candidate.
