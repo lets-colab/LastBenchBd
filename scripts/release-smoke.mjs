@@ -60,21 +60,29 @@ const checks = [
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+async function resolveAndReport(label, host, resolver) {
+  try {
+    const records = await resolver.call(dns, host);
+    console.error(`      ${label}: ${records.length ? records.join(", ") : "none"}`);
+  } catch (error) {
+    const code = error && typeof error === "object" && "code" in error ? error.code : "lookup-failed";
+    console.error(`      ${label}: ${code}`);
+  }
+}
+
 async function reportDns(url) {
   const host = new URL(url).hostname;
+  const labels = host.split(".").filter(Boolean);
+  const zone = labels.length >= 2 ? labels.slice(-2).join(".") : host;
+
   console.error(`DNS   ${host}:`);
-  for (const [label, resolver] of [
-    ["CNAME", dns.resolveCname],
-    ["A", dns.resolve4],
-    ["AAAA", dns.resolve6],
-  ]) {
-    try {
-      const records = await resolver.call(dns, host);
-      console.error(`      ${label}: ${records.length ? records.join(", ") : "none"}`);
-    } catch (error) {
-      const code = error && typeof error === "object" && "code" in error ? error.code : "lookup-failed";
-      console.error(`      ${label}: ${code}`);
-    }
+  await resolveAndReport("CNAME", host, dns.resolveCname);
+  await resolveAndReport("A", host, dns.resolve4);
+  await resolveAndReport("AAAA", host, dns.resolve6);
+
+  if (zone !== host) {
+    console.error(`DNS   authoritative zone ${zone}:`);
+    await resolveAndReport("NS", zone, dns.resolveNs);
   }
 }
 
@@ -82,7 +90,7 @@ async function verify(check) {
   const response = await fetch(check.url, {
     redirect: "follow",
     headers: {
-      "user-agent": "lastbench-release-smoke/3.2",
+      "user-agent": "lastbench-release-smoke/3.3",
       "cache-control": "no-cache",
     },
   });
