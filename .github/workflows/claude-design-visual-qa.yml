@@ -105,6 +105,24 @@ jobs:
           echo '--- static server log ---'
           cat /tmp/lastbench-http.log || true
 
+      - name: Enforce clean production console
+        run: |
+          python - <<'PY'
+          import json
+          rows=json.load(open('qa-report.json'))
+          production=[r for r in rows if r['name'].startswith('current-')]
+          failures=[]
+          for r in production:
+              if r['status'] != 200: failures.append(f"{r['name']}: HTTP {r['status']}")
+              if r['errors']: failures.append(f"{r['name']}: console errors {r['errors']}")
+              if r['badResponses']: failures.append(f"{r['name']}: bad responses {r['badResponses']}")
+              if r['failedRequests']: failures.append(f"{r['name']}: failed requests {r['failedRequests']}")
+              if r['benchAi'] != 'opened': failures.append(f"{r['name']}: Bench AI {r['benchAi']}")
+          if failures:
+              raise SystemExit('\n'.join(failures))
+          print('Production desktop/mobile console clean; Bench AI interaction passed.')
+          PY
+
       - name: Upload visual evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -115,3 +133,5 @@ jobs:
             qa-report.json
           if-no-files-found: warn
           retention-days: 3
+
+# Post-hardening gate: production cases must be console-clean before merge.
