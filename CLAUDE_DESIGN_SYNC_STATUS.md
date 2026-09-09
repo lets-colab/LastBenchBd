@@ -2,8 +2,10 @@
 
 The verified 2026-09-08 Claude Design export is stored under `design-source/claude-design/2026-09-08/`.
 
-A production-safe review route is generated at `landing/claude-design-preview.html`.
+The production-safe reference remains available at `landing/claude-design-preview.html`.
 
-The live root `landing/index.html` is intentionally not overwritten by the import. The user-exported Claude project contains older/non-production behavior in places, while the current root contains newer production hardening such as real Netlify form handling, contact consent, accessibility improvements, and advisor integrations.
+`landing/index.html` now promotes the verified Claude Design visual experience while retaining production protections: real form submission wiring, contact consent, `/app/` routing, accessibility safeguards, locked Last Bench brand assets, and the separately maintained Bench AI advisor layer.
 
-Promotion rule: visually review the preview against the approved Claude Design project, then port or promote approved sections without deleting newer production protections.
+Static-export hardening restores the Claude Design nested token path, packages an empty image-slot state file, and replaces the malformed inline film-grain data URI with a local SVG asset.
+
+Final browser QA passed on desktop and mobile: HTTP 200, clean production console/network checks, CTA navigation, and Bench AI open/close interaction.
