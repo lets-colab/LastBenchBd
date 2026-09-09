@@ -9,9 +9,11 @@
  *
  * RENDER_ORIGIN is optional and is used as a diagnostic control-plane check.
  * When present, both the custom API domain and Render origin must be healthy.
- * This verifies the public web/API contract. OAuth/session and real form receipt
- * remain separate release gates because they require stateful authenticated flows.
+ * This verifies the public web/API contract. Auth/session and real form receipt
+ * remain separate release gates because they require stateful flows.
  */
+
+import dns from "node:dns/promises";
 
 const webOrigin = (process.env.WEB_ORIGIN ?? "https://lastbenchbd.com").replace(/\/+$/, "");
 const apiOrigin = (process.env.API_ORIGIN ?? "https://api.lastbenchbd.com").replace(/\/+$/, "");
@@ -40,7 +42,7 @@ for (const [name, value] of origins) {
 }
 
 const checks = [
-  { name: "API custom-domain health", url: `${apiOrigin}/api/health`, expectJson: true },
+  { name: "API custom-domain health", url: `${apiOrigin}/api/health`, expectJson: true, dnsOnFailure: true },
   ...(renderOrigin
     ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }]
     : []),
@@ -58,18 +60,35 @@ const checks = [
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+async function reportDns(url) {
+  const host = new URL(url).hostname;
+  console.error(`DNS   ${host}:`);
+  for (const [label, resolver] of [
+    ["CNAME", dns.resolveCname],
+    ["A", dns.resolve4],
+    ["AAAA", dns.resolve6],
+  ]) {
+    try {
+      const records = await resolver.call(dns, host);
+      console.error(`      ${label}: ${records.length ? records.join(", ") : "none"}`);
+    } catch (error) {
+      const code = error && typeof error === "object" && "code" in error ? error.code : "lookup-failed";
+      console.error(`      ${label}: ${code}`);
+    }
+  }
+}
+
 async function verify(check) {
   const response = await fetch(check.url, {
     redirect: "follow",
     headers: {
-      "user-agent": "lastbench-release-smoke/3.1",
+      "user-agent": "lastbench-release-smoke/3.2",
       "cache-control": "no-cache",
     },
   });
 
   const type = response.headers.get("content-type") ?? "";
   let semanticOk = response.ok;
-  let bodyText = null;
 
   if (check.expectJson) {
     semanticOk = semanticOk && type.includes("application/json");
@@ -78,22 +97,15 @@ async function verify(check) {
       semanticOk = body?.ok === true;
     }
   } else {
-    if (check.expectHtml) {
-      semanticOk = semanticOk && type.includes("text/html");
-    }
+    if (check.expectHtml) semanticOk = semanticOk && type.includes("text/html");
     if (semanticOk && check.expectIncludes?.length) {
-      bodyText = await response.text();
+      const bodyText = await response.text();
       semanticOk = check.expectIncludes.every((needle) => bodyText.includes(needle));
-      if (!semanticOk) {
-        throw new Error("stale or unexpected HTML; missing release fingerprint");
-      }
+      if (!semanticOk) throw new Error("stale or unexpected HTML; missing release fingerprint");
     }
   }
 
-  if (!semanticOk) {
-    throw new Error(`${response.status} ${type || "unknown content-type"}`);
-  }
-
+  if (!semanticOk) throw new Error(`${response.status} ${type || "unknown content-type"}`);
   return response.status;
 }
 
@@ -121,13 +133,14 @@ for (const check of checks) {
   if (!passed) {
     failed = true;
     console.error(`FAIL  ${check.name}: ${lastError instanceof Error ? lastError.message : String(lastError)}`);
+    if (check.dnsOnFailure) await reportDns(check.url);
   }
 }
 
 console.log("\nStateful release gates:");
-console.log("- Netlify production OAuth APP_ID and OWNER_OPEN_ID are verified real values");
-console.log("- Fresh-browser OAuth login completes on /app");
-console.log("- Returning session survives refresh");
+console.log("- Supabase Auth production URL and publishable key are present in the production web build");
+console.log("- Fresh-browser account creation/sign-in completes on /app/auth");
+console.log("- Returning Supabase session survives refresh");
 console.log("- Authenticated tRPC request succeeds");
 console.log("- Logout causes the next protected request to be rejected");
 console.log("- Real Netlify form submissions appear for each active conversion form");
