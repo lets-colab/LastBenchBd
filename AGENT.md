@@ -1,150 +1,99 @@
 # AGENT.md — Operating Manual for AI Agents Working on Last Bench
 
-This file is the handoff brief. Any AI agent (Claude, GPT, Gemini, a local model via
-Ollama — anything) picking up this project should read this file first and follow it.
-Paste it into the system prompt / project instructions of whatever agent you use.
-
-Before a production-sensitive change, also read `FOUNDATION_LOCK.md`. It is the
-current database, release, security, repository, and production-truth contract.
-For database work, also read `drizzle/MIGRATION_STATUS.md`.
+This file is the handoff brief for any AI agent working on this repository. Read it first. Before any production-sensitive change also read `FOUNDATION_LOCK.md`; for database work read `drizzle/MIGRATION_STATUS.md`.
 
 ---
 
-## 1. What Last Bench is
+## 1. Product identity
 
-**Mission:** An AI platform guiding Bangladeshi secondary-school students through their
-study-abroad journey to Malaysia. Not a consultancy — a transparent, always-on platform.
-Tagline: *For Those Who Last, To Create a Benchmark.*
+**Last Bench** is a Bangladesh → Malaysia student accelerator and AI-guided student platform. It is not positioned as a traditional consultancy.
 
-**Non-negotiable product principles** (from `design.md` — read it in full):
+Mission: help Bangladeshi students study, settle and succeed in Malaysia through transparent admissions support, onboarding, community and AI-assisted guidance.
 
-1. **Clarity First** — every screen shows where the student stands and what comes next.
-2. **Trust Through Transparency** — never fake data. Manual updates are labeled
-   ("Updated by [name]"), AI recommendations show reasoning. **No hardcoded demo
-   numbers shown as if real.**
-3. **Mentor-like tone** — supportive older sibling, not corporate.
-4. **Mobile-first, one-handed** (portrait, thumb-reachable actions).
-5. **Community over transaction.**
+Non-negotiable product principles:
 
-**AI advisor rules** (already enforced in `server/routers.ts` `aiGuidance.chat` — keep them):
-only cite universities from the verified database, never invent acceptance rates / costs /
-visa stats, escalate to human mentors for high-stakes decisions, GPA scale is 5.0.
+1. Clarity first — show where the student stands and what comes next.
+2. Trust through transparency — never present demo or guessed values as real facts.
+3. Mentor-like tone — supportive and direct, not corporate filler.
+4. Mobile-first, one-handed usability.
+5. Community over transaction.
+6. Canonical brand assets are immutable: do not redraw, approximate or substitute approved logos.
+
+AI guidance must use verified university/product data, never invent admissions, cost, visa or acceptance claims, and escalate high-stakes uncertainty to a human mentor.
 
 ---
 
-## 2. Architecture and release contract (updated 2026-09-07)
+## 2. Canonical repository and architecture
 
 ```text
-Repo: lets-colab/LastBenchBd   (canonical active repository)
+Repo: lets-colab/LastBenchBd
 
-app/          Expo Router (React Native Web) — student/tutor/admin UI, tabs + stack
-server/       Express + tRPC v11 — student, tutor, admin, messaging, AI and system APIs
-  _core/      index.ts (entry), oauth.ts (Manus OAuth), llm.ts (LLM proxy), storageProxy.ts
-  db.ts       All DB access — drizzle-orm/postgres-js against Supabase Postgres
-  routers.ts  auth, student, application, document, tutor, referral, mentor, message,
-              cohort, university, skill, notification, admin, aiGuidance, selfHealing
-  self-healing.ts  Redacted fingerprinting → safe transient retry → advisory diagnosis
-                   stored in errorLogs/errorFixes; generated fixes require approval
-drizzle/      schema.ts + reviewed SQL migrations + live-ledger documentation
-landing/      Static cinematic marketing site + CLASS[Λ] conversion surfaces
-scripts/build-site.mjs  Assembles dist/: landing/ at /, Expo web export at /app
-server-dist/  Generated API bundle — Render builds this; never publish it as web content
-dist/         Generated web artifact — Netlify builds it with production public values
+app/          Expo Router / React Native Web student, tutor and admin product
+server/       Express + tRPC API
+  _core/      server entry/auth/runtime infrastructure
+  db.ts       database access
+  routers.ts  product APIs
+  self-healing.ts privacy-bounded diagnostics
+landing/      cinematic Last Bench marketing site + CLASS[Λ] conversion surfaces
+drizzle/      reviewed database schema/migrations and migration-status evidence
+supabase/     Edge Functions and Supabase-side runtime code
+scripts/      build/release verification tooling
+server-dist/  generated API bundle
+ dist/        generated Netlify web artifact
 ```
 
-**One merged site — do not re-split these without an explicit architecture decision:**
-`pnpm build:web` exports the Expo app with `EXPO_BASE_URL=/app` into `dist/app/` and
-copies `landing/` into `dist/` unchanged. Netlify serves `/` as the marketing landing
-and `/app/*` as the student app.
+One merged public web artifact is intentional:
 
-### Supported production topology
+- `/` = Last Bench cinematic marketing landing
+- `/app/*` = student product
+- `/class-a/*` = CLASS[Λ] conversion surfaces
 
-| Surface | Host | Source | Trigger |
-|---|---|---|---|
-| Whole site (landing at `/`, app at `/app`) | Netlify | `pnpm build:web:production` → `dist/` | push to `main` |
-| API server | Render (`render.yaml`, `last-bench-api`) | `pnpm build` → `server-dist/index.js`; `pnpm start` | Render git integration |
-| Database | Supabase Postgres | reviewed GitHub SQL → explicit Supabase migration | explicit operator action |
-
-### Current verified production facts
-
-- Canonical Netlify project: `lastbenchbdd`.
-- Current Netlify primary production URL: `https://lastbenchbd.com`.
-- The production Netlify project is connected to `main` and its current deployment is ready.
-- Active Netlify forms: `signup`, `class-a-masterclass`, `class-a-course`.
-- At the last infrastructure check, all three forms existed but had no real submissions yet.
-- Canonical API target remains `https://api.lastbenchbd.com`.
-- Netlify currently has no site-level environment variables configured; committed
-  `netlify.toml` production values therefore matter unless overridden later.
-- `netlify.toml` intentionally still contains placeholder Manus `APP_ID` and
-  `OWNER_OPEN_ID` values. Those make static builds honest but **do not prove production login**.
-
-Do not revert the repository back to an older `www.lastbenchbd.com` assumption unless
-Netlify is deliberately reconfigured and verified. The currently verified primary web
-host is the apex `https://lastbenchbd.com`.
-
-### Auth/runtime contract
-
-- Auth today: Manus OAuth + signed session token/cookie.
-- `EXPO_PUBLIC_API_BASE_URL` is baked into the browser bundle.
-- Production web should call `https://api.lastbenchbd.com` so web and API remain same-site.
-- `FRONTEND_URL` on Render should be `https://lastbenchbd.com` so OAuth redirects to
-  `https://lastbenchbd.com/app`.
-- Production CORS should explicitly allow `https://lastbenchbd.com`.
-- Render also requires database/signing, OAuth identity, owner identity, proxy and
-  Forge/AI configuration. Never invent missing credentials.
-- File storage metadata lives in Postgres; bytes use the reviewed presigned storage flow.
+`pnpm build:web:production` assembles the complete Netlify artifact into `dist/`.
 
 ---
 
-## 3. Database migration rule — live foundation locked
+## 3. Current production topology — verified 9 September 2026
 
-The connected production Supabase project was inspected directly on 7 September 2026.
-Before relational hardening, the checked business/product tables contained no rows and
-the read-only preflight found no checked duplicate or orphan relationships.
+### Web
 
-The live Supabase migration ledger now includes:
+- Hosting: Netlify
+- Canonical project: `lastbenchbdd`
+- Site ID: `04a1423a-961c-4b5e-bb4b-53db3027317e`
+- Primary URL: `https://lastbenchbd.com`
+- Current public deploy is an older upload-based production deploy. Do **not** assume current `main` is live just because Netlify reports the deploy as `ready`.
+- Production smoke requires the homepage release fingerprint `claude-design-support.js` + `bench-ai.js`; the current public homepage does not yet contain that fingerprint.
+- Current `main` does build the complete production site successfully in CI.
+- Netlify site-level environment variables are currently empty; reviewed public production values are committed in `netlify.toml`.
 
-- original schema migration
-- default-deny RLS migration
-- repo `0001_gifted_sunspot`
-- repo `0002_ai_guide_personas`
-- foundation security hardening
-- foundation relational integrity (`drizzle/0003_foundation_relations.sql`)
+### API
 
-The production database now has explicit foreign keys across identity/profile,
-applications/documents, referrals/payouts, messaging/community, notifications, AI
-history/memory and audit actors. One-profile-per-user and cohort-membership uniqueness
-rules are also live.
+- Hosting: Render
+- Canonical working service: `last-bench-api-v2`
+- Region: Singapore
+- Direct origin: `https://last-bench-api-v2.onrender.com`
+- Direct `/api/health` is verified healthy.
+- Intended public API hostname: `https://api.lastbenchbd.com`
+- Current DNS state: the `api` hostname has no CNAME, A or AAAA answer. This is a DNS/custom-domain routing blocker, not an API-code failure.
 
-After `0003`, the Supabase security advisor had **no WARN or ERROR findings**. Its
-remaining security notices are informational RLS-enabled/no-policy notices consistent
-with the server-owned default-deny architecture. Performance advisor notices about newly
-created indexes being unused are informational and expected while the database has no
-business traffic; do not delete those indexes merely because they have not been exercised yet.
+### Database/Auth
 
-`drizzle/meta/` snapshots still do not represent the complete reconciled live history.
-Therefore `pnpm db:push` is intentionally blocked. Do not re-enable automatic
-`drizzle-kit generate && drizzle-kit migrate` until the snapshots are regenerated from
-and compared against the reconciled Supabase baseline.
+- Supabase project: `the-last-bench`
+- Project ref: `tocxdyqlrvzthpexnmxe`
+- Region: `ap-southeast-1`
+- Status: `ACTIVE_HEALTHY`
+- Authentication: **Supabase Auth**, not Manus OAuth.
+- Production client values are `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+- `/app/auth` contains the current sign-in/account-creation flow.
 
-### Required DB change workflow
-
-1. Edit `drizzle/schema.ts`.
-2. Write/review matching SQL under `drizzle/`.
-3. Run the read-only preflight when data/relations are affected.
-4. Pass TypeScript, lint, tests, dependency audit, API/web builds and CodeQL.
-5. Merge the exact reviewed SQL.
-6. Apply that exact SQL through the Supabase migration workflow.
-7. Re-run Supabase security/performance advisors and inspect constraint/index state.
-8. Update `drizzle/MIGRATION_STATUS.md` when the verified ledger changes materially.
-
-**Production server startup and Render deploy commands must never create or alter tables.**
+Do not reintroduce Manus OAuth assumptions into current production documentation, checks or UI.
 
 ---
 
-## 4. How to verify work before claiming it is done
+## 4. Release verification
 
-```bash
+Required local/CI verification before a production-sensitive merge:
+
+```text
 pnpm install
 pnpm check
 pnpm lint
@@ -155,133 +104,113 @@ pnpm build:web
 pnpm build:web:production
 ```
 
-For canonical public health:
+Current CI additionally verifies API startup, full site build and patch integrity. CodeQL must pass.
 
-```bash
-pnpm release:smoke
-```
+### Production smoke
 
-`pnpm release:smoke` defaults to:
+`pnpm release:smoke` / `.github/workflows/production-smoke.yml` verifies:
 
-```text
-WEB_ORIGIN=https://lastbenchbd.com
-API_ORIGIN=https://api.lastbenchbd.com
-```
-
-It checks:
-
-- API `/api/health` returns JSON with `ok: true`
-- landing `/`
-- student `/app/`
+- custom API hostname returns semantic JSON health
+- direct Render origin returns semantic JSON health
+- landing is the expected current release, not merely HTTP 200
+- `/app/`
+- `/class-a/`
 - CLASS masterclass
-- CLASS full course
+- CLASS course
 
-It retries transient failures.
+When custom API DNS fails, smoke diagnostics print CNAME/A/AAAA and authoritative-zone information. A failed run maintains GitHub issue **Production smoke gate**.
 
-### Automated production monitoring
-
-`.github/workflows/production-smoke.yml` runs:
-
-- after every push to `main` (after a deployment settle window),
-- daily,
-- on manual dispatch.
-
-A failed smoke run creates or updates the GitHub issue **Production smoke gate**. A later
-successful run comments on and closes that issue automatically. Keep this workflow
-read-only against production; it must not mutate user data or infrastructure.
-
-### Stateful release checks still required
-
-Public health automation does **not** prove authentication or form storage. Before calling
-the complete product released, verify:
-
-- real Netlify production Manus `APP_ID` and `OWNER_OPEN_ID`
-- real Render environment values and API custom-domain state
-- fresh-browser OAuth login
-- returning session after refresh
-- authenticated tRPC query
-- logout rejects the next protected request
-- receipt of one real submission in each active Netlify form
-- document/storage authorization before opening the full upload flow
-
-A `200` response whose content type is HTML does not count as successful API health.
+HTTP 200 alone is not release proof.
 
 ---
 
-## 5. Engineering standards
+## 5. Authentication/session release gates
 
-- Verify empirically, not by reading code alone.
-- Report known gaps explicitly; never hide them to make a release look complete.
-- Never hardcode placeholder/demo data as real product state.
-- Conventional commits: `fix:`, `feat:`, `build:`, `docs:`, `chore:`, `security:`, `db:`.
-- New data-backed features follow: schema → DB helper → tRPC procedure → UI → test.
-- Auth, documents, commissions/payouts, student data and AI guidance are high-trust surfaces.
-- Cost-bearing/public APIs need abuse controls. OAuth is rate-limited; tRPC has a broad
-  edge limiter and AI guidance a tighter burst limiter. Persistent per-user/day quotas
-  can be added once commercial usage policy is approved.
-- Do not expose development-only routes as normal production features.
-- Never use stale PRs/branches as architecture truth when current `main` or verified
-  infrastructure disagrees.
+Public health checks do not prove session correctness. Before calling authenticated production complete, verify in a fresh browser:
+
+1. account creation/sign-in through Supabase Auth
+2. returning session survives refresh
+3. authenticated tRPC request succeeds
+4. logout invalidates the next protected request
+5. CORS allows `https://lastbenchbd.com`
+
+Do not claim these steps are complete without evidence from the deployed production surfaces.
 
 ---
 
-## 6. Current state and remaining gaps
+## 6. Database mutation rule
 
-### Real in current repository code
+Production DDL is explicit and reviewed.
 
-- student profile + onboarding
-- staged application tracking
-- document metadata/storage plumbing
-- tutor referral/commission/payout logic with audit behavior
-- cohorts/community surfaces
-- two-way messaging
-- three-persona AI Guides (Sayem/Fahim/Erfan) with per-guide history and shared memory
-- Malaysia university directory data
-- admin surfaces
-- notifications
-- privacy-bounded error handling
-- cinematic landing
-- CLASS[Λ] masterclass + full-course signup surfaces
-- CI + CodeQL
-- Netlify/Render deployment contracts
-- automated production smoke monitoring
-- live relational Supabase foundation
+1. Update `drizzle/schema.ts` when application schema changes.
+2. Write/review matching SQL under `drizzle/`.
+3. Run read-only preflight when relations/data assumptions change.
+4. Pass CI + CodeQL.
+5. Merge the exact SQL.
+6. Apply that exact SQL using the Supabase migration workflow.
+7. Re-run security/performance advisors.
+8. Update `drizzle/MIGRATION_STATUS.md` when live state changes materially.
 
-### Remaining release blockers, in order
+`pnpm db:push` is intentionally blocked while legacy Drizzle snapshots are incomplete. Production server startup must never create or alter tables.
 
-1. **Production OAuth identity** — replace placeholder Manus `APP_ID` and `OWNER_OPEN_ID`
-   with verified real values in the actual production configuration.
-2. **Render/API proof** — verify Render environment state and `api.lastbenchbd.com/api/health`.
-3. **Authenticated E2E proof** — fresh login, returning session, authenticated query, logout.
-4. **Form receipt proof** — verify real submissions for `signup`, `class-a-masterclass`,
-   and `class-a-course`.
-5. **Complete student file-picker flow** — backend plumbing exists; user-facing upload
-   completion still needs implementation/QA.
-6. **Product surface overlap** — decide whether hidden `discover.tsx` and `community.tsx`
-   are supported deep links, redirects or dead code.
-7. **Mobile identity lock** — confirm no public store release uses the template-era
-   identifiers, then explicitly lock display name, slug, iOS bundle ID, Android package,
-   deep-link scheme and EAS ownership.
-8. **Persistent AI/message quotas** — add when usage/commercial policy is decided.
-9. **Browser E2E automation** — automate auth → onboarding → application → messaging → logout.
-
-Use GitHub issue #35 for production identity/domain/auth/form verification and issue #36
-for mobile identity. The database reconciliation represented by issue #34 is complete once
-its GitHub issue is updated/closed with the live migration/advisor evidence.
+Current Supabase security advisor has no WARN/ERROR findings. Informational RLS-enabled/no-policy notices are expected under the server-owned default-deny architecture unless the architecture is deliberately changed.
 
 ---
 
-## 7. Bootstrap prompt for a replacement agent
+## 7. Forms and conversion truth
 
-> You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`), an AI
-> platform guiding Bangladeshi students through their Malaysia education journey. Read
-> `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md`, `README.md`, and the
-> relevant product/design source before any change. Verify every claim; never invent
-> product facts, credentials, infrastructure state or completion. Use current `main` plus
-> verified live infrastructure as truth. For database changes, reviewed GitHub SQL must
-> pass CI/CodeQL before the exact SQL is applied through Supabase. For release work, use
-> the automated production smoke gate but remember that auth and form receipt require
-> separate stateful verification. Preserve canonical brand assets exactly.
+Canonical Netlify forms include:
 
-Model/tool choice is never evidence. Repository code, live infrastructure, tests,
-rendered QA and source-backed product facts are the evidence.
+- `signup`
+- `class-a-masterclass`
+- `class-a-course`
+
+A thank-you screen does not prove receipt. A conversion flow is only verified when a real submission appears in Netlify.
+
+---
+
+## 8. Brand/design guardrails
+
+### Last Bench
+
+Preserve the approved green/white/black identity and canonical bench/tick logo. Do not generate replacement logos. Marketing/UI must preserve Student Accelerator positioning.
+
+### CLASS[Λ]
+
+Treat CLASS[Λ] as a distinct visual namespace. Its cinematic dark/high-contrast 3D/motion language must not leak into Last Bench admissions surfaces unless an explicitly approved crossover component calls for it.
+
+The design source of truth is version-controlled source + approved design assets, not a model's memory of a screenshot.
+
+---
+
+## 9. Current known blockers
+
+In priority order:
+
+1. Add correct DNS/custom-domain routing for `api.lastbenchbd.com` to the healthy Render service.
+2. Publish current `main` to canonical Netlify project `lastbenchbdd`; current public homepage is stale.
+3. Restore dependable Netlify deployment authorization/integration so future `main` updates cannot silently remain undeployed.
+4. Verify production Supabase Auth session journey end-to-end.
+5. Verify real receipt for each active Netlify conversion form.
+6. Finish the reviewed student document-picker/upload UI before calling upload complete.
+7. Resolve hidden `discover` / `community` route status.
+8. Lock mobile app identity before any store release.
+9. Add persistent AI/message quotas when commercial usage policy is approved.
+
+---
+
+## 10. Engineering standards
+
+- Verify empirically; model/tool choice is never evidence.
+- Never invent credentials, environment state, DNS state, deployment state, database rows or product facts.
+- Never hide a release blocker to make a status look green.
+- Never commit credentials or temporary deployment tokens to the public repository.
+- Keep sensitive logs free of bearer/session tokens, private document URLs and student PII.
+- Conventional commit prefixes: `fix:`, `feat:`, `build:`, `docs:`, `chore:`, `security:`, `db:`.
+- High-trust surfaces include auth, documents, student data, commissions/payouts and AI guidance.
+
+---
+
+## 11. Replacement-agent bootstrap
+
+> You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`). Read `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md`, `README.md` and relevant design/product sources before making changes. Use current `main` plus verified live infrastructure as truth. Authentication is Supabase Auth. The healthy API control-plane origin is `last-bench-api-v2.onrender.com`; `api.lastbenchbd.com` remains a DNS gate until verified. The canonical Netlify project is `lastbenchbdd`, but its currently public homepage is stale relative to `main`. Never claim deployment, authentication, form receipt or DNS correctness without production evidence. Preserve canonical brand assets exactly.
