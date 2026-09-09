@@ -36,11 +36,16 @@ for (const [name, value] of [
 
 const checks = [
   { name: "API health", url: `${apiOrigin}/api/health`, expectJson: true },
-  { name: "Landing", url: `${webOrigin}/` },
-  { name: "Student app", url: `${webOrigin}/app/` },
-  { name: "CLASS signup hub", url: `${webOrigin}/class-a/` },
-  { name: "CLASS masterclass", url: `${webOrigin}/class-a/masterclass.html` },
-  { name: "CLASS course", url: `${webOrigin}/class-a/course.html` },
+  {
+    name: "Landing",
+    url: `${webOrigin}/`,
+    expectHtml: true,
+    expectIncludes: ["claude-design-support.js", "bench-ai.js"],
+  },
+  { name: "Student app", url: `${webOrigin}/app/`, expectHtml: true },
+  { name: "CLASS signup hub", url: `${webOrigin}/class-a/`, expectHtml: true },
+  { name: "CLASS masterclass", url: `${webOrigin}/class-a/masterclass.html`, expectHtml: true },
+  { name: "CLASS course", url: `${webOrigin}/class-a/course.html`, expectHtml: true },
 ];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -48,17 +53,32 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 async function verify(check) {
   const response = await fetch(check.url, {
     redirect: "follow",
-    headers: { "user-agent": "lastbench-release-smoke/2.0" },
+    headers: {
+      "user-agent": "lastbench-release-smoke/3.0",
+      "cache-control": "no-cache",
+    },
   });
 
   const type = response.headers.get("content-type") ?? "";
   let semanticOk = response.ok;
+  let bodyText = null;
 
   if (check.expectJson) {
     semanticOk = semanticOk && type.includes("application/json");
     if (semanticOk) {
       const body = await response.json();
       semanticOk = body?.ok === true;
+    }
+  } else {
+    if (check.expectHtml) {
+      semanticOk = semanticOk && type.includes("text/html");
+    }
+    if (semanticOk && check.expectIncludes?.length) {
+      bodyText = await response.text();
+      semanticOk = check.expectIncludes.every((needle) => bodyText.includes(needle));
+      if (!semanticOk) {
+        throw new Error(`stale or unexpected HTML; missing release fingerprint`);
+      }
     }
   }
 
