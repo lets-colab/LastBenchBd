@@ -89,3 +89,5 @@ jobs:
             qa-report.json
           if-no-files-found: warn
           retention-days: 3
+
+# This commit intentionally re-runs QA against the promoted production candidate.
