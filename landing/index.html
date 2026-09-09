@@ -65,7 +65,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
     <div ref="{{ mountRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;"></div>
     <div ref="{{ scrimRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(12,22,44,.28),transparent 26%,transparent 72%,rgba(4,10,8,.42));"></div>
     <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 128% 96% at 50% 42%,transparent 52%,rgba(0,0,0,.38) 100%);mix-blend-mode:multiply;"></div>
-    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%22.82%22 numOctaves=%223%22 stitchTiles=%22stitch%22/><feColorMatrix type=%22saturate%22 values=%220%22/></filter><rect width=%22256%22 height=%22256%22 filter=%22url(%23n)%22/></svg>');"></div>
+    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('./assets/film-grain.svg');"></div>
   </sc-if>
   <sc-if value="{{ webglFailed }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;background:radial-gradient(120% 55% at 50% 0%,rgba(20,44,74,.9),transparent 60%),linear-gradient(180deg,#0a0e1a 0%,#0d1420 32%,#0f1c14 64%,#123321 100%);"></div>
