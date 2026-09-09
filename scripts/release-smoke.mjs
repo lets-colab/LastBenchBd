@@ -7,20 +7,25 @@
  *   WEB_ORIGIN=https://lastbenchbd.com
  *   API_ORIGIN=https://api.lastbenchbd.com
  *
- * Override either variable for previews or incident diagnosis.
+ * RENDER_ORIGIN is optional and is used as a diagnostic control-plane check.
+ * When present, both the custom API domain and Render origin must be healthy.
  * This verifies the public web/API contract. OAuth/session and real form receipt
  * remain separate release gates because they require stateful authenticated flows.
  */
 
 const webOrigin = (process.env.WEB_ORIGIN ?? "https://lastbenchbd.com").replace(/\/+$/, "");
 const apiOrigin = (process.env.API_ORIGIN ?? "https://api.lastbenchbd.com").replace(/\/+$/, "");
+const renderOrigin = (process.env.RENDER_ORIGIN ?? "").replace(/\/+$/, "");
 const attempts = Math.max(1, Number.parseInt(process.env.SMOKE_ATTEMPTS ?? "3", 10) || 3);
 const retryDelayMs = Math.max(0, Number.parseInt(process.env.SMOKE_RETRY_DELAY_MS ?? "5000", 10) || 5000);
 
-for (const [name, value] of [
+const origins = [
   ["WEB_ORIGIN", webOrigin],
   ["API_ORIGIN", apiOrigin],
-]) {
+];
+if (renderOrigin) origins.push(["RENDER_ORIGIN", renderOrigin]);
+
+for (const [name, value] of origins) {
   let parsed;
   try {
     parsed = new URL(value);
@@ -35,7 +40,10 @@ for (const [name, value] of [
 }
 
 const checks = [
-  { name: "API health", url: `${apiOrigin}/api/health`, expectJson: true },
+  { name: "API custom-domain health", url: `${apiOrigin}/api/health`, expectJson: true },
+  ...(renderOrigin
+    ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }]
+    : []),
   {
     name: "Landing",
     url: `${webOrigin}/`,
@@ -54,7 +62,7 @@ async function verify(check) {
   const response = await fetch(check.url, {
     redirect: "follow",
     headers: {
-      "user-agent": "lastbench-release-smoke/3.0",
+      "user-agent": "lastbench-release-smoke/3.1",
       "cache-control": "no-cache",
     },
   });
@@ -77,7 +85,7 @@ async function verify(check) {
       bodyText = await response.text();
       semanticOk = check.expectIncludes.every((needle) => bodyText.includes(needle));
       if (!semanticOk) {
-        throw new Error(`stale or unexpected HTML; missing release fingerprint`);
+        throw new Error("stale or unexpected HTML; missing release fingerprint");
       }
     }
   }
