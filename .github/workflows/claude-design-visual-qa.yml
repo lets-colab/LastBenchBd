@@ -1,0 +1,85 @@
+name: Claude Design visual QA
+
+on:
+  push:
+    branches:
+      - design-sync/claude-lastbench-2026-09-08
+    paths:
+      - .github/workflows/claude-design-visual-qa.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: design-sync/claude-lastbench-2026-09-08
+
+      - name: Install Chromium
+        run: |
+          npx -y playwright@1.55.0 install --with-deps chromium
+
+      - name: Start static site
+        run: |
+          cd landing
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/lastbench-http.log 2>&1 &
+          echo $! > /tmp/lastbench-http.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/index.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/lastbench-http.log
+          exit 1
+
+      - name: Render and exercise homepage candidates
+        run: |
+          cat >/tmp/qa.mjs <<'JS'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          const browser = await chromium.launch({headless:true});
+          const cases = [
+            {name:'current-desktop', path:'/index.html', viewport:{width:1440,height:1000}},
+            {name:'claude-desktop', path:'/claude-design-preview.html', viewport:{width:1440,height:1000}},
+            {name:'current-mobile', path:'/index.html', viewport:{width:390,height:844}, mobile:true},
+            {name:'claude-mobile', path:'/claude-design-preview.html', viewport:{width:390,height:844}, mobile:true},
+          ];
+          const report=[];
+          for (const c of cases) {
+            const context=await browser.newContext({viewport:c.viewport,isMobile:!!c.mobile,deviceScaleFactor:1});
+            const page=await context.newPage();
+            const errors=[];
+            page.on('console', m => { if (m.type()==='error') errors.push('console: '+m.text()); });
+            page.on('pageerror', e => errors.push('pageerror: '+e.message));
+            const response=await page.goto('http://127.0.0.1:4173'+c.path,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForTimeout(4500);
+            const bodyText=(await page.locator('body').innerText()).trim();
+            const title=await page.title();
+            const cta=page.locator('a[href="#signup"],a[href="#cta"]').first();
+            let interaction='no matching anchor';
+            if (await cta.count()) {
+              await cta.click({timeout:5000}).catch(()=>{});
+              await page.waitForTimeout(500);
+              interaction='url='+page.url();
+            }
+            await page.screenshot({path:`qa-${c.name}.png`,fullPage:false});
+            report.push({name:c.name,status:response?.status(),title,bodyChars:bodyText.length,errors,interaction,url:page.url()});
+            await context.close();
+          }
+          fs.writeFileSync('qa-report.json',JSON.stringify(report,null,2));
+          await browser.close();
+          JS
+          npx -y -p playwright@1.55.0 node /tmp/qa.mjs
+          cat qa-report.json
+
+      - name: Upload visual evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-design-visual-qa
+          path: |
+            qa-*.png
+            qa-report.json
+          retention-days: 3
