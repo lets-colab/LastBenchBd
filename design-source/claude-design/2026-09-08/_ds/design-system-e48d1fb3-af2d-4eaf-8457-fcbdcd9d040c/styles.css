@@ -1,0 +1,9 @@
+/* The only stylesheet rendered designs receive is this file's @import closure.
+   Anything a design needs must be reachable from here. */
+@import "./tokens/tokens.css";
+
+/* Brand webfonts. General Sans ships from Fontshare, Sora + Hind Siliguri from
+   Google Fonts — the exact sources the shipping Last Bench designs use.
+   Hind Siliguri covers Bengali (বাংলা) copy. */
+@import url("https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&display=swap");

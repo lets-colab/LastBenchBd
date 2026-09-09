@@ -1,0 +1,137 @@
+name: Claude Design visual QA
+
+on:
+  push:
+    branches:
+      - design-sync/claude-lastbench-2026-09-08
+    paths:
+      - .github/workflows/claude-design-visual-qa.yml
+      - landing/index.html
+      - landing/claude-design-preview.html
+      - landing/bench-ai.js
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: design-sync/claude-lastbench-2026-09-08
+
+      - name: Install isolated Playwright and Chromium
+        run: |
+          mkdir -p /tmp/lb-pw
+          cd /tmp/lb-pw
+          npm init -y >/dev/null 2>&1
+          npm install --no-audit --no-fund playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Start static site
+        run: |
+          cd landing
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/lastbench-http.log 2>&1 &
+          echo $! > /tmp/lastbench-http.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/index.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/lastbench-http.log
+          exit 1
+
+      - name: Render and exercise homepage candidates
+        run: |
+          cat >/tmp/lb-pw/qa.mjs <<'JS'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          const browser = await chromium.launch({headless:true});
+          const cases = [
+            {name:'current-desktop', path:'/index.html', viewport:{width:1440,height:1000}},
+            {name:'claude-desktop', path:'/claude-design-preview.html', viewport:{width:1440,height:1000}},
+            {name:'current-mobile', path:'/index.html', viewport:{width:390,height:844}, mobile:true},
+            {name:'claude-mobile', path:'/claude-design-preview.html', viewport:{width:390,height:844}, mobile:true},
+          ];
+          const report=[];
+          for (const c of cases) {
+            const context=await browser.newContext({viewport:c.viewport,isMobile:!!c.mobile,deviceScaleFactor:1});
+            const page=await context.newPage();
+            const errors=[];
+            const badResponses=[];
+            const failedRequests=[];
+            page.on('console', m => {
+              if (m.type()==='error') {
+                const loc=m.location();
+                errors.push({text:m.text(),url:loc.url||'',line:loc.lineNumber||0});
+              }
+            });
+            page.on('pageerror', e => errors.push({text:'pageerror: '+e.message,url:page.url(),line:0}));
+            page.on('response', r => { if (r.status() >= 400) badResponses.push({status:r.status(),url:r.url()}); });
+            page.on('requestfailed', r => failedRequests.push({url:r.url(),failure:r.failure()?.errorText||'unknown'}));
+            const response=await page.goto('http://127.0.0.1:4173'+c.path,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForTimeout(4500);
+            const bodyText=(await page.locator('body').innerText()).trim();
+            const title=await page.title();
+            const cta=page.locator('a[href="#signup"],a[href="#cta"]').first();
+            let interaction='no matching anchor';
+            if (await cta.count()) {
+              await cta.click({timeout:5000}).catch(()=>{});
+              await page.waitForTimeout(500);
+              interaction='url='+page.url();
+            }
+            let benchAi='not expected';
+            if (c.path === '/index.html') {
+              const launcher=page.locator('.lb-ai-launcher');
+              if (await launcher.count()) {
+                await launcher.click();
+                await page.waitForTimeout(200);
+                benchAi=(await page.locator('.lb-ai-panel[data-open="true"]').count()) ? 'opened' : 'failed to open';
+              } else benchAi='launcher missing';
+            }
+            const out=`${process.env.GITHUB_WORKSPACE}/qa-${c.name}.png`;
+            await page.screenshot({path:out,fullPage:false});
+            report.push({name:c.name,status:response?.status(),title,bodyChars:bodyText.length,errors,badResponses,failedRequests,interaction,benchAi,url:page.url()});
+            await context.close();
+          }
+          fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/qa-report.json`,JSON.stringify(report,null,2));
+          await browser.close();
+          JS
+          cd /tmp/lb-pw
+          node qa.mjs
+          cd "$GITHUB_WORKSPACE"
+          cat qa-report.json
+          echo '--- static server log ---'
+          cat /tmp/lastbench-http.log || true
+
+      - name: Enforce clean production console
+        run: |
+          python - <<'PY'
+          import json
+          rows=json.load(open('qa-report.json'))
+          production=[r for r in rows if r['name'].startswith('current-')]
+          failures=[]
+          for r in production:
+              if r['status'] != 200: failures.append(f"{r['name']}: HTTP {r['status']}")
+              if r['errors']: failures.append(f"{r['name']}: console errors {r['errors']}")
+              if r['badResponses']: failures.append(f"{r['name']}: bad responses {r['badResponses']}")
+              if r['failedRequests']: failures.append(f"{r['name']}: failed requests {r['failedRequests']}")
+              if r['benchAi'] != 'opened': failures.append(f"{r['name']}: Bench AI {r['benchAi']}")
+          if failures:
+              raise SystemExit('\n'.join(failures))
+          print('Production desktop/mobile console clean; Bench AI interaction passed.')
+          PY
+
+      - name: Upload visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-design-visual-qa
+          path: |
+            qa-*.png
+            qa-report.json
+          if-no-files-found: warn
+          retention-days: 3
+
+# Post-hardening gate: production cases must be console-clean before merge.

@@ -1,0 +1,51 @@
+name: Harden Claude Design static export
+
+on:
+  push:
+    branches:
+      - design-sync/claude-lastbench-2026-09-08
+    paths:
+      - .github/workflows/harden-claude-design-static-export.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  harden:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: design-sync/claude-lastbench-2026-09-08
+          fetch-depth: 0
+
+      - name: Validate hardening script
+        run: python -m py_compile scripts/harden-claude-design-static-export.py
+
+      - name: Harden static runtime
+        run: python scripts/harden-claude-design-static-export.py
+
+      - name: Verify local runtime assets
+        run: |
+          set -euo pipefail
+          test -s landing/claude-design-ds/tokens/tokens.css
+          test -s landing/.image-slots.state.json
+          test -s landing/assets/film-grain.svg
+          grep -q "./assets/film-grain.svg" landing/index.html
+          grep -q "./assets/film-grain.svg" landing/claude-design-preview.html
+          ! grep -q "data:image/svg+xml;utf8,<svg" landing/index.html
+          ! grep -q "data:image/svg+xml;utf8,<svg" landing/claude-design-preview.html
+
+      - name: Commit hardened static export
+        run: |
+          set -euo pipefail
+          git config user.name 'drx-design-hardening'
+          git config user.email 'drx-design-hardening@users.noreply.github.com'
+          git add landing/index.html landing/claude-design-preview.html
+          if git diff --cached --quiet; then
+            echo 'Static export already hardened.'
+            exit 0
+          fi
+          git commit -m 'fix: harden Claude Design static runtime'
+          git push origin HEAD:design-sync/claude-lastbench-2026-09-08

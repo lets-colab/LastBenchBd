@@ -3,33 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./claude-design-support.js"></script>
-<script src="./bench-ai.js" defer></script>
+<script src="./support.js"></script>
 </head>
 <body>
-<form name="signup" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" style="display:none" aria-hidden="true">
-<input type="hidden" name="form-name" value="signup">
-<input name="bot-field"><input name="name"><input name="whatsapp"><input name="email"><input name="stage"><input name="field"><input name="contact_consent">
-</form>
 <x-dc>
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Last Bench — From Last Bench. To The World.</title>
-<meta name="description" content="A cinematic journey from Bangladesh to Malaysia. Last Bench helps Bangladeshi students explore study options, prepare their next step, and move forward with human guidance.">
-<meta property="og:title" content="The Last Bench — From Last Bench. To The World.">
-<meta property="og:description" content="A cinematic Bangladesh → Malaysia student journey with human guidance.">
-<meta property="og:image" content="./assets/logo-full.png">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#070b16">
-
+<title>Last Bench — From Last Bench. To The World.</title>
 <link rel="icon" href="assets/logo-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="./claude-design-ds/tokens.css">
-<link rel="stylesheet" href="./claude-design-ds/styles.css">
-<script src="./claude-design-image-slot.js"></script>
-<script src="./vendor/three.min.js"></script>
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
@@ -38,8 +26,7 @@ html,body{margin:0;padding:0;background:#070b16;}
 body{overflow-x:hidden;-webkit-text-size-adjust:100%;}
 a,a:hover{color:inherit;}
 button,a,input,[role="button"]{-webkit-tap-highlight-color:transparent;}
-button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-visible{outline:2px solid var(--lb-color-brand-green-dark);outline-offset:2px;}
-@media (prefers-reduced-motion:reduce){[data-reveal]{animation:none !important;opacity:1 !important;transform:none !important;}}
+button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-visible{outline:2px solid #00E676;outline-offset:2px;}
 @keyframes coldOpen { from { opacity:0; transform:translateY(20px); filter:blur(7px); } to { opacity:1; transform:none; filter:blur(0); } }
   @keyframes lbBob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
 @keyframes lbFlicker{0%,92%,100%{opacity:1}93%{opacity:.4}96%{opacity:.9}}
@@ -59,13 +46,13 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
 </style>
 </helmet>
 
-<div style="position:relative;background:#070b16;color:#F2F7F3;font-family:var(--lb-font-body);">
+<div style="position:relative;background:#070b16;color:#F2F7F3;font-family:'Sora','Hind Siliguri',system-ui,sans-serif;">
 
   <sc-if value="{{ webglOk }}" hint-placeholder-val="{{ true }}">
     <div ref="{{ mountRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;"></div>
     <div ref="{{ scrimRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(12,22,44,.28),transparent 26%,transparent 72%,rgba(4,10,8,.42));"></div>
     <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 128% 96% at 50% 42%,transparent 52%,rgba(0,0,0,.38) 100%);mix-blend-mode:multiply;"></div>
-    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('./assets/film-grain.svg');"></div>
+    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%22.82%22 numOctaves=%223%22 stitchTiles=%22stitch%22/><feColorMatrix type=%22saturate%22 values=%220%22/></filter><rect width=%22256%22 height=%22256%22 filter=%22url(%23n)%22/></svg>');"></div>
   </sc-if>
   <sc-if value="{{ webglFailed }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;background:radial-gradient(120% 55% at 50% 0%,rgba(20,44,74,.9),transparent 60%),linear-gradient(180deg,#0a0e1a 0%,#0d1420 32%,#0f1c14 64%,#123321 100%);"></div>
@@ -93,7 +80,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:4;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,transparent 24%,transparent 44%,rgba(0,0,0,.94) 100%);"></div>
       <div ref="{{ destTextRef }}" style="position:absolute;bottom:0;left:0;right:0;z-index:5;max-height:100%;overflow-y:auto;padding:0 clamp(18px,4vw,56px) clamp(24px,5vh,52px);opacity:0;will-change:opacity,transform;transform:translateY(30px);">
         <div style="font-size:11px;font-weight:600;letter-spacing:.4em;color:#00E676;margin-bottom:12px;">{{ t.arrived }}</div>
-        <h2 ref="{{ destNameRef }}" style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(24px,4.4vw,58px);line-height:1.04;letter-spacing:-.015em;margin:0 0 6px;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.9);"></h2>
+        <h2 ref="{{ destNameRef }}" style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(24px,4.4vw,58px);line-height:1.04;letter-spacing:-.015em;margin:0 0 6px;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.9);"></h2>
         <p ref="{{ destLocRef }}" style="font-size:12.5px;letter-spacing:.14em;color:rgba(242,247,243,.62);margin:0 0 14px;"></p>
         <div style="display:flex;gap:clamp(14px,3vw,28px);align-items:flex-start;flex-wrap:wrap;">
           <div style="flex:1;min-width:min(100%,260px);max-width:560px;background:rgba(5,16,10,.8);border:1px solid rgba(0,200,83,.32);border-radius:14px;padding:8px;backdrop-filter:blur(14px);box-sizing:border-box;">
@@ -124,7 +111,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
             <image-slot id="{{ founderSlotId }}" shape="rounded" radius="13" placeholder="{{ founderPhotoPh }}" style="width:98px;height:124px;"></image-slot>
           </div>
           <div style="min-width:180px;flex:1;">
-            <div style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(22px,3.6vw,32px);line-height:1.08;letter-spacing:-.01em;color:#fff;">{{ founderName }}</div>
+            <div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(22px,3.6vw,32px);line-height:1.08;letter-spacing:-.01em;color:#fff;">{{ founderName }}</div>
             <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;color:#00E676;margin-top:8px;text-transform:uppercase;">{{ founderRole }}</div>
             <div style="font-size:12px;color:rgba(242,247,243,.6);margin-top:6px;">{{ founderTag }}</div>
           </div>
@@ -152,7 +139,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div onClick="{{ stopProp }}" style="width:min(720px,96vw);max-height:92vh;display:flex;flex-direction:column;background:rgba(5,16,10,.96);border:1px solid rgba(255,179,0,.42);border-radius:20px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.75);">
         <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:clamp(18px,3vw,26px) clamp(18px,3vw,26px) 12px;">
           <div style="min-width:0;">
-            <div style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(19px,3vw,25px);color:#fff;letter-spacing:-.01em;">{{ hitzPanelHead }}</div>
+            <div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(19px,3vw,25px);color:#fff;letter-spacing:-.01em;">{{ hitzPanelHead }}</div>
             <div style="font-size:12px;line-height:1.55;color:rgba(242,247,243,.62);margin-top:8px;max-width:54ch;text-wrap:pretty;">{{ hitzPanelBody }}</div>
           </div>
           <button onClick="{{ closeRadioPanel }}" aria-label="Close" style="flex:none;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.24);color:#fff;font-size:15px;line-height:1;cursor:pointer;font-family:'Sora',sans-serif;">×</button>
@@ -172,7 +159,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <img src="assets/logo-icon.png" alt="Last Bench" style="width:62px;height:auto;display:block;filter:drop-shadow(0 0 8px rgba(0,200,83,.55));">
     </div>
     <div style="display:flex;align-items:center;gap:12px;font-size:11.5px;font-weight:500;letter-spacing:.2em;color:rgba(242,247,243,.65);">
-      <button onClick="{{ toggleRadio }}" aria-label="Toggle sound" aria-pressed="{{ soundOn }}" style="pointer-events:auto;display:flex;align-items:center;gap:8px;min-height:44px;background:rgba(5,16,10,.6);border:1px solid {{ radioBd }};border-radius:999px;padding:7px 13px;color:{{ radioFg }};font-family:'Sora','Hind Siliguri',sans-serif;font-size:11px;font-weight:600;letter-spacing:.18em;cursor:pointer;backdrop-filter:blur(8px);white-space:nowrap;" style-hover="border-color:#00E676;background:rgba(0,200,83,.12);">
+      <button onClick="{{ toggleRadio }}" aria-label="Toggle sound" aria-pressed="{{ soundOn }}" style="pointer-events:auto;display:flex;align-items:center;gap:8px;min-height:36px;background:rgba(5,16,10,.6);border:1px solid {{ radioBd }};border-radius:999px;padding:7px 13px;color:{{ radioFg }};font-family:'Sora','Hind Siliguri',sans-serif;font-size:11px;font-weight:600;letter-spacing:.18em;cursor:pointer;backdrop-filter:blur(8px);white-space:nowrap;" style-hover="border-color:#00E676;background:rgba(0,200,83,.12);">
         <sc-if value="{{ radioPlaying }}" hint-placeholder-val="{{ false }}">
           <span style="display:flex;align-items:flex-end;gap:2px;height:14px;">
             <span style="width:2.5px;background:currentColor;border-radius:2px;animation:lbEqA .9s ease-in-out infinite;"></span>
@@ -185,11 +172,11 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
         </sc-if>
         <span>{{ radioLabel }}</span>
       </button>
-      <button onClick="{{ cycleLang }}" aria-label="Language" style="pointer-events:auto;display:flex;align-items:center;min-height:44px;padding:0 13px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(5,16,10,.6);color:rgba(242,247,243,.82);font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.14em;cursor:pointer;backdrop-filter:blur(8px);" style-hover="border-color:#00E676;color:#00E676;">{{ langChip }}</button>
+      <button onClick="{{ cycleLang }}" aria-label="Language" style="pointer-events:auto;display:flex;align-items:center;min-height:36px;padding:0 13px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(5,16,10,.6);color:rgba(242,247,243,.82);font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.14em;cursor:pointer;backdrop-filter:blur(8px);" style-hover="border-color:#00E676;color:#00E676;">{{ langChip }}</button>
       <sc-if value="{{ hitzBlocked }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ openRadioPanel }}" style="pointer-events:auto;display:flex;align-items:center;min-height:44px;padding:0 13px;border:1px solid rgba(255,179,0,.5);border-radius:999px;color:#FFB300;background:rgba(5,16,10,.6);font-family:'Sora',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.16em;cursor:pointer;backdrop-filter:blur(8px);" style-hover="border-color:#FFB300;background:rgba(255,179,0,.12);">HITZ FM ↗</button>
+        <button onClick="{{ openRadioPanel }}" style="pointer-events:auto;display:flex;align-items:center;min-height:36px;padding:0 13px;border:1px solid rgba(255,179,0,.5);border-radius:999px;color:#FFB300;background:rgba(5,16,10,.6);font-family:'Sora',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.16em;cursor:pointer;backdrop-filter:blur(8px);" style-hover="border-color:#FFB300;background:rgba(255,179,0,.12);">HITZ FM ↗</button>
       </sc-if>
-      <a href="#signup" style="pointer-events:auto;display:flex;align-items:center;flex:none;white-space:nowrap;min-height:48px;padding:0 20px;border-radius:999px;background:#00C853;color:#04140b;font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-decoration:none;box-shadow:0 6px 22px rgba(0,200,83,.32);" style-hover="background:#00E676;">{{ seatCta }}</a>
+      <a href="#signup" style="pointer-events:auto;display:flex;align-items:center;flex:none;white-space:nowrap;min-height:36px;padding:0 16px;border-radius:999px;background:#00C853;color:#04140b;font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-decoration:none;box-shadow:0 6px 22px rgba(0,200,83,.32);" style-hover="background:#00E676;">{{ seatCta }}</a>
       <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
         <span ref="{{ chapterRef }}" style="white-space:nowrap;">00 — DHAKA · DEPARTURE</span>
       </sc-if>
@@ -207,7 +194,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div ref="{{ legCopyRef }}" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none;will-change:opacity;padding:clamp(22px,4vh,46px) clamp(20px,4vw,54px);background:radial-gradient(ellipse 82% 116% at 50% 46%,rgba(2,9,5,.80) 0%,rgba(2,9,5,.56) 44%,rgba(2,9,5,.18) 72%,transparent 88%);">
         <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:18px;">{{ t.legKicker }}</div>
         <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
-          <h1 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(30px,5.4vw,78px);line-height:1.04;letter-spacing:-.025em;margin:0;color:#fff;max-width:16ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);" aria-label="It starts in Bangladesh. It doesn’t end there.">IT <span style="white-space:nowrap;">ST<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>RTS</span> IN <span style="white-space:nowrap;">B<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>NGL<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>DESH.</span><br><span style="color:#00C853;">IT DOESN'T END THERE.</span></h1>
+          <h1 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(30px,5.4vw,78px);line-height:1.04;letter-spacing:-.025em;margin:0;color:#fff;max-width:16ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);" aria-label="It starts in Bangladesh. It doesn’t end there.">IT <span style="white-space:nowrap;">ST<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>RTS</span> IN <span style="white-space:nowrap;">B<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>NGL<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>DESH.</span><br><span style="color:#00C853;">IT DOESN'T END THERE.</span></h1>
         </sc-if>
         <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
           <h1 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(27px,4.8vw,66px);line-height:1.16;margin:0;color:#fff;max-width:17ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);">{{ t.legL1 }}<br><span style="color:#00C853;">{{ t.legL2 }}</span></h1>
@@ -217,7 +204,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div ref="{{ benchCopyRef }}" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(14px);z-index:2;width:min(760px,88vw);text-align:center;opacity:0;pointer-events:none;will-change:opacity,transform;padding:clamp(20px,3.6vh,40px) clamp(18px,3.4vw,44px);background:radial-gradient(ellipse 80% 118% at 50% 50%,rgba(2,9,5,.82) 0%,rgba(2,9,5,.58) 44%,rgba(2,9,5,.2) 72%,transparent 88%);">
         <div style="font-size:11.5px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:16px;">{{ t.benchKicker }}</div>
         <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
-          <p style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(24px,3.6vw,50px);line-height:1.14;letter-spacing:-.02em;margin:0;color:#fff;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.95);">Your grades don’t define your benchmark.<br><span style="color:#00C853;">The future you build does.</span></p>
+          <p style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(24px,3.6vw,50px);line-height:1.14;letter-spacing:-.02em;margin:0;color:#fff;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.95);">Your grades don’t define your benchmark.<br><span style="color:#00C853;">The future you build does.</span></p>
         </sc-if>
         <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
           <p style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(22px,3.2vw,42px);line-height:1.34;margin:0;color:#fff;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.95);">{{ t.benchL1 }}<br><span style="color:#00C853;">{{ t.benchL2 }}</span></p>
@@ -225,7 +212,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       </div>
       <div style="position:absolute;left:0;right:0;bottom:34px;z-index:2;display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,34px);flex-wrap:wrap;padding:0 22px;">
         <div style="text-align:right;min-width:96px;">
-          <div style="font-family:var(--lb-font-display);font-weight:700;font-size:15px;color:#fff;letter-spacing:.04em;">{{ t.cityFrom }}</div>
+          <div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:15px;color:#fff;letter-spacing:.04em;">{{ t.cityFrom }}</div>
           <div style="font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(242,247,243,.45);margin-top:4px;">23.81°N 90.41°E</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;gap:7px;min-width:min(210px,42vw);">
@@ -236,7 +223,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           <div style="font-size:11px;font-weight:600;letter-spacing:.14em;color:rgba(242,247,243,.5);white-space:nowrap;">{{ t.flightTime }}</div>
         </div>
         <div style="text-align:left;min-width:96px;">
-          <div style="font-family:var(--lb-font-display);font-weight:700;font-size:15px;color:#fff;letter-spacing:.04em;">{{ t.cityTo }}</div>
+          <div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:15px;color:#fff;letter-spacing:.04em;">{{ t.cityTo }}</div>
           <div style="font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(242,247,243,.45);margin-top:4px;">3.14°N 101.69°E</div>
         </div>
       </div>
@@ -248,7 +235,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
     <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:15px;max-width:660px;">
       <div style="font-size:11.5px;font-weight:600;letter-spacing:.3em;color:#00E676;">ARRIVED · 3.14°N 101.69°E</div>
       <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
-        <p style="font-family:var(--lb-font-display);font-weight:600;font-size:clamp(21px,2.8vw,36px);line-height:1.22;letter-spacing:-.012em;margin:0;color:#fff;text-wrap:balance;text-shadow:0 6px 44px rgba(0,0,0,.92);">Admission is only the beginning.</p>
+        <p style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:600;font-size:clamp(21px,2.8vw,36px);line-height:1.22;letter-spacing:-.012em;margin:0;color:#fff;text-wrap:balance;text-shadow:0 6px 44px rgba(0,0,0,.92);">Admission is only the beginning.</p>
       </sc-if>
       <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
         <p style="font-family:'Hind Siliguri',sans-serif;font-weight:600;font-size:clamp(20px,2.5vw,32px);line-height:1.4;margin:0;color:#fff;text-wrap:balance;text-shadow:0 6px 44px rgba(0,0,0,.92);">{{ t.arriveLine }}</p>
@@ -266,7 +253,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div data-reveal>
         <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#FFB300;margin-bottom:14px;animation:lbFlicker 5s linear infinite;">{{ t.a2Kicker }}</div>
         <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
-          <h2 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);" aria-label="The city is awake. So is your journey.">THE CITY IS <span style="white-space:nowrap;"><span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>W<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>KE.</span><br><span style="color:#FFB300;">SO IS YOUR JOURNEY.</span></h2>
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);" aria-label="The city is awake. So is your journey.">THE CITY IS <span style="white-space:nowrap;"><span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>W<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>KE.</span><br><span style="color:#FFB300;">SO IS YOUR JOURNEY.</span></h2>
         </sc-if>
         <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
           <h2 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.14;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);">{{ t.a2L1 }}<br><span style="color:#FFB300;">{{ t.a2L2 }}</span></h2>
@@ -281,7 +268,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
               <div style="width:2px;flex:1;background:linear-gradient(rgba(0,200,83,.5),rgba(0,200,83,.12));min-height:24px;"></div>
             </div>
             <div style="padding-bottom:20px;">
-              <div style="font-family:var(--lb-font-display);font-weight:600;font-size:14.5px;color:#fff;">{{ st.title }}</div>
+              <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:600;font-size:14.5px;color:#fff;">{{ st.title }}</div>
               <div style="font-size:12.5px;line-height:1.5;color:rgba(242,247,243,.55);margin-top:3px;">{{ st.meta }}</div>
             </div>
           </div>
@@ -298,7 +285,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div data-reveal style="max-width:660px;margin:0 auto 30px;padding:0 22px;">
         <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:14px;">{{ t.a3Kicker }}</div>
         <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
-          <h2 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);" aria-label="Fifteen campuses. One honest list.">FIFTEEN <span style="white-space:nowrap;">C<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>MPUSES.</span><br><span style="color:#00C853;">ONE HONEST LIST.</span></h2>
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);" aria-label="Fifteen campuses. One honest list.">FIFTEEN <span style="white-space:nowrap;">C<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>MPUSES.</span><br><span style="color:#00C853;">ONE HONEST LIST.</span></h2>
         </sc-if>
         <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
           <h2 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.14;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);">{{ t.a3L1 }}<br><span style="color:#00C853;">{{ t.a3L2 }}</span></h2>
@@ -309,17 +296,17 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
         <sc-for list="{{ unis }}" as="u" hint-placeholder-count="15">
           <div onClick="{{ travelTo }}" onKeyDown="{{ travelToKey }}" onMouseEnter="{{ preloadCampus }}" data-uni="{{ u.k }}" role="button" tabIndex="0" aria-label="{{ u.aria }}" style="cursor:pointer;flex:0 0 clamp(238px,25vw,278px);scroll-snap-align:center;background:rgba(4,14,9,.82);border:1px solid rgba(0,200,83,.26);border-radius:16px;padding:18px;backdrop-filter:blur(9px);display:flex;flex-direction:column;gap:10px;min-height:206px;box-sizing:border-box;transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s ease,box-shadow .3s ease;" style-hover="border-color:rgba(0,230,118,.65);transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.5);">
             <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;">
-              <span style="font-family:var(--lb-font-display);font-weight:700;font-size:20px;letter-spacing:-.01em;color:#00E676;">{{ u.short }}</span>
+              <span style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:20px;letter-spacing:-.01em;color:#00E676;">{{ u.short }}</span>
               <span style="font-size:11px;font-weight:600;letter-spacing:.14em;color:rgba(242,247,243,.5);">{{ u.typeLabel }}</span>
             </div>
             <div>
-              <div style="font-family:var(--lb-font-display);font-weight:600;font-size:13px;color:#fff;line-height:1.35;">{{ u.name }}</div>
+              <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:600;font-size:13px;color:#fff;line-height:1.35;">{{ u.name }}</div>
               <div style="font-size:12.5px;color:rgba(242,247,243,.6);margin-top:3px;">{{ u.city }}</div>
             </div>
             <div style="display:flex;gap:10px;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;margin-top:auto;">
-              <div style="flex:1;min-width:0;"><div style="font-size:11px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.costL }}</div><div style="font-family:var(--lb-font-display);font-size:13px;font-weight:600;color:#fff;margin-top:2px;">{{ u.cost }}</div></div>
-              <div style="flex:none;"><div style="font-size:11px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.ieltsL }}</div><div style="font-family:var(--lb-font-display);font-size:13px;font-weight:600;color:#00E676;margin-top:2px;">{{ u.ielts }}</div></div>
-              <div style="flex:none;"><div style="font-size:11px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.intakeL }}</div><div style="font-family:var(--lb-font-display);font-size:13px;font-weight:600;color:#fff;margin-top:2px;">{{ u.intakes }}</div></div>
+              <div style="flex:1;min-width:0;"><div style="font-size:11px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.costL }}</div><div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-top:2px;">{{ u.cost }}</div></div>
+              <div style="flex:none;"><div style="font-size:11px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.ieltsL }}</div><div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-size:13px;font-weight:600;color:#00E676;margin-top:2px;">{{ u.ielts }}</div></div>
+              <div style="flex:none;"><div style="font-size:11px;letter-spacing:.1em;color:rgba(242,247,243,.5);font-weight:600;">{{ t.intakeL }}</div><div style="font-family:'General Sans','Sora',system-ui,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-top:2px;">{{ u.intakes }}</div></div>
             </div>
             <div style="font-size:11px;font-weight:600;letter-spacing:.18em;color:#00E676;display:flex;align-items:center;gap:7px;">{{ t.visitL }} <svg width="10" height="9" viewBox="0 0 10 9"><path d="M1 4.5h7M5 1l3.5 3.5L5 8" stroke="#00E676" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
           </div>
@@ -342,7 +329,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#FFB300;margin-bottom:12px;">{{ t.a4Kicker }}</div>
       <div style="min-height:clamp(150px,22vw,230px);display:flex;align-items:center;justify-content:center;">
         <sc-if value="{{ beyondActive }}" hint-placeholder-val="{{ true }}">
-          <h2 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(28px,5vw,68px);line-height:1.04;letter-spacing:-.025em;margin:0;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.95);">BEYOND<br><span style="color:#00C853;">
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(28px,5vw,68px);line-height:1.04;letter-spacing:-.025em;margin:0;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.95);">BEYOND<br><span style="color:#00C853;">
             <sc-if value="{{ isW0 }}" hint-placeholder-val="{{ true }}"><span style="display:inline-block;animation:beyondFlip .6s cubic-bezier(.2,.8,.2,1) both;" aria-label="Marks."><span style="white-space:nowrap;">M<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>RKS.</span></span></sc-if>
             <sc-if value="{{ isW1 }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;animation:beyondFlip .6s cubic-bezier(.2,.8,.2,1) both;" aria-label="Grades."><span style="white-space:nowrap;">GR<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>DES.</span></span></sc-if>
             <sc-if value="{{ isW2 }}" hint-placeholder-val="{{ false }}"><span style="display:inline-block;animation:beyondFlip .6s cubic-bezier(.2,.8,.2,1) both;">LIMITS.</span></sc-if>
@@ -351,7 +338,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           </span></h2>
         </sc-if>
         <sc-if value="{{ beyondResolved }}" hint-placeholder-val="{{ false }}">
-          <h2 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(25px,4.4vw,58px);line-height:1.08;letter-spacing:-.02em;margin:0;color:#fff;text-align:center;text-shadow:0 8px 56px rgba(0,0,0,.95);animation:beyondResolve .9s cubic-bezier(.16,1,.3,1) both;" aria-label="Creating a lasting benchmark."><span style="white-space:nowrap;">CRE<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>TING</span> <span style="white-space:nowrap;"><span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span></span> <span style="white-space:nowrap;">L<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>STING</span><br><span style="color:#00C853;"><span style="white-space:nowrap;">BENCHM<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>RK.</span></span></h2>
+          <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(25px,4.4vw,58px);line-height:1.08;letter-spacing:-.02em;margin:0;color:#fff;text-align:center;text-shadow:0 8px 56px rgba(0,0,0,.95);animation:beyondResolve .9s cubic-bezier(.16,1,.3,1) both;" aria-label="Creating a lasting benchmark."><span style="white-space:nowrap;">CRE<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>TING</span> <span style="white-space:nowrap;"><span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span></span> <span style="white-space:nowrap;">L<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>STING</span><br><span style="color:#00C853;"><span style="white-space:nowrap;">BENCHM<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>RK.</span></span></h2>
         </sc-if>
       </div>
       <p style="max-width:520px;font-size:14.5px;line-height:1.65;color:rgba(242,247,243,.85);margin:16px 0 20px;text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.9);">{{ t.a4Sub }}</p>
@@ -370,7 +357,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
     <div data-reveal style="text-align:center;max-width:680px;margin:0 auto;">
       <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:13px;">{{ t.a5Kicker }}</div>
       <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
-        <h2 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(27px,4.2vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.9);" aria-label="You won’t sit here alone.">YOU WON’T SIT <span style="color:#00C853;">HERE <span style="white-space:nowrap;"><span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>LONE.</span></span></h2>
+        <h2 style="font-family:'General Sans','Sora',system-ui,sans-serif;font-weight:700;font-size:clamp(27px,4.2vw,54px);line-height:1.06;letter-spacing:-.02em;margin:0;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.9);" aria-label="You won’t sit here alone.">YOU WON’T SIT <span style="color:#00C853;">HERE <span style="white-space:nowrap;"><span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>LONE.</span></span></h2>
       </sc-if>
       <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
         <h2 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(25px,3.8vw,48px);line-height:1.14;margin:0;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.9);">{{ t.a5L1 }} <span style="color:#00C853;">{{ t.a5L2 }}</span></h2>
@@ -387,7 +374,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
             <div style="width:100%;aspect-ratio:3/4;border-radius:12px;padding:2px;background:linear-gradient(150deg,#00C853,#FFB300);box-sizing:border-box;">
               <image-slot id="founder-{{ f.key }}" shape="rounded" radius="11" placeholder="{{ f.photoPh }}" style="width:100%;height:100%;"></image-slot>
             </div>
-            <div style="font-family:var(--lb-font-display);font-weight:600;font-size:13.5px;color:#fff;text-align:center;line-height:1.18;">{{ f.name }}</div>
+            <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:600;font-size:13.5px;color:#fff;text-align:center;line-height:1.18;">{{ f.name }}</div>
             <sc-if value="{{ showRole }}" hint-placeholder-val="{{ true }}">
               <div style="font-size:11px;font-weight:600;letter-spacing:.16em;color:#00E676;text-align:center;line-height:1.3;">{{ f.role }}</div>
             </sc-if>
@@ -397,13 +384,13 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
 
       <sc-if value="{{ compactSeat }}" hint-placeholder-val="{{ false }}">
         <div data-reveal style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-          <button onClick="{{ openForm }}" style="min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 26px;border-radius:999px;border:0;cursor:pointer;font-family:var(--lb-font-display);box-shadow:0 0 30px rgba(0,200,83,.45);" style-hover="background:#00E676;">{{ t.ctaSignup }} →</button>
+          <button onClick="{{ openForm }}" style="min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 26px;border-radius:999px;border:0;cursor:pointer;font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;box-shadow:0 0 30px rgba(0,200,83,.45);" style-hover="background:#00E676;">{{ t.ctaSignup }} →</button>
         </div>
       </sc-if>
       <div data-reveal style="width:min(390px,100%);background:rgba(5,16,10,.82);border:1px solid rgba(0,200,83,.3);border-radius:20px;padding:22px 20px;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.55);box-sizing:border-box;display:{{ seatDisplay }};">
         <sc-if value="{{ notJoined }}" hint-placeholder-val="{{ true }}">
           <div style="display:flex;flex-direction:column;gap:10px;text-align:left;">
-            <div style="font-family:var(--lb-font-display);font-weight:700;font-size:21px;letter-spacing:-.01em;color:#fff;">{{ t.signupTitle }}</div>
+            <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:700;font-size:21px;letter-spacing:-.01em;color:#fff;">{{ t.signupTitle }}</div>
             <div style="font-size:12px;line-height:1.55;color:rgba(242,247,243,.65);">{{ t.signupSub }}</div>
             <input value="{{ seatName }}" onChange="{{ setSeatName }}" placeholder="{{ t.phName }}" style="min-height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;" style-focus="border-color:#00C853;">
             <input value="{{ seatContact }}" onChange="{{ setSeatContact }}" placeholder="{{ t.phEmail }}" style="min-height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;" style-focus="border-color:#00C853;">
@@ -413,15 +400,15 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
                 <span>{{ seatErr }}</span>
               </div>
             </sc-if>
-            <button onClick="{{ signUp }}" style="margin-top:3px;min-height:52px;background:#00C853;color:#04140b;font-weight:600;font-size:15px;padding:15px;border-radius:12px;border:0;cursor:pointer;font-family:var(--lb-font-display);box-shadow:0 0 34px rgba(0,200,83,.45);" style-hover="background:#00E676;box-shadow:0 0 52px rgba(0,230,118,.65);">{{ t.ctaSignup }}</button>
+            <button onClick="{{ signUp }}" style="margin-top:3px;min-height:52px;background:#00C853;color:#04140b;font-weight:600;font-size:15px;padding:15px;border-radius:12px;border:0;cursor:pointer;font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;box-shadow:0 0 34px rgba(0,200,83,.45);" style-hover="background:#00E676;box-shadow:0 0 52px rgba(0,230,118,.65);">{{ t.ctaSignup }}</button>
           </div>
         </sc-if>
         <sc-if value="{{ joined }}" hint-placeholder-val="{{ false }}">
           <div style="display:flex;flex-direction:column;align-items:center;gap:11px;text-align:center;">
             <div style="width:48px;height:48px;border-radius:50%;background:rgba(0,200,83,.14);border:1px solid #00C853;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 22 22"><path d="M4 11.5 L9 16.5 L18 6" stroke="#00E676" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-            <div style="font-family:var(--lb-font-display);font-weight:700;font-size:19px;color:#fff;">{{ joinedTitleName }}</div>
+            <div style="font-family:'General Sans','Hind Siliguri','Sora',system-ui,sans-serif;font-weight:700;font-size:19px;color:#fff;">{{ joinedTitleName }}</div>
             <div style="font-size:12.5px;line-height:1.6;color:rgba(242,247,243,.7);">{{ t.joinedSub }}</div>
-            <a href="/app/" style="display:inline-flex;align-items:center;min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 28px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;">{{ t.enterDash }}</a>
+            <a href="Last Bench Dashboard.dc.html" style="display:inline-flex;align-items:center;min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 28px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;">{{ t.enterDash }}</a>
           </div>
         </sc-if>
       </div>
@@ -506,7 +493,7 @@ class Component extends DCLogic {
       'Heavy Rain':  { rain: 2.0, fogMul: 0.68, star: 0.35, wet: 0.30, haze: 1.5 },
     };
     this.GRADES = {
-      'Emerald Night': { hemi: 0x6a8fc0, moon: 0xbcd2ff, tint: 0x14282c, dawn: '#FFB300', lantern: '#FF4D2E', seat: '#00E676' },
+      'Emerald Night': { hemi: 0x6a8fc0, moon: 0xbcd2ff, tint: 0x0e2a1c, dawn: '#FFB300', lantern: '#FF4D2E', seat: '#00E676' },
       'Amber Monsoon': { hemi: 0xc0895a, moon: 0xffd2a4, tint: 0x2a1d10, dawn: '#FF7A18', lantern: '#FFB300', seat: '#FFC246' },
       'Cobalt Night':  { hemi: 0x5a7ec8, moon: 0xa8c8ff, tint: 0x101c34, dawn: '#7AA8FF', lantern: '#00E5FF', seat: '#6FE3FF' },
     };
@@ -709,22 +696,11 @@ class Component extends DCLogic {
         const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ct);
         const okPhone = /^[+]?[\d\s-]{9,}$/.test(ct);
         if (!okEmail && !okPhone) return this.setState({ seatErr: T ? 'একটি সঠিক ইমেইল বা ফোন নম্বর দিন।' : 'Enter a valid email or phone number.' });
-        const payload = new URLSearchParams({
-          'form-name': 'signup', name: nm,
-          whatsapp: okPhone ? ct : '', email: okEmail ? ct : '',
-          stage: 'Claude Design experience', field: '',
-          contact_consent: 'Submission confirms WhatsApp/email contact consent'
-        });
-        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() })
-          .then((res) => {
-            if (!res.ok) throw new Error('Signup failed');
-            try {
-              localStorage.setItem('lb_student_name', nm);
-              localStorage.setItem('lb_lang', this.state.lang);
-            } catch (_) {}
-            this.setState({ joined: true, seatErr: '' });
-          })
-          .catch(() => this.setState({ seatErr: T ? 'এখন জমা দেওয়া যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।' : 'Could not submit right now. Please try again.' }));
+        try {
+          localStorage.setItem('lb_student_name', nm);
+          localStorage.setItem('lb_lang', this.state.lang);
+        } catch (_) {}
+        this.setState({ joined: true, seatErr: '' });
       },
       joined: this.state.joined, notJoined: !this.state.joined,
       joinedTitleName: (() => {
@@ -797,6 +773,7 @@ class Component extends DCLogic {
       else this.setState({ webglFailed: true });
     };
     wait();
+    this.setupReveals();
     this.scheduleBeyond();
     this.onKeyDown = (e) => { if (e.key === 'Escape') { if (this.state.travelActive) this.closeTravelTo(); else if (this.state.radioPanel) this.closeRadioPanel(); else if (this.state.founder) this.setState({ founder: null }); } };
     window.addEventListener('keydown', this.onKeyDown);
@@ -1075,17 +1052,29 @@ class Component extends DCLogic {
     this.setState({ travelActive: false });
   }
 
-  // ─── 3D WORLD ───────────────────────────────────────────────────────────
-  texCanvas(w, h, draw) {
-    const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'));
-    const t = new THREE.CanvasTexture(c);
-    if (!this.maxAniso) {
-      const rr = this.renderer || this.globeRenderer;
-      this.maxAniso = rr ? rr.capabilities.getMaxAnisotropy() : 0;
-    }
-    t.anisotropy = Math.min(8, this.maxAniso || 1);
-    return t;
+  setupReveals() {
+    setTimeout(() => {
+      this.revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
+      this.revealEls.forEach((el) => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1)';
+      });
+    }, 400);
   }
+
+  checkReveals() {
+    if (!this.revealEls || !this.revealEls.length) return;
+    const limit = window.innerHeight * 0.9;
+    this.revealEls = this.revealEls.filter((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.top < limit && r.bottom > 0) { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; return false; }
+      return true;
+    });
+  }
+
+  // ─── 3D WORLD ───────────────────────────────────────────────────────────
+  texCanvas(w, h, draw) { const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d')); return new THREE.CanvasTexture(c); }
   sRGB(t) { if ('colorSpace' in t) t.colorSpace = THREE.SRGBColorSpace; return t; }
   windowTex(density, warmth) {
     return this.sRGB(this.texCanvas(128, 256, (ctx) => {
@@ -1213,199 +1202,81 @@ class Component extends DCLogic {
     dhaka.add(benchG);
 
     // ── rickshaws: spoked wheels, ribbed hood, painted rear panel, pedalling driver ──
-    // Researched dimensions: 2.1-2.5 m long, 0.9-1.2 m wide, 1.5-1.7 m tall, on
-    // 26" bicycle wheels, with a five-rib hinged hood ("kamani") and the painted
-    // rear tin panel. Scene scale ~3.05 u/m, so a wheel is 2.0 u across — not the
-    // 4.2 u that made the old model read as a toy with monster-truck wheels.
-    const WR = 1.0;                              // 26" wheel radius
-    const AXZ = -1.5, FWZ = 2.6;                 // rear axle / front hub -> 1.35 m wheelbase
-    const TRK = 1.45;                            // rear track half-width
-    const FLR = 1.85, CUSH = 2.42, SBK = 3.72;   // floor / cushion top / seat-back top
-    const HR = 1.52;                             // hood radius -> crown at 5.24 u = 1.72 m
-
-    const tyreM = new T.MeshStandardMaterial({ color: 0x0d0c0b, roughness: 0.92 });
-    const chromeM = new T.MeshStandardMaterial({ color: 0xc4ced4, roughness: 0.26, metalness: 0.9 });
-    const frameM = new T.MeshStandardMaterial({ color: 0x1a232b, roughness: 0.5, metalness: 0.45 });
-
-    // 32 spokes as one alpha-mapped disc: crisper and far cheaper than 12 hairlines
-    const spokeTex = this.texCanvas(128, 128, (ctx) => {
-      ctx.clearRect(0, 0, 128, 128); ctx.lineCap = 'round';
-      for (let i = 0; i < 32; i++) {
-        const a = (i / 32) * Math.PI * 2, off = (i % 2 ? 1 : -1) * 0.17;
-        ctx.strokeStyle = i % 2 ? 'rgba(228,236,240,.85)' : 'rgba(186,198,206,.7)';
-        ctx.lineWidth = 1.15; ctx.beginPath();
-        ctx.moveTo(64 + Math.cos(a + off) * 9, 64 + Math.sin(a + off) * 9);
-        ctx.lineTo(64 + Math.cos(a) * 61, 64 + Math.sin(a) * 61); ctx.stroke();
-      }
-    });
-    const spokeDiscM = new T.MeshBasicMaterial({ map: spokeTex, transparent: true, depthWrite: false, side: T.DoubleSide });
-
+    const tyreM = new T.MeshStandardMaterial({ color: 0x0e0c0b, roughness: 0.85 });
+    const chromeM = new T.MeshStandardMaterial({ color: 0xb9c3c8, roughness: 0.32, metalness: 0.85 });
+    const spokeM = new T.LineBasicMaterial({ color: 0xcfd8dc, transparent: true, opacity: 0.75 });
     const mkWheel = (rad) => {
       const g = new T.Group();
-      g.add(new T.Mesh(new T.TorusGeometry(rad, rad * 0.115, 7, 24), tyreM));
-      g.add(new T.Mesh(new T.TorusGeometry(rad * 0.87, rad * 0.045, 6, 24), chromeM));
-      g.add(new T.Mesh(new T.CircleGeometry(rad * 0.86, 24), spokeDiscM));
-      const hub = new T.Mesh(new T.CylinderGeometry(rad * 0.1, rad * 0.1, rad * 0.26, 10), chromeM);
+      g.add(new T.Mesh(new T.TorusGeometry(rad, rad * 0.16, 8, 22), tyreM));
+      g.add(new T.Mesh(new T.TorusGeometry(rad * 0.82, rad * 0.05, 6, 22), chromeM));
+      const hub = new T.Mesh(new T.CylinderGeometry(rad * 0.13, rad * 0.13, rad * 0.3, 10), chromeM);
       hub.rotation.x = Math.PI / 2; g.add(hub);
+      const sp = [];
+      for (let i = 0; i < 12; i++) {
+        const th = (i / 12) * Math.PI * 2;
+        sp.push(0, 0, 0, Math.cos(th) * rad * 0.82, Math.sin(th) * rad * 0.82, 0);
+      }
+      const sg = new T.BufferGeometry(); sg.setAttribute('position', new T.Float32BufferAttribute(sp, 3));
+      g.add(new T.LineSegments(sg, spokeM));
       return g;
     };
-    // The wheel is built in XY so rotation.z still rolls it; the holder turns the
-    // axle to X, so the wheels finally face along the direction of travel instead
-    // of standing sideways like paddles.
-    const mountWheel = (parent, rad, x, y, z) => {
-      const holder = new T.Group();
-      holder.position.set(x, y, z); holder.rotation.y = Math.PI / 2;
-      const w = mkWheel(rad); holder.add(w); parent.add(holder);
-      return w;
-    };
-
-    // Hand-painted rear panel: flat folk-art rosette, birds, scalloped bands.
-    const artCache = {};
-    const artTex = (base, accent) => {
-      const key = base + '_' + accent;
-      if (artCache[key]) return artCache[key];
-      const hex = (c) => '#' + c.toString(16).padStart(6, '0');
-      const t = this.sRGB(this.texCanvas(256, 256, (ctx) => {
-        ctx.fillStyle = hex(base); ctx.fillRect(0, 0, 256, 256);
-        ctx.fillStyle = hex(accent); ctx.fillRect(0, 0, 256, 18); ctx.fillRect(0, 238, 256, 18);
-        ctx.fillStyle = '#f2c53d'; ctx.fillRect(0, 18, 256, 5); ctx.fillRect(0, 233, 256, 5);
-        ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.fillRect(14, 30, 228, 196);
-        ctx.fillStyle = hex(base); ctx.fillRect(18, 34, 220, 188);
-        ctx.fillStyle = '#f2c53d';
-        for (let i = 0; i < 12; i++) { ctx.beginPath(); ctx.arc(27 + i * 18.5, 34, 9, 0, Math.PI); ctx.fill(); }
-        const cx = 128, cy = 132;
-        for (let ring = 0; ring < 3; ring++) {
-          const rr = 54 - ring * 16;
-          ctx.fillStyle = ['#f2c53d', '#e8452c', '#f8f2e0'][ring];
-          for (let k = 0; k < 8; k++) {
-            const a = (k / 8) * Math.PI * 2 + ring * 0.4;
-            ctx.beginPath();
-            ctx.ellipse(cx + Math.cos(a) * rr * 0.6, cy + Math.sin(a) * rr * 0.6, rr * 0.42, rr * 0.2, a, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-        ctx.fillStyle = '#1f7a4c'; ctx.beginPath(); ctx.arc(cx, cy, 13, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = '#1f7a4c';
-        [[42, 62, -0.7], [214, 62, 0.7], [42, 202, 0.7], [214, 202, -0.7]].forEach((L) => {
-          for (let k = 0; k < 3; k++) { ctx.beginPath(); ctx.ellipse(L[0], L[1], 17, 6, L[2] + k * 0.5, 0, Math.PI * 2); ctx.fill(); }
-        });
-        ctx.strokeStyle = '#f8f2e0'; ctx.lineWidth = 3.4;
-        [74, 182].forEach((bx) => {
-          ctx.beginPath(); ctx.arc(bx - 7, 96, 9, Math.PI * 1.05, Math.PI * 1.95); ctx.stroke();
-          ctx.beginPath(); ctx.arc(bx + 7, 96, 9, Math.PI * 1.05, Math.PI * 1.95); ctx.stroke();
-        });
-        ctx.fillStyle = '#f2c53d';
-        for (let i = 0; i < 11; i++) {
-          const dx = 28 + i * 20;
-          ctx.beginPath(); ctx.moveTo(dx, 210); ctx.lineTo(dx + 8, 218); ctx.lineTo(dx, 226); ctx.lineTo(dx - 8, 218); ctx.closePath(); ctx.fill();
-        }
-      }));
-      artCache[key] = t; return t;
-    };
-
     const mkRickshaw = (hoodCol, panelCol) => {
       const g = new T.Group();
-      g.userData.wheels = [
-        mountWheel(g, WR, -TRK, WR, AXZ),
-        mountWheel(g, WR, TRK, WR, AXZ),
-        mountWheel(g, WR, 0, WR, FWZ),
-      ];
-
-      const spine = new T.Mesh(new T.BoxGeometry(0.2, 0.2, 4.6), frameM); spine.position.set(0, 1.15, 0.5); g.add(spine);
-      [-1, 1].forEach((sd) => {
-        const st = new T.Mesh(new T.BoxGeometry(0.15, 0.15, 3.4), frameM);
-        st.position.set(sd * TRK * 0.7, WR + 0.5, AXZ + 1.2); st.rotation.x = 0.2; g.add(st);
+      const RW = 2.1, FW = 2.0;
+      const wl = mkWheel(RW), wr = mkWheel(RW), wf = mkWheel(FW);
+      wl.position.set(-2.3, RW, -2.6); wr.position.set(2.3, RW, -2.6); wf.position.set(0, FW, 4.2);
+      g.add(wl, wr, wf); g.userData.wheels = [wl, wr, wf];
+      // frame
+      const frameM = new T.MeshStandardMaterial({ color: 0x141b22, roughness: 0.55, metalness: 0.4 });
+      const spine = new T.Mesh(new T.BoxGeometry(0.32, 0.32, 7.4), frameM); spine.position.set(0, 2.2, 0.7); g.add(spine);
+      [-1, 1].forEach((sd) => { const st = new T.Mesh(new T.BoxGeometry(0.26, 0.26, 5.4), frameM); st.position.set(sd * 2.3, RW, -0.2); st.rotation.x = 0.12; g.add(st); });
+      const axle = new T.Mesh(new T.CylinderGeometry(0.16, 0.16, 5.0, 8), chromeM); axle.rotation.z = Math.PI / 2; axle.position.set(0, RW, -2.6); g.add(axle);
+      // passenger box: floor, seat cushion, backrest, painted rear panel
+      const bodyM = new T.MeshStandardMaterial({ color: 0x123a24, roughness: 0.42, metalness: 0.25 });
+      const floor = new T.Mesh(new T.BoxGeometry(4.4, 0.3, 4.0), bodyM); floor.position.set(0, 2.5, -1.9); g.add(floor);
+      const cushion = new T.Mesh(new T.BoxGeometry(4.2, 0.7, 2.4), new T.MeshStandardMaterial({ color: 0x8f2f24, roughness: 0.85 })); cushion.position.set(0, 3.0, -1.5); g.add(cushion);
+      const backrest = new T.Mesh(new T.BoxGeometry(4.2, 2.6, 0.4), new T.MeshStandardMaterial({ color: 0x8f2f24, roughness: 0.85 })); backrest.position.set(0, 4.5, -3.1); backrest.rotation.x = -0.1; g.add(backrest);
+      const panel = new T.Mesh(new T.BoxGeometry(4.5, 2.9, 0.22), new T.MeshStandardMaterial({ color: panelCol, roughness: 0.35, metalness: 0.3, emissive: panelCol, emissiveIntensity: 0.32 }));
+      panel.position.set(0, 4.4, -3.45); g.add(panel);
+      [[-1.1, 4.9], [1.1, 4.9], [0, 3.7]].forEach(([px, py]) => {
+        const disc = new T.Mesh(new T.CircleGeometry(0.55, 14), new T.MeshBasicMaterial({ color: 0xffcf5c }));
+        disc.position.set(px, py, -3.58); g.add(disc);
       });
-      const axle = new T.Mesh(new T.CylinderGeometry(0.09, 0.09, TRK * 2 + 0.3, 8), chromeM);
-      axle.rotation.z = Math.PI / 2; axle.position.set(0, WR, AXZ); g.add(axle);
-
-      const bodyM = new T.MeshStandardMaterial({ color: 0x123a24, roughness: 0.45, metalness: 0.25 });
-      const cushionM = new T.MeshStandardMaterial({ color: 0x7d2a22, roughness: 0.88 });
-      const floor = new T.Mesh(new T.BoxGeometry(2.9, 0.16, 2.5), bodyM); floor.position.set(0, FLR, AXZ + 0.35); g.add(floor);
-      const cushion = new T.Mesh(new T.BoxGeometry(2.8, 0.42, 1.5), cushionM); cushion.position.set(0, CUSH - 0.21, AXZ + 0.15); g.add(cushion);
-      const backrest = new T.Mesh(new T.BoxGeometry(2.8, SBK - CUSH, 0.22), cushionM);
-      backrest.position.set(0, (CUSH + SBK) / 2, AXZ - 0.72); backrest.rotation.x = -0.09; g.add(backrest);
-
-      const art = artTex(panelCol, hoodCol);
-      const panel = new T.Mesh(new T.PlaneGeometry(3.0, 2.0), new T.MeshStandardMaterial({ map: art, roughness: 0.42, metalness: 0.18, emissive: 0xffffff, emissiveMap: art, emissiveIntensity: 0.2 }));
-      panel.position.set(0, FLR + 0.95, AXZ - 0.9); panel.rotation.y = Math.PI; g.add(panel);
-      const surround = new T.Mesh(new T.BoxGeometry(3.14, 2.14, 0.1), frameM); surround.position.set(0, FLR + 0.95, AXZ - 0.85); g.add(surround);
-
-      [-TRK, TRK].forEach((mx) => {
-        const mud = new T.Mesh(new T.CylinderGeometry(WR * 1.2, WR * 1.2, 0.42, 16, 1, true, Math.PI * 0.08, Math.PI * 0.84),
-          new T.MeshStandardMaterial({ color: panelCol, roughness: 0.38, metalness: 0.4, side: T.DoubleSide }));
-        mud.rotation.z = Math.PI / 2; mud.position.set(mx, WR, AXZ); g.add(mud);
+      // mudguards over the rear wheels
+      [-2.3, 2.3].forEach((mx) => {
+        const mud = new T.Mesh(new T.CylinderGeometry(RW * 1.16, RW * 1.16, 0.9, 14, 1, true, Math.PI * 0.05, Math.PI * 0.9), new T.MeshStandardMaterial({ color: panelCol, roughness: 0.4, metalness: 0.35, side: T.DoubleSide }));
+        mud.rotation.z = Math.PI / 2; mud.position.set(mx, RW, -2.6); g.add(mud);
       });
-
-      // hood: five hinged ribs arching across the seat, fabric stretched between
-      const hoodM = new T.MeshStandardMaterial({ color: hoodCol, roughness: 0.72, side: T.DoubleSide });
-      const ribM = new T.MeshStandardMaterial({ color: 0x2b2018, roughness: 0.6, metalness: 0.3 });
-      const hoodZ0 = AXZ - 0.62, hoodLen = 1.62;
-      const fabric = new T.Mesh(new T.CylinderGeometry(HR, HR, hoodLen, 18, 1, true, Math.PI / 2, Math.PI), hoodM);
-      fabric.rotation.x = Math.PI / 2; fabric.position.set(0, SBK, hoodZ0 + hoodLen / 2); g.add(fabric);
-      for (let i = 0; i < 5; i++) {
-        const rib = new T.Mesh(new T.TorusGeometry(HR + 0.015, 0.045, 5, 16, Math.PI), ribM);
-        rib.position.set(0, SBK, hoodZ0 + (i / 4) * hoodLen); g.add(rib);
+      // ribbed folding hood
+      const hoodM = new T.MeshStandardMaterial({ color: hoodCol, roughness: 0.62, side: T.DoubleSide, emissive: hoodCol, emissiveIntensity: 0.22 });
+      for (let i = 0; i < 4; i++) {
+        const rr = 2.55 - i * 0.1;
+        const rib = new T.Mesh(new T.CylinderGeometry(rr, rr, 0.62, 16, 1, true, 0, Math.PI), hoodM);
+        rib.rotation.z = Math.PI / 2; rib.rotation.y = Math.PI / 2;
+        rib.position.set(0, 4.7, -3.0 + i * 0.66); g.add(rib);
       }
-      const cap = new T.Mesh(new T.CylinderGeometry(HR + 0.1, HR + 0.1, 0.34, 18, 1, true, Math.PI / 2, Math.PI), hoodM);
-      cap.rotation.x = Math.PI / 2; cap.position.set(0, SBK + 0.04, hoodZ0 + hoodLen + 0.14); g.add(cap);
-      const fringeM = new T.MeshBasicMaterial({ color: 0xf2c53d, side: T.DoubleSide });
-      for (let i = 0; i < 9; i++) {
-        const a = Math.PI * (0.08 + (i / 8) * 0.84);
-        const tag = new T.Mesh(new T.PlaneGeometry(0.16, 0.22), fringeM);
-        tag.position.set(Math.cos(a) * (HR + 0.06), SBK + Math.sin(a) * (HR + 0.06) - 0.12, hoodZ0 + hoodLen + 0.3);
-        g.add(tag);
-      }
-
-      const bumper = new T.Mesh(new T.CylinderGeometry(0.07, 0.07, 3.0, 8), chromeM);
-      bumper.rotation.z = Math.PI / 2; bumper.position.set(0, FLR - 0.28, AXZ - 0.95); g.add(bumper);
-      [-0.95, 0, 0.95].forEach((rx) => {
-        const ref = new T.Mesh(new T.CircleGeometry(0.11, 10), new T.MeshBasicMaterial({ color: 0xff3b2f }));
-        ref.position.set(rx, FLR - 0.28, AXZ - 1.02); ref.rotation.y = Math.PI; g.add(ref);
-      });
-
-      // front end is an off-the-shelf bicycle: head tube, twin fork blades, wide bar
-      const headTube = new T.Mesh(new T.CylinderGeometry(0.1, 0.1, 1.5, 8), frameM);
-      headTube.position.set(0, 2.05, FWZ - 0.42); headTube.rotation.x = 0.3; g.add(headTube);
-      [-0.16, 0.16].forEach((fx) => {
-        const blade = new T.Mesh(new T.CylinderGeometry(0.055, 0.05, 1.5, 6), chromeM);
-        blade.position.set(fx, WR + 0.62, FWZ - 0.1); blade.rotation.x = 0.24; g.add(blade);
-      });
-      const bar = new T.Mesh(new T.CylinderGeometry(0.055, 0.055, 1.5, 8), chromeM);
-      bar.rotation.z = Math.PI / 2; bar.position.set(0, 3.48, FWZ - 0.62); g.add(bar);
-      [-0.72, 0.72].forEach((hx) => {
-        const grip = new T.Mesh(new T.CylinderGeometry(0.07, 0.07, 0.3, 8), new T.MeshStandardMaterial({ color: 0x14100c, roughness: 0.9 }));
-        grip.rotation.z = Math.PI / 2; grip.position.set(hx, 3.48, FWZ - 0.62); g.add(grip);
-      });
-      const post = new T.Mesh(new T.CylinderGeometry(0.07, 0.07, 1.4, 8), chromeM); post.position.set(0, 2.4, 0.95); g.add(post);
-      const saddle = new T.Mesh(new T.BoxGeometry(0.4, 0.14, 0.72), new T.MeshStandardMaterial({ color: 0x241812, roughness: 0.85 }));
-      saddle.position.set(0, 3.11, 0.95); g.add(saddle);
-      const crank = new T.Mesh(new T.TorusGeometry(0.3, 0.045, 6, 16), chromeM);
-      crank.rotation.y = Math.PI / 2; crank.position.set(0.12, 1.28, 1.5); g.add(crank);
-
+      // driver: saddle, handlebar, pedals, bent legs
+      const saddle = new T.Mesh(new T.BoxGeometry(0.8, 0.3, 1.5), new T.MeshStandardMaterial({ color: 0x2a1c14, roughness: 0.8 })); saddle.position.set(0, 4.0, 1.5); g.add(saddle);
+      const post = new T.Mesh(new T.CylinderGeometry(0.13, 0.13, 1.8, 8), chromeM); post.position.set(0, 3.1, 1.5); g.add(post);
+      const fork = new T.Mesh(new T.CylinderGeometry(0.14, 0.14, 4.2, 8), chromeM); fork.position.set(0, 3.2, 4.0); fork.rotation.x = 0.32; g.add(fork);
+      const bar = new T.Mesh(new T.CylinderGeometry(0.11, 0.11, 3.0, 8), chromeM); bar.rotation.z = Math.PI / 2; bar.position.set(0, 5.1, 3.6); g.add(bar);
       const rider = new T.Group();
-      const shirt = new T.MeshLambertMaterial({ color: 0xc9d4cc });
-      const torso = new T.Mesh(new T.BoxGeometry(0.66, 1.0, 0.42), shirt);
-      torso.position.set(0, 3.72, 1.22); torso.rotation.x = 0.3; rider.add(torso);
-      const head = new T.Mesh(new T.SphereGeometry(0.26, 14, 10), skinM); head.position.set(0, 4.42, 1.5); rider.add(head);
-      [-1, 1].forEach((sd) => {
-        const arm = new T.Mesh(new T.BoxGeometry(0.14, 0.14, 1.15), shirt);
-        arm.position.set(sd * 0.42, 3.86, 1.75); arm.rotation.x = -0.55; rider.add(arm);
-      });
+      const rt = new T.Mesh(new T.BoxGeometry(1.05, 1.7, 0.72), new T.MeshLambertMaterial({ color: 0xcfd8d2 })); rt.position.set(0, 5.0, 1.9); rt.rotation.x = 0.26; rider.add(rt);
+      const rh = new T.Mesh(new T.SphereGeometry(0.45, 14, 10), skinM); rh.position.set(0, 6.1, 2.3); rider.add(rh);
       const legs = [];
-      [-0.22, 0.22].forEach((dx, li) => {
+      [-0.42, 0.42].forEach((dx, li) => {
         const leg = new T.Group();
-        const up = new T.Mesh(new T.BoxGeometry(0.2, 0.78, 0.2), denim); up.position.set(0, -0.39, 0.14); leg.add(up);
-        const lo = new T.Mesh(new T.BoxGeometry(0.17, 0.72, 0.17), denim); lo.position.set(0, -1.04, 0.36); leg.add(lo);
-        leg.position.set(dx, 3.05, 1.05); rider.add(leg); legs.push({ leg, phase: li * Math.PI });
+        const up = new T.Mesh(new T.BoxGeometry(0.36, 1.3, 0.36), denim); up.position.set(0, -0.65, 0.25); leg.add(up);
+        const lo = new T.Mesh(new T.BoxGeometry(0.32, 1.2, 0.32), denim); lo.position.set(0, -1.75, 0.55); leg.add(lo);
+        leg.position.set(dx, 4.2, 2.0); rider.add(leg); legs.push({ leg, phase: li * Math.PI });
       });
       g.userData.legs = legs;
       g.add(rider); g.userData.rider = rider;
-
-      const lamp = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ffd28a', transparent: true, opacity: 0.9, depthWrite: false, blending: T.AdditiveBlending }));
-      lamp.scale.set(2.6, 2.6, 1); lamp.position.set(0, 2.1, FWZ + 0.3); g.add(lamp);
-      const tail = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ff4d3a', transparent: true, opacity: 0.75, depthWrite: false, blending: T.AdditiveBlending }));
-      tail.scale.set(1.7, 1.7, 1); tail.position.set(0, FLR - 0.28, AXZ - 1.2); g.add(tail);
+      const crank = new T.Mesh(new T.TorusGeometry(0.55, 0.07, 6, 14), chromeM); crank.position.set(0, 2.4, 2.3); g.add(crank);
+      const lamp = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ffd28a', transparent: true, opacity: 0.95, depthWrite: false, blending: T.AdditiveBlending }));
+      lamp.scale.set(5.4, 5.4, 1); lamp.position.set(0, 3.4, 4.6); g.add(lamp);
+      const tail = new T.Sprite(new T.SpriteMaterial({ map: glow, color: '#ff4d3a', transparent: true, opacity: 0.8, depthWrite: false, blending: T.AdditiveBlending }));
+      tail.scale.set(3.2, 3.2, 1); tail.position.set(0, 2.6, -3.8); g.add(tail);
       return g;
     };
     const rickCols = [[0xd8402f, 0x1d6b3f], [0x1f7a4c, 0xc3392a], [0xe0a62a, 0x1f4f7a], [0x8e3fa8, 0xd8402f], [0x1f4f7a, 0xe0a62a]];
@@ -1633,7 +1504,7 @@ class Component extends DCLogic {
           g.position.z += g.userData.dir * g.userData.speed * dt;
           if (g.userData.dir > 0 && g.position.z > 62) g.position.z = -340 - Math.random() * 60;
           if (g.userData.dir < 0 && g.position.z < -340) g.position.z = 62 + Math.random() * 40;
-          g.userData.wheels.forEach((w) => { w.rotation.z += g.userData.speed * dt; });
+          g.userData.wheels.forEach((w) => { w.rotation.z -= g.userData.dir * dt * 5.5; });
           g.userData.legs.forEach((L) => { L.leg.rotation.x = Math.sin(time * 5.2 + L.phase) * 0.5; });
           g.userData.rider.position.y = Math.abs(Math.sin(time * 5.2)) * 0.1;
           g.position.y = Math.sin(time * 9 + g.position.z * 0.3) * 0.05;
@@ -1773,46 +1644,17 @@ class Component extends DCLogic {
     const path = window.d3.geoPath(proj, lc);
     lc.beginPath(); path(land); lc.fillStyle = '#2f4a30'; lc.fill();
     lc.globalCompositeOperation = 'source-atop';
-    // Real biomes at their real coordinates, not a latitude stripe. A gradient by
-    // latitude alone paints India, south China and Mexico the colour of the Sahara,
-    // which is the single thing that most makes a rendered globe look fake.
-    // [lat, lon, radiusDegLon, radiusDegLat, colour, alpha]
-    const BIOME = [
-      [20, 10, 30, 20, '#c2a570', 0.95], [23, 45, 13, 11, '#c9ac72', 0.92],
-      [27, 71, 7, 6, '#bd9c66', 0.85], [42, 104, 14, 8, '#b09a6e', 0.85],
-      [39, 83, 8, 5, '#bda574', 0.85], [40, 60, 9, 6, '#b49c6c', 0.8],
-      [-25, 133, 18, 11, '#bf8f5c', 0.95], [-23, 20, 9, 9, '#b8975f', 0.85],
-      [-24, -69, 4, 9, '#a8875e', 0.85], [30, -108, 9, 7, '#b99a6a', 0.85],
-      [40, -117, 6, 5, '#a89572', 0.75], [-47, -69, 5, 8, '#8f8468', 0.7],
-      [32, 68, 8, 6, '#b09668', 0.7],
-      [-4, -62, 16, 10, '#1d4a26', 0.95], [0, 22, 12, 8, '#1b4824', 0.95],
-      [0, 112, 12, 7, '#1d5028', 0.9], [-5, 141, 6, 4, '#1d5028', 0.9],
-      [6, -5, 8, 3, '#20502a', 0.85], [17, 100, 6, 5, '#235a2d', 0.8],
-      [62, 95, 34, 10, '#31502f', 0.85], [57, -100, 24, 9, '#33512f', 0.85],
-      [64, 18, 8, 6, '#2f4c2e', 0.8],
-      [40, -98, 11, 7, '#6d7a46', 0.7], [49, 35, 13, 6, '#6f7c48', 0.7],
-      [-33, -62, 7, 7, '#6c7d45', 0.7], [36, 114, 10, 6, '#657440', 0.7],
-      [22, 78, 9, 7, '#4c7238', 0.75], [45, 10, 8, 5, '#5d7440', 0.6],
-      [72, -40, 14, 9, '#e8f2f8', 0.97], [78, 100, 12, 5, '#dfeaf2', 0.7],
-      [-85, 0, 180, 12, '#eef5fa', 0.99], [-72, 0, 180, 10, '#e6eff6', 0.9],
-    ];
-    const PPD = W / 360;
-    const blob = (cx, cy, rx, ry, col, al) => {
-      lc.save(); lc.translate(cx, cy); lc.scale(1, ry / rx);
-      const g3 = lc.createRadialGradient(0, 0, 0, 0, 0, rx);
-      g3.addColorStop(0, col); g3.addColorStop(0.55, col); g3.addColorStop(1, 'rgba(0,0,0,0)');
-      lc.globalAlpha = al; lc.fillStyle = g3;
-      lc.beginPath(); lc.arc(0, 0, rx, 0, Math.PI * 2); lc.fill();
-      lc.restore();
-    };
-    BIOME.forEach((b) => {
-      const cx = (b[1] + 180) * PPD, cy = (90 - b[0]) * PPD;
-      const rx = b[2] * PPD, ry = b[3] * PPD;
-      blob(cx, cy, rx, ry, b[4], b[5]);
-      if (cx < rx) blob(cx + W, cy, rx, ry, b[4], b[5]);
-      if (cx > W - rx) blob(cx - W, cy, rx, ry, b[4], b[5]);
-    });
-    lc.globalAlpha = 1;
+    const tint = lc.createLinearGradient(0, 0, 0, H);
+    tint.addColorStop(0.00, 'rgba(226,238,246,.92)');  // ice
+    tint.addColorStop(0.13, 'rgba(150,168,150,.55)');
+    tint.addColorStop(0.26, 'rgba(96,124,86,.30)');    // boreal
+    tint.addColorStop(0.36, 'rgba(178,150,96,.52)');   // desert belt
+    tint.addColorStop(0.47, 'rgba(74,116,62,.34)');    // tropics
+    tint.addColorStop(0.58, 'rgba(96,132,74,.30)');
+    tint.addColorStop(0.68, 'rgba(170,146,98,.46)');
+    tint.addColorStop(0.84, 'rgba(132,152,128,.42)');
+    tint.addColorStop(1.00, 'rgba(232,242,248,.94)');
+    lc.fillStyle = tint; lc.fillRect(0, 0, W, H);
     lc.globalCompositeOperation = 'source-over';
     lc.beginPath(); path(land);
     lc.strokeStyle = 'rgba(214,232,236,.34)'; lc.lineWidth = Math.max(0.6, W / 3400); lc.stroke();
@@ -1930,13 +1772,12 @@ class Component extends DCLogic {
     const dpr = r.getPixelRatio();
     const w = Math.max(2, Math.floor(window.innerWidth * dpr));
     const h = Math.max(2, Math.floor(window.innerHeight * dpr));
-    const HDR = T.HalfFloatType;
-    const opts = { minFilter: T.LinearFilter, magFilter: T.LinearFilter, format: T.RGBAFormat, type: HDR, depthBuffer: true, stencilBuffer: false, samples: levels >= 3 ? 4 : 2 };
+    const opts = { minFilter: T.LinearFilter, magFilter: T.LinearFilter, format: T.RGBAFormat, depthBuffer: true, stencilBuffer: false };
 
     this.rtScene = new T.WebGLRenderTarget(w, h, opts);
-    if ('colorSpace' in this.rtScene.texture) this.rtScene.texture.colorSpace = T.LinearSRGBColorSpace;
+    this.rtScene.texture.colorSpace = T.SRGBColorSpace;
 
-    const lvlOpts = { minFilter: T.LinearFilter, magFilter: T.LinearFilter, format: T.RGBAFormat, type: HDR, depthBuffer: false, stencilBuffer: false };
+    const lvlOpts = { minFilter: T.LinearFilter, magFilter: T.LinearFilter, format: T.RGBAFormat, depthBuffer: false, stencilBuffer: false };
     this.bloomLv = [];
     let bw = Math.max(2, w >> 1), bh = Math.max(2, h >> 1);
     for (let i = 0; i < levels; i++) {
@@ -1947,7 +1788,7 @@ class Component extends DCLogic {
     const VERT = 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }';
 
     this.matBright = new T.ShaderMaterial({
-      uniforms: { tDiffuse: { value: null }, threshold: { value: 0.52 }, knee: { value: 0.45 } },
+      uniforms: { tDiffuse: { value: null }, threshold: { value: 0.58 }, knee: { value: 0.32 } },
       vertexShader: VERT,
       fragmentShader: [
         'uniform sampler2D tDiffuse; uniform float threshold; uniform float knee; varying vec2 vUv;',
@@ -1984,7 +1825,7 @@ class Component extends DCLogic {
     });
 
     const taps = ['b0', 'b1', 'b2'].slice(0, levels);
-    const uni = { tScene: { value: null }, strength: { value: 0.62 }, vig: { value: 0.18 }, aberr: { value: 0.0016 }, exposure: { value: 1.25 } };
+    const uni = { tScene: { value: null }, strength: { value: 0.62 }, vig: { value: 0.18 }, aberr: { value: 0.0016 } };
     taps.forEach((k) => { uni['t' + k] = { value: null }; });
     const weights = levels === 3 ? [0.50, 0.32, 0.18] : [0.62, 0.38];
     const sumExpr = taps.map((k, i) => 'texture2D(t' + k + ', vUv).rgb * ' + weights[i].toFixed(2)).join(' + ');
@@ -1995,15 +1836,7 @@ class Component extends DCLogic {
       fragmentShader: [
         'uniform sampler2D tScene;',
         taps.map((k) => 'uniform sampler2D t' + k + ';').join('\n'),
-        'uniform float strength; uniform float vig; uniform float aberr; uniform float exposure; varying vec2 vUv;',
-        'vec3 rrt(vec3 v){ vec3 a = v * (v + 0.0245786) - 0.000090537; vec3 b = v * (0.983729 * v + 0.4329510) + 0.238081; return a / b; }',
-        'vec3 aces(vec3 c){',
-        '  const mat3 IN = mat3(0.59719, 0.07600, 0.02840, 0.35458, 0.90834, 0.13383, 0.04823, 0.01566, 0.83777);',
-        '  const mat3 OUT = mat3(1.60475, -0.10208, -0.00327, -0.53108, 1.10813, -0.07276, -0.07367, -0.00605, 1.07602);',
-        '  c *= exposure / 0.6;',
-        '  c = IN * c; c = rrt(c); c = OUT * c;',
-        '  return clamp(c, 0.0, 1.0);',
-        '}',
+        'uniform float strength; uniform float vig; uniform float aberr; varying vec2 vUv;',
         'void main(){',
         // lens: a hair of lateral chromatic aberration toward the edges
         '  vec2 d = vUv - 0.5;',
@@ -2016,16 +1849,11 @@ class Component extends DCLogic {
         '  vec3 bloom = ' + sumExpr + ';',
         '  vec3 col = base + bloom * strength;',
         '  col *= 1.0 - r2 * vig;',
-        '  col = aces(col);',
         '  gl_FragColor = vec4(col, 1.0);',
         '}',
       ].join('\n'),
       depthTest: false, depthWrite: false,
     });
-
-    // Tone mapping now happens in the composite pass, after bloom is added, so the
-// renderer must not also tone map when it fills the offscreen target.
-    r.toneMapping = T.NoToneMapping;
 
     this.fsScene = new T.Scene();
     this.fsCam = new T.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -2067,8 +1895,6 @@ class Component extends DCLogic {
       this.bloomLv.forEach((lv) => { lv.a.dispose(); lv.b.dispose(); });
       this.rtScene = null; this.bloomLv = null; this.matComposite = null;
       this.renderer.setRenderTarget(null);
-      this.renderer.toneMapping = window.THREE.ACESFilmicToneMapping;
-      this.renderer.toneMappingExposure = 1.25;
     }
   }
 
@@ -2116,7 +1942,7 @@ class Component extends DCLogic {
     { const b = this.cityBox(); renderer.setSize(b.w, b.h); camera.aspect = b.w / b.h; camera.updateProjectionMatrix(); }
     if ('outputColorSpace' in renderer) renderer.outputColorSpace = T.SRGBColorSpace;
     renderer.toneMapping = T.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 2.05;
     // set properties individually — assigning cssText would wipe the width/height
     // setSize just wrote, leaving the canvas laid out at its raw buffer size
     Object.assign(renderer.domElement.style, { position: 'absolute', top: '0', left: '0', display: 'block' });
@@ -2175,7 +2001,7 @@ class Component extends DCLogic {
       } catch (_) {}
     }
 
-    this.hemi = new T.HemisphereLight(0x7ba0d2, 0x2a1e12, 1.5); scene.add(this.hemi);
+    this.hemi = new T.HemisphereLight(0x7ba0d2, 0x14261a, 1.5); scene.add(this.hemi);
     this.amb = new T.AmbientLight(0x36456a, 0.85); scene.add(this.amb);
     this.moon = new T.DirectionalLight(0xbcd2ff, 1.75); this.moon.position.set(-60, 120, 40); scene.add(this.moon);
     this.fillWarm = new T.PointLight(0xffb060, 0, 600, 2); this.fillWarm.position.set(0, 40, -1200); scene.add(this.fillWarm);
@@ -2514,17 +2340,7 @@ class Component extends DCLogic {
     window.addEventListener('deviceorientation', this.onTilt);
 
     this.colA = new T.Color(); this.colB = new T.Color(); this.gradeCol = new T.Color();
-    if (tier >= 1) {
-      try { this.initBloom(tier >= 2 ? 3 : 2); }
-      catch (_) { this.rtScene = null; renderer.toneMapping = T.ACESFilmicToneMapping; }
-    }
-    // Report what actually initialised. A silent catch previously meant a missing
-    // HDR/MSAA target disabled bloom AND the restored anti-aliasing with no trace.
-    const st = this.rtScene
-      ? 'hdr-bloom msaa=' + (this.rtScene.samples || 0) + ' aniso=' + Math.min(8, this.maxAniso || 1) + ' tier=' + tier
-      : (tier >= 1 ? 'fallback-direct-render tier=' + tier : 'no-bloom tier=' + tier);
-    document.documentElement.setAttribute('data-lb-render', st);
-    if (!this.rtScene && tier >= 1) console.info('[Last Bench] HDR bloom unavailable — direct render with renderer AA.');
+    if (tier >= 1) { try { this.initBloom(tier >= 2 ? 3 : 2); } catch (_) { this.rtScene = null; } }
     this.clock = new T.Clock();
     this.chapterText = '';
     this.loop();
@@ -2584,8 +2400,8 @@ class Component extends DCLogic {
     this.colA.set(sk.a.fog); this.colB.set(sk.b.fog); this.scene.fog.color.copy(this.colA).lerp(this.colB, sk.t);
     this.gradeCol.set(gr.tint);
     const dayMix = Math.max(0, Math.min(1, (p - 0.74) / 0.26));
-    this.scene.fog.color.lerp(this.gradeCol, 0.26 * (1 - dayMix * 0.92));
-    this.scene.background.lerp(this.gradeCol, 0.15 * (1 - dayMix * 0.95));
+    this.scene.fog.color.lerp(this.gradeCol, 0.45 * (1 - dayMix * 0.92));
+    this.scene.background.lerp(this.gradeCol, 0.28 * (1 - dayMix * 0.95));
     this.scene.fog.far = (sk.a.far + (sk.b.far - sk.a.far) * sk.t) * atm.fogMul;
 
     const d = Math.max(0, (p - 0.78) / 0.22);
@@ -2673,6 +2489,8 @@ class Component extends DCLogic {
         if (f.standing) f.g.rotation.y = -0.32 + Math.sin(time * 0.4) * 0.05;
       }
     }
+
+    this.checkReveals();
 
     if (this.progressEl) this.progressEl.style.transform = 'scaleX(' + praw.toFixed(4) + ')';
     if (this.chapterEl) {

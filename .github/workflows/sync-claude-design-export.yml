@@ -1,0 +1,56 @@
+name: Sync verified Claude Design export
+
+on:
+  push:
+    branches:
+      - design-sync/claude-lastbench-2026-09-08
+    paths:
+      - .github/workflows/sync-claude-design-export.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sync branch
+        uses: actions/checkout@v4
+        with:
+          ref: design-sync/claude-lastbench-2026-09-08
+          fetch-depth: 0
+
+      - name: Validate import script
+        run: python -m py_compile scripts/import-claude-design-export.py
+
+      - name: Download verified Claude Design export
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet gdown
+          gdown '1GlFQ6t0A9W3KbDq_7uEIsODZZXP77VbR' -O /tmp/lastbench-claude-design.zip
+          test -s /tmp/lastbench-claude-design.zip
+          echo '658020389ad977a436e6308fe2fa7948f1d7e3a79547be18f290459ec6df9ff9  /tmp/lastbench-claude-design.zip' | sha256sum -c -
+
+      - name: Extract export
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/lastbench-claude-design
+          mkdir -p /tmp/lastbench-claude-design
+          unzip -q /tmp/lastbench-claude-design.zip -d /tmp/lastbench-claude-design
+
+      - name: Import exact source and build safe preview
+        run: python scripts/import-claude-design-export.py /tmp/lastbench-claude-design "$GITHUB_WORKSPACE"
+
+      - name: Commit synchronized design source
+        run: |
+          set -euo pipefail
+          git config user.name 'drx-design-sync'
+          git config user.email 'drx-design-sync@users.noreply.github.com'
+          git add design-source/claude-design/2026-09-08 landing/claude-design-preview.html landing/claude-design-support.js landing/claude-design-image-slot.js landing/claude-design-ds CLAUDE_DESIGN_SYNC_STATUS.md
+          if git diff --cached --quiet; then
+            echo 'Nothing to commit.'
+            exit 0
+          fi
+          git commit -m 'design-sync: import Claude Design export'
+          git push origin HEAD:design-sync/claude-lastbench-2026-09-08

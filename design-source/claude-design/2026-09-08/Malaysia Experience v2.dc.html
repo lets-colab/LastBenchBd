@@ -3,33 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./claude-design-support.js"></script>
-<script src="./bench-ai.js" defer></script>
+<script src="./support.js"></script>
 </head>
 <body>
-<form name="signup" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" style="display:none" aria-hidden="true">
-<input type="hidden" name="form-name" value="signup">
-<input name="bot-field"><input name="name"><input name="whatsapp"><input name="email"><input name="stage"><input name="field"><input name="contact_consent">
-</form>
 <x-dc>
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Last Bench — From Last Bench. To The World.</title>
-<meta name="description" content="A cinematic journey from Bangladesh to Malaysia. Last Bench helps Bangladeshi students explore study options, prepare their next step, and move forward with human guidance.">
-<meta property="og:title" content="The Last Bench — From Last Bench. To The World.">
-<meta property="og:description" content="A cinematic Bangladesh → Malaysia student journey with human guidance.">
-<meta property="og:image" content="./assets/logo-full.png">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#070b16">
-
+<title>Last Bench — From Last Bench. To The World.</title>
 <link rel="icon" href="assets/logo-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="./claude-design-ds/tokens.css">
-<link rel="stylesheet" href="./claude-design-ds/styles.css">
-<script src="./claude-design-image-slot.js"></script>
-<script src="./vendor/three.min.js"></script>
+<link rel="stylesheet" href="_ds/design-system-e48d1fb3-af2d-4eaf-8457-fcbdcd9d040c/tokens/tokens.css">
+<link rel="stylesheet" href="_ds/design-system-e48d1fb3-af2d-4eaf-8457-fcbdcd9d040c/styles.css">
+<script src="./image-slot.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.158.0/three.min.js"></script>
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
@@ -65,7 +53,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
     <div ref="{{ mountRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;"></div>
     <div ref="{{ scrimRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(12,22,44,.28),transparent 26%,transparent 72%,rgba(4,10,8,.42));"></div>
     <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 128% 96% at 50% 42%,transparent 52%,rgba(0,0,0,.38) 100%);mix-blend-mode:multiply;"></div>
-    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('./assets/film-grain.svg');"></div>
+    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%22.82%22 numOctaves=%223%22 stitchTiles=%22stitch%22/><feColorMatrix type=%22saturate%22 values=%220%22/></filter><rect width=%22256%22 height=%22256%22 filter=%22url(%23n)%22/></svg>');"></div>
   </sc-if>
   <sc-if value="{{ webglFailed }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;background:radial-gradient(120% 55% at 50% 0%,rgba(20,44,74,.9),transparent 60%),linear-gradient(180deg,#0a0e1a 0%,#0d1420 32%,#0f1c14 64%,#123321 100%);"></div>
@@ -421,7 +409,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
             <div style="width:48px;height:48px;border-radius:50%;background:rgba(0,200,83,.14);border:1px solid #00C853;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 22 22"><path d="M4 11.5 L9 16.5 L18 6" stroke="#00E676" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
             <div style="font-family:var(--lb-font-display);font-weight:700;font-size:19px;color:#fff;">{{ joinedTitleName }}</div>
             <div style="font-size:12.5px;line-height:1.6;color:rgba(242,247,243,.7);">{{ t.joinedSub }}</div>
-            <a href="/app/" style="display:inline-flex;align-items:center;min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 28px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;">{{ t.enterDash }}</a>
+            <a href="Last Bench Dashboard.dc.html" style="display:inline-flex;align-items:center;min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 28px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;">{{ t.enterDash }}</a>
           </div>
         </sc-if>
       </div>
@@ -709,22 +697,11 @@ class Component extends DCLogic {
         const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ct);
         const okPhone = /^[+]?[\d\s-]{9,}$/.test(ct);
         if (!okEmail && !okPhone) return this.setState({ seatErr: T ? 'একটি সঠিক ইমেইল বা ফোন নম্বর দিন।' : 'Enter a valid email or phone number.' });
-        const payload = new URLSearchParams({
-          'form-name': 'signup', name: nm,
-          whatsapp: okPhone ? ct : '', email: okEmail ? ct : '',
-          stage: 'Claude Design experience', field: '',
-          contact_consent: 'Submission confirms WhatsApp/email contact consent'
-        });
-        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() })
-          .then((res) => {
-            if (!res.ok) throw new Error('Signup failed');
-            try {
-              localStorage.setItem('lb_student_name', nm);
-              localStorage.setItem('lb_lang', this.state.lang);
-            } catch (_) {}
-            this.setState({ joined: true, seatErr: '' });
-          })
-          .catch(() => this.setState({ seatErr: T ? 'এখন জমা দেওয়া যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।' : 'Could not submit right now. Please try again.' }));
+        try {
+          localStorage.setItem('lb_student_name', nm);
+          localStorage.setItem('lb_lang', this.state.lang);
+        } catch (_) {}
+        this.setState({ joined: true, seatErr: '' });
       },
       joined: this.state.joined, notJoined: !this.state.joined,
       joinedTitleName: (() => {

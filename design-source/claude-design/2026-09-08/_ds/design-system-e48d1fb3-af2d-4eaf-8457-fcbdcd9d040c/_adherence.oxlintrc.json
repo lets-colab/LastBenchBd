@@ -1,0 +1,72 @@
+{
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "rules": {
+    "react/forbid-elements": [
+      "warn",
+      {
+        "forbid": []
+      }
+    ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        "patterns": []
+      }
+    ],
+    "no-restricted-syntax": [
+      "warn",
+      {
+        "selector": "Literal[value=/#[0-9a-fA-F]{3,8}\\b/]",
+        "message": "Raw hex color — use a design-system color token via var()."
+      },
+      {
+        "selector": "Literal[value=/font-family\\s*:\\s*(?!['\\\"]?(?:Sora|Hind Siliguri))/i]",
+        "message": "Font not provided by the design system. Available: Sora, Hind Siliguri."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/index.js"
+      ],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "x-omelette": {
+    "components": {},
+    "tokens": [
+      "--lb-color-brand-green",
+      "--lb-color-brand-green-dark",
+      "--lb-color-charcoal",
+      "--lb-color-gray",
+      "--lb-color-sage-green",
+      "--lb-color-soft-gray",
+      "--lb-color-warm-white",
+      "--lb-font-bengali",
+      "--lb-font-body",
+      "--lb-font-display"
+    ],
+    "tokenKinds": {
+      "--lb-color-brand-green": "color",
+      "--lb-color-brand-green-dark": "color",
+      "--lb-color-charcoal": "color",
+      "--lb-color-warm-white": "color",
+      "--lb-color-sage-green": "color",
+      "--lb-color-gray": "color",
+      "--lb-color-soft-gray": "color",
+      "--lb-font-display": "font",
+      "--lb-font-body": "font",
+      "--lb-font-bengali": "font"
+    },
+    "fontFamilies": [
+      "Hind Siliguri",
+      "Sora"
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+name: Promote Claude Design homepage
+
+on:
+  push:
+    branches:
+      - design-sync/claude-lastbench-2026-09-08
+    paths:
+      - .github/workflows/promote-claude-design-homepage.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: design-sync/claude-lastbench-2026-09-08
+          fetch-depth: 0
+
+      - name: Validate promotion script
+        run: python -m py_compile scripts/promote-claude-design-homepage.py
+
+      - name: Promote verified Claude Design homepage
+        run: python scripts/promote-claude-design-homepage.py
+
+      - name: Verify production guards
+        run: |
+          set -euo pipefail
+          grep -q 'The Last Bench — From Last Bench. To The World.' landing/index.html
+          grep -q './bench-ai.js' landing/index.html
+          grep -q 'name="signup"' landing/index.html
+          grep -q 'Submission confirms WhatsApp/email contact consent' landing/index.html
+          grep -q 'href="/app/"' landing/index.html
+          grep -q './vendor/three.min.js' landing/index.html
+          ! grep -q 'Claude Design Preview' landing/index.html
+
+      - name: Commit production candidate
+        run: |
+          set -euo pipefail
+          git config user.name 'drx-design-promotion'
+          git config user.email 'drx-design-promotion@users.noreply.github.com'
+          git add landing/index.html
+          if git diff --cached --quiet; then
+            echo 'Homepage already promoted.'
+            exit 0
+          fi
+          git commit -m 'design: promote verified Claude Design homepage'
+          git push origin HEAD:design-sync/claude-lastbench-2026-09-08
