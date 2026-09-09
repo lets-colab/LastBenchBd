@@ -6,6 +6,9 @@ on:
       - design-sync/claude-lastbench-2026-09-08
     paths:
       - .github/workflows/claude-design-visual-qa.yml
+      - landing/index.html
+      - landing/claude-design-preview.html
+      - landing/bench-ai.js
   workflow_dispatch:
 
 permissions:
@@ -19,9 +22,10 @@ jobs:
         with:
           ref: design-sync/claude-lastbench-2026-09-08
 
-      - name: Install Chromium
+      - name: Install Playwright and Chromium
         run: |
-          npx -y playwright@1.55.0 install --with-deps chromium
+          npm install --no-save --ignore-scripts playwright@1.55.0
+          npx playwright install --with-deps chromium
 
       - name: Start static site
         run: |
@@ -37,7 +41,7 @@ jobs:
 
       - name: Render and exercise homepage candidates
         run: |
-          cat >/tmp/qa.mjs <<'JS'
+          cat >qa.mjs <<'JS'
           import { chromium } from 'playwright';
           import fs from 'node:fs';
           const browser = await chromium.launch({headless:true});
@@ -72,14 +76,16 @@ jobs:
           fs.writeFileSync('qa-report.json',JSON.stringify(report,null,2));
           await browser.close();
           JS
-          npx -y -p playwright@1.55.0 node /tmp/qa.mjs
+          node qa.mjs
           cat qa-report.json
 
       - name: Upload visual evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: claude-design-visual-qa
           path: |
             qa-*.png
             qa-report.json
+          if-no-files-found: warn
           retention-days: 3
