@@ -1,0 +1,73 @@
+name: Apply blueprint source correction
+
+on:
+  push:
+    branches:
+      - fix/lastbench-blueprint-alignment
+    paths:
+      - .github/workflows/apply-blueprint-source-patch.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/lastbench-blueprint-alignment
+
+      - name: Align production homepage source
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('landing/index.html')
+          text = path.read_text()
+          replacements = {
+              'class="lb-class-portal" href="/class-a/"': 'class="lb-class-portal" href="#lb-journey-os" aria-label="See how the Last Bench student journey works"',
+              'ENTER CLASS[Λ] →': 'SEE HOW LAST BENCH WORKS →',
+              "a3L2: 'ONE HONEST LIST.'": "a3L2: 'ONE RESEARCH LIST.'",
+              "a3Sub: 'You’re flying between the Petronas Towers. Below you: the fifteen campuses Last Bench works with, with what they cost and what they ask. Tap any card to walk its campus in 360°.'": "a3Sub: 'You’re flying between the Petronas Towers. Below you: fifteen Malaysian campuses to research, with Last Bench planning estimates to help you compare. Tap any card to explore the campus in 360°.'",
+              "dataNote: 'Figures are Last Bench’s own planning estimates for Bangladeshi students, covering tuition and living costs. They are not quotes and not guarantees — always confirm current fees, entry requirements and visa rules with the university and EMGS before you decide.'": "dataNote: 'Figures are Last Bench’s own planning estimates for Bangladeshi students, covering tuition and living costs. They are research aids, not quotes, guarantees or claims of current Last Bench partnership — always confirm current fees, entry requirements, intakes, scholarships and visa rules with official sources before you decide.'",
+              "a3L2: 'একটি সৎ তালিকা।'": "a3L2: 'গবেষণার একটি তালিকা।'",
+              "a3Sub: 'আপনি পেট্রোনাস টাওয়ারের মাঝ দিয়ে উড়ছেন। নিচে: লাস্ট বেঞ্চ যে পনেরোটি ক্যাম্পাসে কাজ করে — খরচ ও শর্তসহ। যেকোনো কার্ডে ট্যাপ করে ৩৬০° ঘুরে দেখুন।'": "a3Sub: 'আপনি পেট্রোনাস টাওয়ারের মাঝ দিয়ে উড়ছেন। নিচে: গবেষণা ও তুলনার জন্য মালয়েশিয়ার পনেরোটি ক্যাম্পাস। দেখানো খরচ ও শর্ত পরিকল্পনা-তথ্য; আবেদন করার আগে বর্তমান অফিসিয়াল তথ্য যাচাই করুন।'",
+              'Fifteen campuses. One honest list.': 'Fifteen campuses. One research list.',
+          }
+
+          changed = False
+          for old, new in replacements.items():
+              if old in text:
+                  text = text.replace(old, new)
+                  changed = True
+
+          forbidden = [
+              'the fifteen campuses Last Bench works with',
+              'লাস্ট বেঞ্চ যে পনেরোটি ক্যাম্পাসে কাজ করে',
+              'class="lb-class-portal" href="/class-a/"',
+              'ENTER CLASS[Λ] →',
+          ]
+          remaining = [needle for needle in forbidden if needle in text]
+          if remaining:
+              raise SystemExit('Source-level blueprint correction incomplete: ' + ', '.join(remaining))
+
+          if changed:
+              path.write_text(text)
+              print('Production homepage source aligned.')
+          else:
+              print('Production homepage source already aligned.')
+          PY
+
+      - name: Commit source correction
+        run: |
+          if git diff --quiet -- landing/index.html; then
+            echo "No source correction needed."
+            exit 0
+          fi
+          git config user.name "lastbench-release-bot"
+          git config user.email "release-bot@lastbench.local"
+          git add landing/index.html
+          git commit -m "fix: align homepage source copy with mobility blueprint"
+          git push origin HEAD:fix/lastbench-blueprint-alignment
