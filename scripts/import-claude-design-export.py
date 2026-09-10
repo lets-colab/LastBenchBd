@@ -17,6 +17,12 @@ def require(path: Path) -> Path:
     return path
 
 
+def replace_once(text: str, old: str, new: str, label: str) -> str:
+    if old not in text:
+        raise SystemExit(f"Could not locate {label} in Claude Design export")
+    return text.replace(old, new, 1)
+
+
 def copy_exact_source(src: Path, repo: Path) -> None:
     dest = repo / "design-source" / "claude-design" / SNAPSHOT_DATE
     if dest.exists():
@@ -92,21 +98,63 @@ def build_preview(src: Path, repo: Path) -> None:
         '<meta name="description" content="Verified Claude Design export preview for Last Bench.">',
     )
 
-    detector = (
-        '<form name="signup" method="POST" data-netlify="true" '
-        'data-netlify-honeypot="bot-field" style="display:none" aria-hidden="true">\n'
-        '<input type="hidden" name="form-name" value="signup">\n'
-        '<input name="bot-field"><input name="name"><input name="whatsapp">'
-        '<input name="email"><input name="stage"><input name="field">'
-        '<input name="contact_consent">\n'
-        '</form>\n'
+    name_input = '<input value="{{ seatName }}" onChange="{{ setSeatName }}" placeholder="{{ t.phName }}"'
+    out = replace_once(
+        out,
+        name_input,
+        '<input name="company" value="{{ seatCompany }}" onChange="{{ setSeatCompany }}" '
+        'autocomplete="off" tabindex="-1" aria-hidden="true" '
+        'style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0;pointer-events:none;">\n'
+        '            ' + name_input,
+        "signup honeypot anchor",
     )
-    if '<body>\n' not in out:
-        raise SystemExit("Could not locate body tag in Claude Design page")
-    out = out.replace('<body>\n', '<body>\n' + detector, 1)
+
+    contact_input = (
+        '<input value="{{ seatContact }}" onChange="{{ setSeatContact }}" '
+        'placeholder="{{ t.phEmail }}" style="min-height:48px;background:rgba(255,255,255,.06);'
+        "border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;"
+        "font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;"
+        '" style-focus="border-color:#00C853;">'
+    )
+    out = replace_once(
+        out,
+        contact_input,
+        contact_input
+        + '\n            <div style="font-size:10.5px;line-height:1.55;'
+        'color:rgba(242,247,243,.5);">{{ t.signupConsent }}</div>',
+        "signup consent anchor",
+    )
+
+    out = replace_once(
+        out,
+        "        signupTitle: 'TAKE YOUR SEAT', signupSub: 'From Bangladesh to Malaysia — the journey starts with a name.',",
+        "        signupTitle: 'TAKE YOUR SEAT', signupSub: 'From Bangladesh to Malaysia — the journey starts with a name.',\n"
+        "        signupConsent: 'By submitting, you agree that Last Bench may contact you by WhatsApp, phone, or email about your Malaysia study journey.',",
+        "English signup consent translation",
+    )
+    out = replace_once(
+        out,
+        "        signupTitle: 'আপনার আসন নিন', signupSub: 'বাংলাদেশ থেকে মালয়েশিয়া — যাত্রা শুরু হয় একটি নাম দিয়ে।',",
+        "        signupTitle: 'আপনার আসন নিন', signupSub: 'বাংলাদেশ থেকে মালয়েশিয়া — যাত্রা শুরু হয় একটি নাম দিয়ে।',\n"
+        "        signupConsent: 'জমা দিলে আপনি সম্মতি দিচ্ছেন যে মালয়েশিয়ায় পড়াশোনার বিষয়ে লাস্ট বেঞ্চ WhatsApp, ফোন বা ইমেইলে আপনার সঙ্গে যোগাযোগ করতে পারে।',",
+        "Bangla signup consent translation",
+    )
+    out = replace_once(
+        out,
+        "      seatName: this.state.seatName || '', seatContact: this.state.seatContact || '',\n"
+        "      setSeatName: (e) => this.setState({ seatName: e.target.value, seatErr: '' }),\n"
+        "      setSeatContact: (e) => this.setState({ seatContact: e.target.value, seatErr: '' }),",
+        "      seatName: this.state.seatName || '', seatContact: this.state.seatContact || '',\n"
+        "      seatCompany: this.state.seatCompany || '',\n"
+        "      setSeatName: (e) => this.setState({ seatName: e.target.value, seatErr: '' }),\n"
+        "      setSeatContact: (e) => this.setState({ seatContact: e.target.value, seatErr: '' }),\n"
+        "      setSeatCompany: (e) => this.setState({ seatCompany: e.target.value }),",
+        "signup state bindings",
+    )
 
     replacement = r'''
       signUp: () => {
+        if (this.state.seatSubmitting || (this.state.seatCompany || '').trim()) return;
         const nm = (this.state.seatName || '').trim();
         const ct = (this.state.seatContact || '').trim();
         const T = this.state.lang === 'bn';
@@ -114,22 +162,37 @@ def build_preview(src: Path, repo: Path) -> None:
         const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ct);
         const okPhone = /^[+]?[\d\s-]{9,}$/.test(ct);
         if (!okEmail && !okPhone) return this.setState({ seatErr: T ? 'একটি সঠিক ইমেইল বা ফোন নম্বর দিন।' : 'Enter a valid email or phone number.' });
-        const payload = new URLSearchParams({
-          'form-name': 'signup', name: nm,
-          whatsapp: okPhone ? ct : '', email: okEmail ? ct : '',
-          stage: 'Claude Design experience', field: '',
-          contact_consent: 'Submission confirms WhatsApp/email contact consent'
-        });
-        fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: payload.toString() })
+        this.setState({ seatSubmitting: true, seatErr: '' });
+        const payload = {
+          full_name: nm,
+          phone: okPhone ? ct : null,
+          email: okEmail ? ct : null,
+          stage: 'claude-design-experience',
+          source: 'lastbench-homepage',
+          language: T ? 'bn' : 'en',
+          contact_consent: true
+        };
+        fetch('https://tocxdyqlrvzthpexnmxe.supabase.co/rest/v1/lastbench_signups', {
+          method: 'POST',
+          headers: {
+            apikey: 'sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_',
+            'Content-Type': 'application/json',
+            Prefer: 'return=minimal'
+          },
+          body: JSON.stringify(payload)
+        })
           .then((res) => {
             if (!res.ok) throw new Error('Signup failed');
             try {
               localStorage.setItem('lb_student_name', nm);
               localStorage.setItem('lb_lang', this.state.lang);
             } catch (_) {}
-            this.setState({ joined: true, seatErr: '' });
+            this.setState({ joined: true, seatSubmitting: false, seatErr: '' });
           })
-          .catch(() => this.setState({ seatErr: T ? 'এখন জমা দেওয়া যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।' : 'Could not submit right now. Please try again.' }));
+          .catch(() => this.setState({
+            seatSubmitting: false,
+            seatErr: T ? 'এখন জমা দেওয়া যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।' : 'Could not submit right now. Please try again.'
+          }));
       },
       joined:'''
     pattern = re.compile(
@@ -151,7 +214,7 @@ def write_status(repo: Path) -> None:
         "A production-safe review route is generated at `landing/claude-design-preview.html`.\n\n"
         "The live root `landing/index.html` is intentionally not overwritten by the import. "
         "The user-exported Claude project contains older/non-production behavior in places, while "
-        "the current root contains newer production hardening such as real Netlify form handling, "
+        "the current root contains newer production hardening such as Supabase lead capture, "
         "contact consent, accessibility improvements, and advisor integrations.\n\n"
         "Promotion rule: visually review the preview against the approved Claude Design project, "
         "then port or promote approved sections without deleting newer production protections.\n"

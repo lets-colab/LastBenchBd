@@ -1,0 +1,18 @@
+# Cloudflare Pages SPA entry routes.
+# Keep these specific: Cloudflare applies redirect rules even when a static
+# asset exists, so a broad /app/* rewrite would break /app/_expo assets.
+/app/ai-guidance /app/index.html 200
+/app/applications /app/index.html 200
+/app/application-detail /app/index.html 200
+/app/auth /app/index.html 200
+/app/community /app/index.html 200
+/app/compare /app/index.html 200
+/app/discover /app/index.html 200
+/app/messages /app/index.html 200
+/app/notifications /app/index.html 200
+/app/onboarding /app/index.html 200
+/app/profile /app/index.html 200
+/app/universities /app/index.html 200
+/app/admin/* /app/index.html 200
+/app/cohort/* /app/index.html 200
+/app/tutor/* /app/index.html 200
