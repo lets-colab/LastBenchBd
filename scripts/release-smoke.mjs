@@ -52,6 +52,11 @@ const checks = [
     expectHtml: true,
     expectIncludes: ["claude-design-support.js", "bench-ai.js"],
   },
+  {
+    name: "Blueprint business layer",
+    url: `${webOrigin}/lastbench-blueprint.js`,
+    expectIncludes: ["STUDY. SETTLE.", "OPEN JOURNEY OS", "UNIVERSITY EXPLORER"],
+  },
   { name: "Student app", url: `${webOrigin}/app/`, expectHtml: true },
   { name: "CLASS signup hub", url: `${webOrigin}/class-a/`, expectHtml: true },
   { name: "CLASS masterclass", url: `${webOrigin}/class-a/masterclass.html`, expectHtml: true },
@@ -90,7 +95,7 @@ async function verify(check) {
   const response = await fetch(check.url, {
     redirect: "follow",
     headers: {
-      "user-agent": "lastbench-release-smoke/3.3",
+      "user-agent": "lastbench-release-smoke/3.4",
       "cache-control": "no-cache",
     },
   });
@@ -109,7 +114,7 @@ async function verify(check) {
     if (semanticOk && check.expectIncludes?.length) {
       const bodyText = await response.text();
       semanticOk = check.expectIncludes.every((needle) => bodyText.includes(needle));
-      if (!semanticOk) throw new Error("stale or unexpected HTML; missing release fingerprint");
+      if (!semanticOk) throw new Error("stale or unexpected content; missing release fingerprint");
     }
   }
 
@@ -153,5 +158,6 @@ console.log("- Authenticated tRPC request succeeds");
 console.log("- Logout causes the next protected request to be rejected");
 console.log("- Real Netlify form submissions appear for each active conversion form");
 console.log("- Supabase migration ledger remains reconciled with drizzle/MIGRATION_STATUS.md");
+console.log("- Homepage business logic matches the current Last Bench mobility blueprint");
 
 process.exitCode = failed ? 1 : 0;
