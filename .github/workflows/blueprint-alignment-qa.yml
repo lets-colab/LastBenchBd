@@ -38,7 +38,8 @@ jobs:
           grep -q 'ARRIVE' PRODUCT.md
           grep -q 'study, settle and succeed' PRODUCT.md
           grep -q '#00C853' design.md
-          if grep -q 'historical teal palette.*is.*current' design.md; then exit 1; fi
+          grep -q 'historical teal palette.*not.*current Last Bench brand palette' design.md
+          if grep -Fq '| **Primary** | `#0a7ea4`' design.md; then exit 1; fi
           grep -q 'lastbench-blueprint.js' landing/bench-ai.js
           grep -q 'STUDY. SETTLE.' landing/lastbench-blueprint.js
           grep -q 'UNIVERSITY EXPLORER' landing/lastbench-blueprint.js
