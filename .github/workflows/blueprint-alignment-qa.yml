@@ -42,9 +42,11 @@ jobs:
           if grep -Fq '| **Primary** | `#0a7ea4`' design.md; then exit 1; fi
           grep -q 'lastbench-blueprint.js' landing/bench-ai.js
           grep -q 'STUDY. SETTLE.' landing/lastbench-blueprint.js
+          grep -q 'TRACK MY JOURNEY' landing/lastbench-blueprint.js
           grep -q 'UNIVERSITY EXPLORER' landing/lastbench-blueprint.js
-          grep -q 'OPEN JOURNEY OS' landing/lastbench-blueprint.js
           grep -q 'not a claim that every listed institution is a current Last Bench partner' landing/lastbench-blueprint.js
+          grep -q 'আমার যাত্রা ট্র্যাক করুন' landing/lastbench-blueprint.js
+          grep -q 'লাস্ট বেঞ্চ একটি স্টুডেন্ট অ্যাক্সেলারেটর' landing/lastbench-blueprint.js
 
       - name: Install isolated Playwright and Chromium
         run: |
