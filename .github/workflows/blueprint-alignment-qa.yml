@@ -8,6 +8,7 @@ on:
       - landing/bench-ai.js
       - landing/lastbench-blueprint.js
       - PRODUCT.md
+      - design.md
       - .github/workflows/blueprint-alignment-qa.yml
   pull_request:
     branches: [main]
@@ -15,6 +16,7 @@ on:
       - landing/bench-ai.js
       - landing/lastbench-blueprint.js
       - PRODUCT.md
+      - design.md
       - .github/workflows/blueprint-alignment-qa.yml
   workflow_dispatch:
 
@@ -35,10 +37,13 @@ jobs:
           grep -q 'DISCOVER' PRODUCT.md
           grep -q 'ARRIVE' PRODUCT.md
           grep -q 'study, settle and succeed' PRODUCT.md
+          grep -q '#00C853' design.md
+          if grep -q 'historical teal palette.*is.*current' design.md; then exit 1; fi
           grep -q 'lastbench-blueprint.js' landing/bench-ai.js
           grep -q 'STUDY. SETTLE.' landing/lastbench-blueprint.js
           grep -q 'UNIVERSITY EXPLORER' landing/lastbench-blueprint.js
           grep -q 'OPEN JOURNEY OS' landing/lastbench-blueprint.js
+          grep -q 'not a claim that every listed institution is a current Last Bench partner' landing/lastbench-blueprint.js
 
       - name: Install isolated Playwright and Chromium
         run: |
@@ -87,6 +92,7 @@ jobs:
             const universityNote=page.locator('.lbp-university-note');
             const portal=page.locator('.lb-class-portal');
             const launcher=page.locator('.lb-ai-launcher');
+            const bodyText=await page.locator('body').innerText();
             const checks={
               status:response?.status(),
               aligned:await page.locator('html[data-business-blueprint-aligned="2026-09-10"]').count(),
@@ -96,6 +102,8 @@ jobs:
               portalHref:await portal.getAttribute('href'),
               journeyText:(await journey.innerText()).includes('DISCOVER') && (await journey.innerText()).includes('ARRIVE'),
               classDeemphasized:(await portal.getAttribute('href'))==='#lb-journey-os',
+              noFalsePartnerClaim:!bodyText.includes('the fifteen campuses Last Bench works with'),
+              researchList:bodyText.includes('ONE RESEARCH LIST.'),
               benchAi:await launcher.count(),
             };
             if (await launcher.count()) {
@@ -124,7 +132,7 @@ jobs:
           failures=[]
           for row in rows:
               c=row['checks']
-              required=['aligned','journey','beyond','universityNote','journeyText','classDeemphasized','benchAi','benchAiOpened']
+              required=['aligned','journey','beyond','universityNote','journeyText','classDeemphasized','noFalsePartnerClaim','researchList','benchAi','benchAiOpened']
               for key in required:
                   if not c.get(key): failures.append(f"{row['name']}: {key} failed")
               if c.get('status') != 200: failures.append(f"{row['name']}: HTTP {c.get('status')}")
