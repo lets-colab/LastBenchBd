@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sync branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: design-sync/claude-lastbench-2026-09-08
           fetch-depth: 0

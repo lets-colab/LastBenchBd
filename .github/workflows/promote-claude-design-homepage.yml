@@ -15,7 +15,7 @@ jobs:
   promote:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: design-sync/claude-lastbench-2026-09-08
           fetch-depth: 0
