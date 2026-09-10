@@ -39,7 +39,7 @@ drizzle/      reviewed database schema/migrations and migration-status evidence
 supabase/     Edge Functions and Supabase-side runtime code
 scripts/      build/release verification tooling
 server-dist/  generated API bundle
- dist/        generated Netlify web artifact
+ dist/        generated host-neutral static web artifact
 ```
 
 One merged public web artifact is intentional:
@@ -48,22 +48,20 @@ One merged public web artifact is intentional:
 - `/app/*` = student product
 - `/class-a/*` = CLASS[Λ] conversion surfaces
 
-`pnpm build:web:production` assembles the complete Netlify artifact into `dist/`.
+`pnpm build:web:production` assembles the complete static production artifact into `dist/`.
 
 ---
 
-## 3. Current production topology — verified 9 September 2026
+## 3. Current production topology — verified 10 September 2026
 
 ### Web
 
-- Hosting: Netlify
-- Canonical project: `lastbenchbdd`
-- Site ID: `04a1423a-961c-4b5e-bb4b-53db3027317e`
-- Primary URL: `https://lastbenchbd.com`
+- Canonical URL: `https://lastbenchbd.com`.
+- Current public host: Netlify project `lastbenchbdd` (site ID `04a1423a-961c-4b5e-bb4b-53db3027317e`).
 - Current public deploy is an older upload-based production deploy. Do **not** assume current `main` is live just because Netlify reports the deploy as `ready`.
-- Production smoke requires the homepage release fingerprint `claude-design-support.js` + `bench-ai.js`; the current public homepage does not yet contain that fingerprint.
-- Current `main` does build the complete production site successfully in CI.
-- Netlify site-level environment variables are currently empty; reviewed public production values are committed in `netlify.toml`.
+- Approved deployment target: Cloudflare Pages with GitHub `main` integration. Create and verify a Pages preview before moving the canonical domain.
+- Production smoke requires `claude-design-support.js`, `bench-ai.js` and the Supabase homepage-signup endpoint; the current Netlify homepage does not yet contain that release.
+- Current `main` builds the complete host-neutral production site successfully. Public build values in `netlify.toml` must be mirrored into Cloudflare Pages until configuration is consolidated.
 
 ### API
 
@@ -72,8 +70,8 @@ One merged public web artifact is intentional:
 - Region: Singapore
 - Direct origin: `https://last-bench-api-v2.onrender.com`
 - Direct `/api/health` is verified healthy.
-- Intended public API hostname: `https://api.lastbenchbd.com`
-- Current DNS state: the `api` hostname has no CNAME, A or AAAA answer. This is a DNS/custom-domain routing blocker, not an API-code failure.
+- Public API hostname: `https://api.lastbenchbd.com`
+- Custom-domain `/api/health` is verified reachable with semantic JSON `ok: true`. AI remains an optional unconfigured integration, so health currently reports `degraded: true` without making the core API unavailable.
 
 ### Database/Auth
 
@@ -84,6 +82,7 @@ One merged public web artifact is intentional:
 - Authentication: **Supabase Auth**, not Manus OAuth.
 - Production client values are `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 - `/app/auth` contains the current sign-in/account-creation flow.
+- `public.lastbench_signups` is the insert-only, RLS-protected homepage intake table; migration `lastbench_homepage_signups` is applied.
 
 Do not reintroduce Manus OAuth assumptions into current production documentation, checks or UI.
 
@@ -159,13 +158,11 @@ Current Supabase security advisor has no WARN/ERROR findings. Informational RLS-
 
 ## 7. Forms and conversion truth
 
-Canonical Netlify forms include:
+- The current homepage source submits directly to `public.lastbench_signups` through Supabase REST. Anonymous clients have INSERT only; submitted leads are not publicly readable.
+- CLASS[Λ] JavaScript submits to `public.class_a_registrations`; its HTML retains Netlify form markup as a compatibility fallback while the current public host remains Netlify.
+- Historical Netlify submissions must be preserved, but they do not prove receipt for the new Supabase homepage path.
 
-- `signup`
-- `class-a-masterclass`
-- `class-a-course`
-
-A thank-you screen does not prove receipt. A conversion flow is only verified when a real submission appears in Netlify.
+A thank-you screen or HTTP 200 does not prove receipt. Verify a real row in the intended Supabase table for each active production conversion journey.
 
 ---
 
@@ -187,15 +184,14 @@ The design source of truth is version-controlled source + approved design assets
 
 In priority order:
 
-1. Add correct DNS/custom-domain routing for `api.lastbenchbd.com` to the healthy Render service.
-2. Publish current `main` to canonical Netlify project `lastbenchbdd`; current public homepage is stale.
-3. Restore dependable Netlify deployment authorization/integration so future `main` updates cannot silently remain undeployed.
-4. Verify production Supabase Auth session journey end-to-end.
-5. Verify real receipt for each active Netlify conversion form.
-6. Finish the reviewed student document-picker/upload UI before calling upload complete.
-7. Resolve hidden `discover` / `community` route status.
-8. Lock mobile app identity before any store release.
-9. Add persistent AI/message quotas when commercial usage policy is approved.
+1. Create a Cloudflare Pages project from GitHub `main`, deploy `dist/`, and verify the `pages.dev` preview.
+2. Move `lastbenchbd.com` to the verified Pages project without interrupting the healthy Render API hostname.
+3. Verify production Supabase Auth session journey end-to-end.
+4. Verify real receipt in Supabase for the homepage and both CLASS[Λ] conversion journeys.
+5. Finish the reviewed student document-picker/upload UI before calling upload complete.
+6. Resolve hidden `discover` / `community` route status.
+7. Lock mobile app identity before any store release.
+8. Add persistent AI/message quotas when commercial usage policy is approved.
 
 ---
 
@@ -213,4 +209,4 @@ In priority order:
 
 ## 11. Replacement-agent bootstrap
 
-> You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`). Read `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md`, `README.md` and relevant design/product sources before making changes. Use current `main` plus verified live infrastructure as truth. Authentication is Supabase Auth. The healthy API control-plane origin is `last-bench-api-v2.onrender.com`; `api.lastbenchbd.com` remains a DNS gate until verified. The canonical Netlify project is `lastbenchbdd`, but its currently public homepage is stale relative to `main`. Never claim deployment, authentication, form receipt or DNS correctness without production evidence. Preserve canonical brand assets exactly.
+> You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`). Read `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md`, `README.md` and relevant design/product sources before making changes. Use current `main` plus verified live infrastructure as truth. Authentication is Supabase Auth. The healthy API control-plane origin is `last-bench-api-v2.onrender.com`; `api.lastbenchbd.com/api/health` is verified healthy. The canonical web domain is still serving a stale Netlify upload while the approved Cloudflare Pages cutover is pending preview verification. Never claim deployment, authentication or form receipt without production evidence. Preserve canonical brand assets exactly.

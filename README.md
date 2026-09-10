@@ -19,13 +19,13 @@
 
 | Layer | Platform | Contract |
 | --- | --- | --- |
-| Marketing + web app | **Netlify** | `/` landing · `/app` student app |
+| Marketing + web app | **Netlify → Cloudflare Pages** | Current host is stale Netlify; approved target is a GitHub-integrated Pages deployment |
 | API | **Render** | Express + tRPC |
 | Identity | **Supabase Auth** | Email/password sessions; HTTP-only cookies on web, bearer/refresh tokens on native |
 | Database | **Supabase Postgres** | Drizzle schema + reviewed SQL migration ledger |
 | Private files | **Supabase Storage** | `student-documents`, private, per-user RLS |
 | AI | **OpenAI Responses API** | Server-side only; optional until a production API key is configured |
-| Canonical web | `https://lastbenchbd.com` | Netlify |
+| Canonical web | `https://lastbenchbd.com` | Move only after the Cloudflare Pages preview passes smoke checks |
 | Canonical API | `https://api.lastbenchbd.com` | Render custom domain |
 
 **Manus and Forge are not part of the supported production architecture.** Legacy integration modules and environment contracts have been removed.
@@ -92,7 +92,7 @@ The bucket/policies are infrastructure foundation. The complete document-picker/
 
 ## AI guidance
 
-AI guidance calls the OpenAI Responses API directly from the Render server. `OPENAI_API_KEY` is server-only and never belongs in Netlify or the Expo bundle.
+AI guidance calls the OpenAI Responses API directly from the Render server. `OPENAI_API_KEY` is server-only and never belongs in a static host or the Expo bundle.
 
 AI is deliberately an optional integration: the core API, auth, applications and other product functions must remain available when no OpenAI key is configured. `/api/health` reports `aiConfigured` and the overall degraded state.
 
@@ -153,7 +153,7 @@ Optional integrations:
 - `AI_GUIDANCE_MODEL`
 - `AUTO_DIAGNOSE_ERRORS`
 
-### Netlify / Expo public bundle
+### Static web / Expo public bundle
 
 - `EXPO_PUBLIC_API_BASE_URL`
 - `EXPO_PUBLIC_SUPABASE_URL`
@@ -167,20 +167,22 @@ The production build rejects a Supabase `sb_secret_*` value if it is accidentall
 
 A green build is not proof of a working product. Before calling the authenticated product fully released, verify:
 
-- [x] Netlify production site is connected to `main`
-- [x] Supabase database migrations through relational foundation `0003` are applied
+- [x] Supabase database migrations through homepage intake `0005` are applied
 - [x] relational foreign keys/uniqueness/indexes are verified
 - [x] production DB security advisor has no known foundation WARN/ERROR findings
 - [x] production smoke workflow exists
-- [ ] migration `0004` storage/auth-identity contract is merged and applied
-- [ ] Render is running the merged Supabase-auth build
-- [ ] `api.lastbenchbd.com/api/health` reports the intended integration state
+- [x] migration `0004` storage/auth-identity contract is merged and applied
+- [x] canonical Render service reports Supabase auth/storage configured
+- [x] `api.lastbenchbd.com/api/health` returns semantic JSON health
+- [x] homepage Supabase REST intake accepts an anonymous insert without exposing lead reads
+- [ ] Cloudflare Pages builds and serves a verified preview of current `main`
+- [ ] `lastbenchbd.com` serves the verified current release instead of the stale Netlify upload
 - [ ] fresh sign-in succeeds with a real user
 - [ ] returning session succeeds
 - [ ] authenticated API request succeeds
 - [ ] logout prevents session resurrection
 - [ ] student document upload/download authorization is verified
-- [ ] `signup`, `class-a-masterclass` and `class-a-course` receipt is verified with real submissions
+- [ ] homepage, CLASS[Λ] masterclass and CLASS[Λ] course receipt is verified with real production Supabase rows
 
 No production user, credential, admissions result or verification evidence should ever be fabricated to satisfy this checklist.
 

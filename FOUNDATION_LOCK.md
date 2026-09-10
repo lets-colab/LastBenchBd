@@ -6,22 +6,23 @@ This document is the production-trust contract for Last Bench. It separates veri
 
 Important product state must have one authoritative source, one owner, one verified state, and one safe mutation path.
 
-## Current verified foundation — 9 September 2026
+## Current verified foundation — 10 September 2026
 
 - Canonical repository: `lets-colab/LastBenchBd`.
-- Canonical Netlify production project: `lastbenchbdd`.
-- Netlify primary production URL: `https://lastbenchbd.com`.
-- The currently published Netlify deploy is an older upload-based production deploy and must not be treated as proof that current `main` is live.
-- Current `main` builds successfully in CI, including the complete Netlify production artifact.
+- Canonical web URL: `https://lastbenchbd.com`.
+- The current host is Netlify project `lastbenchbdd`, but its published upload is stale and must not be treated as proof that current `main` is live.
+- Cloudflare Pages is the approved replacement host. The project/preview must be verified before the canonical-domain cutover.
+- Current `main` builds the complete host-neutral production artifact successfully.
 - A release fingerprint now prevents a stale homepage from passing production smoke checks.
 - Canonical API custom hostname: `https://api.lastbenchbd.com`.
 - Canonical working Render service: `last-bench-api-v2` in Singapore.
 - Direct Render health is verified at `https://last-bench-api-v2.onrender.com/api/health`.
-- `api.lastbenchbd.com` currently has no A, AAAA or CNAME answer and is therefore a DNS/custom-domain blocker rather than an API-code blocker.
+- `https://api.lastbenchbd.com/api/health` is verified reachable with semantic JSON `ok: true`; the Render custom-domain routing gate is complete.
 - Authentication has been migrated away from Manus OAuth to Supabase Auth.
 - Supabase production project `the-last-bench` is `ACTIVE_HEALTHY` in `ap-southeast-1`.
-- Production web configuration uses the reviewed Supabase URL and publishable key from `netlify.toml`.
-- The live Supabase migration ledger includes the repository foundation migrations, Supabase identity/storage migration, CLASS[Λ] registration migration, and DR.X social-engine runtime/activation migrations.
+- Production web configuration uses the reviewed Supabase URL and publishable key from `netlify.toml`; those same public values must be configured in Cloudflare Pages.
+- The live Supabase migration ledger includes the repository foundation migrations, Supabase identity/storage migration, CLASS[Λ] registration migration, DR.X social-engine runtime/activation migrations, and the insert-only homepage signup migration.
+- The homepage source now submits directly to `public.lastbench_signups`; public roles have INSERT only and cannot read, update or delete submitted leads.
 - Supabase security advisor currently has no WARN or ERROR findings; remaining RLS notices are informational and consistent with the server-owned default-deny model.
 - `pnpm db:push` remains intentionally blocked while legacy Drizzle snapshots are incomplete; production DDL uses reviewed SQL through Supabase migrations.
 - Production smoke monitoring is automated by `.github/workflows/production-smoke.yml` and distinguishes the Render control-plane origin from the custom API hostname.
@@ -43,7 +44,7 @@ The safe production migration path is:
 
 **Do not point `drizzle-kit migrate` or `pnpm db:push` blindly at production.**
 
-## Gate B — Production web/API routing ⚠ active blocker
+## Gate B — Production web/API routing ⚠ web cutover active
 
 Public health automation targets:
 
@@ -58,11 +59,11 @@ Public health automation targets:
 Current verified state:
 
 - [x] Direct Render API returns JSON with `ok: true`.
+- [x] `api.lastbenchbd.com` returns semantic JSON health from the Render service.
 - [x] Current repository builds the complete production web artifact.
 - [x] Student app and CLASS routes on the public domain return HTML successfully.
-- [ ] `api.lastbenchbd.com` resolves to the Render service. It currently returns no CNAME/A/AAAA record.
-- [ ] Netlify serves the current `main` homepage release fingerprint. It currently serves an older homepage.
-- [ ] Netlify production deployment authorization is available to the GitHub workflow or the Netlify Git integration is re-established.
+- [ ] Cloudflare Pages builds current GitHub `main` and passes preview smoke checks.
+- [ ] `lastbenchbd.com` serves the verified Pages deployment. It currently serves an older Netlify homepage.
 
 A successful static build, deploy or green CI run is not production-routing proof.
 
@@ -86,14 +87,15 @@ Before declaring authenticated production complete, verify:
 
 ## Gate D — Forms and conversion proof
 
-Netlify forms remain enabled for the canonical site.
+The repository homepage now posts to the RLS-protected Supabase table `public.lastbench_signups`. CLASS[Λ] posts to `public.class_a_registrations`; compatibility Netlify markup remains during the host transition. Historical Netlify submissions are retained.
 
 Before declaring conversion flows complete:
 
-- [ ] `signup` receives a real submission.
-- [ ] `class-a-masterclass` receives a real submission.
-- [ ] `class-a-course` receives a real submission.
-- [ ] Submission receipt is verified in Netlify rather than inferred from a thank-you page.
+- [x] Homepage intake schema, insert-only RLS and public REST transport are verified in production Supabase.
+- [ ] A real production homepage journey creates the expected `lastbench_signups` row.
+- [ ] A real CLASS[Λ] masterclass journey creates the expected `class_a_registrations` row.
+- [ ] A real CLASS[Λ] course journey creates the expected `class_a_registrations` row.
+- [ ] Receipt is verified in the intended Supabase table rather than inferred from a thank-you screen.
 
 ## Gate E — Security and abuse controls
 
@@ -129,7 +131,7 @@ Still required before broad public launch:
 - [x] PR safety template exists.
 - [x] Production smoke monitoring automatically opens/updates/closes a GitHub incident issue.
 - [x] CI rejects stale production-homepage assumptions through release fingerprinting.
-- [ ] Restore a working production-deploy credential/integration for the canonical Netlify site.
+- [ ] Establish GitHub `main` integration for the verified Cloudflare Pages project.
 
 ## Gate H — Mobile identity
 
@@ -153,7 +155,7 @@ Automate or certify these journeys before declaring the complete product release
 2. Student application → mentor/admin update → student sees sanitized state.
 3. Message A → B → B reads → unread state updates.
 4. Tutor referral → earned commission → payout reservation.
-5. CLASS[Λ] form → confirmed Netlify submission.
+5. Homepage/CLASS[Λ] form → confirmed Supabase row.
 6. Logout → protected API call is rejected.
 7. Returning browser session → authenticated after refresh.
 
@@ -165,8 +167,8 @@ Automate or certify these journeys before declaring the complete product release
 - once daily;
 - on manual dispatch.
 
-It calls `scripts/release-smoke.mjs` with the canonical web/API origins plus the direct Render diagnostic origin. The smoke gate verifies semantic API health, detects stale homepage HTML through release fingerprints, and prints DNS diagnostics when the custom API hostname fails. A failed run creates or updates the GitHub issue **Production smoke gate**. A later successful run comments on and closes that issue automatically.
+It calls `scripts/release-smoke.mjs` with the canonical web/API origins plus the direct Render diagnostic origin. The smoke gate verifies semantic API health and detects stale homepage HTML through release fingerprints. A failed run creates or updates the GitHub issue **Production smoke gate**. A later successful run comments on and closes that issue automatically.
 
 ## Definition of done
 
-The Foundation Lock is fully complete when repository code, Supabase migration state, Netlify production deploy, Render custom-domain routing, authenticated sessions, form receipt and end-to-end release journeys all agree. Unknowns remain explicit gates; they are never converted into “done” statements by documentation or UI.
+The Foundation Lock is fully complete when repository code, Supabase migration state, Cloudflare Pages production deploy, Render routing, authenticated sessions, form receipt and end-to-end release journeys all agree. Unknowns remain explicit gates; they are never converted into “done” statements by documentation or UI.

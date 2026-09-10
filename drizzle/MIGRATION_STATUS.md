@@ -1,6 +1,6 @@
 # Last Bench database migration status
 
-Last verified against the connected production Supabase project on **9 September 2026**.
+Last verified against the connected production Supabase project on **10 September 2026**.
 
 ## Canonical live migration path
 
@@ -25,6 +25,7 @@ Do not infer live migration state from filenames or `drizzle/meta/_journal.json`
 | `20260908102639` | `lastbench_repo_0004_supabase_identity_storage` | Repo `0004` — Supabase Auth identity contract + private student document storage |
 | `20260908102929` | `create_drx_social_engine_runtime` | DR.X social-engine runtime tables and supporting schema |
 | `20260908103022` | `add_drx_social_activation_gates` | DR.X social-engine activation/guardrail schema |
+| `20260910045538` | `lastbench_homepage_signups` | Repo `0005` — insert-only, RLS-protected homepage lead intake |
 
 ## Supabase identity + storage verification
 
@@ -55,7 +56,21 @@ The live ledger includes the runtime and activation-gate migrations. Current spo
 
 No production social events were fabricated for verification.
 
-## Security and performance posture — 9 September 2026
+## Homepage signup verification
+
+`drizzle/0005_lastbench_signups.sql` was merged to `main` and then applied unchanged through the Supabase migration workflow.
+
+Verified live:
+
+- `public.lastbench_signups` exists with RLS enabled
+- `anon` and `authenticated` have INSERT permission only
+- public roles have no SELECT, UPDATE or DELETE permission
+- the identity sequence grants only the USAGE needed for inserts
+- exactly one INSERT policy validates name, contact, source, language and explicit contact consent
+- an anonymous Supabase REST submission returned HTTP 201
+- the synthetic verification row was deleted immediately afterward; the table returned to 0 rows
+
+## Security and performance posture — 10 September 2026
 
 Security advisor:
 
