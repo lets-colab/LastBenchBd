@@ -3,6 +3,7 @@
 
   const ALIGNMENT_VERSION = '2026-09-10';
   const PARTNER_WHATSAPP = 'https://wa.me/8801300801785?text=I%20want%20to%20learn%20about%20the%20Last%20Bench%20partner%20pathway.';
+  let enforcing = false;
 
   const css = `
     .lbp-shell{position:relative;z-index:2;width:min(1180px,calc(100% - 36px));margin:0 auto;color:#F2F7F3;font-family:var(--lb-font-body,'Sora','Hind Siliguri',system-ui,sans-serif)}
@@ -99,12 +100,55 @@
     return wrap;
   }
 
+  function getScreens() {
+    return Array.from(document.querySelectorAll('[data-screen-label]'));
+  }
+
+  function findCampusSection() {
+    return getScreens().find((el) => /universit|campus/i.test(el.getAttribute('data-screen-label') || '')) || null;
+  }
+
   function alignPrimaryCTA() {
     const classPortal = document.querySelector('.lb-class-portal');
     if (!classPortal) return;
-    classPortal.setAttribute('href', '#lb-journey-os');
-    classPortal.setAttribute('aria-label', 'See how the Last Bench student journey works');
-    classPortal.textContent = 'SEE HOW LAST BENCH WORKS →';
+    if (classPortal.getAttribute('href') !== '#lb-journey-os') classPortal.setAttribute('href', '#lb-journey-os');
+    if (classPortal.getAttribute('aria-label') !== 'See how the Last Bench student journey works') classPortal.setAttribute('aria-label', 'See how the Last Bench student journey works');
+    if (classPortal.textContent !== 'SEE HOW LAST BENCH WORKS →') classPortal.textContent = 'SEE HOW LAST BENCH WORKS →';
+  }
+
+  function sanitizeUniversityClaims(campusSection) {
+    if (!campusSection) return;
+    const replacements = [
+      [
+        'You’re flying between the Petronas Towers. Below you: the fifteen campuses Last Bench works with, with what they cost and what they ask. Tap any card to walk its campus in 360°.',
+        'You’re flying between the Petronas Towers. Below you: fifteen Malaysian campuses to research, with Last Bench planning estimates to help you compare. Tap any card to explore the campus in 360°.'
+      ],
+      [
+        "You're flying between the Petronas Towers. Below you: the fifteen campuses Last Bench works with, with what they cost and what they ask. Tap any card to walk its campus in 360°.",
+        "You're flying between the Petronas Towers. Below you: fifteen Malaysian campuses to research, with Last Bench planning estimates to help you compare. Tap any card to explore the campus in 360°."
+      ],
+      [
+        'আপনি পেট্রোনাস টাওয়ারের মাঝ দিয়ে উড়ছেন। নিচে: লাস্ট বেঞ্চ যে পনেরোটি ক্যাম্পাসে কাজ করে — খরচ ও শর্তসহ। যেকোনো কার্ডে ট্যাপ করে ৩৬০° ঘুরে দেখুন।',
+        'আপনি পেট্রোনাস টাওয়ারের মাঝ দিয়ে উড়ছেন। নিচে: গবেষণা ও তুলনার জন্য মালয়েশিয়ার পনেরোটি ক্যাম্পাস। দেখানো খরচ ও শর্ত পরিকল্পনা-তথ্য; আবেদন করার আগে বর্তমান অফিসিয়াল তথ্য যাচাই করুন।'
+      ],
+      ['ONE HONEST LIST.', 'ONE RESEARCH LIST.'],
+      ['একটি সৎ তালিকা।', 'গবেষণার একটি তালিকা।']
+    ];
+
+    const walker = document.createTreeWalker(campusSection, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (const node of nodes) {
+      let next = node.nodeValue || '';
+      for (const [from, to] of replacements) next = next.replace(from, to);
+      if (next !== node.nodeValue) node.nodeValue = next;
+    }
+
+    const headings = campusSection.querySelectorAll('h1,h2,h3');
+    headings.forEach((heading) => {
+      const aria = heading.getAttribute('aria-label');
+      if (aria === 'Fifteen campuses. One honest list.') heading.setAttribute('aria-label', 'Fifteen campuses. One research list.');
+    });
   }
 
   function addUniversityDisclosure(campusSection) {
@@ -123,29 +167,42 @@
     if (meta) meta.setAttribute('content', 'Last Bench helps Bangladeshi students study, settle and succeed in Malaysia with transparent university selection, admissions, visa guidance, pre-departure support, journey tracking and community after arrival.');
   }
 
-  function mount() {
-    if (document.getElementById('lb-journey-os')) return;
-    addStyles();
-    updateMetadata();
-    alignPrimaryCTA();
+  function ensureBusinessLayer() {
+    if (enforcing) return;
+    enforcing = true;
+    try {
+      addStyles();
+      updateMetadata();
+      alignPrimaryCTA();
 
-    const screens = Array.from(document.querySelectorAll('[data-screen-label]'));
-    const campusSection = screens.find((el) => /universit|campus/i.test(el.getAttribute('data-screen-label') || ''));
-    const signup = document.getElementById('signup');
+      const campusSection = findCampusSection();
+      const signup = document.getElementById('signup');
+      sanitizeUniversityClaims(campusSection);
 
-    const journey = journeySection();
-    if (campusSection && campusSection.parentNode) {
-      campusSection.parentNode.insertBefore(journey, campusSection);
+      if (!document.getElementById('lb-journey-os')) {
+        const journey = journeySection();
+        if (campusSection?.parentNode) campusSection.parentNode.insertBefore(journey, campusSection);
+        else if (signup?.parentNode) signup.parentNode.insertBefore(journey, signup);
+        else document.body.appendChild(journey);
+      }
+
       addUniversityDisclosure(campusSection);
-    } else if (signup && signup.parentNode) {
-      signup.parentNode.insertBefore(journey, signup);
-    } else {
-      document.body.appendChild(journey);
-    }
 
-    if (signup && signup.parentNode && !document.getElementById('lb-beyond-arrival')) {
-      signup.parentNode.insertBefore(beyondSection(), signup);
+      if (signup?.parentNode && !document.getElementById('lb-beyond-arrival')) {
+        signup.parentNode.insertBefore(beyondSection(), signup);
+      }
+    } finally {
+      enforcing = false;
     }
+  }
+
+  function mount() {
+    ensureBusinessLayer();
+    const root = document.getElementById('dc-root') || document.body;
+    const observer = new MutationObserver(() => {
+      queueMicrotask(ensureBusinessLayer);
+    });
+    observer.observe(root, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['href', 'aria-label'] });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, { once: true });
