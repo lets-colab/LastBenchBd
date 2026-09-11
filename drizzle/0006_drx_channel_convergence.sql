@@ -67,6 +67,9 @@ CREATE TABLE IF NOT EXISTS public.drx_channel_messages (
   state text NOT NULL DEFAULT 'received'
     CHECK (state IN ('received','processing','blocked','queued_human','send_claimed','sent','failed')),
   failure_code text,
+  gateway_evidence_id text,
+  route_provider text,
+  trace jsonb NOT NULL DEFAULT '{}'::jsonb,
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
   UNIQUE (transport, provider_message_id)
