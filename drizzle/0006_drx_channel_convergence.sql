@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS public.drx_channel_messages (
   body_hash text NOT NULL,
   provider_timestamp timestamptz,
   state text NOT NULL DEFAULT 'received'
-    CHECK (state IN ('received','processing','blocked','queued_human','send_claimed','sent','failed')),
+    CHECK (state IN ('received','processing','processed','blocked','queued_human','send_claimed','sent','failed')),
   failure_code text,
   gateway_evidence_id text,
   route_provider text,
