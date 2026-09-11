@@ -28,7 +28,7 @@ jobs:
           deno-version: v2.x
 
       - name: Type-check WhatsApp Edge Function
-        run: deno check supabase/functions/drx-whatsapp/index.ts
+        run: deno check --node-modules-dir=auto supabase/functions/drx-whatsapp/index.ts
 
       - name: Verify fail-closed channel contract
         shell: python
