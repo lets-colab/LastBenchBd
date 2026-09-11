@@ -15,7 +15,7 @@ jobs:
   promote:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: design-sync/claude-lastbench-2026-09-08
           fetch-depth: 0
@@ -31,8 +31,8 @@ jobs:
           set -euo pipefail
           grep -q 'The Last Bench — From Last Bench. To The World.' landing/index.html
           grep -q './bench-ai.js' landing/index.html
-          grep -q 'name="signup"' landing/index.html
-          grep -q 'Submission confirms WhatsApp/email contact consent' landing/index.html
+          grep -q '/rest/v1/lastbench_signups' landing/index.html
+          grep -q 'contact_consent: true' landing/index.html
           grep -q 'href="/app/"' landing/index.html
           grep -q './vendor/three.min.js' landing/index.html
           ! grep -q 'Claude Design Preview' landing/index.html

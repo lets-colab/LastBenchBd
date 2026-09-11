@@ -26,7 +26,7 @@ def main() -> None:
     require(html, "./claude-design-support.js", "Claude Design runtime")
     require(html, "./claude-design-ds/tokens.css", "design tokens")
     require(html, 'href="/app/"', "student dashboard route")
-    require(html, 'name="signup"', "Netlify form detector")
+    require(html, "/rest/v1/lastbench_signups", "Supabase signup endpoint")
 
     html = html.replace(
         "<title>Last Bench — Claude Design Preview</title>",
@@ -70,7 +70,7 @@ def main() -> None:
         raise SystemExit("Preview label still present after promotion patch")
 
     # Ensure the signup handler remains the production-safe patched version.
-    require(html, "Submission confirms WhatsApp/email contact consent", "contact-consent payload")
+    require(html, "contact_consent: true", "contact-consent payload")
     require(html, "Could not submit right now. Please try again.", "signup failure state")
 
     TARGET.write_text(html)

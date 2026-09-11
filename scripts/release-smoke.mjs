@@ -34,6 +34,15 @@ const checks = [
   ...(renderOrigin ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }] : []),
   { name: "Landing", url: `${webOrigin}/`, expectHtml: true, expectIncludes: ["claude-design-support.js", "bench-ai.js"] },
   { name: "Blueprint business layer", url: `${webOrigin}/lastbench-blueprint.js`, expectIncludes: ["STUDY. SETTLE.", "TRACK MY JOURNEY", "UNIVERSITY EXPLORER"] },
+  ...(renderOrigin
+    ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }]
+    : []),
+  {
+    name: "Landing",
+    url: `${webOrigin}/`,
+    expectHtml: true,
+    expectIncludes: ["claude-design-support.js", "bench-ai.js", "/rest/v1/lastbench_signups"],
+  },
   { name: "Student app", url: `${webOrigin}/app/`, expectHtml: true },
   { name: "CLASS signup hub", url: `${webOrigin}/class-a/`, expectHtml: true },
   { name: "CLASS masterclass", url: `${webOrigin}/class-a/masterclass.html`, expectHtml: true },
@@ -90,7 +99,7 @@ console.log("- Fresh-browser account creation/sign-in completes on /app/auth");
 console.log("- Returning Supabase session survives refresh");
 console.log("- Authenticated tRPC request succeeds");
 console.log("- Logout causes the next protected request to be rejected");
-console.log("- Real Netlify form submissions appear for each active conversion form");
+console.log("- Real homepage and CLASS[Λ] submissions appear in their intended Supabase tables");
 console.log("- Supabase migration ledger remains reconciled with drizzle/MIGRATION_STATUS.md");
 console.log("- Homepage business logic matches the current Last Bench mobility blueprint");
 

@@ -1,4 +1,4 @@
-import { index, integer, pgEnum, pgTable, serial, text, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
+import { bigint, boolean, index, integer, pgEnum, pgTable, serial, text, timestamp, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 
 /**
  * Enum types. Postgres enums are named types in the schema, so each gets a
@@ -509,3 +509,24 @@ export const cohortMessages = pgTable(
 
 export type CohortMessage = typeof cohortMessages.$inferSelect;
 export type InsertCohortMessage = typeof cohortMessages.$inferInsert;
+
+/**
+ * Public Last Bench admission-interest intake.
+ *
+ * Browser clients may INSERT through a tightly scoped RLS policy, but they
+ * cannot read, update or delete any submitted lead.
+ */
+export const lastbenchSignups = pgTable("lastbench_signups", {
+  id: bigint("id", { mode: "number" }).primaryKey().generatedByDefaultAsIdentity(),
+  fullName: text("full_name").notNull(),
+  phone: text("phone"),
+  email: text("email"),
+  stage: text("stage").default("claude-design-experience").notNull(),
+  source: text("source").default("lastbench-homepage").notNull(),
+  language: text("language").default("en").notNull(),
+  contactConsent: boolean("contact_consent").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export type LastBenchSignup = typeof lastbenchSignups.$inferSelect;
+export type InsertLastBenchSignup = typeof lastbenchSignups.$inferInsert;
