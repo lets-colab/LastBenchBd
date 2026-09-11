@@ -1,10 +1,11 @@
-import { ScrollView, Text, View, TouchableOpacity, Alert } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity, Alert, Linking } from "react-native";
 import { ScreenContainer } from "@/components/screen-container";
 import { useAuth } from "@/hooks/use-auth";
 import { trpc } from "@/lib/trpc";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { BenchLoader } from "@/components/bench-loader";
+import { LAST_BENCH_CONTACT } from "@/constants/contact";
 
 /**
  * Profile Screen - Premium User Hub
@@ -101,6 +102,13 @@ export default function ProfileScreen() {
     );
   }
 
+  const handleEmailSupport = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    void Linking.openURL(LAST_BENCH_CONTACT.emailHref).catch(() => {
+      Alert.alert("Email unavailable", `Please email ${LAST_BENCH_CONTACT.email} from your mail app.`);
+    });
+  };
+
   const handleLogout = () => {
     Alert.alert("Sign Out", "Are you sure you want to sign out?", [
       { text: "Cancel", onPress: () => {} },
@@ -166,6 +174,21 @@ export default function ProfileScreen() {
               <View className="w-8 h-8 rounded-full bg-primary items-center justify-center">
                 <Text className="text-white font-bold text-sm">→</Text>
               </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* Contact Section */}
+          <View className="gap-3">
+            <Text className="text-lg font-bold text-foreground">Need help?</Text>
+            <TouchableOpacity
+              onPress={handleEmailSupport}
+              className="bg-surface border border-border rounded-xl p-4 flex-row items-center justify-between active:opacity-80"
+            >
+              <View className="flex-1 gap-1">
+                <Text className="text-base font-semibold text-foreground">✉️ Email Last Bench</Text>
+                <Text className="text-sm text-muted">Reach the team at {LAST_BENCH_CONTACT.email}</Text>
+              </View>
+              <Text className="text-lg text-muted">→</Text>
             </TouchableOpacity>
           </View>
 

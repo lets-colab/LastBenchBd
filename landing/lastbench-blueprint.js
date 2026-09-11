@@ -3,6 +3,8 @@
 
   const ALIGNMENT_VERSION = '2026-09-10';
   const PARTNER_WHATSAPP = 'https://wa.me/8801300801785?text=I%20want%20to%20learn%20about%20the%20Last%20Bench%20partner%20pathway.';
+  const CONTACT_EMAIL = 'info@lastbenchbd.com';
+  const CONTACT_HREF = 'mailto:info@lastbenchbd.com?subject=Last%20Bench%20question';
   let enforcing = false;
 
   const COPY = {
@@ -19,7 +21,7 @@
         ['ARRIVE', 'Settlement, community and first steps.'],
       ],
       services: ['University selection','Malaysia admissions','Visa guidance','Scholarship verification','Pre-departure','Settlement + community'],
-      start: 'START MY JOURNEY', track: 'TRACK MY JOURNEY', partner: 'TUTOR / COACHING / EDUCATION PARTNER →',
+      start: 'START MY JOURNEY', track: 'TRACK MY JOURNEY', partner: 'TUTOR / COACHING / EDUCATION PARTNER →', email: 'EMAIL THE TEAM →',
       trust: 'TRANSPARENCY RULE — No visa guarantees. No fixed scholarship or admission promises. Fees, intakes, eligibility and partner offers can change and must be verified before a student acts. Every operational promise should have an owner, status and evidence.',
       university: 'UNIVERSITY EXPLORER — These are research options, not a claim that every listed institution is a current Last Bench partner. Programme availability, fees, English requirements, intakes, scholarships and eligibility must be verified against current official information before application.',
       beyondKicker: 'BEYOND ARRIVAL', beyondA: 'THE RELATIONSHIP', beyondB: 'CONTINUES.',
@@ -45,7 +47,7 @@
         ['ARRIVE','সেটেলমেন্ট, কমিউনিটি ও প্রথম পদক্ষেপ।'],
       ],
       services: ['ইউনিভার্সিটি নির্বাচন','মালয়েশিয়া অ্যাডমিশন','ভিসা গাইডেন্স','স্কলারশিপ যাচাই','প্রি-ডিপারচার','সেটেলমেন্ট + কমিউনিটি'],
-      start: 'আমার যাত্রা শুরু করুন', track: 'আমার যাত্রা ট্র্যাক করুন', partner: 'টিউটর / কোচিং / এডুকেশন পার্টনার →',
+      start: 'আমার যাত্রা শুরু করুন', track: 'আমার যাত্রা ট্র্যাক করুন', partner: 'টিউটর / কোচিং / এডুকেশন পার্টনার →', email: 'EMAIL THE TEAM →',
       trust: 'স্বচ্ছতার নিয়ম — ভিসার গ্যারান্টি নেই। নির্দিষ্ট স্কলারশিপ বা অ্যাডমিশনের প্রতিশ্রুতি নেই। ফি, ইনটেক, যোগ্যতা ও পার্টনার অফার বদলাতে পারে; সিদ্ধান্তের আগে বর্তমান তথ্য যাচাই করতে হবে। প্রতিটি অপারেশনাল প্রতিশ্রুতির মালিক, স্ট্যাটাস ও প্রমাণ থাকা উচিত।',
       university: 'ইউনিভার্সিটি এক্সপ্লোরার — এগুলো গবেষণার অপশন; তালিকায় থাকা মানেই প্রতিষ্ঠানটি বর্তমানে লাস্ট বেঞ্চের পার্টনার নয়। প্রোগ্রাম, ফি, ইংরেজি শর্ত, ইনটেক, স্কলারশিপ ও যোগ্যতা আবেদনের আগে বর্তমান অফিসিয়াল সূত্র থেকে যাচাই করুন।',
       beyondKicker: 'পৌঁছানোর পরেও', beyondA: 'সম্পর্কটি', beyondB: 'চলতে থাকে।',
@@ -69,12 +71,12 @@
     .lbp-lede{max-width:760px;margin:18px 0 0;font-size:clamp(14px,1.5vw,17px);line-height:1.72;color:rgba(242,247,243,.82)}
     .lbp-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:32px 0 0}.lbp-step{min-height:132px;padding:16px 14px;border:1px solid rgba(255,255,255,.09);border-radius:16px;background:rgba(255,255,255,.035);display:flex;flex-direction:column;justify-content:space-between}.lbp-num{font:700 10px/1 var(--lb-font-body,'Sora',sans-serif);letter-spacing:.18em;color:rgba(242,247,243,.38)}.lbp-step strong{font-family:var(--lb-font-display,'Sora','Hind Siliguri',sans-serif);font-size:17px;letter-spacing:.02em;color:#fff}.lbp-step span{font-size:11.5px;line-height:1.45;color:rgba(242,247,243,.58)}
     .lbp-services{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}.lbp-services span{border:1px solid rgba(0,200,83,.24);border-radius:999px;padding:9px 12px;background:rgba(0,200,83,.06);font-size:11px;font-weight:600;letter-spacing:.03em;color:rgba(242,247,243,.82)}
-    .lbp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;align-items:center}.lbp-btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:0 20px;text-decoration:none;font-size:11.5px;font-weight:800;letter-spacing:.07em}.lbp-btn-primary{background:#00C853;color:#04140b;box-shadow:0 10px 30px rgba(0,200,83,.28)}.lbp-btn-secondary{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.05);color:#fff}.lbp-partner{color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.05em;padding:12px 2px}
+    .lbp-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;align-items:center}.lbp-btn{min-height:48px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:0 20px;text-decoration:none;font-size:11.5px;font-weight:800;letter-spacing:.07em}.lbp-btn-primary{background:#00C853;color:#04140b;box-shadow:0 10px 30px rgba(0,200,83,.28)}.lbp-btn-secondary{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.05);color:#fff}.lbp-partner{color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.05em;padding:12px 2px}.lbp-contact{color:rgba(242,247,243,.72);text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.05em;padding:12px 2px}
     .lbp-trust{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);font-size:11px;line-height:1.65;color:rgba(242,247,243,.48)}
     .lbp-university-note{position:relative;z-index:3;width:min(1180px,calc(100% - 44px));margin:0 auto 26px;padding:14px 16px;border-left:2px solid #00C853;background:rgba(4,20,11,.68);backdrop-filter:blur(10px);font:500 11.5px/1.65 var(--lb-font-body,'Sora','Hind Siliguri',sans-serif);color:rgba(242,247,243,.67)}
     .lbp-beyond{position:relative;z-index:2;padding:12vh 0 4vh}.lbp-beyond .lbp-panel{background:linear-gradient(145deg,rgba(6,16,10,.9),rgba(11,22,16,.76))}.lbp-beyond-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:28px}.lbp-beyond-card{padding:17px 16px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035)}.lbp-beyond-card strong{display:block;font-family:var(--lb-font-display,'Sora','Hind Siliguri',sans-serif);font-size:18px;color:#fff;margin-bottom:6px}.lbp-beyond-card span{font-size:11.5px;line-height:1.5;color:rgba(242,247,243,.6)}
     @media(max-width:900px){.lbp-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.lbp-beyond-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:600px){.lbp-shell{width:min(100% - 22px,1180px)}.lbp-panel{border-radius:22px;padding:24px 18px}.lbp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.lbp-step{min-height:118px;padding:14px 12px}.lbp-beyond-grid{grid-template-columns:1fr 1fr;gap:8px}.lbp-actions{align-items:stretch}.lbp-btn{width:100%;box-sizing:border-box}.lbp-partner{text-align:center;width:100%}.lbp-university-note{width:calc(100% - 28px);box-sizing:border-box}}
+    @media(max-width:600px){.lbp-shell{width:min(100% - 22px,1180px)}.lbp-panel{border-radius:22px;padding:24px 18px}.lbp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.lbp-step{min-height:118px;padding:14px 12px}.lbp-beyond-grid{grid-template-columns:1fr 1fr;gap:8px}.lbp-actions{align-items:stretch}.lbp-btn{width:100%;box-sizing:border-box}.lbp-partner,.lbp-contact{text-align:center;width:100%}.lbp-university-note{width:calc(100% - 28px);box-sizing:border-box}}
     @media(prefers-reduced-motion:reduce){.lbp-panel{backdrop-filter:none}}
   `;
 
@@ -92,7 +94,7 @@
     const c = COPY[lang];
     const steps = c.steps.map((step, i) => `<div class="lbp-step"><div class="lbp-num">${String(i + 1).padStart(2,'0')}</div><strong>${step[0]}</strong><span>${step[1]}</span></div>`).join('');
     const services = c.services.map((s) => `<span>${s}</span>`).join('');
-    return `<div class="lbp-panel"><div class="lbp-kicker">${c.kicker}</div><h2 class="lbp-title" id="lbp-journey-title">${c.titleA} <span>${c.titleB}</span></h2><p class="lbp-lede">${c.lede}</p><div class="lbp-grid" aria-label="Six Last Bench journey milestones">${steps}</div><div class="lbp-services">${services}</div><div class="lbp-actions"><a class="lbp-btn lbp-btn-primary" href="#signup">${c.start}</a><a class="lbp-btn lbp-btn-secondary" href="/app/">${c.track}</a><a class="lbp-partner" href="${PARTNER_WHATSAPP}" target="_blank" rel="noopener">${c.partner}</a></div><div class="lbp-trust">${c.trust}</div></div>`;
+    return `<div class="lbp-panel"><div class="lbp-kicker">${c.kicker}</div><h2 class="lbp-title" id="lbp-journey-title">${c.titleA} <span>${c.titleB}</span></h2><p class="lbp-lede">${c.lede}</p><div class="lbp-grid" aria-label="Six Last Bench journey milestones">${steps}</div><div class="lbp-services">${services}</div><div class="lbp-actions"><a class="lbp-btn lbp-btn-primary" href="#signup">${c.start}</a><a class="lbp-btn lbp-btn-secondary" href="/app/">${c.track}</a><a class="lbp-partner" href="${PARTNER_WHATSAPP}" target="_blank" rel="noopener">${c.partner}</a><a class="lbp-contact" href="${CONTACT_HREF}">${c.email}</a></div><div class="lbp-trust">${c.trust}</div></div>`;
   }
 
   function beyondMarkup(lang) {
