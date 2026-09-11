@@ -48,6 +48,7 @@ jobs:
               "preferred_providers: ['openrouter_free']",
               "ambiguous_transport_failure",
               "latest_inbound_provider_id",
+              "lastbench_leads",
           ]
           missing_fn = [item for item in required_fn if item not in fn]
           if missing_fn:
@@ -64,13 +65,17 @@ jobs:
               raise SystemExit(f'WhatsApp adapter bypasses DR.X Gateway: {present_forbidden}')
 
           required_sql = [
+              'lastbench_leads',
+              'lastbench_sync_signup_to_lead',
               'drx_channel_accounts',
               'drx_channel_contacts',
               'drx_channel_conversations',
               'drx_channel_messages',
               'drx_channel_escalations',
+              "contact_consent_state IN ('opted_in','service_window','unknown','opted_out')",
               "consent_state IN ('opted_in','service_window','unknown','opted_out')",
               'ENABLE ROW LEVEL SECURITY',
+              'REVOKE ALL ON TABLE public.lastbench_leads FROM anon, authenticated',
               'REVOKE ALL ON TABLE public.drx_channel_contacts FROM anon, authenticated',
           ]
           missing_sql = [item for item in required_sql if item not in sql]
