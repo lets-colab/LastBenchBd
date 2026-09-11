@@ -209,7 +209,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           <h1 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(27px,4.8vw,66px);line-height:1.16;margin:0;color:#fff;max-width:17ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);">{{ t.legL1 }}<br><span style="color:#00C853;">{{ t.legL2 }}</span></h1>
         </sc-if>
         <p style="max-width:520px;font-size:clamp(14px,1.4vw,17px);line-height:1.62;color:rgba(242,247,243,.85);margin:24px 0 0;text-wrap:pretty;text-shadow:0 2px 18px rgba(0,0,0,.9);">{{ t.legSub }}</p>
-        <a class="lb-class-portal" href="#lb-journey-os" aria-label="See how the Last Bench student journey works" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-height:50px;margin-top:24px;padding:0 28px;border:1px solid rgba(0,230,118,.64);border-radius:999px;background:rgba(0,200,83,.12);color:#00E676;font-family:'Sora','Hind Siliguri',sans-serif;font-size:12px;font-weight:700;letter-spacing:.11em;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(0,200,83,.14);" style-hover="background:rgba(0,200,83,.25);color:#fff;box-shadow:0 0 42px rgba(0,230,118,.25);">SEE HOW LAST BENCH WORKS →</a>
+        <a class="lb-class-portal" href="/class-a/" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-height:50px;margin-top:24px;padding:0 28px;border:1px solid rgba(0,230,118,.64);border-radius:999px;background:rgba(0,200,83,.12);color:#00E676;font-family:'Sora','Hind Siliguri',sans-serif;font-size:12px;font-weight:700;letter-spacing:.11em;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(0,200,83,.14);" style-hover="background:rgba(0,200,83,.25);color:#fff;box-shadow:0 0 42px rgba(0,230,118,.25);">ENTER CLASS[Λ] →</a>
       </div>
       <div ref="{{ benchCopyRef }}" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(14px);z-index:2;width:min(760px,88vw);text-align:center;opacity:0;pointer-events:none;will-change:opacity,transform;padding:clamp(20px,3.6vh,40px) clamp(18px,3.4vw,44px);background:radial-gradient(ellipse 80% 118% at 50% 50%,rgba(2,9,5,.82) 0%,rgba(2,9,5,.58) 44%,rgba(2,9,5,.2) 72%,transparent 88%);">
         <div style="font-size:11.5px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:16px;">{{ t.benchKicker }}</div>
@@ -295,7 +295,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div data-reveal style="max-width:660px;margin:0 auto 30px;padding:0 22px;">
         <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:14px;">{{ t.a3Kicker }}</div>
         <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
-          <h2 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);" aria-label="Fifteen campuses. One research list.">FIFTEEN <span style="white-space:nowrap;">C<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>MPUSES.</span><br><span style="color:#00C853;">ONE HONEST LIST.</span></h2>
+          <h2 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(30px,4.4vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);" aria-label="Fifteen campuses. One honest list.">FIFTEEN <span style="white-space:nowrap;">C<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>MPUSES.</span><br><span style="color:#00C853;">ONE HONEST LIST.</span></h2>
         </sc-if>
         <sc-if value="{{ isBN }}" hint-placeholder-val="{{ false }}">
           <h2 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.14;margin:0 0 18px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);">{{ t.a3L1 }}<br><span style="color:#00C853;">{{ t.a3L2 }}</span></h2>
@@ -544,10 +544,10 @@ class Component extends DCLogic {
         cityFrom: 'DHAKA', cityTo: 'KUALA LUMPUR', flightTime: '≈ 4H 30M NONSTOP', toGo: 'KM TO GO', arrived: 'ARRIVED',
         a2Kicker: '02 — JALAN ALOR, 11:48 PM', a2L1: 'THE CITY IS AWAKE.', a2L2: 'SO IS YOUR JOURNEY.',
         a2Sub: 'Your application becomes a journey with visible stages, updated by a named mentor. Never a black box — you always know where you stand and what comes next.',
-        a3Kicker: '03 — ABOVE THE TOWERS, 452 M', a3L1: 'FIFTEEN CAMPUSES.', a3L2: 'ONE RESEARCH LIST.',
-        a3Sub: 'You’re flying between the Petronas Towers. Below you: fifteen Malaysian campuses to research, with Last Bench planning estimates to help you compare. Tap any card to explore the campus in 360°.',
+        a3Kicker: '03 — ABOVE THE TOWERS, 452 M', a3L1: 'FIFTEEN CAMPUSES.', a3L2: 'ONE HONEST LIST.',
+        a3Sub: 'You’re flying between the Petronas Towers. Below you: the fifteen campuses Last Bench works with, with what they cost and what they ask. Tap any card to walk its campus in 360°.',
         costL: 'TOTAL / YR', ieltsL: 'IELTS', intakeL: 'INTAKES', visitL: 'VISIT CAMPUS', exploreL: 'OFFICIAL DETAILS',
-        dataNote: 'Figures are Last Bench’s own planning estimates for Bangladeshi students, covering tuition and living costs. They are research aids, not quotes, guarantees or claims of current Last Bench partnership — always confirm current fees, entry requirements, intakes, scholarships and visa rules with official sources before you decide.',
+        dataNote: 'Figures are Last Bench’s own planning estimates for Bangladeshi students, covering tuition and living costs. They are not quotes and not guarantees — always confirm current fees, entry requirements and visa rules with the university and EMGS before you decide.',
         a4Kicker: '04 — KLCC PARK, 7:03 AM',
         a4Sub: 'This bench sits in KLCC Park, at the foot of the towers you just flew through. We’ve kept it clear — look around.',
         pin: 'OPEN THE REAL KLCC BENCH IN MAPS →',
@@ -588,8 +588,8 @@ class Component extends DCLogic {
         cityFrom: 'ঢাকা', cityTo: 'কুয়ালালামপুর', flightTime: '≈ ৪ ঘ ৩০ মি ননস্টপ', toGo: 'কিমি বাকি', arrived: 'পৌঁছে গেছি',
         a2Kicker: '০২ — জালান আলোর, রাত ১১:৪৮', a2L1: 'শহর জেগে আছে।', a2L2: 'আপনার যাত্রাও।',
         a2Sub: 'আপনার আবেদন হয়ে ওঠে দৃশ্যমান ধাপে ভরা একটি যাত্রা, যা একজন নির্দিষ্ট মেন্টর আপডেট করেন। কখনো অন্ধকার বাক্স নয় — আপনি সবসময় জানেন আপনি কোথায় আছেন।',
-        a3Kicker: '০৩ — টাওয়ারের উপরে, ৪৫২ মিটার', a3L1: 'পনেরোটি ক্যাম্পাস।', a3L2: 'গবেষণার একটি তালিকা।',
-        a3Sub: 'আপনি পেট্রোনাস টাওয়ারের মাঝ দিয়ে উড়ছেন। নিচে: গবেষণা ও তুলনার জন্য মালয়েশিয়ার পনেরোটি ক্যাম্পাস। দেখানো খরচ ও শর্ত পরিকল্পনা-তথ্য; আবেদন করার আগে বর্তমান অফিসিয়াল তথ্য যাচাই করুন।',
+        a3Kicker: '০৩ — টাওয়ারের উপরে, ৪৫২ মিটার', a3L1: 'পনেরোটি ক্যাম্পাস।', a3L2: 'একটি সৎ তালিকা।',
+        a3Sub: 'আপনি পেট্রোনাস টাওয়ারের মাঝ দিয়ে উড়ছেন। নিচে: লাস্ট বেঞ্চ যে পনেরোটি ক্যাম্পাসে কাজ করে — খরচ ও শর্তসহ। যেকোনো কার্ডে ট্যাপ করে ৩৬০° ঘুরে দেখুন।',
         costL: 'মোট / বছর', ieltsL: 'IELTS', intakeL: 'ইনটেক', visitL: 'ক্যাম্পাস দেখুন', exploreL: 'অফিসিয়াল তথ্য',
         dataNote: 'এই সংখ্যাগুলো বাংলাদেশি শিক্ষার্থীদের জন্য লাস্ট বেঞ্চের নিজস্ব পরিকল্পনা-অনুমান, যাতে টিউশন ও জীবনযাত্রার খরচ ধরা আছে। এগুলো কোটেশন নয়, নিশ্চয়তা নয় — সিদ্ধান্তের আগে বিশ্ববিদ্যালয় ও EMGS থেকে বর্তমান ফি, ভর্তির শর্ত ও ভিসা নিয়ম যাচাই করুন।',
         a4Kicker: '০৪ — কেএলসিসি পার্ক, সকাল ৭:০৩',

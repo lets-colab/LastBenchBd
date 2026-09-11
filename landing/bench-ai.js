@@ -4,17 +4,6 @@
   const CONTACT_PRIMARY = '01300 801785';
   const CONTACT_SECONDARY = '01726 494917';
 
-  // Keep the business/blueprint layer separate from the Claude Design runtime.
-  // The homepage already loads Bench AI, so this is the smallest safe integration
-  // point that preserves the verified design export while adding current product logic.
-  if (!document.querySelector('script[data-lb-blueprint]')) {
-    const blueprint = document.createElement('script');
-    blueprint.src = './lastbench-blueprint.js';
-    blueprint.dataset.lbBlueprint = 'true';
-    blueprint.async = false;
-    document.head.appendChild(blueprint);
-  }
-
   const css = `
     .lb-ai-launcher{position:fixed;right:18px;bottom:18px;z-index:90;width:58px;height:58px;border:0;border-radius:50%;display:grid;place-items:center;background:#00C853;color:#04140b;box-shadow:0 12px 38px rgba(0,200,83,.42);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;background-color .2s ease}
     .lb-ai-launcher:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(0,200,83,.56);background:#00E676}
@@ -61,10 +50,10 @@
     <div class="lb-ai-chips"></div>
     <form class="lb-ai-form">
       <label style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" for="lb-ai-input">Ask Bench AI</label>
-      <input id="lb-ai-input" class="lb-ai-input" autocomplete="off" maxlength="700" placeholder="Ask about your journey, universities, visa…">
+      <input id="lb-ai-input" class="lb-ai-input" autocomplete="off" maxlength="700" placeholder="Ask about universities, visa, scholarships…">
       <button class="lb-ai-send" type="submit" aria-label="Send message">→</button>
     </form>
-    <div class="lb-ai-note">Bench AI gives orientation, not guarantees. Verify current fees, entry requirements, scholarships, partner offers and visa rules with official sources before acting.</div>`;
+    <div class="lb-ai-note">Bench AI gives orientation, not guarantees. Verify current fees, entry requirements, scholarships and visa rules with official sources before acting.</div>`;
 
   document.body.appendChild(launcher);
   document.body.appendChild(panel);
@@ -99,18 +88,13 @@
 
   const fallback = (text) => {
     const t = text.toLowerCase();
-    if (/journey|how.*work|process|next step|milestone/.test(t)) return 'The Last Bench mobility journey is: Discover → Match → Apply → Secure → Prepare → Arrive. The goal is that you always know your current stage, next milestone and what evidence is still needed. If you are already registered, open the Journey OS at /app/.';
-    if (/status|track|tracking|application progress/.test(t)) return 'If you already joined Last Bench, use the Journey OS at /app/ to track your application. Important status changes should show a next step and evidence rather than leaving you inside a WhatsApp-only process.';
-    if (/settle|settlement|arrival|arrive|housing|sim|bank|community|belong/.test(t)) return 'Last Bench is designed to continue after admission and arrival. The current promise includes pre-departure preparation, practical settlement guidance and community support in Malaysia — not only university application processing.';
-    if (/partner|tutor|coaching|ielts center|agent|recruiter|counsellor|counselor/.test(t)) return `Last Bench has a partner pathway for tutors, coaching/IELTS centers, counsellors and education partners. Ask the team for current onboarding and commercial terms on WhatsApp: ${CONTACT_PRIMARY}. Terms should be confirmed before anyone represents an offer to students.`;
-    if (/class.?a|class\[|class lambda|co\.lab|colab/.test(t)) return 'CLASS[Λ] and co.lab are progression wings in the wider Last Bench blueprint. The public mobility promise comes first: study, settle and succeed in Malaysia. Capability or venture pathways should only be introduced when they are active and relevant to the person.';
     if (/visa|emgs/.test(t)) return 'Visa outcomes cannot be promised. They depend on your documents, EMGS processing and the relevant authorities. A Last Bench mentor can help you identify missing documents and verify the current process.';
     if (/scholar|discount|rebate/.test(t)) return 'Scholarships, rebates and discounts change by intake, programme and eligibility. I will not promise a percentage without a current official source. Share your results and intended intake and a mentor can help verify available offers.';
     if (/fee|cost|tuition|budget/.test(t)) return 'Fees vary by university, programme and intake, and can change. Tell me your field, qualification, budget range and preferred intake; I can help you structure a shortlist, then the team should verify the current official fee.';
     if (/ielts|english/.test(t)) return 'English requirements vary by university and programme. Check the current programme requirement or offer conditions; a mentor can help you interpret them.';
-    if (/which|best|fit|match|recommend|university|uni\b/.test(t)) return 'A useful Malaysia shortlist starts with four things: intended field, academic results, budget and intake. Send those four and I can help structure the comparison without inventing current requirements. A university shown on this website is a research option, not automatically a claim of a current Last Bench partnership.';
+    if (/which|best|fit|match|recommend|university|uni\b/.test(t)) return 'A useful Malaysia shortlist starts with four things: intended field, academic results, budget and intake. Send those four and I can help structure the comparison without inventing current requirements.';
     if (/human|mentor|call|whatsapp|contact|talk/.test(t)) return `A human mentor can review your profile. WhatsApp Last Bench at ${CONTACT_PRIMARY} or ${CONTACT_SECONDARY}, or use the “Take Your Seat” form on this page.`;
-    return 'I can help you understand your next step in the Bangladesh → Malaysia journey, structure university research and prepare better questions. I will not invent current fees, visa odds, scholarship percentages, partner offers or entry requirements. What stage are you at now?';
+    return 'I can help you organize your Malaysia study research and prepare better questions. I will not invent current fees, visa odds, scholarship percentages or entry requirements. What programme, intake and budget range are you considering?';
   };
 
   const send = async (raw) => {
@@ -148,8 +132,8 @@
     launcher.setAttribute('aria-expanded', 'true');
     if (!seeded) {
       seeded = true;
-      addMessage('ai', 'Hi — I’m Bench AI. I can help you understand your next step from Discover to Arrive, explore Malaysia study options and prepare the right questions. I’ll flag what needs current verification instead of guessing.');
-      setChips(['How the journey works', 'Find my university fit', 'Visa / EMGS', 'Talk to a mentor']);
+      addMessage('ai', 'Hi — I’m Bench AI. I can help you explore Malaysia study options and prepare the right questions. I’ll flag what needs current verification instead of guessing.');
+      setChips(['Find my university fit', 'Scholarships', 'Visa / EMGS', 'Talk to a mentor']);
     }
     window.setTimeout(() => input.focus(), 0);
   };
