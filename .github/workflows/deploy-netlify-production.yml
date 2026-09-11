@@ -28,6 +28,9 @@ jobs:
     env:
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
       NETLIFY_SITE_ID: 04a1423a-961c-4b5e-bb4b-53db3027317e
+      EXPO_PUBLIC_API_BASE_URL: https://api.lastbenchbd.com
+      EXPO_PUBLIC_SUPABASE_URL: https://tocxdyqlrvzthpexnmxe.supabase.co
+      EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_
 
     steps:
       - name: Verify deployment authorization
