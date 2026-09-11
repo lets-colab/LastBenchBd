@@ -1,6 +1,6 @@
 -- DR.X channel convergence foundation
--- Additive only. Does not alter existing product/auth tables.
--- All tables are server-owned and default-deny under RLS.
+-- Additive only. Does not alter existing product/auth contracts.
+-- All new operational tables are server-owned and default-deny under RLS.
 
 BEGIN;
 
@@ -111,6 +111,95 @@ CREATE TABLE IF NOT EXISTS public.drx_channel_escalations (
   status text NOT NULL DEFAULT 'open' CHECK (status IN ('open','claimed','resolved','closed')),
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE OR REPLACE FUNCTION public.lastbench_normalize_phone_e164(input text)
+RETURNS text
+LANGUAGE sql
+IMMUTABLE
+SET search_path = ''
+AS $$
+  SELECT CASE
+    WHEN input IS NULL OR btrim(input) = '' THEN NULL
+    WHEN regexp_replace(input, '[^0-9]', '', 'g') = '' THEN NULL
+    WHEN regexp_replace(input, '[^0-9]', '', 'g') LIKE '880%' THEN '+' || regexp_replace(input, '[^0-9]', '', 'g')
+    WHEN regexp_replace(input, '[^0-9]', '', 'g') LIKE '0%' THEN '+88' || regexp_replace(input, '[^0-9]', '', 'g')
+    ELSE '+' || regexp_replace(input, '[^0-9]', '', 'g')
+  END
+$$;
+
+CREATE OR REPLACE FUNCTION public.lastbench_sync_signup_to_lead()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, pg_temp
+AS $$
+DECLARE
+  normalized_phone text := public.lastbench_normalize_phone_e164(NEW.phone);
+  normalized_email text := CASE WHEN NEW.email IS NULL THEN NULL ELSE lower(btrim(NEW.email)) END;
+  existing_id bigint;
+BEGIN
+  SELECT id INTO existing_id
+  FROM public.lastbench_leads
+  WHERE (normalized_phone IS NOT NULL AND phone_e164 = normalized_phone)
+     OR (normalized_email IS NOT NULL AND email_normalized = normalized_email)
+  ORDER BY id
+  LIMIT 1;
+
+  IF existing_id IS NULL THEN
+    INSERT INTO public.lastbench_leads (
+      full_name, phone_raw, phone_e164, email, email_normalized,
+      source, source_ref, lifecycle_stage,
+      contact_consent_state, consent_source, consent_at
+    ) VALUES (
+      NEW.full_name, NEW.phone, normalized_phone, NEW.email, normalized_email,
+      'lastbench-homepage', 'signup:' || NEW.id::text, 'new',
+      'opted_in', 'lastbench-homepage-form', NEW.created_at
+    );
+  ELSE
+    UPDATE public.lastbench_leads
+    SET full_name = COALESCE(NULLIF(btrim(full_name), ''), NEW.full_name),
+        phone_raw = COALESCE(phone_raw, NEW.phone),
+        phone_e164 = COALESCE(phone_e164, normalized_phone),
+        email = COALESCE(email, NEW.email),
+        email_normalized = COALESCE(email_normalized, normalized_email),
+        contact_consent_state = CASE WHEN contact_consent_state = 'opted_out' THEN 'opted_out' ELSE 'opted_in' END,
+        consent_source = CASE WHEN contact_consent_state = 'opted_out' THEN consent_source ELSE 'lastbench-homepage-form' END,
+        consent_at = CASE WHEN contact_consent_state = 'opted_out' THEN consent_at ELSE COALESCE(consent_at, NEW.created_at) END,
+        updated_at = now()
+    WHERE id = existing_id;
+  END IF;
+  RETURN NEW;
+END
+$$;
+
+DROP TRIGGER IF EXISTS trg_lastbench_signup_to_lead ON public.lastbench_signups;
+CREATE TRIGGER trg_lastbench_signup_to_lead
+AFTER INSERT ON public.lastbench_signups
+FOR EACH ROW EXECUTE FUNCTION public.lastbench_sync_signup_to_lead();
+
+-- Backfill any already-recorded consented homepage signups through the same semantics.
+INSERT INTO public.lastbench_leads (
+  full_name, phone_raw, phone_e164, email, email_normalized,
+  source, source_ref, lifecycle_stage, contact_consent_state, consent_source, consent_at
+)
+SELECT
+  s.full_name,
+  s.phone,
+  public.lastbench_normalize_phone_e164(s.phone),
+  s.email,
+  CASE WHEN s.email IS NULL THEN NULL ELSE lower(btrim(s.email)) END,
+  'lastbench-homepage',
+  'signup:' || s.id::text,
+  'new',
+  'opted_in',
+  'lastbench-homepage-form',
+  s.created_at
+FROM public.lastbench_signups s
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.lastbench_leads l
+  WHERE (s.phone IS NOT NULL AND l.phone_e164 = public.lastbench_normalize_phone_e164(s.phone))
+     OR (s.email IS NOT NULL AND l.email_normalized = lower(btrim(s.email)))
 );
 
 -- Explicitly default-deny public access. Edge/server runtimes use privileged server credentials.
