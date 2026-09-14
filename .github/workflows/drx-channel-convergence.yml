@@ -1,0 +1,85 @@
+name: Verify DR.X Channel Convergence
+
+on:
+  pull_request:
+    paths:
+      - 'supabase/functions/drx-whatsapp/**'
+      - 'drizzle/0006_drx_channel_convergence.sql'
+      - '.github/workflows/drx-channel-convergence.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/functions/drx-whatsapp/**'
+      - 'drizzle/0006_drx_channel_convergence.sql'
+      - '.github/workflows/drx-channel-convergence.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Type-check WhatsApp Edge Function
+        run: deno check --node-modules-dir=auto supabase/functions/drx-whatsapp/index.ts
+
+      - name: Verify fail-closed channel contract
+        shell: python
+        run: |
+          from pathlib import Path
+
+          fn = Path('supabase/functions/drx-whatsapp/index.ts').read_text()
+          sql = Path('drizzle/0006_drx_channel_convergence.sql').read_text()
+
+          required_fn = [
+              "const PROJECT_SCOPE = 'last-bench'",
+              "DRX_WHATSAPP_GLOBAL_KILL_SWITCH', true",
+              "DRX_WHATSAPP_SEND_ENABLED', false",
+              "x-hub-signature-256",
+              "privacy_level: 'high'",
+              "project_scope: PROJECT_SCOPE",
+              "preferred_providers: ['openrouter_free']",
+              "ambiguous_transport_failure",
+              "latest_inbound_provider_id",
+              "lastbench_leads",
+          ]
+          missing_fn = [item for item in required_fn if item not in fn]
+          if missing_fn:
+              raise SystemExit(f'Missing fail-closed function contracts: {missing_fn}')
+
+          forbidden_fn = [
+              'api.openai.com',
+              'api.anthropic.com',
+              'OPENAI_API_KEY',
+              'ANTHROPIC_API_KEY',
+          ]
+          present_forbidden = [item for item in forbidden_fn if item in fn]
+          if present_forbidden:
+              raise SystemExit(f'WhatsApp adapter bypasses DR.X Gateway: {present_forbidden}')
+
+          required_sql = [
+              'lastbench_leads',
+              'lastbench_sync_signup_to_lead',
+              'drx_channel_accounts',
+              'drx_channel_contacts',
+              'drx_channel_conversations',
+              'drx_channel_messages',
+              'drx_channel_escalations',
+              "contact_consent_state IN ('opted_in','service_window','unknown','opted_out')",
+              "consent_state IN ('opted_in','service_window','unknown','opted_out')",
+              'ENABLE ROW LEVEL SECURITY',
+              'REVOKE ALL ON TABLE public.lastbench_leads FROM anon, authenticated',
+              'REVOKE ALL ON TABLE public.drx_channel_contacts FROM anon, authenticated',
+          ]
+          missing_sql = [item for item in required_sql if item not in sql]
+          if missing_sql:
+              raise SystemExit(f'Missing database safety contracts: {missing_sql}')
+
+          print('DR.X channel convergence static contract: PASS')
