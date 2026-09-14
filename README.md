@@ -4,14 +4,33 @@
 
 <h1 align="center">Last Bench</h1>
 
-<p align="center"><strong>We help Bangladeshi students study, settle and succeed in Malaysia.</strong></p>
+<p align="center"><strong>Opportunity Accelerator</strong></p>
 
-<p align="center">A student-first journey platform for clearer decisions, transparent progress, verified guidance and community support.</p>
+<p align="center"><strong>Education · Capability · Business · Community</strong></p>
+
+<p align="center">From where you are. To what you can build.</p>
+
+<p align="center">Last Bench is the umbrella platform. Malaysia Admissions is one active service inside Education & Mobility; CLASS[Λ] is the capability engine; co.lab is the business & growth engine; Community + Platform connects opportunity, proof and continuity across the ecosystem.</p>
 
 <p align="center">
   <a href="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml"><img src="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
   <a href="https://github.com/lets-colab/LastBenchBd/actions/workflows/production-smoke.yml"><img src="https://github.com/lets-colab/LastBenchBd/actions/workflows/production-smoke.yml/badge.svg" alt="Production Smoke" /></a>
 </p>
+
+---
+
+## Business architecture
+
+- **Education & Mobility — Access:** current active service includes Malaysia Admissions and its study/settle/succeed journey.
+- **CLASS[Λ] — Capability:** free Class 0 + 20-Class One-Person Venture Builder; proof-of-work first.
+- **co.lab — Business & Growth:** brand development, business development, growth systems, creator/community systems, venture validation and automation.
+- **Community + Platform — Connection & Continuity:** relationships, opportunity routing, verified progress, referrals and shared context where operationally real.
+
+Strategic progression: **Access → Capability → Creation → Ownership.**
+
+This is not a mandatory funnel. People can enter through the engine relevant to their need.
+
+For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experience rules, read [`design.md`](./design.md).
 
 ---
 
@@ -30,7 +49,7 @@
 
 **Manus and Forge are not part of the supported production architecture.** Legacy integration modules and environment contracts have been removed.
 
-> Product truth is a feature. Last Bench must never present fabricated admissions data, fake progress, placeholder metrics or AI guesses as real student guidance.
+> Product truth is a feature. Last Bench must never present fabricated admissions data, fake progress, placeholder metrics, invented business results or AI guesses as real guidance.
 
 ---
 
@@ -38,12 +57,15 @@
 
 ```text
 lastbenchbd.com/
-├── /          → cinematic marketing experience
-└── /app       → student application
+├── /          → current cinematic marketing experience
+├── /app       → student/Journey OS application
+└── /class-a/* → CLASS[Λ] conversion + program surfaces
 
 api.lastbenchbd.com/
 └── /api       → Express + tRPC runtime
 ```
+
+The current `/` marketing implementation is historically Malaysia-service-led. That implementation should not be treated as proof that Malaysia defines the parent company. Any corporate-homepage migration to the Opportunity Accelerator architecture must be deliberate, tested and visually verified so the active Malaysia conversion journey is not broken.
 
 Repository surfaces:
 
@@ -51,6 +73,7 @@ Repository surfaces:
 | --- | --- |
 | Marketing experience | `landing/` |
 | Student/tutor/admin app | `app/` |
+| CLASS[Λ] | `landing/class-a/` |
 | API | `server/` |
 | Database schema + migrations | `drizzle/` |
 | Shared logic | `shared/` |
@@ -96,7 +119,7 @@ AI guidance calls the OpenAI Responses API directly from the Render server. `OPE
 
 AI is deliberately an optional integration: the core API, auth, applications and other product functions must remain available when no OpenAI key is configured. `/api/health` reports `aiConfigured` and the overall degraded state.
 
-AI guidance must remain grounded in verified project data. Never invent or imply certainty around current fees, rankings, visa probability, scholarships, eligibility, admission probability or other high-stakes facts. Escalate to a human mentor when current verification or professional judgment is required.
+AI guidance must remain grounded in verified project data. Never invent or imply certainty around current fees, rankings, visa probability, scholarships, eligibility, admission probability, partner status, revenue, traction or other high-stakes facts. Escalate to a human owner when current verification or professional judgment is required.
 
 ---
 
@@ -183,8 +206,9 @@ A green build is not proof of a working product. Before calling the authenticate
 - [ ] logout prevents session resurrection
 - [ ] student document upload/download authorization is verified
 - [ ] homepage, CLASS[Λ] masterclass and CLASS[Λ] course receipt is verified with real production Supabase rows
+- [ ] corporate homepage architecture is deliberately migrated from Malaysia-first service framing to Opportunity Accelerator framing and visually verified
 
-No production user, credential, admissions result or verification evidence should ever be fabricated to satisfy this checklist.
+No production user, credential, admissions result, business outcome or verification evidence should ever be fabricated to satisfy this checklist.
 
 ---
 
@@ -196,6 +220,7 @@ Canonical logo assets live under `assets/branding/` and `landing/assets/`.
 - Do not regenerate approved marks with AI.
 - Do not distort proportions or recolor outside approved variants.
 - Preserve the established Last Bench green/white/charcoal visual system.
+- Keep CLASS[Λ] and co.lab in their own approved visual namespaces.
 
 Current documented palette:
 
@@ -216,20 +241,20 @@ Current documented palette:
 - Keep database changes deliberate and reviewed.
 - Never auto-alter production tables during normal startup.
 - New data-backed features should follow: **schema → DB helper → tRPC procedure → UI → tests**.
-- Treat authentication, documents, commissions, student records and AI guidance as high-trust surfaces.
+- Treat authentication, documents, commissions, student records, partner claims and AI guidance as high-trust surfaces.
 - Surface known gaps rather than hiding them.
 
 ### Source-of-truth order
 
 When documentation disagrees:
 
-1. Current code + verified runtime/infrastructure behavior
-2. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md`
-3. `README.md`
-4. `AGENT.md`
-5. `PRODUCT.md` / `design.md`
-6. Feature-specific documentation
-7. `todo.md`
+1. Current explicit user direction recorded in canonical business/product documents.
+2. Current code + verified runtime/infrastructure behavior for implementation claims.
+3. `PRODUCT.md` for business/product architecture.
+4. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
+5. `README.md` / `AGENT.md` / `design.md`.
+6. Feature-specific documentation.
+7. Historical design handoffs and archived notes.
 
 The active repository is **`lets-colab/LastBenchBd`**.
 
@@ -237,5 +262,5 @@ The active repository is **`lets-colab/LastBenchBd`**.
 
 <p align="center">
   <strong>Last Bench</strong><br />
-  From uncertainty to a clear next step.
+  From where you are. To what you can build.
 </p>
