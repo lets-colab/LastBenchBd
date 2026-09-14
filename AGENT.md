@@ -1,25 +1,48 @@
 # AGENT.md — Operating Manual for AI Agents Working on Last Bench
 
-This file is the handoff brief for any AI agent working on this repository. Read it first. Before any production-sensitive change also read `FOUNDATION_LOCK.md`; for database work read `drizzle/MIGRATION_STATUS.md`.
+This file is the handoff brief for any AI agent working on this repository. Read it first. Before any production-sensitive change also read `PRODUCT.md`, `design.md`, `FOUNDATION_LOCK.md`; for database work read `drizzle/MIGRATION_STATUS.md`.
 
 ---
 
 ## 1. Product identity
 
-**Last Bench** is a Bangladesh → Malaysia student accelerator and AI-guided student platform. It is not positioned as a traditional consultancy.
+**Last Bench** is an **Opportunity Accelerator**.
 
-Mission: help Bangladeshi students study, settle and succeed in Malaysia through transparent admissions support, onboarding, community and AI-assisted guidance.
+Corporate descriptor: **Education · Capability · Business · Community.**
+
+Brand promise: **From where you are. To what you can build.**
+
+Last Bench is the umbrella platform. It is not defined by Malaysia, admissions, CLASS[Λ] or co.lab alone.
+
+Canonical architecture:
+
+1. **Education & Mobility — Access**: education pathways, admissions/application support, visa/process guidance, pre-departure, settlement and student community.
+2. **CLASS[Λ] — Capability**: AI, research, building, creation, growth, sales, automation and proof-of-work.
+3. **co.lab — Business & Growth**: brand development, business development, growth strategy, creative execution, creator/community systems, venture validation and automation.
+4. **Community + Platform — Connection & Continuity**: relationships, verified progress, opportunity routing and shared context across the ecosystem.
+
+**Malaysia Admissions is one current active service inside Education & Mobility. It is not the corporate backbone.**
+
+The Malaysia service promise remains: **help Bangladeshi students study, settle and succeed in Malaysia.**
+
+Do not turn that service promise into the parent-company definition.
+
+The ecosystem is not a mandatory funnel. Students, learners, founders, businesses and partners may enter through the engine relevant to their need.
+
+Strategic progression thesis: **Access → Capability → Creation → Ownership.**
 
 Non-negotiable product principles:
 
-1. Clarity first — show where the student stands and what comes next.
-2. Trust through transparency — never present demo or guessed values as real facts.
-3. Mentor-like tone — supportive and direct, not corporate filler.
-4. Mobile-first, one-handed usability.
-5. Community over transaction.
-6. Canonical brand assets are immutable: do not redraw, approximate or substitute approved logos.
+1. Clarity first — show where the person stands and what comes next.
+2. Truth through evidence — never present demo, guessed or future-state values as current fact.
+3. Multiple entry points — do not force every user through Malaysia mobility.
+4. Outcome before feature — explain the opportunity and next meaningful action before technology.
+5. Mentor-like tone — supportive and direct, not corporate filler.
+6. Mobile-first, one-handed usability where relevant.
+7. Community should compound relationships, not manufacture social proof.
+8. Canonical brand assets are immutable: do not redraw, approximate or substitute approved logos.
 
-AI guidance must use verified university/product data, never invent admissions, cost, visa or acceptance claims, and escalate high-stakes uncertainty to a human mentor.
+AI guidance must use verified product/domain data, never invent admissions, cost, visa, acceptance, revenue, traction or partnership claims, and escalate high-stakes uncertainty to a human owner.
 
 ---
 
@@ -39,16 +62,18 @@ drizzle/      reviewed database schema/migrations and migration-status evidence
 supabase/     Edge Functions and Supabase-side runtime code
 scripts/      build/release verification tooling
 server-dist/  generated API bundle
- dist/        generated host-neutral static web artifact
+dist/         generated host-neutral static web artifact
 ```
 
 One merged public web artifact is intentional:
 
-- `/` = Last Bench cinematic marketing landing
-- `/app/*` = student product
+- `/` = current Last Bench marketing landing
+- `/app/*` = student application / Journey OS surfaces
 - `/class-a/*` = CLASS[Λ] conversion surfaces
 
 `pnpm build:web:production` assembles the complete static production artifact into `dist/`.
+
+The current landing/application implementation is still heavily oriented toward the Malaysia service. Do not mistake that implementation history for the parent-company category. Any corporate-site redesign must preserve current service truth while aligning the umbrella architecture deliberately and visually.
 
 ---
 
@@ -57,10 +82,9 @@ One merged public web artifact is intentional:
 ### Web
 
 - Canonical URL: `https://lastbenchbd.com`.
-- Current public host: Netlify project `lastbenchbdd` (site ID `04a1423a-961c-4b5e-bb4b-53db3027317e`).
+- Current public host: Netlify project `lastbenchbdd`.
 - Current public deploy is an older upload-based production deploy. Do **not** assume current `main` is live just because Netlify reports the deploy as `ready`.
 - Approved deployment target: Cloudflare Pages with GitHub `main` integration. Create and verify a Pages preview before moving the canonical domain.
-- Production smoke requires `claude-design-support.js`, `bench-ai.js` and the Supabase homepage-signup endpoint; the current Netlify homepage does not yet contain that release.
 - Current `main` builds the complete host-neutral production site successfully. Public build values in `netlify.toml` must be mirrored into Cloudflare Pages until configuration is consolidated.
 
 ### API
@@ -71,24 +95,60 @@ One merged public web artifact is intentional:
 - Direct origin: `https://last-bench-api-v2.onrender.com`
 - Direct `/api/health` is verified healthy.
 - Public API hostname: `https://api.lastbenchbd.com`
-- Custom-domain `/api/health` is verified reachable with semantic JSON `ok: true`. AI remains an optional unconfigured integration, so health currently reports `degraded: true` without making the core API unavailable.
+- Custom-domain `/api/health` is verified reachable with semantic JSON `ok: true`.
 
 ### Database/Auth
 
 - Supabase project: `the-last-bench`
-- Project ref: `tocxdyqlrvzthpexnmxe`
-- Region: `ap-southeast-1`
-- Status: `ACTIVE_HEALTHY`
 - Authentication: **Supabase Auth**, not Manus OAuth.
 - Production client values are `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 - `/app/auth` contains the current sign-in/account-creation flow.
-- `public.lastbench_signups` is the insert-only, RLS-protected homepage intake table; migration `lastbench_homepage_signups` is applied.
+- `public.lastbench_signups` is the insert-only, RLS-protected homepage intake table.
 
 Do not reintroduce Manus OAuth assumptions into current production documentation, checks or UI.
 
 ---
 
-## 4. Release verification
+## 4. Service and engine boundaries
+
+### Education & Mobility
+
+Current active service: Malaysia Admissions.
+
+Canonical Malaysia journey:
+
+**DISCOVER → MATCH → APPLY → SECURE → PREPARE → ARRIVE**
+
+Current service scope may include university selection, admissions/application support, visa/EMGS guidance, scholarship/funding-route verification, pre-departure, settlement and community.
+
+Never guarantee visa, admission, scholarship, timeline or university relationship status.
+
+### CLASS[Λ]
+
+Current flagship capability path:
+
+- Free Class 0 masterclass.
+- Paid 20-Class One-Person Venture Builder.
+- Five phases: AI Driver → AI Builder → AI Creator → AI Operator → AI Founder.
+- Final five classes use co.lab venture gates: Select → Validate → Design → Automate → Launch.
+
+CLASS[Λ] is an independent entry point and distinct visual namespace.
+
+### co.lab
+
+Current standalone positioning: Brand & Business Development / **The Growth Operating System for Modern Brands**.
+
+Core sequence: **Collaboration → Connection → Community.**
+
+co.lab serves founders/businesses directly and must not be reduced to a CLASS[Λ] course module.
+
+### Community + Platform
+
+Connective layer across engines. Shared identity, opportunity routing, referral systems or cross-engine context must be described as current only when implementation and evidence exist.
+
+---
+
+## 5. Release verification
 
 Required local/CI verification before a production-sensitive merge:
 
@@ -105,25 +165,11 @@ pnpm build:web:production
 
 Current CI additionally verifies API startup, full site build and patch integrity. CodeQL must pass.
 
-### Production smoke
-
-`pnpm release:smoke` / `.github/workflows/production-smoke.yml` verifies:
-
-- custom API hostname returns semantic JSON health
-- direct Render origin returns semantic JSON health
-- landing is the expected current release, not merely HTTP 200
-- `/app/`
-- `/class-a/`
-- CLASS masterclass
-- CLASS course
-
-When custom API DNS fails, smoke diagnostics print CNAME/A/AAAA and authoritative-zone information. A failed run maintains GitHub issue **Production smoke gate**.
-
 HTTP 200 alone is not release proof.
 
 ---
 
-## 5. Authentication/session release gates
+## 6. Authentication/session release gates
 
 Public health checks do not prove session correctness. Before calling authenticated production complete, verify in a fresh browser:
 
@@ -133,11 +179,11 @@ Public health checks do not prove session correctness. Before calling authentica
 4. logout invalidates the next protected request
 5. CORS allows `https://lastbenchbd.com`
 
-Do not claim these steps are complete without evidence from the deployed production surfaces.
+Do not claim these steps are complete without evidence from deployed production surfaces.
 
 ---
 
-## 6. Database mutation rule
+## 7. Database mutation rule
 
 Production DDL is explicit and reviewed.
 
@@ -152,50 +198,61 @@ Production DDL is explicit and reviewed.
 
 `pnpm db:push` is intentionally blocked while legacy Drizzle snapshots are incomplete. Production server startup must never create or alter tables.
 
-Current Supabase security advisor has no WARN/ERROR findings. Informational RLS-enabled/no-policy notices are expected under the server-owned default-deny architecture unless the architecture is deliberately changed.
-
 ---
 
-## 7. Forms and conversion truth
+## 8. Forms and conversion truth
 
 - The current homepage source submits directly to `public.lastbench_signups` through Supabase REST. Anonymous clients have INSERT only; submitted leads are not publicly readable.
 - CLASS[Λ] JavaScript submits to `public.class_a_registrations`; its HTML retains Netlify form markup as a compatibility fallback while the current public host remains Netlify.
-- Historical Netlify submissions must be preserved, but they do not prove receipt for the new Supabase homepage path.
+- Historical Netlify submissions must be preserved, but they do not prove receipt for the new Supabase paths.
 
 A thank-you screen or HTTP 200 does not prove receipt. Verify a real row in the intended Supabase table for each active production conversion journey.
 
 ---
 
-## 8. Brand/design guardrails
+## 9. Brand/design guardrails
 
 ### Last Bench
 
-Preserve the approved green/white/black identity and canonical bench/tick logo. Do not generate replacement logos. Marketing/UI must preserve Student Accelerator positioning.
+Preserve the approved green/white/charcoal identity and canonical bench/tick logo. Do not generate replacement logos.
+
+Corporate identity: **Opportunity Accelerator**.
+
+Visual law: **dark for emotion, white for trust, green for progress.**
+
+### Education & Mobility / Malaysia service
+
+May use the Last Bench corporate visual system while keeping the service conversion path focused on Malaysia and the six-stage student journey.
 
 ### CLASS[Λ]
 
-Treat CLASS[Λ] as a distinct visual namespace. Its cinematic dark/high-contrast 3D/motion language must not leak into Last Bench admissions surfaces unless an explicitly approved crossover component calls for it.
+Treat CLASS[Λ] as a distinct visual namespace. Its cinematic dark/high-contrast 3D/motion language must not automatically leak into Last Bench corporate or Education & Mobility surfaces.
+
+### co.lab
+
+Treat co.lab as a distinct business/visual namespace. Its brand system and commercial positioning must not be overwritten by Last Bench or CLASS[Λ] styling.
 
 The design source of truth is version-controlled source + approved design assets, not a model's memory of a screenshot.
 
 ---
 
-## 9. Current known blockers
+## 10. Current known blockers
 
 In priority order:
 
-1. Create a Cloudflare Pages project from GitHub `main`, deploy `dist/`, and verify the `pages.dev` preview.
-2. Move `lastbenchbd.com` to the verified Pages project without interrupting the healthy Render API hostname.
+1. Verify Cloudflare Pages project from GitHub `main` and preview.
+2. Move `lastbenchbd.com` only after verified preview/smoke evidence.
 3. Verify production Supabase Auth session journey end-to-end.
-4. Verify real receipt in Supabase for the homepage and both CLASS[Λ] conversion journeys.
+4. Verify real receipt in Supabase for homepage and CLASS[Λ] conversion journeys.
 5. Finish the reviewed student document-picker/upload UI before calling upload complete.
 6. Resolve hidden `discover` / `community` route status.
 7. Lock mobile app identity before any store release.
 8. Add persistent AI/message quotas when commercial usage policy is approved.
+9. Deliberately migrate the public corporate homepage from Malaysia-first framing to the Opportunity Accelerator architecture without breaking the current Malaysia service funnel.
 
 ---
 
-## 10. Engineering standards
+## 11. Engineering standards
 
 - Verify empirically; model/tool choice is never evidence.
 - Never invent credentials, environment state, DNS state, deployment state, database rows or product facts.
@@ -203,10 +260,26 @@ In priority order:
 - Never commit credentials or temporary deployment tokens to the public repository.
 - Keep sensitive logs free of bearer/session tokens, private document URLs and student PII.
 - Conventional commit prefixes: `fix:`, `feat:`, `build:`, `docs:`, `chore:`, `security:`, `db:`.
-- High-trust surfaces include auth, documents, student data, commissions/payouts and AI guidance.
+- High-trust surfaces include auth, documents, student data, commissions/payouts, partner claims and AI guidance.
 
 ---
 
-## 11. Replacement-agent bootstrap
+## 12. Source-of-truth priority
 
-> You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`). Read `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md`, `README.md` and relevant design/product sources before making changes. Use current `main` plus verified live infrastructure as truth. Authentication is Supabase Auth. The healthy API control-plane origin is `last-bench-api-v2.onrender.com`; `api.lastbenchbd.com/api/health` is verified healthy. The canonical web domain is still serving a stale Netlify upload while the approved Cloudflare Pages cutover is pending preview verification. Never claim deployment, authentication or form receipt without production evidence. Preserve canonical brand assets exactly.
+When documentation disagrees:
+
+1. Current explicit user direction recorded in canonical decision/product documents.
+2. Current code + verified runtime/infrastructure behavior for implementation claims.
+3. `PRODUCT.md` for business/product architecture.
+4. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
+5. `README.md` / `AGENT.md` / `design.md`.
+6. Feature-specific documentation.
+7. Historical design handoffs and archived notes.
+
+Historical Malaysia-first design snapshots remain useful evidence of the service experience, but they no longer define the parent-company category.
+
+---
+
+## 13. Replacement-agent bootstrap
+
+> You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`). First understand the business truth: Last Bench is an **Opportunity Accelerator** with Education & Mobility, CLASS[Λ], co.lab, and a connective Community + Platform layer. Malaysia Admissions is one current active service inside Education & Mobility, not the corporate backbone. Read `PRODUCT.md`, `design.md`, `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md` and relevant feature/design sources before changing anything. Use current code plus verified live infrastructure as truth for implementation claims. Never claim deployment, authentication, admissions outcomes, form receipt, partnerships or future platform capability without evidence. Preserve canonical brand assets exactly.
