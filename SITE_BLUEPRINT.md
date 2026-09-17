@@ -2,8 +2,9 @@
 
 **Status:** CURRENT SOURCE OF TRUTH  
 **Date:** 17 September 2026  
-**Scope:** `lastbenchbd.com` corporate website architecture and routing logic  
-**Authority:** Read with `PRODUCT.md`, `design.md`, `FOUNDATION_LOCK.md`, canonical brand assets, and current release evidence. Latest explicit user instruction overrides older website framing.
+**Primary live interactive profile:** `https://last-bench-interactive-profile.lastbenchbd.chatgpt.site`  
+**Corporate domain target:** `https://lastbenchbd.com`  
+**Authority:** Read with `PRODUCT.md`, `design.md`, `FOUNDATION_LOCK.md`, canonical brand assets, and current release evidence. Latest explicit founder instruction overrides older website framing.
 
 ---
 
@@ -13,43 +14,48 @@
 
 **Last Bench = Opportunity Accelerator.**
 
-### Corporate descriptor
+### Public descriptor
 
-**Education · Capability · Business · Community**
+**Education · Capability · Business**  
+**Community connects everything.**
+
+Community is the connective layer, not a fourth equal commercial engine.
 
 ### Brand promise
 
-> **From where you are. To what you can build.**
+> **FROM WHERE YOU ARE. TO WHAT YOU CAN BUILD.**
+
+### System thesis
+
+> **OPPORTUNITY SHOULD COMPOUND, NOT RESET.**
 
 Last Bench is the umbrella opportunity-acceleration platform. It is **not** defined by one country, one admissions corridor, one course, or one consulting offer.
-
-The website must make that architecture obvious within the first interaction.
 
 ---
 
 ## 2. Operating architecture
 
-Last Bench has three operating engines and one connective layer:
+Last Bench has **three operating engines and one connective layer**:
 
 1. **Education & Mobility — Access**  
-   Education pathways, university guidance, admissions, mobility, settlement and student community.
+   Education pathways, university guidance, admissions, mobility, settlement and student continuity.
 
 2. **CLASS[Λ] — Capability**  
    AI fluency, building, creation, growth, sales, automation and proof-of-work.
 
 3. **co.lab — Business & Growth**  
-   Brand development, business development, growth strategy, systems, community, venture validation and launch.
+   Brand development, business development, growth strategy, systems, community-led growth, venture validation and launch.
 
 4. **Community + Platform — Connection & Continuity**  
    Relationships, identity, verified progress, referrals, alumni, partners, opportunity routing and long-term context where operationally real.
 
 ### Experience rule
 
-> **Multiple entry points. One forward motion.**
+> **MULTIPLE ENTRY POINTS. ONE FORWARD MOTION.**
 
-The ecosystem is not a mandatory funnel. A student may enter Education & Mobility, a learner may enter CLASS[Λ], a founder may enter co.lab, and a partner may enter through the relevant engine or community relationship.
+The ecosystem is not a mandatory funnel. A student may enter Education & Mobility, a learner may enter CLASS[Λ], a founder may enter co.lab, and a partner may enter through the relevant relationship.
 
-The strategic human progression thesis is:
+### Human progression thesis
 
 > **ACCESS → CAPABILITY → CREATION → OWNERSHIP**
 
@@ -57,635 +63,532 @@ This is an outcome model, not a required purchase sequence.
 
 ---
 
-## 3. Website job
+## 3. Job of the interactive site
 
-The corporate site has one job:
+The interactive profile must do five things exceptionally well:
 
-> **Identify the visitor's real opportunity problem and route them into the correct Last Bench engine without confusing the parent brand with any single service.**
+1. Make the Last Bench belief emotionally clear before explaining the company.
+2. Reveal **Opportunity Accelerator** only after the name and problem make the category feel inevitable.
+3. Explain why Education, CLASS[Λ] and co.lab belong together without implying a mandatory funnel.
+4. Route visitors to the engine that matches their real need.
+5. Distinguish current reality from roadmap ambition without turning the experience into an internal operating manual.
 
-The corporate homepage must therefore:
-
-1. Establish the Last Bench belief and parent category.
-2. Explain the three engines and connective layer.
-3. Let visitors choose the route that matches their need.
-4. Show credible current proof without overstating roadmap capability.
-5. Preserve distinct product/brand worlds after routing.
-6. Keep every CTA tied to a real next action.
+The experience should feel like **a belief becoming a company**, not a consultancy deck, generic SaaS page, or Malaysia admissions website.
 
 ---
 
-## 4. Target site map
+## 4. Canonical 20-scene narrative
 
-```text
-lastbenchbd.com/
-├── /                         → Corporate Opportunity Accelerator home
-├── /education/               → Education & Mobility engine
-│   └── /malaysia/            → Current Malaysia Admissions experience
-├── /class-a/                 → CLASS[Λ] capability accelerator
-│   ├── /masterclass.html
-│   └── /course.html
-├── /colab/                   → co.lab business & growth entry surface
-├── /community/               → Community, alumni, referrals, continuity
-├── /partners/                → Institutions, tutors, coaching/IELTS, ecosystem partners
-├── /about/                   → Belief, business architecture, founders, governance
-└── /app/                     → Journey OS / authenticated product
-```
+The live ChatGPT Site should follow this order. This is the web equivalent of the Fable-QC 20-page master profile.
 
-### Route rules
+### 01 — HERO / PROMISE
 
-- `/` is the **corporate parent** and must not behave like a Malaysia landing page.
-- `/education/malaysia/` is the correct home for the existing cinematic Bangladesh → Malaysia experience.
-- `/class-a/` remains a direct independent entry point.
-- `/colab/` must present co.lab as a distinct business/growth engine, not as a CLASS module.
-- `/app/` remains the operational Journey OS/product surface.
-- Community is a connective layer; do not turn `/community/` into a generic social feed without a real operating purpose.
-- Partner pages must route to the relevant engine and must not expose unverified commission or institutional claims.
+**FROM WHERE YOU ARE.**  
+**TO WHAT YOU CAN BUILD.**
 
-If a target route is not yet implemented, the website must not pretend it is live. Use an honest redirect, waitlist, or contact path until the surface exists.
+Small category cue: **Opportunity Accelerator**
+
+Support line:
+
+> Last Bench connects credible opportunity to the capability, systems and relationships that help people turn it into progress.
+
+Primary CTA: **CHOOSE YOUR PATH**  
+Secondary CTA: **SEE HOW LAST BENCH WORKS**
+
+Do not lead with Malaysia, admissions, CLASS[Λ], or co.lab individually.
 
 ---
 
-## 5. Corporate homepage information architecture
+### 02 — THE BELIEF
 
-### SECTION 01 — BELIEF / HERO
+**YOUR STARTING POINT SHOULD NEVER DEFINE HOW FAR YOU CAN GO.**
 
-**Primary idea:**
+Beyond grades.  
+Beyond borders.  
+Beyond labels.  
+Beyond what others expected.
 
-> **FROM WHERE YOU ARE.**  
-> **TO WHAT YOU CAN BUILD.**
-
-**Category:** Opportunity Accelerator
-
-**Support line:** Last Bench connects credible opportunity with the capability, systems and community that help people turn it into progress.
-
-**Primary CTA:** **CHOOSE YOUR PATH**  
-**Secondary CTA:** **SEE HOW LAST BENCH WORKS**
-
-The hero must not lead with Malaysia, admissions, CLASS[Λ], or co.lab individually.
-
-The hero should feel like the parent brand: cinematic, sincere, ambitious, precise — not like a student agency homepage and not like a generic SaaS site.
+> Last Bench exists for people ready to turn opportunity into progress — and progress into something they can own.
 
 ---
 
-### SECTION 02 — THE PROBLEM
+### 03 — THE NAME
 
-**Opportunity exists. The path is fragmented.**
+**LAST → BENCH → BENCHMARK**
 
-Show the four structural gaps Last Bench is designed around:
+- **LAST** — You kept going through pressure, doubt and unequal starting conditions.
+- **BENCH** — Where you began is context, not a ceiling.
+- **BENCHMARK** — What you build becomes the standard others can see.
 
-- **Access** — people struggle to see which opportunities are credible and realistic.
-- **Capability** — access alone does not make someone useful or commercially ready.
-- **Execution / Creation** — skills without systems, proof or a market path often stay trapped as knowledge.
+Brand line: **CREATING A LASTING BENCHMARK**
+
+---
+
+### 04 — THE PROBLEM
+
+**OPPORTUNITY EXISTS. THE PATH IS FRAGMENTED.**
+
+- **Access** — credible opportunities are hard to identify and compare.
+- **Capability** — access alone does not make someone more capable.
+- **Creation / Execution** — skills without systems, proof or a market path stay trapped as knowledge.
 - **Continuity** — providers reset context instead of compounding relationships, proof and opportunity.
 
-This section explains *why the umbrella exists* before presenting products.
+Close with:
+
+> **LAST BENCH IS DESIGNED AROUND THE HANDOFFS.**
 
 ---
 
-### SECTION 03 — CHOOSE YOUR ENTRY POINT
+### 05 — THE REVEAL
 
-This is the core routing interaction.
+**LAST BENCH IS AN OPPORTUNITY ACCELERATOR.**
 
-#### Education & Mobility
+**Education · Capability · Business**  
+**Community connects everything.**
 
-**Question:** “Help me access the right education opportunity with clarity.”  
-**Outcome:** Access  
-**Current active service:** Malaysia Admissions  
-**CTA:** **EXPLORE EDUCATION**
+> One umbrella connecting credible opportunity to capability, systems and community — so progress can compound.
 
-#### CLASS[Λ]
-
-**Question:** “Help me become capable, useful and commercially ready.”  
-**Outcome:** Capability  
-**Current flagship:** 20-Class One-Person Venture Builder  
-**CTA:** **ENTER CLASS[Λ]**
-
-#### co.lab
-
-**Question:** “Help me build, position, systemize or grow.”  
-**Outcome:** Creation / Business  
-**Current positioning:** The Growth Operating System for Modern Brands  
-**CTA:** **ENTER co.lab**
-
-#### Partner / Institution
-
-**Question:** “Help us create, distribute or connect credible opportunity.”  
-**Outcome:** Connection  
-**CTA:** **PARTNER WITH LAST BENCH**
-
-This section must feel like four doors into one ecosystem, not four identical SaaS cards.
+Do not visually present Community as a fourth equal commercial engine.
 
 ---
 
-### SECTION 04 — ONE SYSTEM, DIFFERENT JOURNEYS
+### 06 — BUSINESS ARCHITECTURE
 
-Introduce the strategic progression model:
+**THREE OPERATING ENGINES. ONE CONNECTIVE LAYER.**
 
-> **ACCESS → CAPABILITY → CREATION → OWNERSHIP**
+- **Education & Mobility** — Access
+- **CLASS[Λ]** — Capability
+- **co.lab** — Business & Growth
+- **Community + Platform** — Connection · continuity · identity · proof · opportunity routing
 
-Clarify immediately:
-
-> This is the human progression thesis — not a compulsory sequence of products.
-
-Show how the engines can connect when relevant, while keeping direct entry valid.
-
-Examples:
-
-- A student may use Education & Mobility only.
-- A learner may enter CLASS[Λ] directly.
-- A business may engage co.lab directly.
-- A person may later cross into another engine when the handoff is relevant and active.
+Each engine has its own audience, promise, economics and visual namespace. The parent supplies trust and coherence.
 
 ---
 
-### SECTION 05 — CURRENT / VERIFIED
+### 07 — ECOSYSTEM FLYWHEEL
 
-The corporate homepage must distinguish **what exists now** from **what is being built**.
+**OPPORTUNITY ENTERS.**  
+**PROOF COMPOUNDS.**  
+**OUTCOMES RETURN.**
 
-Current examples that may be shown when verified:
+Visual loop:
 
-- **Malaysia Admissions** — active Education & Mobility service.
-- **CLASS[Λ]** — Class 0 / Free Masterclass + 20-Class One-Person Venture Builder.
-- **co.lab** — active Brand & Business Development / Growth OS.
-- **Journey OS / platform foundation** — show only capabilities verified in the current release.
+**Opportunity → Access → Capability → Creation → Proof → Value → New Opportunity**
 
-Do not use invented traction, fake users, fabricated success rates, fake partner counts, simulated revenue, or unverifiable testimonials.
+Community + Platform carries relationships, proof, stories and referrals around the loop.
 
----
+Close with:
 
-### SECTION 06 — COMMUNITY + CONTINUITY
-
-Explain the connective layer:
-
-**Connection · continuity · identity · proof · opportunity routing**
-
-Community should answer:
-
-- What happens after the first transaction?
-- How does useful context stay with the person?
-- How can alumni, mentors, creators, founders, businesses and partners reconnect around relevant opportunities?
-
-Do not present proposed shared-identity or opportunity-routing technology as live until verified.
+> **OPPORTUNITY SHOULD COMPOUND, NOT RESET.**
 
 ---
 
-### SECTION 07 — TRUST / EVIDENCE
+### 08 — ENTRY + PROGRESSION
 
-Corporate trust rules:
+**MULTIPLE ENTRY POINTS. ONE FORWARD MOTION.**
 
-- Truth builds trust.
-- Outcomes over activity.
-- Transparency over persuasion.
-- Technology serves humans.
-- Community must compound real relationships, not manufacture social proof.
-- Roadmap capability must remain visibly separate from current operations.
+Four doors:
 
-For education surfaces specifically:
+- **Student / Parent** → Education & Mobility
+- **Learner / Creator** → CLASS[Λ]
+- **Founder / Business** → co.lab
+- **Partner / Institution** → relevant ecosystem relationship
 
-- no guaranteed visa
-- no guaranteed admission
-- no fixed scholarship/rebate claim without current verification
-- no university partnership implication from simple inclusion in an explorer
+Then show:
 
-For CLASS[Λ] and co.lab:
+**ACCESS → CAPABILITY → CREATION → OWNERSHIP**
 
-- no fabricated graduate/business outcomes
-- no fake client, revenue, traction or automation claims
+Clarify visibly:
+
+> No engine is a prerequisite for another unless a specific product requires it.
 
 ---
 
-### SECTION 08 — FINAL ROUTING CTA
+### 09 — EDUCATION & MOBILITY
 
-**Headline:** **WHAT DO YOU NEED TO MOVE FORWARD?**
+**ACCESS WITH CLARITY.**
 
-Route options:
+Education & Mobility helps people make credible education decisions, move through high-stakes processes and arrive with continuity.
 
-- **Education opportunity** → Education & Mobility
-- **Capability / AI / building** → CLASS[Λ]
-- **Brand / business / growth** → co.lab
-- **Partnership / institution** → Partners
+Core ideas:
 
-The final CTA should route intent; it should not collapse every visitor into one contact form.
+- credible opportunity matching
+- application/document clarity
+- responsible guidance
+- continuity after arrival
+
+CTA: **EXPLORE EDUCATION**
 
 ---
 
-## 6. Education & Mobility blueprint
+### 10 — CURRENT EDUCATION MARKET: MALAYSIA
 
-### Engine promise
+**CURRENT EDUCATION MARKET — MALAYSIA**
 
-Help people access credible education opportunities with clarity and continuity.
+> Helping Bangladeshi students study, settle and succeed in Malaysia — as one active service inside Education & Mobility.
 
-### Current active service
-
-**Malaysia Admissions**
-
-### Malaysia service promise
-
-> **Helping Bangladeshi students study, settle and succeed in Malaysia.**
-
-### Canonical Malaysia journey
+Service journey:
 
 **DISCOVER → MATCH → APPLY → SECURE → PREPARE → ARRIVE**
 
-Every student should have:
+Trust rule:
 
-- current stage
-- next milestone
-- accountable owner
-- verified evidence
+> No guaranteed visa, admission, scholarship or fixed rebate claim without current verification.
 
-### Post-arrival continuity
+CTA: **EXPLORE MALAYSIA ADMISSIONS**
+
+---
+
+### 11 — BEYOND ARRIVAL
+
+**THE RELATIONSHIP SHOULD NOT RESET AFTER THE FLIGHT LANDS.**
 
 **SETTLE → BELONG → PROGRESS → RETURN**
 
-### Existing cinematic experience
-
-The existing Claude Design Bangladesh → Malaysia cinematic website should be **preserved and migrated**, not discarded.
-
-Target role:
-
-> `/education/malaysia/` = immersive service-level acquisition experience.
-
-It should not define the corporate `/` route.
-
-Keep its verified strengths:
-
-- cinematic Bangladesh → Malaysia narrative
-- current Malaysia conversion logic
-- university research/exploration
-- Bench AI orientation
-- Journey OS handoff
-- mobile-first experiential design
-
-Keep its trust safeguards:
-
-- research list ≠ partner list
-- volatile university information requires verification
-- no invented visa/fee/scholarship certainty
+- Settle — practical arrival and first-week clarity
+- Belong — community and trustworthy local context
+- Progress — relevant opportunities, capability and next steps
+- Return — alumni, referrals, mentoring and proof
 
 ---
 
-## 7. CLASS[Λ] blueprint
+### 12 — CLASS[Λ]
 
-### Role
+**CAPABILITY SHOULD END IN PROOF.**
 
-Independent **Capability Accelerator** inside Last Bench.
+> CLASS[Λ] turns learning into visible capability: command, build, create, sell and launch — independent of Malaysia Admissions.
 
-### Promise
+Doctrine:
 
-Become capable, useful and commercially ready.
+> **PROOF > ATTENDANCE · OUTPUT > CERTIFICATE**
 
-### Current structure
+Use the original CLASS[Λ] brand world, not the corporate visual system.
 
-- Class 0 / Free Masterclass
-- 20-Class One-Person Venture Builder
-- AI Driver → AI Builder → AI Creator → AI Operator → AI Founder
-- Select → Validate → Design → Automate → Launch
-
-### Doctrine
-
-> **Proof > attendance. Output > certificate.**
-
-### Visual boundary
-
-Near-black · editorial · proof-led · metallic/technical.
-
-CLASS[Λ] must not inherit the corporate parent or Education & Mobility visual language by default.
+CTA: **ENTER CLASS[Λ]**
 
 ---
 
-## 8. co.lab blueprint
+### 13 — CLASS[Λ] SYSTEM
 
-### Role
+**AI BEGINNER → VENTURE-READY FOUNDER**
 
-Independent **Business & Growth** engine inside Last Bench.
+**Driver → Builder → Creator → Operator → Founder**
 
-### Positioning
+**Command → Build → Create → Sell → Launch**
 
-> **The Growth Operating System for Modern Brands.**
+Class 0 opens the door. The 20-Class One-Person Venture Builder turns learning into visible proof.
 
-### Operating sequence
+Representative proof:
 
-**Collaboration → Connection → Community**
-
-### Capability lanes
-
-- brand development
-- business development
-- growth strategy
-- creative execution
-- creator/community systems
-- venture validation
-- automation
-- market launch
-
-### Visual boundary
-
-Monochrome · engineered · blueprint logic · electric-blue accent.
-
-co.lab must not be reduced to a CLASS[Λ] module even when its venture-gate logic supports CLASS founder progression.
+- AI tool map
+- prompt kit
+- AI self
+- research brief
+- micro-tool
+- live MVP
+- content engine
+- brand blueprint
+- CRM playbook
+- AI workforce
+- venture dossier
+- live demo
 
 ---
 
-## 9. Community + Platform blueprint
+### 14 — co.lab
 
-Community is the **connective layer**, not simply a fourth product tile.
+**BUSINESS SHOULD MOVE FROM CLARITY TO GROWTH.**
 
-The layer may connect:
+> co.lab helps founders, brands and operating teams move from clarity to growth through brand, systems, community and launch.
 
-- students
-- learners
-- creators
-- founders
-- businesses
-- alumni
-- tutors
-- institutions
-- partners
+Use the original co.lab identity and visual namespace.
 
-Use it only where relationships are real, permissioned and operational.
-
-Potential long-term capabilities — shared identity, proof history, opportunity routing, referrals and cross-engine context — remain **roadmap** until production-verified.
+CTA: **ENTER co.lab**
 
 ---
 
-## 10. Navigation blueprint
+### 15 — co.lab GROWTH SYSTEM
 
-### Desktop
+**THE GROWTH OPERATING SYSTEM FOR MODERN BRANDS.**
 
-**Logo** | Education | CLASS[Λ] | co.lab | Community | About | **Choose Your Path**
+Progression:
 
-### Mobile
+**Brand Direction → Systems → Community Activation → Advocacy → Compounding Growth**
 
-Keep the same hierarchy with no more than one primary CTA visible at a time.
+Four capability lanes:
 
-The logo always returns to the corporate homepage.
-
-### Navigation rules
-
-- No “Malaysia” as the parent-level identity.
-- CLASS[Λ] remains directly reachable from corporate navigation.
-- co.lab remains directly reachable from corporate navigation.
-- Journey OS may appear as a utility action for relevant returning users, not as the only universal CTA.
-- Keep navigation human-readable; avoid internal architecture labels that only the team understands.
+1. **Brand Development** — Identity & Storytelling
+2. **Business Growth** — Scaling With Intent
+3. **Marketing & Creative** — Visibility That Builds Trust
+4. **Creator & Community OS** — Trust-Based Scale
 
 ---
 
-## 11. Visual system by namespace
+### 16 — CONTINUITY LAYER
 
-### Last Bench corporate
+**COMMUNITY MAKES OPPORTUNITY CONTINUOUS.**
 
-**Dark for emotion · white for trust · green for progress.**
+Community preserves relationships, proof and context across students, learners, founders, businesses, alumni, tutors, creators, institutions and partners.
 
-- cinematic but simpler than the Malaysia journey
-- editorial scale
-- strong negative space
-- restrained dimensionality
-- one clear idea per section
-- canonical Last Bench mark only
+- **Identity** — a person should not become unknown again when they move between engines.
+- **Proof** — progress should be tied to evidence, timestamps, sources and accountable ownership.
+- **Opportunity routing** — connect the right next step when it is real.
+- **Return** — turn outcomes into mentoring, referrals and new opportunity.
 
-### Education & Mobility / Malaysia
-
-Retain the approved cinematic journey language where appropriate.
-
-### CLASS[Λ]
-
-Near-black, editorial, technical, metallic, proof-led.
-
-### co.lab
-
-Monochrome, engineered, blueprint logic, electric-blue accent.
-
-### Rule
-
-> **Shared ownership does not mean visual homogenization.**
-
-Never redraw, recolor, regenerate or substitute canonical brand marks.
+Mark roadmap capability visibly where not yet live.
 
 ---
 
-## 12. Content system
+### 17 — BUSINESS MODEL
 
-Every page must answer five questions:
+**THREE REVENUE ENGINES. ONE PARENT TRUST LAYER.**
 
-1. **Who is this for?**
-2. **What problem is being solved?**
-3. **What outcome does this engine/service create?**
-4. **What is verified now?**
-5. **What should the visitor do next?**
+- **Education & Mobility** — verified service and partner economics
+- **CLASS[Λ]** — program fees tied to proof-led delivery
+- **co.lab** — sprint, build and partnership economics
 
-### Language rule
+> Each engine must be able to stand commercially on its own. Cross-engine value is upside, not dependency.
 
-Use simple, direct language. Avoid internal jargon unless it clarifies rather than impresses.
-
-Corporate copy may describe the full ecosystem. Engine pages should focus on their own promise.
-
-### Bangla
-
-Where Bangla is provided, it must communicate the same business logic as English. Do not create a weaker or outdated Bangla version of the architecture.
+Future platform monetization begins only after the capability is real, useful and trusted.
 
 ---
 
-## 13. Conversion logic
+### 18 — FOUNDERS
 
-### Corporate homepage
+**THREE MANDATES. ONE SHARED STANDARD.**
 
-Conversion = **correct routing**.
+**Sayem Ahmed — Co-founder & CEO**  
+Vision · capital · academic partnerships · public trust
 
-Do not judge the parent homepage only by lead-form volume.
+**Fahim Shahbaz Mahmud — Co-founder & COO**  
+Operations · delivery · guidance quality · repeatable journey
 
-Primary events to measure:
+**Erfan Uddin — Co-founder & CBIO**  
+Business innovation · ecosystem architecture · growth systems
+
+Governance rule:
+
+> Material brand, capital, data, partnership and promise decisions require explicit owner accountability.
+
+---
+
+### 19 — ROADMAP
+
+**PROVE THE SYSTEM. THEN COMPOUND IT.**
+
+1. **NOW** — operate the three engines with clear boundaries; improve Malaysia service quality; run CLASS[Λ]; grow co.lab.
+2. **PROVE** — make Journey OS, proof outcomes, ownership and delivery metrics reliable end-to-end.
+3. **COMPOUND** — strengthen alumni, referrals, community and permissioned cross-engine continuity.
+4. **EXPAND** — add new education corridors, products or markets only after evidence and operating readiness.
+
+Close with:
+
+> **DO NOT SCALE CONFUSION.**
+
+---
+
+### 20 — CLOSING PROMISE
+
+**FROM A LAST BENCH, TO A LASTING BENCHMARK.**
+
+**FROM WHERE YOU ARE. TO WHAT YOU CAN BUILD.**
+
+Show the three original brand identities together with correct hierarchy:
+
+**LAST BENCH · CLASS[Λ] · co.lab**
+
+Final line:
+
+**CREATING A LASTING BENCHMARK**
+
+---
+
+## 5. Live interaction / conversion rules
+
+The ChatGPT Site should behave like an interactive profile, not a static slide dump.
+
+### Primary interaction
+
+**Choose Your Path** opens or scrolls to four intent routes:
+
+- Education opportunity
+- Capability / AI / building
+- Brand / business / growth
+- Partnership / institution
+
+### Conversion definition
+
+Corporate conversion = **correct routing**, not simply form submissions.
+
+Track where supported:
 
 - route selection by engine
 - qualified engine visit
 - meaningful next-step completion
-- returning-user Journey OS entry
+- returning Journey OS entry
 - verified partner enquiry
 
-### Education & Mobility
+### CTA discipline
 
-Conversion = qualified student moving to the next verified milestone.
+Every section gets at most one dominant action. Do not repeat generic `Contact Us` buttons throughout the experience.
+
+---
+
+## 6. Canonical brand assets — immutable
+
+Do not redraw, regenerate, recolor, approximate or substitute any of the three brand marks.
+
+### Last Bench
+
+Use the **original GitHub logo asset with transparency** for web presentation:
+
+- `landing/assets/logo-full.png`
+
+Print-exact reference / lockup source:
+
+- `assets/branding/logo-lockups.png`
+
+Do **not** use `design-system/logo.svg` as the master brand asset; that file is explicitly a digital vector recreation.
 
 ### CLASS[Λ]
 
-Conversion = learner entering and producing proof.
+Use the original product asset:
+
+- `landing/class-a/assets/class-a-logo.jpg`
+
+Do not reconstruct the Λ wordmark with typed text when the logo can be used.
 
 ### co.lab
 
-Conversion = qualified business/founder entering a relevant growth engagement.
+Use original assets from `lets-colab/letscolab`:
 
-### Community / Partner
+- dark-background primary: `src/assets/logo-white.png`
+- light-background alternate: `src/assets/logo-black.png`
 
-Conversion = a real, permissioned relationship that connects credible opportunity.
+Do not type a substitute `co.lab` wordmark where the canonical image should appear.
 
----
+### Logo hierarchy
 
-## 14. SEO / metadata logic
-
-### Corporate homepage
-
-Title direction:
-
-**Last Bench — Opportunity Accelerator**
-
-Description direction:
-
-**Education, capability, business and community — connecting credible opportunity to the systems and support that help people turn it into progress.**
-
-### Malaysia service
-
-Keep Malaysia-specific search intent on `/education/malaysia/`.
-
-Do not use Malaysia-only metadata on the corporate homepage after migration.
-
-### CLASS[Λ] / co.lab
-
-Each engine owns its own metadata, search intent and conversion promise.
+- Last Bench owns the parent experience.
+- CLASS[Λ] logo appears only in the CLASS section/route and ecosystem contexts.
+- co.lab logo appears only in the co.lab section/route and ecosystem contexts.
+- Do not make the three marks visually equal in the global header; the Last Bench parent mark leads.
 
 ---
 
-## 15. Technical migration plan
+## 7. Visual direction
 
-### Phase 0 — Protect what already works
+### Last Bench parent
 
-Before changing `/`:
+**Dark for emotion · white for trust · green for progress.**
 
-- preserve the current cinematic Malaysia implementation
-- preserve forms/intake logic
-- preserve Bench AI integration
-- preserve Journey OS routing
-- preserve mobile/reduced-motion behavior
-- preserve exact canonical brand assets
-- preserve current production evidence and rollback point
+- cinematic, not theatrical
+- editorial scale
+- generous negative space
+- strong typography
+- restrained contour/motion system
+- one dominant idea per viewport
+- purposeful scroll rhythm
+- no dashboard-card overload
 
-### Phase 1 — Extract Malaysia experience
+### Education & Mobility / Malaysia
 
-Move/copy the current Malaysia cinematic experience into its dedicated service route:
+Preserve the approved cinematic Bangladesh → Malaysia experience where appropriate.
 
-`/education/malaysia/`
+### CLASS[Λ]
 
-Verify functional parity before changing the corporate root.
+Near-black · editorial · technical · metallic · proof-led.
 
-### Phase 2 — Build new corporate `/`
+### co.lab
 
-Implement the Opportunity Accelerator homepage defined in this blueprint.
+Monochrome · engineered · blueprint logic · electric-blue accent.
 
-Required first-release sections:
-
-1. Hero / belief
-2. Problem
-3. Entry-point routing
-4. Access → Capability → Creation → Ownership
-5. Current / verified proof
-6. Community + continuity
-7. Trust
-8. Final routing CTA
-
-### Phase 3 — Wire engine routes
-
-- Education → `/education/`
-- Malaysia → `/education/malaysia/`
-- CLASS[Λ] → `/class-a/`
-- co.lab → `/colab/` or an approved canonical co.lab destination
-- Partners → `/partners/`
-- Journey OS → `/app/`
-
-No dead buttons, placeholder CTAs or fake surfaces.
-
-### Phase 4 — Verification
-
-Before calling the migration live:
-
-- desktop visual QA
-- mobile visual QA
-- reduced-motion QA
-- no console errors
-- no failed critical requests
-- all route CTAs verified
-- all forms verified
-- canonical logo/asset comparison passed
-- metadata verified per route
-- old Malaysia flow still works at its new route
-- corporate homepage no longer defines Last Bench as Malaysia-only
-- CLASS[Λ] and co.lab remain independent entry points
-- production smoke binds to the new corporate release fingerprint
-
-### Phase 5 — Production promotion
-
-Only after all gates pass:
-
-- promote verified build to canonical production
-- confirm `lastbenchbd.com` serves the corporate Opportunity Accelerator homepage
-- confirm Malaysia service route works separately
-- confirm `/class-a/`, `/app/` and other active routes remain healthy
-- capture final evidence and rollback reference
+> **Shared ownership does not mean visual homogenization.**
 
 ---
 
-## 16. What not to build yet
+## 8. Responsive and motion rules
 
-Do not add these merely to make the corporate site look bigger:
-
-- fake marketplace
-- fake opportunity feed
-- fake alumni metrics
-- invented partner logos
-- fabricated testimonials
-- shared universal profile if it is not operational
-- cross-engine recommendation AI presented as live without proof
-- complex dashboards on the public homepage
-- mandatory Malaysia → CLASS → co.lab sequence
-- one visual style flattened across all brands
-
-The blueprint should stay ahead of implementation without pretending future capabilities already exist.
+- Mobile-first readability is mandatory.
+- Headline sizes must collapse gracefully without orphan words.
+- Body copy must remain comfortably readable on common phone widths.
+- Reduced-motion preference must be respected.
+- Motion should reveal hierarchy, not decorate empty space.
+- Avoid excessive parallax, cursor tricks, or effects that obscure CTA clarity.
+- Keep the page fast enough that cinematic intent never becomes loading friction.
 
 ---
 
-## 17. Definition of done
+## 9. Truth boundary
 
-The site blueprint is correctly implemented when a first-time visitor can answer, within seconds:
+The site must distinguish **current / verified** from **roadmap / prove**.
 
-- **What is Last Bench?** → Opportunity Accelerator.
-- **What does it do?** → Education, capability, business and community.
-- **Where do I go?** → The engine matching my real problem.
-- **Is Malaysia the whole company?** → No; it is a current Education & Mobility service.
-- **Can I enter CLASS[Λ] directly?** → Yes.
-- **Can a founder/business enter co.lab directly?** → Yes.
-- **What connects the system?** → Community + Platform continuity where real.
-- **What is live vs future?** → Clearly distinguished.
-- **What should I do next?** → One relevant, working CTA.
+Current examples when verified:
+
+- Malaysia Admissions
+- CLASS[Λ] Class 0 + 20-Class One-Person Venture Builder
+- co.lab Brand & Business Development / Growth OS
+- current web/API/auth/data foundation only where release evidence supports it
+
+Roadmap unless production-verified:
+
+- seamless shared identity across all engines
+- automated cross-engine opportunity routing
+- unified proof history
+- broad platform monetization
+- additional education corridors
+
+Never publish invented traction, fake testimonials, fake users, fabricated conversion rates, unverified partner counts, simulated revenue, or guaranteed outcomes.
 
 ---
 
-## 18. Canonical summary
+## 10. Navigation
 
-```text
-LAST BENCH
-Opportunity Accelerator
-Education · Capability · Business · Community
+Desktop direction:
 
-FROM WHERE YOU ARE.
-TO WHAT YOU CAN BUILD.
+**Last Bench logo** | Education | CLASS[Λ] | co.lab | Community | About | **Choose Your Path**
 
-          ┌──────────────────────┐
-          │ EDUCATION & MOBILITY │ → ACCESS
-          └──────────────────────┘
-                    │
-          ┌──────────────────────┐
-          │       CLASS[Λ]       │ → CAPABILITY
-          └──────────────────────┘
-                    │
-          ┌──────────────────────┐
-          │        co.lab        │ → CREATION / BUSINESS
-          └──────────────────────┘
+Mobile:
 
-COMMUNITY + PLATFORM = CONNECTION + CONTINUITY
+Keep the same information hierarchy with a single visible primary CTA.
 
-Multiple entry points.
-One forward motion.
+The parent logo always returns to the parent profile/home.
 
-Malaysia Admissions = current Education & Mobility service,
-not the definition of Last Bench.
-```
+---
 
-This document is the canonical website architecture until superseded by a later explicit user decision and corresponding source update.
+## 11. SEO / metadata
+
+### Corporate profile
+
+**Title:** `Last Bench — Opportunity Accelerator`
+
+**Description:** `Education, capability and business connected by community — helping people turn credible opportunity into progress.`
+
+Do not use Malaysia-only metadata on the corporate profile.
+
+Malaysia-specific search intent belongs to the Malaysia service route.
+
+---
+
+## 12. Publication acceptance gate
+
+Do not call the live ChatGPT Site updated until all of the following are visually verified:
+
+- [ ] Last Bench original transparent GitHub logo is used correctly.
+- [ ] Original CLASS[Λ] logo is used in the CLASS section.
+- [ ] Original co.lab logo is used in the co.lab section.
+- [ ] Hero leads with the brand promise, not Malaysia.
+- [ ] Opportunity Accelerator is the parent category.
+- [ ] Community is visibly the connective layer, not a fourth equal business engine.
+- [ ] `Opportunity should compound, not reset` is communicated by the flywheel.
+- [ ] Multiple independent entry points are obvious.
+- [ ] Malaysia is shown as the current Education market/service.
+- [ ] CLASS[Λ] is proof-led and independent.
+- [ ] co.lab is standalone and independent.
+- [ ] Current reality is separated from roadmap.
+- [ ] No internal DR.X / Second Brain machinery appears in the public primary narrative.
+- [ ] Mobile flow is checked.
+- [ ] All CTAs resolve to real actions or honest placeholders.
+- [ ] No old Student Accelerator / Malaysia-first parent positioning remains.
+
+Only after this gate passes should the live site be treated as **10.5/10 publication-ready**.
