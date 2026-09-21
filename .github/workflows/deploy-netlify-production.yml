@@ -36,8 +36,19 @@ jobs:
       - name: Verify deployment authorization
         shell: bash
         run: |
-          if [[ -z "$NETLIFY_AUTH_TOKEN" ]]; then
+          set -euo pipefail
+
+          if [[ -z "${NETLIFY_AUTH_TOKEN:-}" ]]; then
             echo "::error::NETLIFY_AUTH_TOKEN is not configured in GitHub Actions. Production cannot be updated safely from CI."
+            exit 1
+          fi
+
+          status="$(
+            curl --silent --show-error               --output /tmp/netlify-site.json               --write-out '%{http_code}'               --header "Authorization: Bearer ${NETLIFY_AUTH_TOKEN}"               "https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}"
+          )"
+
+          if [[ "$status" != "200" ]]; then
+            echo "::error::NETLIFY_AUTH_TOKEN cannot access canonical Netlify site ${NETLIFY_SITE_ID} (HTTP ${status}). Replace the GitHub Actions secret with a Netlify token authorized for this site before deploying."
             exit 1
           fi
 
