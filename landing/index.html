@@ -10,10 +10,10 @@
 <x-dc>
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Last Bench — From Last Bench. To The World.</title>
-<meta name="description" content="A cinematic journey from Bangladesh to Malaysia. Last Bench helps Bangladeshi students explore study options, prepare their next step, and move forward with human guidance.">
-<meta property="og:title" content="The Last Bench — From Last Bench. To The World.">
-<meta property="og:description" content="A cinematic Bangladesh → Malaysia student journey with human guidance.">
+<title>Last Bench — Opportunity Accelerator</title>
+<meta name="description" content="Education, capability and business connected by community — helping people turn credible opportunity into progress.">
+<meta property="og:title" content="Last Bench — Opportunity Accelerator">
+<meta property="og:description" content="Education, capability and business connected by community — helping people turn credible opportunity into progress.">
 <meta property="og:image" content="./assets/logo-full.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#070b16">
@@ -195,8 +195,37 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
     <div ref="{{ progressRef }}" style="height:100%;width:100%;background:#00C853;transform:scaleX(0);transform-origin:left;box-shadow:0 0 12px #00C853;"></div>
   </div>
 
-  <!-- LEG 00 · DEPARTURE — BANGLADESH TO MALAYSIA -->
-  <section ref="{{ departRef }}" data-screen-label="Departure — Bangladesh to Malaysia" style="position:relative;z-index:3;background:#04140B;min-height:460vh;">
+  <!-- PARENT COMPANY · OPPORTUNITY ACCELERATOR -->
+  <section id="lb-company" data-screen-label="Last Bench — Opportunity Accelerator" style="position:relative;z-index:3;background:#04140B;min-height:92vh;display:flex;align-items:center;padding:96px 22px;">
+    <div style="width:min(1120px,100%);margin:0 auto;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.3em;color:#00E676;margin-bottom:18px;">OPPORTUNITY ACCELERATOR</div>
+      <h1 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(34px,5.2vw,72px);line-height:1.02;letter-spacing:-.025em;margin:0;color:#fff;max-width:15ch;text-wrap:balance;">FROM WHERE YOU ARE.<br><span style="color:#00C853;">TO WHAT YOU CAN BUILD.</span></h1>
+      <p style="max-width:720px;font-size:clamp(15px,1.45vw,18px);line-height:1.7;color:rgba(242,247,243,.82);margin:26px 0 34px;text-wrap:pretty;">Last Bench connects credible opportunity to the capability, systems and relationships that help people turn it into progress.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;">
+        <div style="border:1px solid rgba(0,200,83,.28);border-radius:18px;padding:22px;background:rgba(255,255,255,.035);">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#00E676;margin-bottom:9px;">EDUCATION & MOBILITY</div>
+          <div style="font-family:var(--lb-font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">Access</div>
+          <div style="font-size:13px;line-height:1.6;color:rgba(242,247,243,.65);">Credible education decisions, high-stakes processes and continuity after arrival. Malaysia is the current active education market.</div>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:22px;background:rgba(255,255,255,.035);">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#fff;margin-bottom:9px;">CLASS[Λ]</div>
+          <div style="font-family:var(--lb-font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">Capability</div>
+          <div style="font-size:13px;line-height:1.6;color:rgba(242,247,243,.65);">A proof-led capability engine where learning is designed to end in visible output, not attendance alone.</div>
+          <a href="/class-a/" style="display:inline-flex;margin-top:16px;color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.12em;">ENTER CLASS[Λ] →</a>
+        </div>
+        <div style="border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:22px;background:rgba(255,255,255,.035);">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#fff;margin-bottom:9px;">co.lab</div>
+          <div style="font-family:var(--lb-font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">Business & Growth</div>
+          <div style="font-size:13px;line-height:1.6;color:rgba(242,247,243,.65);">Brand, business development, systems and community-led growth for founders, brands and operating teams.</div>
+        </div>
+      </div>
+      <div style="margin-top:18px;padding:16px 18px;border-left:2px solid #00C853;background:rgba(0,200,83,.06);font-size:13px;line-height:1.65;color:rgba(242,247,243,.72);"><strong style="color:#fff;">Community connects everything.</strong> It carries relationships, context, proof and opportunity across the system. Each operating engine remains an independent entry point.</div>
+      <a href="#lb-journey-os" style="display:inline-flex;align-items:center;min-height:48px;margin-top:28px;padding:0 24px;border-radius:999px;background:#00C853;color:#04140b;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.1em;">SEE HOW LAST BENCH WORKS →</a>
+    </div>
+  </section>
+
+  <!-- EDUCATION & MOBILITY · CURRENT MARKET — MALAYSIA -->
+  <section ref="{{ departRef }}" data-screen-label="Education & Mobility — Bangladesh to Malaysia" style="position:relative;z-index:3;background:#04140B;min-height:460vh;">
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;padding:104px 22px 96px;">
       <canvas ref="{{ globeRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
       <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 46%, transparent 34%, rgba(4,20,11,.72) 76%);"></div>
@@ -535,12 +564,12 @@ class Component extends DCLogic {
         gateSub: 'Pick your language, and tune in live radio if you’d like — a Dhaka station to start, English KL radio once you land. Both are up to you, and you can change them anytime.',
         langLabel: 'LANGUAGE', radioShort: 'RADIO', radioLabel: 'Radio that follows the journey', radioHint: 'A Dhaka station over Bangladesh, then HITZ FM and English KL radio on arrival · synthesized ambience if none reach you', radioOpen: 'LISTEN ON A STATION SITE ↗',
         enter: 'Enter the experience', loading: 'PREPARING KUALA LUMPUR…',
-        heroKicker: 'STUDY. SETTLE. SUCCEED. · BANGLADESH → MALAYSIA',
+        heroKicker: 'OPPORTUNITY ACCELERATOR · EDUCATION · CAPABILITY · BUSINESS',
         heroL1: 'FROM WHERE YOU ARE.', heroL2: 'TO WHAT YOU CAN BUILD.',
-        heroSub: 'A transparent student journey from Bangladesh to Malaysia — designed to continue after you arrive. Scroll to fly it.',
+        heroSub: 'Education, capability and business connected by community — helping people turn credible opportunity into progress.',
         ctaSignup: 'Begin the journey', ctaExplore: 'See where it leads', flyIn: 'FLY IN',
-        legKicker: 'LEG 00 — DEPARTURE', legL1: '', legL2: '',
-        legSub: 'Two thousand seven hundred kilometres. About four and a half hours in the air. Follow the route your degree takes, from where you are to where it lands.',
+        legKicker: 'EDUCATION & MOBILITY · CURRENT MARKET — MALAYSIA', legL1: '', legL2: '',
+        legSub: 'Malaysia is one current service inside Education & Mobility. Follow the route from Bangladesh to Kuala Lumpur, then verify each decision with current sources and human guidance.',
         cityFrom: 'DHAKA', cityTo: 'KUALA LUMPUR', flightTime: '≈ 4H 30M NONSTOP', toGo: 'KM TO GO', arrived: 'ARRIVED',
         a2Kicker: '02 — JALAN ALOR, 11:48 PM', a2L1: 'THE CITY IS AWAKE.', a2L2: 'SO IS YOUR JOURNEY.',
         a2Sub: 'Your application becomes a journey with visible stages, updated by a named mentor. Never a black box — you always know where you stand and what comes next.',
