@@ -1,6 +1,19 @@
 name: Last Bench blueprint alignment QA
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - PRODUCT.md
+      - design.md
+      - AGENT.md
+      - AGENTS.md
+      - README.md
+      - landing/index.html
+      - landing/lastbench-blueprint.js
+      - landing/bench-ai.js
+      - scripts/release-smoke.mjs
+      - .github/workflows/blueprint-alignment-qa.yml
   pull_request:
     branches: [main]
     paths:
