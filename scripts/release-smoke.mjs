@@ -63,7 +63,20 @@ const checks = [
   },
   { name: "Student app", url: `${webOrigin}/app/`, expectHtml: true },
   { name: "CLASS signup hub", url: `${webOrigin}/class-a/`, expectHtml: true },
-  { name: "CLASS masterclass", url: `${webOrigin}/class-a/masterclass.html`, expectHtml: true },
+  {
+    name: "CLASS masterclass",
+    url: `${webOrigin}/class-a/masterclass.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "masterclass-entry.mp4",
+      "SCENE 01 · 0.01%",
+      "ENTER EXPERIENCE",
+      "TURN AI INTO",
+      "YOUR TEAM.",
+      "CONTENT · AUTOMATION · MARKETING · OPERATIONS",
+      "10 SEATS ONLY · RESERVE YOUR FREE SEAT",
+    ],
+  },
   { name: "CLASS course", url: `${webOrigin}/class-a/course.html`, expectHtml: true },
 ];
 
