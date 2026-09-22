@@ -33,7 +33,7 @@ jobs:
           grep -q './bench-ai.js' landing/index.html
           grep -q '/rest/v1/lastbench_signups' landing/index.html
           grep -q 'contact_consent: true' landing/index.html
-          grep -q 'href="/app/"' landing/index.html
+          grep -q 'href="./app/"' landing/index.html
           grep -q './vendor/three.min.js' landing/index.html
           ! grep -q 'Claude Design Preview' landing/index.html
 
