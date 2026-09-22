@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#050607">
+  <title>CLASS[Λ] — Attendance Check-in</title>
+  <link rel="icon" type="image/png" href="./assets/last-bench-bench.png">
+  <link rel="stylesheet" href="./checkin.css">
+</head>
+<body>
+  <main class="checkin-shell">
+    <header>
+      <img class="logo" src="./assets/class-a-logo.jpg" alt="CLASS Lambda — Acquire. Apply. Advance.">
+      <img class="bench" src="./assets/last-bench-bench.png" alt="Last Bench">
+    </header>
+    <section class="card">
+      <p class="eyebrow">STAFF CHECK-IN · CLASS 0</p>
+      <h1>REDEEM ATTENDANCE.</h1>
+      <p class="lead">Scan the attendee pass or enter its code. Attendance is only recorded after the staff key is verified.</p>
+      <form data-checkin-form>
+        <label for="code">ATTENDEE CODE</label>
+        <input id="code" name="code" autocomplete="off" spellcheck="false" placeholder="CLA-XXXXXX-XXXXXX" required>
+        <label for="staff-key">STAFF KEY</label>
+        <input id="staff-key" name="staff_key" type="password" autocomplete="current-password" placeholder="Staff check-in key" required>
+        <button type="submit">MARK ATTENDED →</button>
+      </form>
+      <div class="status" data-status aria-live="polite"></div>
+      <div class="result" data-result hidden>
+        <span>ATTENDANCE VERIFIED</span>
+        <strong data-name>—</strong>
+        <p data-time>—</p>
+      </div>
+    </section>
+  </main>
+  <script src="./checkin.js" defer></script>
+</body>
+</html>
