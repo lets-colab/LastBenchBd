@@ -104,7 +104,7 @@
   }
 
   function newJourney(lang) {
-    const section = document.createElement('section'); section.id = 'lb-education'; section.className = 'lbp-shell'; section.dataset.lang = lang; section.setAttribute('aria-labelledby','lbp-journey-title'); section.style.padding = '10vh 0 12vh'; section.innerHTML = journeyMarkup(lang); return section;
+    const section = document.createElement('section'); section.id = 'lb-malaysia-service'; section.className = 'lbp-shell'; section.dataset.lang = lang; section.setAttribute('aria-labelledby','lbp-journey-title'); section.style.padding = '10vh 0 12vh'; section.innerHTML = journeyMarkup(lang); return section;
   }
 
   function newBeyond(lang) {
@@ -170,7 +170,7 @@
       const lang=currentLanguage(); const campusSection=findCampusSection(); const signup=document.getElementById('signup');
       alignPrimaryCTA(lang); sanitizeUniversityClaims(campusSection);
 
-      let journey=document.getElementById('lb-education');
+      let journey=document.getElementById('lb-malaysia-service');
       if(!journey){journey=newJourney(lang); if(campusSection?.parentNode) campusSection.parentNode.insertBefore(journey,campusSection); else if(signup?.parentNode) signup.parentNode.insertBefore(journey,signup); else document.body.appendChild(journey);}
       else if(journey.dataset.lang!==lang){journey.dataset.lang=lang; journey.innerHTML=journeyMarkup(lang);}
 
