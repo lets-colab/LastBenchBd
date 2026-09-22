@@ -429,3 +429,250 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .brand-intro { display: none; }
   .journey-progress, .phase-list::before, .phase::after, .module-list li::after { display: none; }
 }
+
+
+/* CLASS[Λ] Masterclass — Scene 01 reel entry
+   The reel is optional and skippable. It hands off to the existing orbital
+   system instead of acting as a detached splash screen. */
+.reel-entry { display: none; }
+.reel-entry.is-ready {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #010203;
+  isolation: isolate;
+}
+body.reel-locked { overflow: hidden; }
+.reel-entry::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 50% 43%, rgba(255,255,255,.055), transparent 28%),
+    linear-gradient(180deg, #050607 0%, #010203 72%);
+}
+.reel-entry-video {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(100vw, 56.25vh);
+  height: 100vh;
+  height: 100dvh;
+  object-fit: cover;
+  background: #000;
+  opacity: .34;
+  filter: saturate(.8) contrast(1.04) brightness(.62);
+  transform: scale(1.015);
+  transition: opacity .65s cubic-bezier(.16,1,.3,1), filter .65s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
+}
+.reel-entry-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.62), transparent 28%, transparent 64%, rgba(0,0,0,.82)),
+    linear-gradient(90deg, rgba(0,0,0,.55), transparent 34%, transparent 66%, rgba(0,0,0,.55));
+  pointer-events: none;
+}
+.reel-entry-ui {
+  position: relative;
+  z-index: 3;
+  width: min(1120px, calc(100% - 40px));
+  height: calc(100vh - 48px);
+  height: calc(100dvh - 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding:
+    max(8px, env(safe-area-inset-top))
+    max(4px, env(safe-area-inset-right))
+    max(22px, env(safe-area-inset-bottom))
+    max(4px, env(safe-area-inset-left));
+  pointer-events: none;
+}
+.reel-entry-logo {
+  width: clamp(150px, 18vw, 245px);
+  height: auto;
+  display: block;
+  mix-blend-mode: screen;
+  opacity: .94;
+  pointer-events: auto;
+  transition: opacity .4s ease, transform .6s cubic-bezier(.16,1,.3,1);
+}
+.reel-entry-copy {
+  max-width: 720px;
+  margin-top: auto;
+  margin-bottom: 112px;
+  pointer-events: none;
+  transition: opacity .45s ease, transform .65s cubic-bezier(.16,1,.3,1);
+}
+.reel-scene-label {
+  margin: 0 0 16px;
+  color: #c7cbd1;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+.reel-entry-copy h1 {
+  margin: 0;
+  max-width: 11ch;
+  color: #fff;
+  font-size: clamp(48px, 7vw, 104px);
+  font-weight: 950;
+  letter-spacing: -.065em;
+  line-height: .88;
+  text-wrap: balance;
+}
+.reel-entry-copy > p:last-child {
+  max-width: 560px;
+  margin: 24px 0 0;
+  color: rgba(245,247,250,.68);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.reel-entry-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  gap: 10px;
+  pointer-events: auto;
+}
+.reel-enter,
+.reel-skip {
+  min-height: 48px;
+  border-radius: 999px;
+  padding: 0 18px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .09em;
+}
+.reel-enter {
+  border: 0;
+  background: #f5f7fa;
+  color: #050607;
+}
+.reel-skip {
+  border: 1px solid rgba(255,255,255,.24);
+  background: rgba(5,6,7,.66);
+  color: #fff;
+  backdrop-filter: blur(16px);
+}
+.reel-enter:hover { transform: translateY(-1px); }
+.reel-skip:hover { border-color: rgba(255,255,255,.52); }
+.reel-persistent-cta {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: max(22px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  min-height: 50px;
+  width: min(560px, calc(100% - 32px));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #03120a;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .055em;
+  box-shadow: 0 14px 38px rgba(0,200,83,.16);
+  transition: background .2s ease, transform .2s ease, opacity .3s ease;
+}
+.reel-persistent-cta:hover {
+  background: var(--accent-bright);
+  transform: translateX(-50%) translateY(-2px);
+}
+.reel-progress {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgba(255,255,255,.08);
+}
+.reel-progress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--accent);
+  transition: transform .08s linear;
+}
+.reel-morph {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  width: min(58vw, 520px);
+  aspect-ratio: 1;
+  transform: translate(-50%,-50%) scale(.42);
+  opacity: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(245,247,250,.96);
+  font-size: clamp(96px, 18vw, 210px);
+  font-weight: 950;
+  letter-spacing: -.08em;
+  transition: opacity .36s ease, transform .52s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+.reel-orbit {
+  position: absolute;
+  inset: 15%;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 50%;
+}
+.reel-orbit-a { transform: rotateX(62deg) rotateZ(14deg); }
+.reel-orbit-b { transform: rotateY(62deg) rotateZ(-22deg); }
+.reel-orbit-c { inset: 25%; border-color: rgba(0,200,83,.4); transform: rotateX(72deg) rotateY(28deg); }
+.reel-entry.is-playing .reel-entry-video {
+  opacity: 1;
+  filter: none;
+  transform: scale(1);
+}
+.reel-entry.is-playing .reel-entry-copy {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.reel-entry.is-playing .reel-enter { opacity: 0; pointer-events: none; }
+.reel-entry.is-playing .reel-entry-logo { opacity: .58; transform: scale(.94); transform-origin: left top; }
+.reel-entry.is-morphing .reel-entry-video { opacity: .12; filter: grayscale(1) contrast(1.08); }
+.reel-entry.is-morphing .reel-morph { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+.reel-entry.is-morphing .reel-entry-ui,
+.reel-entry.is-morphing .reel-persistent-cta { opacity: .35; }
+.reel-entry.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .42s ease;
+}
+
+.stage-grid-six { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+
+@media (max-width: 980px) {
+  .stage-grid-six { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 680px) {
+  .reel-entry-ui { width: calc(100% - 26px); height: calc(100dvh - 26px); }
+  .reel-entry-logo { width: 160px; }
+  .reel-entry-actions { gap: 7px; }
+  .reel-enter, .reel-skip { min-height: 46px; padding: 0 14px; font-size: 9px; }
+  .reel-entry-copy { margin-bottom: 102px; }
+  .reel-entry-copy h1 { font-size: clamp(45px, 14.5vw, 72px); }
+  .reel-entry-copy > p:last-child { max-width: 34ch; font-size: 12px; }
+  .reel-persistent-cta { bottom: max(14px, env(safe-area-inset-bottom)); font-size: 9.5px; }
+  .stage-grid-six { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel-entry { display: none !important; }
+}
