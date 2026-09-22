@@ -9,6 +9,10 @@ on:
       - AGENT.md
       - AGENTS.md
       - README.md
+      - landing/index.html
+      - landing/lastbench-blueprint.js
+      - landing/bench-ai.js
+      - scripts/release-smoke.mjs
       - .github/workflows/blueprint-alignment-qa.yml
   workflow_dispatch:
 
@@ -38,6 +42,15 @@ jobs:
           grep -q '#00C853' design.md
           grep -q 'Malaysia Admissions is one current active service inside Education & Mobility' AGENT.md
           grep -q 'Opportunity Accelerator' README.md
+          grep -q '<title>Last Bench — Opportunity Accelerator</title>' landing/index.html
+          grep -q 'OPPORTUNITY ACCELERATOR · EDUCATION · CAPABILITY · BUSINESS' landing/index.html
+          grep -q 'id="lb-education"' landing/index.html
+          grep -q 'ENTRY PATH · NOT A FOURTH ENGINE' landing/index.html
+          grep -q "category:'Opportunity Accelerator'" landing/lastbench-blueprint.js
+          grep -q "currentEducationMarket:'Malaysia'" landing/lastbench-blueprint.js
+          grep -q "lb-malaysia-service" landing/lastbench-blueprint.js
+          grep -q 'three independent operating engines' landing/bench-ai.js
+          grep -q 'Last Bench — Opportunity Accelerator' scripts/release-smoke.mjs
 
       - name: Reject known parent-brand drift
         run: |
@@ -48,6 +61,14 @@ jobs:
           fi
           if grep -q 'Malaysia.*corporate backbone' PRODUCT.md | grep -vq 'not the corporate backbone'; then
             echo 'Malaysia has been promoted back to parent-company backbone.'
+            exit 1
+          fi
+          if grep -q "currentEngine:'mobility'" landing/lastbench-blueprint.js; then
+            echo 'Runtime has regressed to mobility as the parent engine.'
+            exit 1
+          fi
+          if grep -q 'public mobility promise comes first' landing/bench-ai.js; then
+            echo 'Bench AI has regressed to Malaysia-first parent positioning.'
             exit 1
           fi
           echo 'Opportunity Accelerator architecture checks passed.'
