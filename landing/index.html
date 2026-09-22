@@ -185,7 +185,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <sc-if value="{{ hitzBlocked }}" hint-placeholder-val="{{ false }}">
         <button onClick="{{ openRadioPanel }}" style="pointer-events:auto;display:flex;align-items:center;min-height:44px;padding:0 13px;border:1px solid rgba(255,179,0,.5);border-radius:999px;color:#FFB300;background:rgba(5,16,10,.6);font-family:'Sora',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.16em;cursor:pointer;backdrop-filter:blur(8px);" style-hover="border-color:#FFB300;background:rgba(255,179,0,.12);">HITZ FM ↗</button>
       </sc-if>
-      <a href="#signup" style="pointer-events:auto;display:flex;align-items:center;flex:none;white-space:nowrap;min-height:48px;padding:0 20px;border-radius:999px;background:#00C853;color:#04140b;font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-decoration:none;box-shadow:0 6px 22px rgba(0,200,83,.32);" style-hover="background:#00E676;">{{ seatCta }}</a>
+      <a href="#lb-company" aria-label="Choose your Last Bench path" style="pointer-events:auto;display:flex;align-items:center;flex:none;white-space:nowrap;min-height:48px;padding:0 20px;border-radius:999px;background:#00C853;color:#04140b;font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-decoration:none;box-shadow:0 6px 22px rgba(0,200,83,.32);" style-hover="background:#00E676;">{{ seatCta }}</a>
       <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
         <span ref="{{ chapterRef }}" style="white-space:nowrap;">00 — DHAKA · DEPARTURE</span>
       </sc-if>
@@ -575,7 +575,7 @@ class Component extends DCLogic {
         heroKicker: 'OPPORTUNITY ACCELERATOR · EDUCATION · CAPABILITY · BUSINESS',
         heroL1: 'FROM WHERE YOU ARE.', heroL2: 'TO WHAT YOU CAN BUILD.',
         heroSub: 'Education, capability and business connected by community — helping people turn credible opportunity into progress.',
-        ctaSignup: 'Choose your path', ctaExplore: 'See how Last Bench works', flyIn: 'ENTER',
+        ctaSignup: 'BEGIN MY MALAYSIA JOURNEY', ctaExplore: 'See how Last Bench works', flyIn: 'ENTER',
         legKicker: 'EDUCATION & MOBILITY · CURRENT MARKET — MALAYSIA', legL1: '', legL2: '',
         legSub: 'Malaysia is one current service inside Education & Mobility. Follow the route from Bangladesh to Kuala Lumpur, then verify each decision with current sources and human guidance.',
         cityFrom: 'DHAKA', cityTo: 'KUALA LUMPUR', flightTime: '≈ 4H 30M NONSTOP', toGo: 'KM TO GO', arrived: 'ARRIVED',
@@ -619,7 +619,7 @@ class Component extends DCLogic {
         heroKicker: 'অপরচুনিটি অ্যাক্সেলারেটর · শিক্ষা · সক্ষমতা · ব্যবসা',
         heroL1: 'আপনি যেখানে আছেন।', heroL2: 'সেখান থেকে যা গড়তে পারেন।',
         heroSub: 'শিক্ষা, সক্ষমতা ও ব্যবসাকে কমিউনিটি দিয়ে যুক্ত করে বিশ্বাসযোগ্য সুযোগকে বাস্তব অগ্রগতিতে রূপ দেওয়াই লাস্ট বেঞ্চের কাজ।',
-        ctaSignup: 'আপনার পথ বেছে নিন', ctaExplore: 'লাস্ট বেঞ্চ কীভাবে কাজ করে দেখুন', flyIn: 'প্রবেশ করুন',
+        ctaSignup: 'আমার মালয়েশিয়া যাত্রা শুরু করুন', ctaExplore: 'লাস্ট বেঞ্চ কীভাবে কাজ করে দেখুন', flyIn: 'প্রবেশ করুন',
         legKicker: 'পর্ব ০০ — যাত্রা শুরু', legL1: 'শুরু বাংলাদেশে।', legL2: 'শেষ সেখানেই নয়।',
         legSub: 'দুই হাজার সাতশো কিলোমিটার। আকাশে প্রায় সাড়ে চার ঘণ্টা। আপনার ডিগ্রি যে পথে যায়, সেই পথটাই দেখুন।',
         cityFrom: 'ঢাকা', cityTo: 'কুয়ালালামপুর', flightTime: '≈ ৪ ঘ ৩০ মি ননস্টপ', toGo: 'কিমি বাকি', arrived: 'পৌঁছে গেছি',
@@ -814,7 +814,7 @@ class Component extends DCLogic {
       departRef: (el) => { this.departEl = el; },
       legCopyRef: (el) => { this.legCopyEl = el; },
       benchCopyRef: (el) => { this.benchCopyEl = el; },
-      seatCta: narrow ? 'JOIN' : 'TAKE YOUR SEAT',
+      seatCta: narrow ? 'PATHS' : 'CHOOSE YOUR PATH',
       globeRef: (el) => { if (el && el !== this.globeCanvas) { this.globeCanvas = el; this.initGlobe(); } },
       routeRef: (el) => { this.routeEl = el; },
       routeBarRef: (el) => { this.routeBarEl = el; },
