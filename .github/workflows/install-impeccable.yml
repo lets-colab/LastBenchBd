@@ -1,0 +1,63 @@
+name: Install Impeccable Design Skill
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/install-impeccable.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+
+      - name: Install Impeccable for Claude and Codex
+        run: npx --yes impeccable@latest install --providers=claude,codex --scope=project
+
+      - name: Verify installed skill
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f .agents/skills/impeccable/SKILL.md
+          test -d .agents/skills/impeccable/reference
+          test -d .agents/skills/impeccable/scripts
+          if [[ -f .claude/skills/impeccable/SKILL.md || -L .claude/skills/impeccable/SKILL.md || -d .claude/skills/impeccable ]]; then
+            echo "Claude provider skill present"
+          else
+            echo "::error::Claude provider install missing"
+            exit 1
+          fi
+          if [[ -f .codex/hooks.json ]]; then
+            echo "Codex hook manifest present"
+          else
+            echo "::error::Codex hook manifest missing"
+            exit 1
+          fi
+
+      - name: Commit installed design skill
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Last Bench Release Bot"
+          git config user.email "252910500+lets-colab@users.noreply.github.com"
+          git add .agents .claude .codex
+          if git diff --cached --quiet; then
+            echo "Impeccable already installed; nothing to commit."
+            exit 0
+          fi
+          git commit -m "Install Impeccable design skill"
+          git push origin HEAD:main
