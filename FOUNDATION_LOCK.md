@@ -6,13 +6,14 @@ This document is the production-trust contract for Last Bench. It separates veri
 
 Important product state must have one authoritative source, one owner, one verified state, and one safe mutation path.
 
-## Current verified foundation — 10 September 2026
+## Current verified foundation — 22 September 2026
 
 - Canonical repository: `lets-colab/LastBenchBd`.
 - Canonical web URL: `https://lastbenchbd.com`.
 - The current host is Netlify project `lastbenchbdd`, but its published upload is stale and must not be treated as proof that current `main` is live.
-- Cloudflare Pages is the approved replacement host. The project/preview must be verified before the canonical-domain cutover.
-- Current `main` builds the complete host-neutral production artifact successfully.
+- Netlify team `lets-colab` is confirmed to be running on operational credits: existing published sites remain online while production deploys are paused. The production workflow still passes site-read authorization, build and artifact upload, then the legacy CLI publish returns `JSONHTTPError: Forbidden`. Do not rotate the token while this account-level pause remains the verified blocker.
+- Cloudflare Pages with GitHub `main` integration is the approved zero-cost replacement host. Verify a Pages preview before moving the canonical domain; do not create a Direct Upload-only project when Git integration is the target.
+- Current `main` builds the complete host-neutral production artifact successfully. Latest production-content artifact: `lastbench-production-dist` `10671676282`, SHA-256 `02e979dabb7e6b4e1c97dc49b41c553af3caf293ae04cdbd8092673ffe0e2663`.
 - A release fingerprint now prevents a stale homepage from passing production smoke checks.
 - Canonical API custom hostname: `https://api.lastbenchbd.com`.
 - Canonical working Render service: `last-bench-api-v2` in Singapore.
