@@ -103,12 +103,12 @@ function materializeGitHubPagesAppRoutes(siteRoot) {
 
     const relativeRoute = source.replace(/^\/+|\/+$/g, "");
     if (!relativeRoute.startsWith("app/") || relativeRoute.includes("..")) {
-      throw new Error(\`[build-site] unsafe app route in _redirects: \${source}\`);
+      throw new Error(`[build-site] unsafe app route in _redirects: ${source}`);
     }
 
     const routeDir = path.resolve(siteRoot, relativeRoute);
     if (!routeDir.startsWith(siteRoot + path.sep)) {
-      throw new Error(\`[build-site] app route escapes build root: \${source}\`);
+      throw new Error(`[build-site] app route escapes build root: ${source}`);
     }
 
     mkdirSync(routeDir, { recursive: true });
@@ -116,7 +116,7 @@ function materializeGitHubPagesAppRoutes(siteRoot) {
     routes.push(source);
   }
 
-  const fallback = \`<!doctype html>
+  const fallback = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -138,14 +138,14 @@ function materializeGitHubPagesAppRoutes(siteRoot) {
 </script>
 </head>
 <body></body>
-</html>\`;
+</html>`;
   writeFileSync(path.join(siteRoot, "404.html"), fallback);
 
   if (routes.length === 0) {
     throw new Error("[build-site] no exact /app routes were materialized for GitHub Pages");
   }
   console.log(
-    \`[build-site] materialized \${routes.length} exact GitHub Pages app route(s); \${dynamicRules.length} dynamic rule(s) use 404 fallback\`,
+    `[build-site] materialized ${routes.length} exact GitHub Pages app route(s); ${dynamicRules.length} dynamic rule(s) use 404 fallback`,
   );
 }
 
