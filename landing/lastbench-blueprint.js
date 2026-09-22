@@ -94,7 +94,7 @@
     const c = COPY[lang];
     const steps = c.steps.map((step, i) => `<div class="lbp-step"><div class="lbp-num">${String(i + 1).padStart(2,'0')}</div><strong>${step[0]}</strong><span>${step[1]}</span></div>`).join('');
     const services = c.services.map((s) => `<span>${s}</span>`).join('');
-    return `<div class="lbp-panel"><div class="lbp-kicker">${c.kicker}</div><h2 class="lbp-title" id="lbp-journey-title">${c.titleA} <span>${c.titleB}</span></h2><p class="lbp-lede">${c.lede}</p><div class="lbp-grid" aria-label="Six Last Bench journey milestones">${steps}</div><div class="lbp-services">${services}</div><div class="lbp-actions"><a class="lbp-btn lbp-btn-primary" href="#signup">${c.start}</a><a class="lbp-btn lbp-btn-secondary" href="/app/">${c.track}</a><a class="lbp-partner" href="${PARTNER_WHATSAPP}" target="_blank" rel="noopener">${c.partner}</a><a class="lbp-contact" href="${CONTACT_HREF}">${c.email}</a></div><div class="lbp-trust">${c.trust}</div></div>`;
+    return `<div class="lbp-panel"><div class="lbp-kicker">${c.kicker}</div><h2 class="lbp-title" id="lbp-journey-title">${c.titleA} <span>${c.titleB}</span></h2><p class="lbp-lede">${c.lede}</p><div class="lbp-grid" aria-label="Six Last Bench journey milestones">${steps}</div><div class="lbp-services">${services}</div><div class="lbp-actions"><a class="lbp-btn lbp-btn-primary" href="#signup">${c.start}</a><a class="lbp-btn lbp-btn-secondary" href="./app/">${c.track}</a><a class="lbp-partner" href="${PARTNER_WHATSAPP}" target="_blank" rel="noopener">${c.partner}</a><a class="lbp-contact" href="${CONTACT_HREF}">${c.email}</a></div><div class="lbp-trust">${c.trust}</div></div>`;
   }
 
   function beyondMarkup(lang) {
