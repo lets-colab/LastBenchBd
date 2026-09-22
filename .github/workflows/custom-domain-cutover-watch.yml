@@ -42,8 +42,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          title="Custom domain cutover — lastbenchbd.com → GitHub Pages"
-          issue_number="$(gh issue list --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "Custom domain cutover — lastbenchbd.com → GitHub Pages") | .number' | head -n 1)"
+          title="Custom domain cutover - lastbenchbd.com to GitHub Pages"
+          issue_number="$(gh issue list --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "Custom domain cutover - lastbenchbd.com to GitHub Pages") | .number' | head -n 1)"
 
           if [[ "${{ steps.domain.outcome }}" == "success" ]]; then
             if [[ -n "$issue_number" ]]; then
@@ -55,40 +55,21 @@ jobs:
           fi
 
           if [[ -z "$issue_number" ]]; then
-            cat > /tmp/domain-cutover.md <<'EOF'
-The application and canonical GitHub Pages deployment are healthy. The remaining cutover is account-level hosting configuration, not a code failure.
-
-### GitHub Pages
-In lets-colab/LastBenchBd → Settings → Pages:
-- Source: GitHub Actions
-- Custom domain: lastbenchbd.com
-- Save it before changing DNS.
-- Enable Enforce HTTPS when GitHub makes it available.
-
-### Cloudflare DNS
-Preserve all Google Workspace MX/TXT records and the api.lastbenchbd.com Render record.
-
-Replace only the old Netlify web-hosting records.
-
-Apex @ A records:
-- 185.199.108.153
-- 185.199.109.153
-- 185.199.110.153
-- 185.199.111.153
-
-Optional IPv6 AAAA:
-- 2606:50c0:8000::153
-- 2606:50c0:8001::153
-- 2606:50c0:8002::153
-- 2606:50c0:8003::153
-
-www:
-- CNAME → lets-colab.github.io
-
-Remove the previous Netlify apex A records 75.2.60.5 and 99.83.231.61 and the www CNAME to lastbenchbdd.netlify.app.
-
-This workflow checks the full release contract every six hours and will close this issue automatically once DNS and GitHub Pages are aligned.
-EOF
+            printf "%s\n" \
+              "The application and canonical GitHub Pages deployment are healthy. The remaining cutover is account-level hosting configuration, not a code failure." \
+              "" \
+              "GitHub Pages: in lets-colab/LastBenchBd -> Settings -> Pages, keep Source = GitHub Actions, set Custom domain = lastbenchbd.com, save it, then enable Enforce HTTPS when available." \
+              "" \
+              "Cloudflare DNS: preserve Google Workspace MX/TXT records and api.lastbenchbd.com. Replace only the old Netlify web-hosting records." \
+              "" \
+              "Apex @ A records: 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153." \
+              "Optional AAAA: 2606:50c0:8000::153, 2606:50c0:8001::153, 2606:50c0:8002::153, 2606:50c0:8003::153." \
+              "www CNAME: lets-colab.github.io." \
+              "" \
+              "Remove Netlify apex A records 75.2.60.5 and 99.83.231.61 and the www CNAME to lastbenchbdd.netlify.app." \
+              "" \
+              "This workflow checks the full release contract every six hours and closes this issue automatically once the cutover is complete." \
+              > /tmp/domain-cutover.md
             gh issue create --title "$title" --body-file /tmp/domain-cutover.md
           fi
 
