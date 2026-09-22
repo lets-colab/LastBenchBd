@@ -58,6 +58,7 @@ jobs:
           set -euo pipefail
           git config user.name "Last Bench Release Bot"
           git config user.email "252910500+lets-colab@users.noreply.github.com"
+          git pull --rebase origin main
           git add landing/colab
           if git diff --cached --quiet; then
             echo "co.lab route already matches canonical source."
