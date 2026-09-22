@@ -1,0 +1,92 @@
+name: Custom Domain Cutover Watch
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: custom-domain-cutover-watch
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      WEB_ORIGIN: https://lastbenchbd.com
+      API_ORIGIN: https://api.lastbenchbd.com
+      RENDER_ORIGIN: https://last-bench-api-v2.onrender.com
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Verify custom domain against the full release contract
+        id: domain
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          node scripts/release-smoke.mjs 2>&1 | tee custom-domain-smoke.log
+
+      - name: Maintain one cutover issue without blocking releases
+        shell: bash
+        run: |
+          set -euo pipefail
+          title="Custom domain cutover — lastbenchbd.com → GitHub Pages"
+          issue_number="$(gh issue list --state open --search "$title in:title" --json number,title --jq '.[] | select(.title == "Custom domain cutover — lastbenchbd.com → GitHub Pages") | .number' | head -n 1)"
+
+          if [[ "${{ steps.domain.outcome }}" == "success" ]]; then
+            if [[ -n "$issue_number" ]]; then
+              gh issue comment "$issue_number" --body "Verified: lastbenchbd.com now serves the full canonical release contract. Closing automatically."
+              gh issue close "$issue_number" --reason completed
+            fi
+            echo "Custom domain is aligned."
+            exit 0
+          fi
+
+          if [[ -z "$issue_number" ]]; then
+            cat > /tmp/domain-cutover.md <<'EOF'
+The application and canonical GitHub Pages deployment are healthy. The remaining cutover is account-level hosting configuration, not a code failure.
+
+### GitHub Pages
+In lets-colab/LastBenchBd → Settings → Pages:
+- Source: GitHub Actions
+- Custom domain: lastbenchbd.com
+- Save it before changing DNS.
+- Enable Enforce HTTPS when GitHub makes it available.
+
+### Cloudflare DNS
+Preserve all Google Workspace MX/TXT records and the api.lastbenchbd.com Render record.
+
+Replace only the old Netlify web-hosting records.
+
+Apex @ A records:
+- 185.199.108.153
+- 185.199.109.153
+- 185.199.110.153
+- 185.199.111.153
+
+Optional IPv6 AAAA:
+- 2606:50c0:8000::153
+- 2606:50c0:8001::153
+- 2606:50c0:8002::153
+- 2606:50c0:8003::153
+
+www:
+- CNAME → lets-colab.github.io
+
+Remove the previous Netlify apex A records 75.2.60.5 and 99.83.231.61 and the www CNAME to lastbenchbdd.netlify.app.
+
+This workflow checks the full release contract every six hours and will close this issue automatically once DNS and GitHub Pages are aligned.
+EOF
+            gh issue create --title "$title" --body-file /tmp/domain-cutover.md
+          fi
+
+          echo "Custom domain is not aligned yet; release remains healthy on canonical GitHub Pages."
+          exit 0
