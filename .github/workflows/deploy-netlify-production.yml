@@ -1,89 +1,17 @@
-name: Deploy Netlify Production
+name: Deploy Netlify Production (Legacy Manual Fallback)
 
+# Netlify is no longer the automatic production path.
+# GitHub Pages is the primary production deploy target.
 on:
-  push:
-    branches: [main]
-    paths:
-      - ".github/workflows/deploy-netlify-production.yml"
-      - "landing/**"
-      - "app/**"
-      - "assets/**"
-      - "scripts/build-site.mjs"
-      - "netlify.toml"
-      - "package.json"
-      - "pnpm-lock.yaml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
-concurrency:
-  group: netlify-production
-  cancel-in-progress: true
-
 jobs:
-  deploy:
+  legacy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      NETLIFY_SITE_ID: 04a1423a-961c-4b5e-bb4b-53db3027317e
-      EXPO_PUBLIC_API_BASE_URL: https://api.lastbenchbd.com
-      EXPO_PUBLIC_SUPABASE_URL: https://tocxdyqlrvzthpexnmxe.supabase.co
-      EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_
-
     steps:
-      - name: Verify deployment authorization
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          if [[ -z "${NETLIFY_AUTH_TOKEN:-}" ]]; then
-            echo "::error::NETLIFY_AUTH_TOKEN is not configured in GitHub Actions. Production cannot be updated safely from CI."
-            exit 1
-          fi
-
-          status="$(
-            curl --silent --show-error               --output /tmp/netlify-site.json               --write-out '%{http_code}'               --header "Authorization: Bearer ${NETLIFY_AUTH_TOKEN}"               "https://api.netlify.com/api/v1/sites/${NETLIFY_SITE_ID}"
-          )"
-
-          if [[ "$status" != "200" ]]; then
-            echo "::error::NETLIFY_AUTH_TOKEN cannot access canonical Netlify site ${NETLIFY_SITE_ID} (HTTP ${status}). Replace the GitHub Actions secret with a Netlify token authorized for this site before deploying."
-            exit 1
-          fi
-
-      - name: Checkout repository
-        uses: actions/checkout@v7
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 9.12.0
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.14.0
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build complete production site
-        run: pnpm build:web:production
-
-      - name: Upload verified production build
-        uses: actions/upload-artifact@v7
-        with:
-          name: lastbench-production-dist
-          path: dist
-          if-no-files-found: error
-          retention-days: 7
-
-      - name: Deploy exact build to canonical Netlify site
-        run: >-
-          npx --yes netlify-cli@27.8.0 deploy
-          --dir=dist
-          --prod
-          --site="$NETLIFY_SITE_ID"
-          --message="GitHub ${GITHUB_SHA}"
+      - run: |
+          echo "Netlify automatic production deployment is retired."
+          echo "Use Deploy GitHub Pages Production for production releases."
