@@ -14,6 +14,10 @@ on:
       - landing/bench-ai.js
       - scripts/release-smoke.mjs
       - .github/workflows/blueprint-alignment-qa.yml
+      - design-system/**
+      - theme.config.js
+      - scripts/validate-design-system.mjs
+      - .github/workflows/deploy-github-pages.yml
   pull_request:
     branches: [main]
     paths:
@@ -27,6 +31,10 @@ on:
       - landing/bench-ai.js
       - scripts/release-smoke.mjs
       - .github/workflows/blueprint-alignment-qa.yml
+      - design-system/**
+      - theme.config.js
+      - scripts/validate-design-system.mjs
+      - .github/workflows/deploy-github-pages.yml
   workflow_dispatch:
 
 permissions:
@@ -37,7 +45,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+
+      - name: Verify canonical design system contract
+        run: node scripts/validate-design-system.mjs
 
       - name: Verify canonical opportunity-accelerator contract
         run: |

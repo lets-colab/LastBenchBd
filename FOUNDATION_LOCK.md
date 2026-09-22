@@ -10,18 +10,20 @@ Important product state must have one authoritative source, one owner, one verif
 
 - Canonical repository: `lets-colab/LastBenchBd`.
 - Canonical web URL: `https://lastbenchbd.com`.
-- The current host is Netlify project `lastbenchbdd`, but its published upload is stale and must not be treated as proof that current `main` is live.
-- Netlify team `lets-colab` is confirmed to be running on operational credits: existing published sites remain online while production deploys are paused. The production workflow still passes site-read authorization, build and artifact upload, then the legacy CLI publish returns `JSONHTTPError: Forbidden`. Do not rotate the token while this account-level pause remains the verified blocker.
-- Cloudflare Pages with GitHub `main` integration is the approved zero-cost replacement host. Verify a Pages preview before moving the canonical domain; do not create a Direct Upload-only project when Git integration is the target.
-- Current `main` builds the complete host-neutral production artifact successfully. Latest production-content artifact: `lastbench-production-dist` `10671676282`, SHA-256 `02e979dabb7e6b4e1c97dc49b41c553af3caf293ae04cdbd8092673ffe0e2663`.
-- A release fingerprint now prevents a stale homepage from passing production smoke checks.
+- GitHub Pages is the primary production web deployment path. Workflow `.github/workflows/deploy-github-pages.yml` builds the exact host-neutral artifact from `main` and deploys it with GitHub Pages provenance.
+- The first GitHub Pages production run (`35683150738`) completed successfully for commit `c9f98c678a43a59c64cbc60e9d09851684a8b2b4`; both build and deploy jobs passed and GitHub reported `https://lets-colab.github.io/LastBenchBd/` as the deployment URL.
+- The immutable production artifact from that run is `lastbench-production-dist` `10675761617`, SHA-256 `e2fca9453673353c8a1f68d4099a21a7dd1d05f53c9c3106e72b6fb2707757c3`.
+- Automatic Netlify production deployment is retired. Netlify remains a legacy manual fallback only.
+- The canonical domain has **not** completed host cutover yet. DNS verified on 22 September 2026 still points the apex to Netlify addresses `75.2.60.5` / `99.83.231.61`, while `www.lastbenchbd.com` CNAMEs to `lastbenchbdd.netlify.app`. Therefore `lastbenchbd.com` must not be treated as proof of the GitHub Pages release until DNS is changed and the release fingerprint is re-verified.
+- Current `main` builds the complete host-neutral production artifact successfully.
+- A release fingerprint prevents a stale homepage from passing production smoke checks.
 - Canonical API custom hostname: `https://api.lastbenchbd.com`.
 - Canonical working Render service: `last-bench-api-v2` in Singapore.
 - Direct Render health is verified at `https://last-bench-api-v2.onrender.com/api/health`.
 - `https://api.lastbenchbd.com/api/health` is verified reachable with semantic JSON `ok: true`; the Render custom-domain routing gate is complete.
 - Authentication has been migrated away from Manus OAuth to Supabase Auth.
 - Supabase production project `the-last-bench` is `ACTIVE_HEALTHY` in `ap-southeast-1`.
-- Production web configuration uses the reviewed Supabase URL and publishable key from `netlify.toml`; those same public values must be configured in Cloudflare Pages.
+- Production web configuration for GitHub Pages is explicit in `.github/workflows/deploy-github-pages.yml` and uses the reviewed public API/Supabase values.
 - The live Supabase migration ledger includes the repository foundation migrations, Supabase identity/storage migration, CLASS[Λ] registration migration, DR.X social-engine runtime/activation migrations, and the insert-only homepage signup migration.
 - The homepage source now submits directly to `public.lastbench_signups`; public roles have INSERT only and cannot read, update or delete submitted leads.
 - Supabase security advisor currently has no WARN or ERROR findings; remaining RLS notices are informational and consistent with the server-owned default-deny model.
@@ -62,9 +64,10 @@ Current verified state:
 - [x] Direct Render API returns JSON with `ok: true`.
 - [x] `api.lastbenchbd.com` returns semantic JSON health from the Render service.
 - [x] Current repository builds the complete production web artifact.
-- [x] Student app and CLASS routes on the public domain return HTML successfully.
-- [ ] Cloudflare Pages builds current GitHub `main` and passes preview smoke checks.
-- [ ] `lastbenchbd.com` serves the verified Pages deployment. It currently serves an older Netlify homepage.
+- [x] GitHub Pages build and deployment completed successfully from `main`.
+- [x] GitHub Pages generated a working deployment target at `https://lets-colab.github.io/LastBenchBd/`.
+- [ ] Move the canonical apex and `www` DNS away from Netlify to the GitHub Pages custom-domain configuration.
+- [ ] Verify `lastbenchbd.com` serves the same release fingerprint after DNS/HTTPS convergence.
 
 A successful static build, deploy or green CI run is not production-routing proof.
 
@@ -132,7 +135,8 @@ Still required before broad public launch:
 - [x] PR safety template exists.
 - [x] Production smoke monitoring automatically opens/updates/closes a GitHub incident issue.
 - [x] CI rejects stale production-homepage assumptions through release fingerprinting.
-- [ ] Establish GitHub `main` integration for the verified Cloudflare Pages project.
+- [x] GitHub Pages production deployment is integrated with `main`; automatic Netlify production deployment is retired.
+- [ ] Complete canonical-domain DNS cutover to the verified GitHub Pages deployment.
 
 ## Gate H — Mobile identity
 
@@ -172,4 +176,4 @@ It calls `scripts/release-smoke.mjs` with the canonical web/API origins plus the
 
 ## Definition of done
 
-The Foundation Lock is fully complete when repository code, Supabase migration state, Cloudflare Pages production deploy, Render routing, authenticated sessions, form receipt and end-to-end release journeys all agree. Unknowns remain explicit gates; they are never converted into “done” statements by documentation or UI.
+The Foundation Lock is fully complete when repository code, Supabase migration state, GitHub Pages production deploy, canonical-domain DNS, Render routing, authenticated sessions, form receipt and end-to-end release journeys all agree. Unknowns remain explicit gates; they are never converted into “done” statements by documentation or UI.

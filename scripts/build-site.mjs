@@ -1,4 +1,4 @@
-// Assembles the single production site served by Netlify:
+// Assembles the host-neutral production site currently deployed through GitHub Pages:
 //   dist/          ← landing/ (marketing front door at /)
 //   dist/app/      ← Expo web export (the student app at /app)
 // The Expo router + asset URLs are namespaced under /app via EXPO_BASE_URL,
@@ -110,7 +110,8 @@ try {
   writeFileSync(appIndexPath, appIndex.replace('<div id="root"></div>', bootLoader));
 
   console.log("[build-site] copying landing/ → temporary build (front door)");
-  // netlify.toml is deploy config, not content; CNAME was GitHub-Pages-only.
+  // Hosting configuration is not production page content. The GitHub Pages
+  // workflow creates dist/CNAME only after this host-neutral build succeeds.
   const exclude = new Set(["netlify.toml", "CNAME"]);
   for (const entry of readdirSync(landing)) {
     if (exclude.has(entry)) continue;
