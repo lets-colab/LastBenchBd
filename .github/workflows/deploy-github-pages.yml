@@ -7,9 +7,22 @@ on:
       - ".github/workflows/deploy-github-pages.yml"
       - "landing/**"
       - "app/**"
+      - "components/**"
+      - "constants/**"
+      - "hooks/**"
+      - "lib/**"
+      - "shared/**"
       - "assets/**"
+      - "design-system/**"
+      - "app.config.ts"
+      - "babel.config.js"
+      - "metro.config.js"
+      - "theme.config.js"
+      - "tailwind.config.js"
+      - "global.css"
       - "scripts/build-site.mjs"
       - "scripts/validate-public-env.mjs"
+      - "scripts/validate-design-system.mjs"
       - "package.json"
       - "pnpm-lock.yaml"
   workflow_dispatch:
@@ -33,18 +46,27 @@ jobs:
       EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_
     steps:
       - uses: actions/checkout@v7
+
       - uses: pnpm/action-setup@v6
         with:
           version: 9.12.0
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22.14.0
           cache: pnpm
+
       - run: pnpm install --frozen-lockfile
+
+      - name: Verify canonical design system
+        run: pnpm design:check
+
       - name: Build exact production site
         run: pnpm build:web:production
+
       - name: Configure custom domain artifact
         run: printf '%s\n' 'lastbenchbd.com' > dist/CNAME
+
       - name: Upload immutable build evidence
         uses: actions/upload-artifact@v7
         with:
@@ -52,6 +74,7 @@ jobs:
           path: dist
           if-no-files-found: error
           retention-days: 7
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
