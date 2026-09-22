@@ -20,8 +20,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install yt-dlp
-        run: python -m pip install --disable-pip-version-check --quiet yt-dlp
+      - name: Install reel tooling
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install --disable-pip-version-check --quiet yt-dlp
 
       - name: Download approved masterclass reel
         shell: bash
