@@ -25,7 +25,7 @@ def main() -> None:
     require(html, "Last Bench — Claude Design Preview", "preview title")
     require(html, "./claude-design-support.js", "Claude Design runtime")
     require(html, "./claude-design-ds/tokens.css", "design tokens")
-    require(html, 'href="/app/"', "student dashboard route")
+    require(html, 'href="./app/"', "student dashboard route")
     require(html, "/rest/v1/lastbench_signups", "Supabase signup endpoint")
 
     html = html.replace(
