@@ -58,7 +58,7 @@ const checks = [
       "co.lab",
       "Community + Platform",
       "currentEducationMarket:'Malaysia'",
-      "lb-education",
+      "lb-malaysia-service",
     ],
   },
   { name: "Student app", url: `${webOrigin}/app/`, expectHtml: true },
