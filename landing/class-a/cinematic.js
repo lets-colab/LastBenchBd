@@ -103,6 +103,20 @@
     }
   }
 
+  if (scene && !scene.querySelector('.scene-orbit-system')) {
+    const orbitSystem = document.createElement('div');
+    orbitSystem.className = 'scene-orbit-system';
+    orbitSystem.setAttribute('aria-hidden', 'true');
+    orbitSystem.innerHTML = [
+      '<span class="scene-orbit scene-orbit-1"></span>',
+      '<span class="scene-orbit scene-orbit-2"></span>',
+      '<span class="scene-orbit scene-orbit-3"></span>',
+      '<span class="scene-axis scene-axis-x"></span>',
+      '<span class="scene-axis scene-axis-y"></span>'
+    ].join('');
+    scene.prepend(orbitSystem);
+  }
+
   if (brandIntro) {
     const removeIntro = () => brandIntro.remove();
     const handleIntroEnd = (event) => {
