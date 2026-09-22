@@ -77,6 +77,18 @@ const checks = [
       "10 SEATS ONLY · RESERVE YOUR FREE SEAT",
     ],
   },
+  {
+    name: "CLASS attendance check-in",
+    url: `${webOrigin}/class-a/checkin.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "STAFF CHECK-IN · CLASS 0",
+      "REDEEM ATTENDANCE.",
+      "MARK ATTENDED →",
+      "checkin.js",
+      "last-bench-bench.png",
+    ],
+  },
   { name: "CLASS course", url: `${webOrigin}/class-a/course.html`, expectHtml: true },
 ];
 
