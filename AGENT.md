@@ -73,19 +73,20 @@ One merged public web artifact is intentional:
 
 `pnpm build:web:production` assembles the complete static production artifact into `dist/`.
 
-The current landing/application implementation is still heavily oriented toward the Malaysia service. Do not mistake that implementation history for the parent-company category. Any corporate-site redesign must preserve current service truth while aligning the umbrella architecture deliberately and visually.
+The parent runtime is aligned to the Opportunity Accelerator architecture. Malaysia remains a focused Education & Mobility service and must not be promoted back into the parent-company definition. Preserve the current service truth and the independent CLASS[Λ]/co.lab entry paths.
 
 ---
 
-## 3. Current production topology — verified 10 September 2026
+## 3. Current production topology — verified 22 September 2026
 
 ### Web
 
 - Canonical URL: `https://lastbenchbd.com`.
-- Current public host: Netlify project `lastbenchbdd`.
-- Current public deploy is an older upload-based production deploy. Do **not** assume current `main` is live just because Netlify reports the deploy as `ready`.
-- Approved deployment target: Cloudflare Pages with GitHub `main` integration. Create and verify a Pages preview before moving the canonical domain.
-- Current `main` builds the complete host-neutral production site successfully. Public build values in `netlify.toml` must be mirrored into Cloudflare Pages until configuration is consolidated.
+- Primary production deployment: GitHub Pages from `main` via `.github/workflows/deploy-github-pages.yml`.
+- The verified Pages deployment for the canonical design-system release is built from repository commit provenance and immutable workflow artifacts.
+- Automatic Netlify production deployment is retired; Netlify is a legacy manual fallback only.
+- Canonical-domain DNS still points at Netlify and is the remaining web-host cutover gate. Do **not** claim `lastbenchbd.com` is served by GitHub Pages until DNS and the release fingerprint prove it.
+- Current `main` builds the complete host-neutral production site successfully.
 
 ### API
 
@@ -203,7 +204,7 @@ Production DDL is explicit and reviewed.
 ## 8. Forms and conversion truth
 
 - The current homepage source submits directly to `public.lastbench_signups` through Supabase REST. Anonymous clients have INSERT only; submitted leads are not publicly readable.
-- CLASS[Λ] JavaScript submits to `public.class_a_registrations`; its HTML retains Netlify form markup as a compatibility fallback while the current public host remains Netlify.
+- CLASS[Λ] JavaScript submits to `public.class_a_registrations`; its HTML retains Netlify form markup only as a compatibility/no-JavaScript fallback during the host transition.
 - Historical Netlify submissions must be preserved, but they do not prove receipt for the new Supabase paths.
 
 A thank-you screen or HTTP 200 does not prove receipt. Verify a real row in the intended Supabase table for each active production conversion journey.
@@ -240,15 +241,14 @@ The design source of truth is version-controlled source + approved design assets
 
 In priority order:
 
-1. Verify Cloudflare Pages project from GitHub `main` and preview.
-2. Move `lastbenchbd.com` only after verified preview/smoke evidence.
-3. Verify production Supabase Auth session journey end-to-end.
-4. Verify real receipt in Supabase for homepage and CLASS[Λ] conversion journeys.
-5. Finish the reviewed student document-picker/upload UI before calling upload complete.
-6. Resolve hidden `discover` / `community` route status.
-7. Lock mobile app identity before any store release.
-8. Add persistent AI/message quotas when commercial usage policy is approved.
-9. Deliberately migrate the public corporate homepage from Malaysia-first framing to the Opportunity Accelerator architecture without breaking the current Malaysia service funnel.
+1. Move `lastbenchbd.com` apex and `www` DNS from legacy Netlify to the verified GitHub Pages custom-domain configuration, then re-run release smoke.
+2. Verify production Supabase Auth session journey end-to-end.
+3. Verify real receipt in Supabase for homepage and CLASS[Λ] conversion journeys.
+4. Finish the reviewed student document-picker/upload UI before calling upload complete.
+5. Resolve hidden `discover` / `community` route status.
+6. Lock mobile app identity before any store release.
+7. Add persistent AI/message quotas when commercial usage policy is approved.
+8. Visually certify the canonical-domain render after DNS cutover; build/deploy success is not visual approval.
 
 ---
 

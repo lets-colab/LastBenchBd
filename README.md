@@ -38,13 +38,13 @@ For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experi
 
 | Layer | Platform | Contract |
 | --- | --- | --- |
-| Marketing + web app | **Netlify → Cloudflare Pages** | Current host is stale Netlify; approved target is a GitHub-integrated Pages deployment |
+| Marketing + web app | **GitHub Pages** | `main` builds and deploys the exact production artifact; Netlify is legacy fallback only |
 | API | **Render** | Express + tRPC |
 | Identity | **Supabase Auth** | Email/password sessions; HTTP-only cookies on web, bearer/refresh tokens on native |
 | Database | **Supabase Postgres** | Drizzle schema + reviewed SQL migration ledger |
 | Private files | **Supabase Storage** | `student-documents`, private, per-user RLS |
 | AI | **OpenAI Responses API** | Server-side only; optional until a production API key is configured |
-| Canonical web | `https://lastbenchbd.com` | Move only after the Cloudflare Pages preview passes smoke checks |
+| Canonical web | `https://lastbenchbd.com` | DNS cutover to the verified GitHub Pages deployment is the remaining host gate |
 | Canonical API | `https://api.lastbenchbd.com` | Render custom domain |
 
 **Manus and Forge are not part of the supported production architecture.** Legacy integration modules and environment contracts have been removed.
@@ -198,15 +198,16 @@ A green build is not proof of a working product. Before calling the authenticate
 - [x] canonical Render service reports Supabase auth/storage configured
 - [x] `api.lastbenchbd.com/api/health` returns semantic JSON health
 - [x] homepage Supabase REST intake accepts an anonymous insert without exposing lead reads
-- [ ] Cloudflare Pages builds and serves a verified preview of current `main`
-- [ ] `lastbenchbd.com` serves the verified current release instead of the stale Netlify upload
+- [x] GitHub Pages builds and deploys the verified production artifact from current `main`
+- [ ] `lastbenchbd.com` DNS serves the verified GitHub Pages release instead of the legacy Netlify host
 - [ ] fresh sign-in succeeds with a real user
 - [ ] returning session succeeds
 - [ ] authenticated API request succeeds
 - [ ] logout prevents session resurrection
 - [ ] student document upload/download authorization is verified
 - [ ] homepage, CLASS[Λ] masterclass and CLASS[Λ] course receipt is verified with real production Supabase rows
-- [ ] corporate homepage architecture is deliberately migrated from Malaysia-first service framing to Opportunity Accelerator framing and visually verified
+- [x] corporate runtime architecture is aligned to Opportunity Accelerator framing with Education & Mobility, CLASS[Λ], co.lab and the connective Community layer
+- [ ] visually verify the canonical-domain render after DNS cutover
 
 No production user, credential, admissions result, business outcome or verification evidence should ever be fabricated to satisfy this checklist.
 

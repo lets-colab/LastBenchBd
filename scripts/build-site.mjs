@@ -13,6 +13,7 @@ import {
   renameSync,
   existsSync,
   statSync,
+  mkdirSync,
 } from "fs";
 import { spawnSync } from "child_process";
 import path from "path";
@@ -77,6 +78,77 @@ function verifyLocalAssetReferences(siteRoot) {
   console.log(`[build-site] verified ${references.size} local app asset references`);
 }
 
+
+function materializeGitHubPagesAppRoutes(siteRoot) {
+  const redirectsPath = path.join(siteRoot, "_redirects");
+  const appIndexPath = path.join(siteRoot, "app", "index.html");
+  if (!existsSync(redirectsPath) || !existsSync(appIndexPath)) {
+    throw new Error("[build-site] GitHub Pages route materialization requires _redirects and app/index.html");
+  }
+
+  const appHtml = readFileSync(appIndexPath, "utf8");
+  const routes = [];
+  const dynamicRules = [];
+
+  for (const rawLine of readFileSync(redirectsPath, "utf8").split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) continue;
+    const [source, target, status] = line.split(/\s+/);
+    if (target !== "/app/index.html" || status !== "200" || !source?.startsWith("/app/")) continue;
+
+    if (source.includes("*")) {
+      dynamicRules.push(source);
+      continue;
+    }
+
+    const relativeRoute = source.replace(/^\/+|\/+$/g, "");
+    if (!relativeRoute.startsWith("app/") || relativeRoute.includes("..")) {
+      throw new Error(`[build-site] unsafe app route in _redirects: ${source}`);
+    }
+
+    const routeDir = path.resolve(siteRoot, relativeRoute);
+    if (!routeDir.startsWith(siteRoot + path.sep)) {
+      throw new Error(`[build-site] app route escapes build root: ${source}`);
+    }
+
+    mkdirSync(routeDir, { recursive: true });
+    writeFileSync(path.join(routeDir, "index.html"), appHtml);
+    routes.push(source);
+  }
+
+  const fallback = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Last Bench</title>
+<script>
+(function () {
+  var pathname = window.location.pathname || "/";
+  var search = window.location.search || "";
+  var hash = window.location.hash || "";
+  if (pathname === "/app" || pathname.indexOf("/app/") === 0) {
+    try { window.sessionStorage.setItem("lb-pages-route", pathname + search + hash); } catch (_) {}
+    window.location.replace("/app/");
+    return;
+  }
+  window.location.replace("/");
+})();
+</script>
+</head>
+<body></body>
+</html>`;
+  writeFileSync(path.join(siteRoot, "404.html"), fallback);
+
+  if (routes.length === 0) {
+    throw new Error("[build-site] no exact /app routes were materialized for GitHub Pages");
+  }
+  console.log(
+    `[build-site] materialized ${routes.length} exact GitHub Pages app route(s); ${dynamicRules.length} dynamic rule(s) use 404 fallback`,
+  );
+}
+
 console.log("[build-site] exporting Expo web app → temporary build (base URL /app)");
 const result = spawnSync(
   expo,
@@ -107,7 +179,13 @@ try {
   if (!appIndex.includes('<div id="root"></div>')) {
     throw new Error("[build-site] could not find empty #root in app/index.html — Expo output changed?");
   }
-  writeFileSync(appIndexPath, appIndex.replace('<div id="root"></div>', bootLoader));
+  const pagesRouteRestore = `<script>(function(){try{var route=sessionStorage.getItem("lb-pages-route");if(route){sessionStorage.removeItem("lb-pages-route");history.replaceState(null,"",route);}}catch(_){}})();</script>`;
+  let appHtml = appIndex.replace('<div id="root"></div>', bootLoader);
+  if (!appHtml.includes("</head>")) {
+    throw new Error("[build-site] could not find </head> in app/index.html — Expo output changed?");
+  }
+  appHtml = appHtml.replace("</head>", `${pagesRouteRestore}</head>`);
+  writeFileSync(appIndexPath, appHtml);
 
   console.log("[build-site] copying landing/ → temporary build (front door)");
   // Hosting configuration is not production page content. The GitHub Pages
@@ -118,6 +196,7 @@ try {
     cpSync(path.join(landing, entry), path.join(buildDir, entry), { recursive: true });
   }
 
+  materializeGitHubPagesAppRoutes(buildDir);
   verifyLocalAssetReferences(buildDir);
 } catch (error) {
   rmSync(buildDir, { recursive: true, force: true });
