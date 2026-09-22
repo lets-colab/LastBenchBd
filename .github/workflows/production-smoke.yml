@@ -1,4 +1,4 @@
-name: Production Smoke
+name: Canonical Production Smoke
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      WEB_ORIGIN: https://lastbenchbd.com
+      WEB_ORIGIN: https://lets-colab.github.io/LastBenchBd
       API_ORIGIN: https://api.lastbenchbd.com
       RENDER_ORIGIN: https://last-bench-api-v2.onrender.com
       GH_TOKEN: ${{ github.token }}
