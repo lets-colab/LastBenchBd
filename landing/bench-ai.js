@@ -62,7 +62,7 @@
     <div class="lb-ai-chips"></div>
     <form class="lb-ai-form">
       <label style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" for="lb-ai-input">Ask Bench AI</label>
-      <input id="lb-ai-input" class="lb-ai-input" autocomplete="off" maxlength="700" placeholder="Ask about your journey, universities, visa…">
+      <input id="lb-ai-input" class="lb-ai-input" autocomplete="off" maxlength="700" placeholder="Ask about education, CLASS[Λ], co.lab, or your next step…">
       <button class="lb-ai-send" type="submit" aria-label="Send message">→</button>
     </form>
     <div class="lb-ai-note">Bench AI gives orientation, not guarantees. Verify current fees, entry requirements, scholarships, partner offers and visa rules with official sources before acting.</div>`;
@@ -100,18 +100,20 @@
 
   const fallback = (text) => {
     const t = text.toLowerCase();
-    if (/journey|how.*work|process|next step|milestone/.test(t)) return 'The Last Bench mobility journey is: Discover → Match → Apply → Secure → Prepare → Arrive. The goal is that you always know your current stage, next milestone and what evidence is still needed. If you are already registered, open the Journey OS at /app/.';
+    if (/what is last bench|opportunity accelerator|ecosystem|choose.*path|which.*path|three engine|how.*last bench/.test(t)) return 'Last Bench is an Opportunity Accelerator with three independent operating engines: Education & Mobility for access, CLASS[Λ] for capability, and co.lab for business & growth. Community + Platform connects relationships, proof and continuity across them. You can enter through the engine that matches your need; there is no mandatory funnel.';
+    if (/journey|process|next step|milestone|malaysia admissions|education.*mobility/.test(t)) return 'Inside Education & Mobility, the current Malaysia service journey is Discover → Match → Apply → Secure → Prepare → Arrive. Malaysia is one active education market, not the definition of Last Bench. If you are already registered, open the Journey OS at /app/.';
     if (/status|track|tracking|application progress/.test(t)) return 'If you already joined Last Bench, use the Journey OS at /app/ to track your application. Important status changes should show a next step and evidence rather than leaving you inside a WhatsApp-only process.';
     if (/settle|settlement|arrival|arrive|housing|sim|bank|community|belong/.test(t)) return 'Last Bench is designed to continue after admission and arrival. The current promise includes pre-departure preparation, practical settlement guidance and community support in Malaysia — not only university application processing.';
     if (/partner|tutor|coaching|ielts center|agent|recruiter|counsellor|counselor/.test(t)) return `Last Bench has a partner pathway for tutors, coaching/IELTS centers, counsellors and education partners. Ask the team for current onboarding and commercial terms on WhatsApp: ${CONTACT_PRIMARY} or email ${CONTACT_EMAIL}. Terms should be confirmed before anyone represents an offer to students.`;
-    if (/class.?a|class\[|class lambda|co\.lab|colab/.test(t)) return 'CLASS[Λ] and co.lab are progression wings in the wider Last Bench blueprint. The public mobility promise comes first: study, settle and succeed in Malaysia. Capability or venture pathways should only be introduced when they are active and relevant to the person.';
+    if (/class.?a|class\[|class lambda/.test(t)) return 'CLASS[Λ] is the Last Bench capability engine: AI fluency, building, creation, growth, sales, automation and proof-of-work. It is an independent entry point, not a required step after Malaysia Admissions. Open /class-a/ to choose the current CLASS[Λ] route.';
+    if (/co\.lab|colab|brand|business growth|growth system/.test(t)) return 'co.lab is the Last Bench Business & Growth engine for founders, brands and operating teams — covering brand development, business development, growth systems and community-led growth. It is an independent entry point; email info@lastbenchbd.com for the current co.lab path.';
     if (/visa|emgs/.test(t)) return 'Visa outcomes cannot be promised. They depend on your documents, EMGS processing and the relevant authorities. A Last Bench mentor can help you identify missing documents and verify the current process.';
     if (/scholar|discount|rebate/.test(t)) return 'Scholarships, rebates and discounts change by intake, programme and eligibility. I will not promise a percentage without a current official source. Share your results and intended intake and a mentor can help verify available offers.';
     if (/fee|cost|tuition|budget/.test(t)) return 'Fees vary by university, programme and intake, and can change. Tell me your field, qualification, budget range and preferred intake; I can help you structure a shortlist, then the team should verify the current official fee.';
     if (/ielts|english/.test(t)) return 'English requirements vary by university and programme. Check the current programme requirement or offer conditions; a mentor can help you interpret them.';
     if (/which|best|fit|match|recommend|university|uni\b/.test(t)) return 'A useful Malaysia shortlist starts with four things: intended field, academic results, budget and intake. Send those four and I can help structure the comparison without inventing current requirements. A university shown on this website is a research option, not automatically a claim of a current Last Bench partnership.';
     if (/human|mentor|call|whatsapp|contact|talk/.test(t)) return `A human mentor can review your profile. WhatsApp Last Bench at ${CONTACT_PRIMARY} or ${CONTACT_SECONDARY}, email ${CONTACT_EMAIL}, or use the “Take Your Seat” form on this page.`;
-    return 'I can help you understand your next step in the Bangladesh → Malaysia journey, structure university research and prepare better questions. I will not invent current fees, visa odds, scholarship percentages, partner offers or entry requirements. What stage are you at now?';
+    return 'I can route you to the right Last Bench path: Education & Mobility, CLASS[Λ], co.lab, or a partner relationship. For education questions I will not invent current fees, visa odds, scholarships, partner status or entry requirements. Tell me what you are trying to access, learn, build or grow.';
   };
 
   const send = async (raw) => {
@@ -149,8 +151,8 @@
     launcher.setAttribute('aria-expanded', 'true');
     if (!seeded) {
       seeded = true;
-      addMessage('ai', 'Hi — I’m Bench AI. I can help you understand your next step from Discover to Arrive, explore Malaysia study options and prepare the right questions. I’ll flag what needs current verification instead of guessing.');
-      setChips(['How the journey works', 'Find my university fit', 'Visa / EMGS', 'Talk to a mentor']);
+      addMessage('ai', 'Hi — I’m Bench AI. Last Bench is an Opportunity Accelerator. I can route you to Education & Mobility, CLASS[Λ], co.lab, or the right partner path, and I’ll flag anything that needs current verification instead of guessing.');
+      setChips(['Choose my path', 'Education & Malaysia', 'CLASS[Λ]', 'co.lab']);
     }
     window.setTimeout(() => input.focus(), 0);
   };
