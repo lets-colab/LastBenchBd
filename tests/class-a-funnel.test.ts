@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -63,6 +63,35 @@ describe("CLASS A signup funnel", () => {
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
     expect(script).toContain("--journey-progress");
     expect(script).toContain("visibilitychange");
+  });
+
+
+  it("locks the approved cinematic reel as masterclass Scene 01", () => {
+    const reelPath = resolve(classRoot, "assets/masterclass-entry.mp4");
+    expect(existsSync(reelPath)).toBe(true);
+    expect(statSync(reelPath).size).toBeGreaterThan(1_000_000);
+    expect(masterclass).toContain('data-reel-entry');
+    expect(masterclass).toContain('./assets/masterclass-entry.mp4');
+    expect(masterclass).toContain('SCENE 01 · 0.01%');
+    expect(masterclass).toContain('ENTER EXPERIENCE');
+    expect(masterclass).toContain('>SKIP<');
+    expect(masterclass).toContain('TURN AI INTO');
+    expect(masterclass).toContain('YOUR TEAM.');
+    expect(masterclass).toContain('CONTENT · AUTOMATION · MARKETING · OPERATIONS');
+    expect(masterclass).toContain('10 SEATS ONLY · RESERVE YOUR FREE SEAT');
+    expect(script).toContain('const handoffAt = 23.6');
+    expect(script).toContain("reelVideo.muted = false");
+    expect(styles).toContain('.reel-morph');
+  });
+
+  it("shares the CLASS Lambda spatial orbit system without changing locked art", () => {
+    expect(script).toContain('scene-orbit-system');
+    expect(styles).toContain('.scene-orbit-1');
+    expect(styles).toContain('@keyframes classOrbitA');
+    for (const page of [hub, masterclass, course]) {
+      expect(page).toContain('./assets/class-a-20-orbit.jpg');
+      expect(page).toContain('./assets/class-a-logo.jpg');
+    }
   });
 
   it("contains no hardcoded event date", () => {
