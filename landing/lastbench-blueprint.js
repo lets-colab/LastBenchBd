@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const ALIGNMENT_VERSION = '2026-09-10';
+  const ALIGNMENT_VERSION = '2026-09-22';
   const PARTNER_WHATSAPP = 'https://wa.me/8801300801785?text=I%20want%20to%20learn%20about%20the%20Last%20Bench%20partner%20pathway.';
   const CONTACT_EMAIL = 'info@lastbenchbd.com';
   const CONTACT_HREF = 'mailto:info@lastbenchbd.com?subject=Last%20Bench%20question';
@@ -9,9 +9,9 @@
 
   const COPY = {
     en: {
-      kicker: 'THE LAST BENCH JOURNEY',
-      titleA: 'STUDY. SETTLE.', titleB: 'SUCCEED.',
-      lede: 'Last Bench is a student accelerator and technology-enabled journey platform — not a traditional consultancy. Malaysia is the first corridor. We help Bangladeshi students move from confusion to a clear, trackable next step and continue supporting them after arrival.',
+      kicker: 'EDUCATION & MOBILITY · CURRENT MARKET — MALAYSIA',
+      titleA: 'ACCESS WITH', titleB: 'CLARITY.',
+      lede: 'Malaysia Admissions is one active service inside Last Bench Education & Mobility. It helps Bangladeshi students make credible education decisions, move through high-stakes application and visa processes, prepare for departure and continue with practical support after arrival.',
       steps: [
         ['DISCOVER', 'Goals, profile, budget and intake.'],
         ['MATCH', 'Realistic courses and institutions.'],
@@ -21,7 +21,7 @@
         ['ARRIVE', 'Settlement, community and first steps.'],
       ],
       services: ['University selection','Malaysia admissions','Visa guidance','Scholarship verification','Pre-departure','Settlement + community'],
-      start: 'START MY JOURNEY', track: 'TRACK MY JOURNEY', partner: 'TUTOR / COACHING / EDUCATION PARTNER →', email: 'EMAIL THE TEAM →',
+      start: 'EXPLORE MALAYSIA ADMISSIONS', track: 'TRACK MY JOURNEY', partner: 'EDUCATION PARTNER →', email: 'EMAIL THE TEAM →',
       trust: 'TRANSPARENCY RULE — No visa guarantees. No fixed scholarship or admission promises. Fees, intakes, eligibility and partner offers can change and must be verified before a student acts. Every operational promise should have an owner, status and evidence.',
       university: 'UNIVERSITY EXPLORER — These are research options, not a claim that every listed institution is a current Last Bench partner. Programme availability, fees, English requirements, intakes, scholarships and eligibility must be verified against current official information before application.',
       beyondKicker: 'BEYOND ARRIVAL', beyondA: 'THE RELATIONSHIP', beyondB: 'CONTINUES.',
@@ -32,12 +32,12 @@
         ['PROGRESS','Modern capability pathways when active and relevant.'],
         ['RETURN','Stories, referrals, mentoring and opportunity.'],
       ],
-      portal: 'SEE HOW LAST BENCH WORKS →', portalAria: 'See how the Last Bench student journey works',
+      portal: 'CHOOSE YOUR PATH →', portalAria: 'Choose your Last Bench path',
     },
     bn: {
-      kicker: 'লাস্ট বেঞ্চ শিক্ষার্থী যাত্রা',
-      titleA: 'পড়ুন। থিতু হোন।', titleB: 'সফল হোন।',
-      lede: 'লাস্ট বেঞ্চ একটি স্টুডেন্ট অ্যাক্সেলারেটর ও প্রযুক্তি-সমর্থিত জার্নি প্ল্যাটফর্ম — প্রচলিত কনসালটেন্সি নয়। প্রথম করিডর বাংলাদেশ থেকে মালয়েশিয়া। আমরা বিভ্রান্তি থেকে একটি পরিষ্কার, ট্র্যাকযোগ্য পরবর্তী ধাপে যেতে সাহায্য করি এবং পৌঁছানোর পরেও পাশে থাকি।',
+      kicker: 'এডুকেশন অ্যান্ড মোবিলিটি · বর্তমান মার্কেট — মালয়েশিয়া',
+      titleA: 'স্পষ্টতার সাথে', titleB: 'অ্যাক্সেস।',
+      lede: 'মালয়েশিয়া অ্যাডমিশন লাস্ট বেঞ্চের Education & Mobility বিভাগের একটি সক্রিয় সেবা। এটি শিক্ষার্থীদের বিশ্বাসযোগ্য শিক্ষা সিদ্ধান্ত, আবেদন ও ভিসা প্রক্রিয়া, প্রি-ডিপারচার প্রস্তুতি এবং পৌঁছানোর পর বাস্তব সহায়তায় সাহায্য করে।',
       steps: [
         ['DISCOVER','লক্ষ্য, প্রোফাইল, বাজেট ও ইনটেক বুঝুন।'],
         ['MATCH','বাস্তবসম্মত কোর্স ও প্রতিষ্ঠান মিলিয়ে নিন।'],
@@ -47,7 +47,7 @@
         ['ARRIVE','সেটেলমেন্ট, কমিউনিটি ও প্রথম পদক্ষেপ।'],
       ],
       services: ['ইউনিভার্সিটি নির্বাচন','মালয়েশিয়া অ্যাডমিশন','ভিসা গাইডেন্স','স্কলারশিপ যাচাই','প্রি-ডিপারচার','সেটেলমেন্ট + কমিউনিটি'],
-      start: 'আমার যাত্রা শুরু করুন', track: 'আমার যাত্রা ট্র্যাক করুন', partner: 'টিউটর / কোচিং / এডুকেশন পার্টনার →', email: 'EMAIL THE TEAM →',
+      start: 'মালয়েশিয়া অ্যাডমিশন দেখুন', track: 'আমার যাত্রা ট্র্যাক করুন', partner: 'এডুকেশন পার্টনার →', email: 'EMAIL THE TEAM →',
       trust: 'স্বচ্ছতার নিয়ম — ভিসার গ্যারান্টি নেই। নির্দিষ্ট স্কলারশিপ বা অ্যাডমিশনের প্রতিশ্রুতি নেই। ফি, ইনটেক, যোগ্যতা ও পার্টনার অফার বদলাতে পারে; সিদ্ধান্তের আগে বর্তমান তথ্য যাচাই করতে হবে। প্রতিটি অপারেশনাল প্রতিশ্রুতির মালিক, স্ট্যাটাস ও প্রমাণ থাকা উচিত।',
       university: 'ইউনিভার্সিটি এক্সপ্লোরার — এগুলো গবেষণার অপশন; তালিকায় থাকা মানেই প্রতিষ্ঠানটি বর্তমানে লাস্ট বেঞ্চের পার্টনার নয়। প্রোগ্রাম, ফি, ইংরেজি শর্ত, ইনটেক, স্কলারশিপ ও যোগ্যতা আবেদনের আগে বর্তমান অফিসিয়াল সূত্র থেকে যাচাই করুন।',
       beyondKicker: 'পৌঁছানোর পরেও', beyondA: 'সম্পর্কটি', beyondB: 'চলতে থাকে।',
@@ -58,7 +58,7 @@
         ['PROGRESS','সক্রিয় ও প্রাসঙ্গিক হলে আধুনিক স্কিল পথ।'],
         ['RETURN','গল্প, রেফারেল, মেন্টরিং ও সুযোগ।'],
       ],
-      portal: 'লাস্ট বেঞ্চ কীভাবে কাজ করে →', portalAria: 'লাস্ট বেঞ্চ শিক্ষার্থী যাত্রা কীভাবে কাজ করে দেখুন',
+      portal: 'আপনার পথ বেছে নিন →', portalAria: 'লাস্ট বেঞ্চে আপনার পথ বেছে নিন',
     }
   };
 
@@ -104,7 +104,7 @@
   }
 
   function newJourney(lang) {
-    const section = document.createElement('section'); section.id = 'lb-journey-os'; section.className = 'lbp-shell'; section.dataset.lang = lang; section.setAttribute('aria-labelledby','lbp-journey-title'); section.style.padding = '10vh 0 12vh'; section.innerHTML = journeyMarkup(lang); return section;
+    const section = document.createElement('section'); section.id = 'lb-education'; section.className = 'lbp-shell'; section.dataset.lang = lang; section.setAttribute('aria-labelledby','lbp-journey-title'); section.style.padding = '10vh 0 12vh'; section.innerHTML = journeyMarkup(lang); return section;
   }
 
   function newBeyond(lang) {
@@ -117,7 +117,7 @@
   function alignPrimaryCTA(lang) {
     const el = document.querySelector('.lb-class-portal'); if (!el) return;
     const c = COPY[lang];
-    if (el.getAttribute('href') !== '#lb-journey-os') el.setAttribute('href','#lb-journey-os');
+    if (el.getAttribute('href') !== '#lb-company') el.setAttribute('href','#lb-company');
     if (el.getAttribute('aria-label') !== c.portalAria) el.setAttribute('aria-label',c.portalAria);
     if (el.textContent !== c.portal) el.textContent = c.portal;
   }
@@ -142,10 +142,25 @@
   }
 
   function updateMetadata() {
+    const title='Last Bench — Opportunity Accelerator';
+    const description='Education, capability and business connected by community — helping people turn credible opportunity into progress.';
     document.documentElement.dataset.businessBlueprintAligned=ALIGNMENT_VERSION;
-    window.__LB_BLUEPRINT_ALIGNMENT__={version:ALIGNMENT_VERSION,currentEngine:'mobility',corridor:'Bangladesh-Malaysia'};
-    const meta=document.querySelector('meta[name="description"]');
-    if(meta) meta.setAttribute('content','Last Bench helps Bangladeshi students study, settle and succeed in Malaysia with transparent university selection, admissions, visa guidance, pre-departure support, journey tracking and community after arrival.');
+    document.documentElement.dataset.parentCategory='opportunity-accelerator';
+    window.__LB_BLUEPRINT_ALIGNMENT__={
+      version:ALIGNMENT_VERSION,
+      category:'Opportunity Accelerator',
+      engines:['Education & Mobility','CLASS[Λ]','co.lab'],
+      connectiveLayer:'Community + Platform',
+      currentEducationMarket:'Malaysia'
+    };
+    document.title=title;
+    const setMeta=(selector,attribute,value)=>{
+      const el=document.querySelector(selector);
+      if(el) el.setAttribute(attribute,value);
+    };
+    setMeta('meta[name="description"]','content',description);
+    setMeta('meta[property="og:title"]','content',title);
+    setMeta('meta[property="og:description"]','content',description);
   }
 
   function ensureBusinessLayer() {
@@ -155,7 +170,7 @@
       const lang=currentLanguage(); const campusSection=findCampusSection(); const signup=document.getElementById('signup');
       alignPrimaryCTA(lang); sanitizeUniversityClaims(campusSection);
 
-      let journey=document.getElementById('lb-journey-os');
+      let journey=document.getElementById('lb-education');
       if(!journey){journey=newJourney(lang); if(campusSection?.parentNode) campusSection.parentNode.insertBefore(journey,campusSection); else if(signup?.parentNode) signup.parentNode.insertBefore(journey,signup); else document.body.appendChild(journey);}
       else if(journey.dataset.lang!==lang){journey.dataset.lang=lang; journey.innerHTML=journeyMarkup(lang);}
 
