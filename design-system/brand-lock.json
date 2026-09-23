@@ -1,0 +1,93 @@
+{
+  "$schemaVersion": "1.0.0",
+  "$description": "Machine-enforced Last Bench identity source lock. Canonical logo files are immutable unless the user explicitly approves a brand identity change and this manifest is updated in the same reviewed change.",
+  "brand": "Last Bench",
+  "policy": {
+    "imageModelMayRenderLogo": false,
+    "imageModelMayRecreateWordmark": false,
+    "imageModelMayRecreateIcon": false,
+    "vectorizationFromRasterAllowed": false,
+    "recolorLockedLogoAllowed": false,
+    "postGenerationCompositingRequired": true,
+    "savedArtifactReviewRequired": true,
+    "unknownBrandFactsMayBeInvented": false
+  },
+  "canonicalAssets": {
+    "masterReference": {
+      "path": "assets/branding/logo-lockups.png",
+      "gitBlobSha": "00a93bf868dd3accea95c3e08e0b0a8816f3ab85",
+      "role": "master-reference"
+    },
+    "productionLogo": {
+      "path": "landing/assets/logo-full.png",
+      "gitBlobSha": "e1c2f1be3d72c28e0790e26c638de72fcef19ad3",
+      "role": "production-full-lockup"
+    },
+    "productionIcon": {
+      "path": "landing/assets/logo-icon.png",
+      "gitBlobSha": "6bedefa5e936807ac0de88d9cfd3b7bc6145c3bc",
+      "role": "production-icon"
+    }
+  },
+  "approvedDuplicates": [
+    {
+      "path": "design-source/claude-design/2026-09-08/assets/logo-full.png",
+      "source": "productionLogo"
+    },
+    {
+      "path": "design-source/claude-design/2026-09-08/design_handoff_last_bench/assets/logo-full.png",
+      "source": "productionLogo"
+    },
+    {
+      "path": "design-source/claude-design/2026-09-08/assets/logo-icon.png",
+      "source": "productionIcon"
+    },
+    {
+      "path": "design-source/claude-design/2026-09-08/design_handoff_last_bench/assets/logo-icon.png",
+      "source": "productionIcon"
+    },
+    {
+      "path": "design-source/claude-design/2026-09-08/design_handoff_journey_and_dashboard/assets/logo-icon.png",
+      "source": "productionIcon"
+    },
+    {
+      "path": "landing/class-a/assets/last-bench-bench.png",
+      "source": "productionIcon"
+    }
+  ],
+  "deprecatedAssets": [
+    "design-system/logo.svg"
+  ],
+  "lockedIdentity": {
+    "name": "Last Bench",
+    "tagline": "Creating a Lasting Benchmark",
+    "colors": {
+      "brandGreen": "#00C853",
+      "brandGreenBright": "#00E676",
+      "charcoal": "#111111",
+      "warmWhite": "#FAFAF8",
+      "sageGreen": "#E6F2E9",
+      "gray": "#6B6F76"
+    },
+    "typography": {
+      "display": "General Sans",
+      "body": "Sora"
+    }
+  },
+  "forbiddenProductionPhrases": [
+    "New Country New Skills Bigger Tomorrow",
+    "Your Next Chapter Starts Here",
+    "Bangladeshi Students Global Opportunities",
+    "From Bangladesh to a brighter tomorrow",
+    "Real Opportunities. A Brighter You."
+  ],
+  "productionScanRoots": [
+    "landing",
+    "app",
+    "components"
+  ],
+  "allowedLogoFilesInLandingAssets": [
+    "landing/assets/logo-full.png",
+    "landing/assets/logo-icon.png"
+  ]
+}
