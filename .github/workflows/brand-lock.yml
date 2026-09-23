@@ -1,0 +1,54 @@
+name: Last Bench Brand Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/branding/**"
+      - "landing/assets/**"
+      - "landing/**"
+      - "app/**"
+      - "components/**"
+      - "design-system/**"
+      - "scripts/validate-brand-lock.mjs"
+      - "skills/last-bench-brand-source-lock/**"
+      - ".claude/skills/last-bench-brand-source-lock/**"
+      - ".agents/skills/last-bench-brand-source-lock/**"
+      - "package.json"
+      - ".github/workflows/brand-lock.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "assets/branding/**"
+      - "landing/assets/**"
+      - "landing/**"
+      - "app/**"
+      - "components/**"
+      - "design-system/**"
+      - "scripts/validate-brand-lock.mjs"
+      - "skills/last-bench-brand-source-lock/**"
+      - ".claude/skills/last-bench-brand-source-lock/**"
+      - ".agents/skills/last-bench-brand-source-lock/**"
+      - "package.json"
+      - ".github/workflows/brand-lock.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  brand-lock:
+    name: Verify canonical identity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+
+      - name: Verify Last Bench brand source lock
+        run: node scripts/validate-brand-lock.mjs
