@@ -174,6 +174,30 @@ Automate or certify these journeys before declaring the complete product release
 
 It calls `scripts/release-smoke.mjs` with the canonical web/API origins plus the direct Render diagnostic origin. The smoke gate verifies semantic API health and detects stale homepage HTML through release fingerprints. A failed run creates or updates the GitHub issue **Production smoke gate**. A later successful run comments on and closes that issue automatically.
 
+## Gate J — Brand identity source lock
+
+Last Bench visual identity is governed by a deterministic source-lock system:
+
+- Canonical manifest: `design-system/brand-lock.json`.
+- Production logo: `landing/assets/logo-full.png`.
+- Production icon: `landing/assets/logo-icon.png`.
+- Master/reference board: `assets/branding/logo-lockups.png`.
+- Mandatory skill: `skills/last-bench-brand-source-lock/SKILL.md` with mirrored copies for Claude/agent runtimes.
+- Validation command: `pnpm brand:check`.
+- CI gate: `.github/workflows/brand-lock.yml`.
+
+Release requirements:
+
+- [x] Canonical logo/icon fingerprints are machine-locked.
+- [x] Approved duplicate assets must remain byte-identical to their canonical source.
+- [x] The legacy `design-system/logo.svg` recreation is blocked from production use.
+- [x] AI image generation is prohibited from rendering/recreating the Last Bench mark; AI may generate only an unbranded visual layer and the exact logo is composited afterward.
+- [x] Agent skill copies are checked for drift.
+- [x] Saved/exported artifact review is mandatory before calling a branded artifact final.
+- [ ] Enable branch/ruleset protection on `main` so the Brand Lock status check and CODEOWNERS review cannot be bypassed by direct pushes.
+
+A visually attractive result is not brand-approved unless this gate passes.
+
 ## Definition of done
 
 The Foundation Lock is fully complete when repository code, Supabase migration state, GitHub Pages production deploy, canonical-domain DNS, Render routing, authenticated sessions, form receipt and end-to-end release journeys all agree. Unknowns remain explicit gates; they are never converted into “done” statements by documentation or UI.
