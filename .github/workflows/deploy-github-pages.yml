@@ -25,6 +25,7 @@ on:
       - "scripts/build-site.mjs"
       - "scripts/validate-public-env.mjs"
       - "scripts/validate-design-system.mjs"
+      - "scripts/validate-brand-lock.mjs"
       - "package.json"
       - "pnpm-lock.yaml"
   workflow_dispatch:

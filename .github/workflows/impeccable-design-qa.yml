@@ -12,6 +12,11 @@ on:
       - "SITE_BLUEPRINT.md"
       - "CLAUDE_DESIGN_PHONE_HANDOFF.md"
       - ".agents/skills/impeccable/**"
+      - "scripts/validate-brand-lock.mjs"
+      - ".agents/skills/last-bench-brand-source-lock/**"
+      - ".claude/skills/last-bench-brand-source-lock/**"
+      - "skills/last-bench-brand-source-lock/**"
+      - "design-system/brand-lock.json"
       - ".github/workflows/impeccable-design-qa.yml"
   pull_request:
     branches: [main]

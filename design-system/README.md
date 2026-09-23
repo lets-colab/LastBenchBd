@@ -8,6 +8,26 @@ Last Bench is an **Opportunity Accelerator** with three operating engines — Ed
 
 This system governs Last Bench corporate, Education & Mobility, Journey OS, and the shared app shell. It does **not** visually homogenize CLASS[Λ] or co.lab.
 
+## Brand source lock
+
+Last Bench identity is also protected by a machine-enforced source lock:
+
+- Manifest: `design-system/brand-lock.json`
+- Validator: `scripts/validate-brand-lock.mjs`
+- Mandatory agent skill: `skills/last-bench-brand-source-lock/SKILL.md`
+- Runtime mirrors: `.claude/skills/last-bench-brand-source-lock/SKILL.md` and `.agents/skills/last-bench-brand-source-lock/SKILL.md`
+- CI gate: `.github/workflows/brand-lock.yml`
+
+The locked workflow separates **unbranded AI-generated visuals** from **brand compositing**. Image models may generate scene/background material, but they must never generate, redraw, imitate, vectorize, recolor, or reconstruct the Last Bench logo. The exact production PNG is composited afterward and the saved/exported artifact must be inspected before release.
+
+Run:
+
+```bash
+pnpm brand:check
+```
+
+Any fingerprint mismatch, deprecated-logo usage, skill drift, unapproved root logo asset, or prohibited campaign phrase blocks the brand gate.
+
 ## Source priority
 
 When sources disagree, use this order:

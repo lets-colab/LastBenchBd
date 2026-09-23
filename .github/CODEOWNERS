@@ -14,3 +14,11 @@
 /landing/ @lets-colab
 /assets/branding/ @lets-colab
 /design-system/ @lets-colab
+
+# Last Bench brand identity lock
+/skills/last-bench-brand-source-lock/ @lets-colab
+/.claude/skills/last-bench-brand-source-lock/ @lets-colab
+/.agents/skills/last-bench-brand-source-lock/ @lets-colab
+/design-system/brand-lock.json @lets-colab
+/scripts/validate-brand-lock.mjs @lets-colab
+/.github/workflows/brand-lock.yml @lets-colab
