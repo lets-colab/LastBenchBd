@@ -8,7 +8,17 @@ Last Bench is an **Opportunity Accelerator** with three operating engines — Ed
 
 This system governs Last Bench corporate, Education & Mobility, Journey OS, and the shared app shell. It does **not** visually homogenize CLASS[Λ] or co.lab.
 
+## Canonical brand registry
+
+Human- and agent-readable brand blueprints and exact logo copies are available under:
+
+- `brand/last-bench/`
+- `brand/class-a/`
+
+These copies are fingerprint-checked against their canonical sources. co.lab remains a separate namespace and is maintained in its own canonical repository.
+
 ## Brand source lock
+
 
 Last Bench identity is also protected by a machine-enforced source lock:
 
