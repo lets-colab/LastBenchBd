@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "brand": "Last Bench",
+  "canonical": true,
+  "assets": {
+    "fullLogo": {
+      "path": "brand/last-bench/logo-full.png",
+      "gitBlobSha": "e1c2f1be3d72c28e0790e26c638de72fcef19ad3",
+      "source": "landing/assets/logo-full.png"
+    },
+    "icon": {
+      "path": "brand/last-bench/logo-icon.png",
+      "gitBlobSha": "6bedefa5e936807ac0de88d9cfd3b7bc6145c3bc",
+      "source": "landing/assets/logo-icon.png"
+    },
+    "masterLockups": {
+      "path": "brand/last-bench/logo-lockups.png",
+      "gitBlobSha": "00a93bf868dd3accea95c3e08e0b0a8816f3ab85",
+      "source": "assets/branding/logo-lockups.png"
+    }
+  },
+  "policy": {
+    "generativeLogoCreation": false,
+    "redrawAllowed": false,
+    "recolorAllowed": false,
+    "tracingAllowed": false,
+    "typeSubstitutionAllowed": false,
+    "postGenerationCompositingRequired": true
+  }
+}

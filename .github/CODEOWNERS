@@ -22,3 +22,6 @@
 /design-system/brand-lock.json @lets-colab
 /scripts/validate-brand-lock.mjs @lets-colab
 /.github/workflows/brand-lock.yml @lets-colab
+
+# Canonical brand registry and blueprints
+/brand/ @lets-colab

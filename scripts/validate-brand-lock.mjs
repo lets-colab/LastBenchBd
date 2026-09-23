@@ -273,6 +273,37 @@ for (const productionRoot of productionRoots) {
   }
 }
 
+
+const classABrandLockPath = "brand/class-a/brand-lock.json";
+let classABrandLock = {};
+try {
+  classABrandLock = JSON.parse(readText(classABrandLockPath));
+} catch (error) {
+  fail(classABrandLockPath + " is invalid JSON: " + error.message);
+}
+
+if (classABrandLock?.brand !== "CLASS[Λ]") {
+  fail('brand/class-a/brand-lock.json brand must be exactly "CLASS[Λ]"');
+}
+for (const [name, asset] of Object.entries(classABrandLock?.assets ?? {})) {
+  if (!asset?.path || !asset?.gitBlobSha) {
+    fail("CLASS[Λ] asset " + name + " must define path and gitBlobSha");
+    continue;
+  }
+  assertGitBlobSha(asset.path, asset.gitBlobSha, "CLASS[Λ] " + name);
+}
+for (const [key, expected] of Object.entries({
+  generativeLogoCreation: false,
+  redrawAllowed: false,
+  recolorAllowed: false,
+  lambdaSubstitutionAllowed: false,
+  parentChildLogoFusionAllowed: false,
+})) {
+  if (classABrandLock?.policy?.[key] !== expected) {
+    fail("CLASS[Λ] brand-lock policy." + key + " must be " + expected);
+  }
+}
+
 const homepage = readText("landing/index.html");
 if (!homepage.includes("assets/logo-full.png")) {
   fail("landing/index.html must reference the canonical production full logo asset");

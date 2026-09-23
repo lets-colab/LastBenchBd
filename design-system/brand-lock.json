@@ -53,6 +53,18 @@
     {
       "path": "landing/class-a/assets/last-bench-bench.png",
       "source": "productionIcon"
+    },
+    {
+      "path": "brand/last-bench/logo-full.png",
+      "source": "productionLogo"
+    },
+    {
+      "path": "brand/last-bench/logo-icon.png",
+      "source": "productionIcon"
+    },
+    {
+      "path": "brand/last-bench/logo-lockups.png",
+      "source": "masterReference"
     }
   ],
   "deprecatedAssets": [
