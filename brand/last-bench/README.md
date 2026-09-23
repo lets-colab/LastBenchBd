@@ -1,0 +1,1 @@
+# Last Bench Parent Brand\n\nUse the exact assets in this folder. See `BRAND_BLUEPRINT.md` and `brand-lock.json`.\n
