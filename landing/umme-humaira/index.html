@@ -116,6 +116,7 @@
       background:rgba(8,23,16,.72)
     }
     .nav-links{display:flex;align-items:center;gap:22px}
+    .nav-status{display:none;color:#b9c9bf;font-size:.82rem;font-weight:700}
     .nav-links a{
       position:relative;text-decoration:none;color:#c9d7ce;font-size:.92rem;font-weight:650;
       transition:color .22s ease
@@ -138,14 +139,14 @@
 
     .hero{
       min-height:100svh;
-      display:grid;align-items:center;
+      display:grid;align-items:center;overflow:clip;
       padding:calc(var(--nav-h) + 32px) max(20px,calc((100vw - var(--max))/2)) 40px;
     }
     .hero-grid{
-      width:100%;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.92fr);
+      width:100%;min-width:0;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.92fr);
       gap:clamp(34px,6vw,92px);align-items:center;
     }
-    .hero-copy{max-width:720px;will-change:transform,opacity}
+    .hero-copy{max-width:720px;min-width:0;will-change:transform,opacity}
     .hero-kicker{
       display:inline-flex;align-items:center;gap:9px;
       font-size:.92rem;color:#dce8df;font-weight:650;margin-bottom:24px
@@ -177,6 +178,7 @@
 
     .portrait-stage{
       --rx:0deg;--ry:0deg;--scroll-ry:0deg;--lift:0px;
+      min-width:0;
       --shine-x:54%;--shine-y:18%;--orbit-turn:0deg;
       position:relative;display:grid;place-items:center;min-height:620px;
       perspective:1300px;transform-style:preserve-3d;isolation:isolate;
@@ -404,10 +406,11 @@
       padding:120px max(20px,calc((100vw - var(--max))/2)) 52px;
       background:var(--ink);overflow:hidden
     }
-    .contact-inner{position:relative;z-index:2}
+    .contact-inner{position:relative;z-index:2;min-width:0;max-width:100%}
     .contact h2{font-size:clamp(3.6rem,10vw,7.6rem);line-height:.9;max-width:9ch}
     .contact p{color:#c7d3ca;font-size:1.12rem;max-width:55ch;margin:26px 0 0}
-    .contact-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+    .contact-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px;max-width:100%}
+    .contact-links .btn{max-width:100%}
     .footer{
       display:flex;justify-content:space-between;gap:20px;align-items:end;
       padding-top:90px;color:#91a498;font-size:.84rem
@@ -429,6 +432,8 @@
     @media (max-width:900px){
       :root{--nav-h:64px}
       .nav-links a:not(.nav-cta){display:none}
+      .nav-links{gap:12px}
+      .nav-status{display:inline-block}
       .hero-grid{grid-template-columns:1fr;gap:22px}
       .hero{padding-top:calc(var(--nav-h) + 36px);padding-bottom:90px}
       h1{max-width:9ch}
@@ -453,17 +458,18 @@
       .hero,.light-section,.dark-section,.research,.contact{
         padding-left:20px;padding-right:20px
       }
-      h1{font-size:clamp(3.1rem,17vw,4.5rem)}
+      h1{font-size:clamp(2.95rem,14.5vw,4.2rem);max-width:100%}
       .role{font-size:1rem}
       .portrait-stage{min-height:440px}
       .portrait-stage::before{width:min(76vw,318px)}
       .portrait-frame{width:min(78vw,338px)}
-      .portrait-caption{max-width:205px;font-size:.78rem;right:1%;bottom:18px;transform:translate3d(6px,var(--lift),72px)}
+      .portrait-caption{max-width:190px;font-size:.78rem;right:0;bottom:18px;transform:translate3d(0,var(--lift),72px)}
       .identity-facts li{grid-template-columns:1fr;gap:4px}
       .timeline-item{padding-left:46px}
       .paper h3{font-size:1.55rem}
-      .contact h2{font-size:clamp(3.2rem,18vw,5rem)}
-      .footer{flex-direction:column;align-items:flex-start}
+      .contact h2{font-size:clamp(2.95rem,14.5vw,4.6rem);max-width:100%}
+      .contact-links .btn-primary{width:100%;font-size:.88rem;overflow-wrap:anywhere;text-align:center}
+      .footer{flex-direction:column;align-items:flex-start;max-width:100%}
     }
 
     @media (prefers-reduced-motion:reduce){
@@ -508,6 +514,7 @@
         <span class="brand-mark">UH</span><span>Umme Humaira</span>
       </a>
       <div class="nav-links">
+        <span class="nav-status" aria-hidden="true">Profile</span>
         <a href="#journey" data-nav="journey">Journey</a>
         <a href="#research" data-nav="research">Research</a>
         <a href="#education" data-nav="education">Education</a>
@@ -679,6 +686,8 @@
     const timeline = document.querySelector('.timeline');
     const timelineItems = [...document.querySelectorAll('.timeline-item')];
     const navLinks = [...document.querySelectorAll('[data-nav]')];
+    const navStatus = document.querySelector('.nav-status');
+    const sectionNames = {journey:'Journey',research:'Research',education:'Education',contact:'Contact'};
     const revealEls = [...document.querySelectorAll('[data-reveal]')];
     const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
     let scrollFrame = 0;
@@ -716,6 +725,7 @@
           if (active) link.setAttribute('aria-current','location');
           else link.removeAttribute('aria-current');
         });
+        if (navStatus) navStatus.textContent = sectionNames[id] || 'Profile';
       }, { rootMargin:'-28% 0px -58% 0px', threshold:[0,.15,.4,.7] });
       ['journey','research','education','contact'].forEach((id)=>{
         const el=document.getElementById(id);
