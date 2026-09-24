@@ -10,9 +10,9 @@
   <meta property="og:title" content="Umme Humaira — Academic Portfolio" />
   <meta property="og:description" content="Lecturer · Researcher · Educator — Accounting, finance and investor psychology." />
   <meta property="og:type" content="profile" />
-  <meta property="og:image" content="https://www.ciu.edu.bd/attachment-files/ciu-schools/ciubs-images/umme-humaira.jpg" />
+  <meta property="og:image" content="https://lastbenchbd.com/umme-humaira/umme-humaira-portrait.webp" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preload" as="image" href="./umme-humaira-portrait.webp" fetchpriority="high" />\n  <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -177,7 +177,7 @@
     }
     .portrait-frame img{
       width:100%;height:100%;object-fit:cover;display:block;
-      filter:saturate(.9) contrast(1.02);
+      filter:saturate(.96) contrast(1.02);object-position:center 24%;
     }
     .portrait-fallback{
       position:absolute;inset:0;display:grid;place-items:center;z-index:-1;
@@ -434,7 +434,7 @@
           <div class="portrait-orbit" aria-hidden="true"></div>
           <figure class="portrait-frame">
             <div class="portrait-fallback" aria-hidden="true">UH</div>
-            <img src="https://www.ciu.edu.bd/attachment-files/ciu-schools/ciubs-images/umme-humaira.jpg" alt="Umme Humaira, Lecturer at Chittagong Independent University" loading="eager" referrerpolicy="no-referrer" />
+            <img src="./umme-humaira-portrait.webp" alt="Umme Humaira, Lecturer and researcher at Chittagong Independent University" loading="eager" fetchpriority="high" width="240" height="300" />
           </figure>
           <div class="portrait-caption"><span>Current academic role</span>Lecturer, CIU Business School · Accounting</div>
         </div>
