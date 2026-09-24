@@ -26,6 +26,7 @@
     try { film?.pause(); } catch (_) {}
     body.classList.remove('no-scroll');
     body.classList.add('intro-done');
+    try { sessionStorage.setItem('classa_intro_seen', '1'); } catch (_) {}
 
     if (instant) {
       intro?.classList.add('is-complete');
@@ -71,7 +72,12 @@
       await film.play();
     } catch (_) {
       film.muted = true;
-      await film.play().catch(() => {});
+      try {
+        await film.play();
+      } catch (_) {
+        completeIntro({ instant: true });
+        return;
+      }
     }
 
     if (film.requestVideoFrameCallback) {
