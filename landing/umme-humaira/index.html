@@ -94,8 +94,14 @@
     .nav{
       position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:var(--z-nav);
       display:flex;align-items:center;
-      background:linear-gradient(to bottom,rgba(7,18,13,.92),rgba(7,18,13,.54),transparent);
-      backdrop-filter:blur(8px);
+      background:linear-gradient(to bottom,rgba(7,18,13,.84),rgba(7,18,13,.28),transparent);
+      transition:background .35s cubic-bezier(.16,1,.3,1),border-color .35s ease;
+      border-bottom:1px solid transparent;
+    }
+    .nav.is-scrolled{
+      background:rgba(7,18,13,.92);
+      border-bottom-color:rgba(255,255,255,.09);
+      backdrop-filter:blur(12px);
     }
     .nav-inner{
       width:min(var(--max),calc(100% - 40px));margin:auto;
@@ -111,16 +117,24 @@
     }
     .nav-links{display:flex;align-items:center;gap:22px}
     .nav-links a{
-      text-decoration:none;color:#dce7df;font-size:.92rem;font-weight:600
+      position:relative;text-decoration:none;color:#c9d7ce;font-size:.92rem;font-weight:650;
+      transition:color .22s ease
     }
-    .nav-links a:hover{color:white}
+    .nav-links a::after{
+      content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;
+      background:var(--green-bright);transform:scaleX(0);transform-origin:left center;
+      transition:transform .28s cubic-bezier(.16,1,.3,1)
+    }
+    .nav-links a:hover,.nav-links a.is-active{color:white}
+    .nav-links a.is-active::after{transform:scaleX(1)}
+    .nav-links .nav-cta::after{display:none}
     .nav-cta{
       border:1px solid rgba(255,255,255,.32);
       padding:9px 13px;border-radius:999px;
     }
 
     main{position:relative;z-index:var(--z-content)}
-    section{position:relative}
+    section{position:relative;scroll-margin-top:calc(var(--nav-h) + 18px)}
 
     .hero{
       min-height:100svh;
@@ -131,7 +145,7 @@
       width:100%;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.92fr);
       gap:clamp(34px,6vw,92px);align-items:center;
     }
-    .hero-copy{max-width:760px}
+    .hero-copy{max-width:720px;will-change:transform,opacity}
     .hero-kicker{
       display:inline-flex;align-items:center;gap:9px;
       font-size:.92rem;color:#dce8df;font-weight:650;margin-bottom:24px
@@ -319,8 +333,13 @@
     .timeline-item:last-child{margin-bottom:0}
     .timeline-node{
       position:absolute;left:5px;top:7px;width:19px;height:19px;border:2px solid var(--green-bright);
-      border-radius:50%;background:var(--ink)
+      border-radius:50%;background:var(--ink);
+      transition:background .3s ease,transform .3s cubic-bezier(.16,1,.3,1)
     }
+    .timeline-item.is-current .timeline-node{
+      background:var(--green-bright);transform:scale(1.12)
+    }
+    .timeline-item.is-current h3{color:#fff}
     .timeline-year{color:var(--green-bright);font-weight:800;margin-bottom:5px}
     .timeline-item h3{font-size:clamp(1.45rem,2.3vw,2rem);margin-bottom:6px}
     .timeline-item p{margin:0;color:#c3d0c7;max-width:65ch}
@@ -358,8 +377,10 @@
     .papers{display:grid;gap:0;position:relative;z-index:2}
     .paper{
       display:grid;grid-template-columns:160px minmax(0,1fr) 44px;gap:28px;align-items:start;
-      padding:34px 0;border-top:1px solid rgba(255,255,255,.18);text-decoration:none
+      padding:34px 0;border-top:1px solid rgba(255,255,255,.18);text-decoration:none;
+      transition:padding-left .28s cubic-bezier(.16,1,.3,1),border-color .28s ease
     }
+    .paper:hover,.paper:focus-visible{padding-left:10px;border-color:rgba(255,255,255,.34)}
     .paper:last-child{border-bottom:1px solid rgba(255,255,255,.18)}
     .paper-meta{color:#90aa99;font-size:.9rem;font-weight:650;line-height:1.5}
     .paper h3{font-size:clamp(1.55rem,3vw,2.55rem);line-height:1.08;max-width:30ch}
@@ -397,8 +418,13 @@
     .motion-ready.loaded .hero-copy,.motion-ready.loaded .portrait-stage{
       opacity:1;transform:none;transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)
     }
-    [data-reveal]{transform:translateY(16px);opacity:.86;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .7s ease}
-    [data-reveal].is-visible{transform:none;opacity:1}
+    .motion-ready [data-reveal]{
+      transform:translateY(22px);opacity:0;
+      transition:transform .72s cubic-bezier(.16,1,.3,1),opacity .55s ease
+    }
+    .motion-ready [data-reveal].is-visible{transform:none;opacity:1}
+    .timeline-item:nth-child(2){transition-delay:.05s}
+    .timeline-item:nth-child(3){transition-delay:.1s}
 
     @media (max-width:900px){
       :root{--nav-h:64px}
@@ -417,7 +443,9 @@
       .fields-intro{position:relative;top:auto}
       .paper{grid-template-columns:1fr 38px;gap:12px}
       .paper-meta{grid-column:1/-1}
-      .vignette{background:linear-gradient(180deg,rgba(7,18,13,.46),rgba(7,18,13,.7))}
+      .vignette{background:linear-gradient(180deg,rgba(7,18,13,.40),rgba(7,18,13,.72))}
+      .nav.is-scrolled{backdrop-filter:none}
+      .paper:hover,.paper:focus-visible{padding-left:0}
     }
     @media (max-width:560px){
       .nav-inner{width:calc(100% - 28px)}
@@ -427,10 +455,10 @@
       }
       h1{font-size:clamp(3.1rem,17vw,4.5rem)}
       .role{font-size:1rem}
-      .portrait-stage{min-height:455px}
-      .portrait-stage::before{width:min(78vw,322px)}
-      .portrait-frame{width:min(80vw,345px)}
-      .portrait-caption{max-width:205px;font-size:.78rem;right:1%;transform:translate3d(8px,var(--lift),92px)}
+      .portrait-stage{min-height:440px}
+      .portrait-stage::before{width:min(76vw,318px)}
+      .portrait-frame{width:min(78vw,338px)}
+      .portrait-caption{max-width:205px;font-size:.78rem;right:1%;bottom:18px;transform:translate3d(6px,var(--lift),72px)}
       .identity-facts li{grid-template-columns:1fr;gap:4px}
       .timeline-item{padding-left:46px}
       .paper h3{font-size:1.55rem}
@@ -480,10 +508,10 @@
         <span class="brand-mark">UH</span><span>Umme Humaira</span>
       </a>
       <div class="nav-links">
-        <a href="#journey">Journey</a>
-        <a href="#research">Research</a>
-        <a href="#education">Education</a>
-        <a class="nav-cta" href="#contact">Contact</a>
+        <a href="#journey" data-nav="journey">Journey</a>
+        <a href="#research" data-nav="research">Research</a>
+        <a href="#education" data-nav="education">Education</a>
+        <a class="nav-cta" href="#contact" data-nav="contact">Contact</a>
       </div>
     </div>
   </nav>
@@ -644,46 +672,86 @@
     requestAnimationFrame(() => body.classList.add('loaded'));
 
     const progress = document.getElementById('progress');
+    const nav = document.querySelector('.nav');
+    const hero = document.querySelector('.hero');
+    const heroCopy = document.querySelector('.hero-copy');
+    const portraitStage = document.querySelector('[data-depth-stage]');
+    const timeline = document.querySelector('.timeline');
+    const timelineItems = [...document.querySelectorAll('.timeline-item')];
+    const navLinks = [...document.querySelectorAll('[data-nav]')];
     const revealEls = [...document.querySelectorAll('[data-reveal]')];
+    const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+    let scrollFrame = 0;
+
     if (!reduced && 'IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) entry.target.classList.add('is-visible');
         });
-      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+      }, { threshold: .11, rootMargin: '0px 0px -9% 0px' });
       revealEls.forEach((el) => io.observe(el));
+
+      const timelineIO = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          timelineItems.forEach((item) => item.classList.remove('is-current'));
+          entry.target.classList.add('is-current');
+        });
+      }, { threshold:.55, rootMargin:'-18% 0px -35% 0px' });
+      timelineItems.forEach((item) => timelineIO.observe(item));
     } else {
       revealEls.forEach((el) => el.classList.add('is-visible'));
     }
 
-    function setProgress(){
-      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      const p = Math.min(1, Math.max(0, scrollY / max));
-      progress.style.transform = 'scaleX(' + p + ')';
-      return p;
+    if ('IntersectionObserver' in window) {
+      const sectionIO = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter((entry)=>entry.isIntersecting)
+          .sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+        if (!visible) return;
+        const id = visible.target.id;
+        navLinks.forEach((link)=>{
+          const active = link.dataset.nav === id;
+          link.classList.toggle('is-active',active);
+          if (active) link.setAttribute('aria-current','location');
+          else link.removeAttribute('aria-current');
+        });
+      }, { rootMargin:'-28% 0px -58% 0px', threshold:[0,.15,.4,.7] });
+      ['journey','research','education','contact'].forEach((id)=>{
+        const el=document.getElementById(id);
+        if(el) sectionIO.observe(el);
+      });
     }
-    const hero = document.querySelector('.hero');
-    const portraitStage = document.querySelector('[data-depth-stage]');
-    const timeline = document.querySelector('.timeline');
-    const finePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 
     function updateNarrativeDepth(){
-      setProgress();
+      scrollFrame = 0;
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      const pageP = Math.min(1, Math.max(0, scrollY / max));
+      progress.style.transform = 'scaleX(' + pageP + ')';
+      nav?.classList.toggle('is-scrolled',scrollY > 18);
       if (reduced) return;
 
-      const heroP = Math.min(1,Math.max(0,scrollY / Math.max(1,innerHeight*.92)));
+      const heroP = Math.min(1,Math.max(0,scrollY / Math.max(1,innerHeight*.88)));
+      if (heroCopy){
+        heroCopy.style.transform = 'translate3d(0,'+(-14*heroP).toFixed(1)+'px,0)';
+        heroCopy.style.opacity = String(1-heroP*.22);
+      }
       if (portraitStage){
-        portraitStage.style.setProperty('--lift',(-20*heroP).toFixed(1)+'px');
-        portraitStage.style.setProperty('--scroll-ry',(-2.4*heroP).toFixed(2)+'deg');
-        portraitStage.style.setProperty('--orbit-turn',(heroP*28).toFixed(2)+'deg');
+        portraitStage.style.setProperty('--lift',(-24*heroP).toFixed(1)+'px');
+        portraitStage.style.setProperty('--scroll-ry',(-2.2*heroP).toFixed(2)+'deg');
+        portraitStage.style.setProperty('--orbit-turn',(heroP*24).toFixed(2)+'deg');
       }
 
       if (timeline){
         const r = timeline.getBoundingClientRect();
-        const span = Math.max(1,r.height + innerHeight*.54);
-        const tp = Math.min(1,Math.max(0,(innerHeight*.66-r.top)/span));
+        const span = Math.max(1,r.height + innerHeight*.50);
+        const tp = Math.min(1,Math.max(0,(innerHeight*.64-r.top)/span));
         timeline.style.setProperty('--timeline-progress',tp.toFixed(4));
       }
+    }
+
+    function scheduleScrollUpdate(){
+      if (!scrollFrame) scrollFrame = requestAnimationFrame(updateNarrativeDepth);
     }
 
     if (!reduced && portraitStage && finePointer){
@@ -707,14 +775,17 @@
     }
 
     updateNarrativeDepth();
-    addEventListener('scroll',updateNarrativeDepth,{passive:true});
-    addEventListener('resize',updateNarrativeDepth,{passive:true});
+    addEventListener('scroll',scheduleScrollUpdate,{passive:true});
+    addEventListener('resize',scheduleScrollUpdate,{passive:true});
 
     if (!reduced) {
       try {
         const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js');
         const canvas = document.getElementById('webgl');
-        const lowPower = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || innerWidth < 620;
+        const lowPower = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || innerWidth < 720;
+        if (lowPower) {
+          canvas.style.display = 'none';
+        } else {
 
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, .1, 100);
@@ -726,7 +797,7 @@
           alpha:true,
           powerPreference:'high-performance'
         });
-        renderer.setPixelRatio(Math.min(devicePixelRatio || 1, lowPower ? 1 : 1.5));
+        renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.25));
         renderer.setSize(innerWidth, innerHeight);
         renderer.outputColorSpace = THREE.SRGBColorSpace;
 
@@ -776,7 +847,7 @@
           rings.push(ring);
         });
 
-        const count = lowPower ? 110 : 220;
+        const count = 160;
         const positions = new Float32Array(count*3);
         for(let i=0;i<count;i++){
           const y = 1 - (i/(count-1))*2;
@@ -815,18 +886,28 @@
         function resize(){
           camera.aspect = innerWidth/innerHeight;
           camera.updateProjectionMatrix();
-          renderer.setPixelRatio(Math.min(devicePixelRatio || 1, ((navigator.hardwareConcurrency||8)<=4 || innerWidth<620) ? 1 : 1.5));
+          renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.25));
           renderer.setSize(innerWidth,innerHeight);
         }
         addEventListener('resize',resize,{passive:true});
 
         const clock = new THREE.Clock();
+        let sceneActive = true;
+        let animationFrame = 0;
+        const heroObserver = new IntersectionObserver(([entry])=>{
+          sceneActive = entry.isIntersecting;
+          if (sceneActive && !document.hidden && !animationFrame) animationFrame=requestAnimationFrame(animate);
+        },{threshold:.02});
+        if (hero) heroObserver.observe(hero);
+
         function animate(){
+          animationFrame = 0;
+          if (!sceneActive || document.hidden) return;
           const t = clock.getElapsedTime();
           const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
           const p = Math.min(1,Math.max(0,scrollY/max));
-          const heroP = Math.min(1,Math.max(0,scrollY/Math.max(1,innerHeight*1.05)));
-          canvas.style.opacity = String(.95 - heroP*.34);
+          const heroP = Math.min(1,Math.max(0,scrollY/Math.max(1,innerHeight*.92)));
+          canvas.style.opacity = String(Math.max(0,.92 - heroP*.74));
 
           pointerX += (targetX-pointerX)*.04;
           pointerY += (targetY-pointerY)*.04;
@@ -854,9 +935,13 @@
           camera.lookAt(0,0,0);
 
           renderer.render(scene,camera);
-          requestAnimationFrame(animate);
+          animationFrame=requestAnimationFrame(animate);
         }
-        animate();
+        animationFrame=requestAnimationFrame(animate);
+        document.addEventListener('visibilitychange',()=>{
+          if (!document.hidden && sceneActive && !animationFrame) animationFrame=requestAnimationFrame(animate);
+        },{passive:true});
+        }
       } catch (err) {
         document.getElementById('webgl').style.display = 'none';
       }
