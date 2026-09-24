@@ -11,7 +11,9 @@ const hub = read("index.html");
 const masterclass = read("masterclass.html");
 const course = read("course.html");
 const script = read("cinematic.js");
-const styles = read("cinematic.css");\nconst masterclassScript = read("masterclass-cinematic.js");\nconst masterclassStyles = `${read("masterclass-cinematic-a.css")}\n${read("masterclass-cinematic-b.css")}`;
+const styles = read("cinematic.css");
+const masterclassScript = read("masterclass-cinematic.js");
+const masterclassStyles = read("masterclass-cinematic-a.css") + read("masterclass-cinematic-b.css");
 
 describe("CLASS A signup funnel", () => {
   it("keeps all three routes linked", () => {
