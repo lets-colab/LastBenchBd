@@ -68,7 +68,8 @@ const checks = [
     url: `${webOrigin}/class-a/masterclass.html`,
     expectHtml: true,
     expectIncludes: [
-      "masterclass-entry.mp4",\n      "data-intro-end-card",
+      "masterclass-entry.mp4",
+      "data-intro-end-card",
       "SCENE 01 · 0.01%",
       "ENTER EXPERIENCE",
       "TURN AI INTO",
