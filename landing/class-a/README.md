@@ -28,3 +28,16 @@ Table: `public.class_a_registrations`
 The browser uses the project’s publishable key. RLS permits validated inserts for `anon` and `authenticated` while preventing public row reads.
 
 These files are copied into the production artifact by `scripts/build-site.mjs`.
+
+
+## Cinematic masterclass contract
+
+The free masterclass route uses the approved builders reel as Scene 01.
+
+- `ENTER EXPERIENCE` starts the source reel immediately with sound after the user gesture.
+- Desktop/laptop playback is edge-to-edge full-screen; mobile remains full-screen.
+- The reel is intentionally cut at the final CLASS[Λ] lockup (`26.88s`), before the Last Bench end card in the source media.
+- The exact locked CLASS[Λ] logo asset holds briefly on black, then the live website is revealed.
+- Last Bench ownership appears only after the cinematic handoff, as secondary ecosystem attribution.
+- The conversion hierarchy is: cinematic intro → outcome hero → six-part operating journey → final seat CTA → registration.
+- The duplicated six-card manifesto was removed; the full 20-class program is a secondary footer route, not a competing hero action.
