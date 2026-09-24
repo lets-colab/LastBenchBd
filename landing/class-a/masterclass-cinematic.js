@@ -3,94 +3,115 @@
   const body = document.body;
   const intro = document.querySelector('[data-intro]');
   const film = document.querySelector('[data-intro-video]');
-  const ambient = document.querySelector('[data-intro-ambient]');
   const gate = document.querySelector('[data-intro-gate]');
-  const caption = document.querySelector('[data-caption]');
-  const handoff = document.querySelector('[data-handoff]');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(pointer:fine)');
+  const INTRO_END_AT = 26.88;
+  const LOGO_HOLD_MS = 1050;
   let introTimer = null;
-  let captionKey = '';
+  let introEnding = false;
+  let videoFrameToken = null;
 
-  const transcriptCues = [
-    { start: 0.40, end: 3.12, key: '01', text: '0.01%.' },
-    { start: 3.44, end: 10.32, key: '02', text: 'THE BUILDERS.' },
-    { start: 10.48, end: 15.11, key: '03', text: 'WIRED DIFFERENTLY.' },
-    { start: 16.39, end: 21.8, key: '04', text: 'EVEN THE GREATEST BUILDER…' },
-    { start: 21.8, end: 24.05, key: '05', text: 'NEEDS THE RIGHT TOOL.' }
-  ];
-
-  function setCaption(text, key) {
-    if (!caption || key === captionKey) return;
-    captionKey = key;
-    caption.classList.remove('is-visible');
-    window.setTimeout(() => {
-      caption.textContent = text || '';
-      if (text) caption.classList.add('is-visible');
-    }, 90);
+  function cancelFrameWatch() {
+    if (videoFrameToken !== null && film?.cancelVideoFrameCallback) {
+      try { film.cancelVideoFrameCallback(videoFrameToken); } catch (_) {}
+    }
+    videoFrameToken = null;
   }
 
-  function finishIntro({ instant = false } = {}) {
+  function completeIntro({ instant = false } = {}) {
     clearTimeout(introTimer);
-    try { film.pause(); ambient.pause(); } catch (_) {}
+    cancelFrameWatch();
+    introEnding = true;
+    try { film?.pause(); } catch (_) {}
     body.classList.remove('no-scroll');
     body.classList.add('intro-done');
+
     if (instant) {
       intro?.classList.add('is-complete');
       return;
     }
-    intro?.classList.add('is-handoff');
-    window.setTimeout(() => intro?.classList.add('is-complete'), 1850);
+
+    intro?.classList.add('is-exiting');
+    introTimer = window.setTimeout(() => intro?.classList.add('is-complete'), 720);
+  }
+
+  function holdClassLogo() {
+    if (!intro || introEnding) return;
+    introEnding = true;
+    cancelFrameWatch();
+    try { film?.pause(); } catch (_) {}
+    intro.classList.add('is-logo-hold');
+    introTimer = window.setTimeout(() => completeIntro(), LOGO_HOLD_MS);
+  }
+
+  function watchFilmFrame(_now, metadata) {
+    if (!film || introEnding || film.paused) return;
+    if (metadata?.mediaTime >= INTRO_END_AT) {
+      holdClassLogo();
+      return;
+    }
+    if (film.requestVideoFrameCallback) {
+      videoFrameToken = film.requestVideoFrameCallback(watchFilmFrame);
+    }
   }
 
   async function playIntro() {
     if (!intro || !film) return;
+    clearTimeout(introTimer);
+    cancelFrameWatch();
+    introEnding = false;
+    intro.classList.remove('is-logo-hold', 'is-exiting', 'is-complete');
     intro.classList.add('is-playing');
     film.currentTime = 0;
-    if (ambient) ambient.currentTime = 0;
     film.muted = false;
-    if (ambient) ambient.muted = true;
+    film.volume = 1;
+
     try {
-      await Promise.all([film.play(), ambient?.play?.()]);
+      await film.play();
     } catch (_) {
       film.muted = true;
       await film.play().catch(() => {});
     }
-    introTimer = window.setTimeout(() => finishIntro(), 33000);
+
+    if (film.requestVideoFrameCallback) {
+      videoFrameToken = film.requestVideoFrameCallback(watchFilmFrame);
+    }
   }
 
   document.querySelectorAll('[data-enter]').forEach(btn => btn.addEventListener('click', playIntro));
-  document.querySelectorAll('[data-skip]').forEach(btn => btn.addEventListener('click', () => finishIntro({ instant: true })));
+  document.querySelectorAll('[data-skip]').forEach(btn => btn.addEventListener('click', () => completeIntro({ instant: true })));
 
   film?.addEventListener('timeupdate', () => {
-    const t = film.currentTime;
-    const cue = transcriptCues.find(c => t >= c.start && t <= c.end);
-    setCaption(cue?.text || '', cue?.key || '');
-    if (t >= 23.6) intro?.classList.add('is-handoff');
+    if (!introEnding && film.currentTime >= INTRO_END_AT) holdClassLogo();
   });
-  film?.addEventListener('ended', () => finishIntro());
+  film?.addEventListener('ended', holdClassLogo);
 
   // Allow deterministic screenshots / fast return visits.
   const params = new URLSearchParams(location.search);
   const returnVisit = sessionStorage.getItem('classa_intro_seen') === '1';
   if (reduced.matches || params.get('skip') === '1' || returnVisit) {
-    finishIntro({ instant: true });
+    completeIntro({ instant: true });
   } else {
     body.classList.add('no-scroll');
   }
 
   intro?.addEventListener('transitionend', (event) => {
-    if (event.target === intro && intro.classList.contains('is-complete')) sessionStorage.setItem('classa_intro_seen', '1');
+    if (event.target === intro && intro.classList.contains('is-complete')) {
+      sessionStorage.setItem('classa_intro_seen', '1');
+    }
   });
 
   document.querySelectorAll('[data-replay]').forEach(btn => btn.addEventListener('click', () => {
     sessionStorage.removeItem('classa_intro_seen');
-    intro?.classList.remove('is-complete', 'is-handoff', 'is-playing');
+    clearTimeout(introTimer);
+    cancelFrameWatch();
+    introEnding = false;
+    intro?.classList.remove('is-complete', 'is-logo-hold', 'is-exiting', 'is-playing');
     body.classList.remove('intro-done');
     body.classList.add('no-scroll');
     gate?.removeAttribute('hidden');
-    captionKey = '';
-    setCaption('', 'reset');
+    try { if (film) film.currentTime = 0; } catch (_) {}
   }));
 
   // Scroll + pointer choreography.

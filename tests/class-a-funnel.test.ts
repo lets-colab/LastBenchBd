@@ -11,7 +11,7 @@ const hub = read("index.html");
 const masterclass = read("masterclass.html");
 const course = read("course.html");
 const script = read("cinematic.js");
-const styles = read("cinematic.css");
+const styles = read("cinematic.css");\nconst masterclassScript = read("masterclass-cinematic.js");\nconst masterclassStyles = `${read("masterclass-cinematic-a.css")}\n${read("masterclass-cinematic-b.css")}`;
 
 describe("CLASS A signup funnel", () => {
   it("keeps all three routes linked", () => {
@@ -79,9 +79,25 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain('YOUR TEAM.');
     expect(masterclass).toContain('CONTENT · AUTOMATION · MARKETING · OPERATIONS');
     expect(masterclass).toContain('10 SEATS ONLY · RESERVE YOUR FREE SEAT');
-    expect(script).toContain('const handoffAt = 23.6');
-    expect(script).toContain("reelVideo.muted = false");
-    expect(styles).toContain('.reel-morph');
+    expect(masterclass).toContain('data-intro-end-card');
+    expect(masterclass).not.toContain('class="intro-bench"');
+    expect(masterclass).not.toContain('class="manifesto"');
+    expect(masterclassScript).toContain('const INTRO_END_AT = 26.88');
+    expect(masterclassScript).toContain('requestVideoFrameCallback');
+    expect(masterclassScript).toContain('film.muted = false');
+    expect(masterclassStyles).toContain('object-fit:cover');
+    expect(masterclassStyles).toContain('.intro-end-card');
+  });
+
+  it("keeps the masterclass hierarchy focused on one conversion path", () => {
+    const heroIndex = masterclass.indexOf('class="hero"');
+    const journeyIndex = masterclass.indexOf('class="journey"');
+    const finalIndex = masterclass.indexOf('class="final-cta"');
+    expect(heroIndex).toBeGreaterThan(-1);
+    expect(journeyIndex).toBeGreaterThan(heroIndex);
+    expect(finalIndex).toBeGreaterThan(journeyIndex);
+    expect(masterclass).toContain('EXPLORE THE 20-CLASS PROGRAM →');
+    expect(masterclass).not.toContain('class="manifesto"');
   });
 
   it("shares the CLASS Lambda spatial orbit system without changing locked art", () => {

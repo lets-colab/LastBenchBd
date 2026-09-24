@@ -20,13 +20,13 @@
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
 
   <section class="intro" data-intro data-reel-entry aria-label="CLASS Lambda cinematic introduction">
-    <video class="intro-ambient" data-intro-ambient muted playsinline preload="auto" aria-hidden="true">
-      <source src="./assets/masterclass-entry.mp4" type="video/mp4">
-    </video>
     <div class="intro-vignette" aria-hidden="true"></div>
     <video class="intro-film" data-intro-video playsinline preload="auto" poster="./assets/class-a-20-orbit.jpg">
       <source src="./assets/masterclass-entry.mp4" type="video/mp4">
     </video>
+    <div class="intro-end-card" data-intro-end-card aria-hidden="true">
+      <img src="./assets/class-a-logo.jpg" alt="">
+    </div>
 
     <div class="intro-gate" data-intro-gate>
       <p class="gate-kicker">SCENE 01 · 0.01% · CLASS[Λ] BUILDER ENTRY</p>
@@ -39,18 +39,9 @@
       <p class="sound-note">Sound begins after you enter.</p>
     </div>
 
-    <div class="intro-brandbar" aria-hidden="true">
-      <span>CLASS[Λ]</span><span>ACQUIRE · APPLY · ADVANCE</span>
-    </div>
-    <img class="intro-bench" src="./assets/last-bench-bench.png" alt="" aria-hidden="true">
 
-    <div class="intro-caption" data-caption aria-live="off"></div>
     <button class="intro-skip" type="button" data-skip aria-label="Skip introduction">SKIP</button>
 
-    <div class="handoff" data-handoff aria-hidden="true">
-      <div class="handoff-line"></div>
-      <div class="handoff-word">THE RIGHT TOOL.</div>
-    </div>
   </section>
 
   <header class="topbar" data-topbar>
@@ -60,7 +51,7 @@
     <div class="topbar-actions">
       <span class="seat-chip"><i></i> 10 SEATS ONLY · RESERVE YOUR FREE SEAT</span>
       <img class="bench-mark" src="./assets/last-bench-bench.png" alt="Last Bench">
-      <a class="outline-link" href="./course.html">FULL PROGRAM →</a><button class="mini-cta" type="button" data-open-signup>RESERVE FREE SEAT →</button>
+      <button class="mini-cta" type="button" data-open-signup>RESERVE FREE SEAT →</button>
     </div>
   </header>
 
@@ -121,19 +112,6 @@
       </div>
     </section>
 
-    <section class="manifesto" aria-labelledby="manifesto-title">
-      <p class="eyebrow">THE OUTCOME</p>
-      <h2 id="manifesto-title"><span>ONE PERSON.</span><span>A FULL AI TEAM.</span></h2>
-      <div class="manifesto-grid">
-        <article><span>01</span><h3>COMMAND</h3><p>Give AI roles, constraints and standards so it produces decisions—not noise.</p></article>
-        <article><span>02</span><h3>RESEARCH</h3><p>Turn assumptions into evidence before you waste time building the wrong thing.</p></article>
-        <article><span>03</span><h3>BUILD</h3><p>Move from idea to working page, workflow or MVP with a repeatable system.</p></article>
-        <article><span>04</span><h3>CREATE</h3><p>Translate the work into clear design, content and a story people understand.</p></article>
-        <article><span>05</span><h3>SELL</h3><p>Find the next lead, craft the message and turn attention into a commercial step.</p></article>
-        <article><span>06</span><h3>OPERATE</h3><p>Connect the roles into one compact AI team you can direct as a solo builder.</p></article>
-      </div>
-    </section>
-
     <section class="final-cta" id="reserve">
       <div class="final-glow" aria-hidden="true"></div>
       <img class="final-object" src="./assets/class-a-20-orbit.jpg" alt="Metallic CLASS Lambda 20 symbol">
@@ -149,7 +127,7 @@
 
   <footer class="footer">
     <img src="./assets/class-a-logo.jpg" alt="CLASS Lambda — Acquire. Apply. Advance.">
-    <div><span>ACQUIRE. APPLY. ADVANCE.</span><span>A LAST BENCH CAPABILITY EXPERIENCE</span></div>
+    <div><span>ACQUIRE. APPLY. ADVANCE.</span><span>A LAST BENCH CAPABILITY EXPERIENCE</span><a class="footer-program" href="./course.html">EXPLORE THE 20-CLASS PROGRAM →</a></div>
     <img class="footer-bench" src="./assets/last-bench-bench.png" alt="Last Bench">
   </footer>
 
