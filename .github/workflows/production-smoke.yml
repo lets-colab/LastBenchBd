@@ -1,8 +1,9 @@
 name: Canonical Production Smoke
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["Deploy GitHub Pages Production"]
+    types: [completed]
   schedule:
     - cron: "15 3 * * *"
   workflow_dispatch:
@@ -29,9 +30,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Allow production deploy to settle
-        if: github.event_name == 'push'
-        run: sleep 90
+      - name: Require successful production deploy
+        if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success'
+        run: |
+          echo "Production Pages deployment did not succeed; smoke verification is blocked."
+          exit 1
 
       - name: Run production smoke gate
         id: smoke
