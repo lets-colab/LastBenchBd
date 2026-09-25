@@ -78,7 +78,7 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain('>SKIP<');
     expect(masterclass).toContain('TURN AI INTO');
     expect(masterclass).toContain('YOUR TEAM.');
-    expect(masterclass).toContain('CONTENT · AUTOMATION · MARKETING · OPERATIONS');
+    expect(masterclass).toContain('Research · Build · Create · Sell · Operate');
     expect(masterclass).toContain('10 SEATS ONLY · RESERVE YOUR FREE SEAT');
     expect(masterclass).toContain('data-intro-end-card');
     expect(masterclass).not.toContain('class="intro-bench"');
