@@ -70,11 +70,11 @@ const checks = [
     expectIncludes: [
       "masterclass-entry.mp4",
       "data-intro-end-card",
-      "SCENE 01 · 0.01%",
+      "<h1>0.01%</h1>",
       "ENTER EXPERIENCE",
       "TURN AI INTO",
       "YOUR TEAM.",
-      "CONTENT · AUTOMATION · MARKETING · OPERATIONS",
+      "Research · Build · Create · Sell · Operate",
       "10 SEATS ONLY · RESERVE YOUR FREE SEAT",
     ],
   },
@@ -83,7 +83,7 @@ const checks = [
     url: `${webOrigin}/class-a/checkin.html`,
     expectHtml: true,
     expectIncludes: [
-      "STAFF CHECK-IN · CLASS 0",
+      "CLASS[Λ] staff check-in · Class 0",
       "REDEEM ATTENDANCE.",
       "MARK ATTENDED →",
       "checkin.js",
