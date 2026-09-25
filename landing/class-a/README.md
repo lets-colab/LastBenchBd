@@ -46,3 +46,5 @@ The free masterclass route uses the approved builders reel as Scene 01.
 ## Impeccable quality floor
 
 The CLASS[Λ] web system uses the repository Impeccable detector as a bounded visual-quality gate. The current masterclass, course, hub, and staff check-in surfaces are expected to remain free of detector findings for: overused typography, undersized functional text, excessive tracking, decorative grid fields, green ambient glow, low-contrast text, and layout-triggering width animation. Protected brand assets remain deterministic and unchanged.
+
+Regression tests in `tests/class-a-funnel.test.ts` lock the cinematic hierarchy and the known Impeccable quality regressions before release.
