@@ -1145,7 +1145,7 @@
         }
         const marketCurve = new THREE.CatmullRomCurve3(marketPts);
         const marketTube = new THREE.Mesh(
-          new THREE.TubeGeometry(marketCurve,liteMode?56:120,liteMode?.012:.018,5,false),
+          new THREE.TubeGeometry(marketCurve,liteMode?56:120,liteMode ? .012 : .018,5,false),
           new THREE.MeshBasicMaterial({color:green,transparent:true,opacity:.0})
         );
         marketGroup.add(marketTube);
@@ -1238,7 +1238,7 @@
           const def = sceneDefs[activeSceneIndex] || sceneDefs[0];
           targetSceneOpacity = def.render3d ? 1 : 0;
           sceneOpacity += (targetSceneOpacity-sceneOpacity)*.08;
-          canvas.style.opacity = String((liteMode?.82:1)*sceneOpacity);
+          canvas.style.opacity = String((liteMode ? .82 : 1)*sceneOpacity);
           if (sceneOpacity < .015 && !def.render3d) return;
 
           const t = clock.getElapsedTime();
@@ -1247,10 +1247,10 @@
           pointerY += (targetY-pointerY)*.04;
 
           const targets = {
-            top:{x:innerWidth>900?1.18:.12,y:innerWidth>900?.02:-.52,s:liteMode?.88:1.08,rx:.18,ry:.15,cz:liteMode?5.25:5.55,cx:0},
-            journey:{x:innerWidth>900?-1.45:-.15,y:.05,s:liteMode?.78:.92,rx:.12,ry:1.05,cz:5.9,cx:.18},
-            research:{x:innerWidth>900?1.62:.18,y:innerWidth>900?.05:-.34,s:liteMode?.94:1.14,rx:-.06,ry:-.55,cz:5.35,cx:-.12},
-            contact:{x:innerWidth>900?1.05:.10,y:.18,s:liteMode?.72:.88,rx:.08,ry:.35,cz:6.15,cx:0}
+            top:{x:innerWidth>900?1.18:.12,y:innerWidth>900 ? .02 : -.52,s:liteMode ? .88 : 1.08,rx:.18,ry:.15,cz:liteMode?5.25:5.55,cx:0},
+            journey:{x:innerWidth>900?-1.45:-.15,y:.05,s:liteMode ? .78 : .92,rx:.12,ry:1.05,cz:5.9,cx:.18},
+            research:{x:innerWidth>900?1.62:.18,y:innerWidth>900 ? .05 : -.34,s:liteMode ? .94 : 1.14,rx:-.06,ry:-.55,cz:5.35,cx:-.12},
+            contact:{x:innerWidth>900?1.05:.10,y:.18,s:liteMode ? .72 : .88,rx:.08,ry:.35,cz:6.15,cx:0}
           };
           const st = targets[sceneId] || targets.top;
           group.position.x += (st.x-group.position.x)*.045;
@@ -1277,16 +1277,16 @@
           const researchMix = sceneId==='research' ? 1 : 0;
           const contactMix = sceneId==='contact' ? 1 : 0;
 
-          core.material.opacity += (((sceneId==='research'?.34:.78))-core.material.opacity)*.08;
-          wire.material.opacity += (((sceneId==='research'?.10:.20))-wire.material.opacity)*.08;
-          ribbon.material.opacity += (((sceneId==='top'?.32:sceneId==='contact'?.16:.08))-ribbon.material.opacity)*.08;
-          points.material.opacity += (((sceneId==='top'?.46:sceneId==='research'?.20:.12))-points.material.opacity)*.08;
-          marketTube.material.opacity += ((researchMix*(liteMode?.42:.68))-marketTube.material.opacity)*.10;
-          marketTube2.material.opacity += ((researchMix*(liteMode?.25:.44))-marketTube2.material.opacity)*.10;
-          helix.material.opacity += ((journeyMix*(liteMode?.38:.62))-helix.material.opacity)*.10;
-          helix2.material.opacity += ((journeyMix*(liteMode?.22:.40))-helix2.material.opacity)*.10;
-          pubMaterialA.opacity += ((researchMix*(liteMode?.42:.66))-pubMaterialA.opacity)*.10;
-          pubMaterialB.opacity += ((researchMix*(liteMode?.36:.58))-pubMaterialB.opacity)*.10;
+          core.material.opacity += (((sceneId==='research' ? .34 : .78))-core.material.opacity)*.08;
+          wire.material.opacity += (((sceneId==='research' ? .10 : .20))-wire.material.opacity)*.08;
+          ribbon.material.opacity += (((sceneId==='top' ? .32 : sceneId==='contact' ? .16 : .08))-ribbon.material.opacity)*.08;
+          points.material.opacity += (((sceneId==='top' ? .46 : sceneId==='research' ? .20 : .12))-points.material.opacity)*.08;
+          marketTube.material.opacity += ((researchMix*(liteMode ? .42 : .68))-marketTube.material.opacity)*.10;
+          marketTube2.material.opacity += ((researchMix*(liteMode ? .25 : .44))-marketTube2.material.opacity)*.10;
+          helix.material.opacity += ((journeyMix*(liteMode ? .38 : .62))-helix.material.opacity)*.10;
+          helix2.material.opacity += ((journeyMix*(liteMode ? .22 : .40))-helix2.material.opacity)*.10;
+          pubMaterialA.opacity += ((researchMix*(liteMode ? .42 : .66))-pubMaterialA.opacity)*.10;
+          pubMaterialB.opacity += ((researchMix*(liteMode ? .36 : .58))-pubMaterialB.opacity)*.10;
 
           marketGroup.rotation.y = .18 + Math.sin(t*.24)*.12;
           marketGroup.rotation.z = -.08 + Math.sin(t*.31)*.035;
@@ -1304,7 +1304,7 @@
 
           camera.position.z += (st.cz-camera.position.z)*.05;
           camera.position.x += (st.cx-camera.position.x)*.05;
-          camera.position.y += ((sceneId==='research'?.06:0)-camera.position.y)*.05;
+          camera.position.y += ((sceneId==='research' ? .06 : 0)-camera.position.y)*.05;
           camera.lookAt(0,0,0);
 
           renderer.render(scene,camera);
