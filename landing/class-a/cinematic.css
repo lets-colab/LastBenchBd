@@ -758,3 +758,8 @@ body.reel-locked { overflow: hidden; }
 .journey-progress>span,.phase-list::before,.phase::after{box-shadow:none}
 .primary,.primary:hover,.mobile-stick a{box-shadow:0 18px 48px rgba(0,0,0,.34)}
 .hero h1,.hub-hero h1,.register-copy h2,.section-heading h2,.path-card h3{letter-spacing:-.04em}
+
+/* Explicit surface ancestry for CLASS[Λ] contrast + rendering. */
+.hub-page,.course-page,.hub-page .wrap,.course-page .wrap,.hub-hero,.course-page .hero,.path-section,.journey-section,.register-section,.phase-list,.phase,.path-card{background-color:#050607}
+.form-card{background-color:#0b0d10}
+.phase-list{border-top:0}
