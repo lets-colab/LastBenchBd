@@ -112,6 +112,21 @@ describe("CLASS A signup funnel", () => {
     }
   });
 
+  it("avoids the known Impeccable slop regressions", () => {
+    const sharedCss = read("cinematic.css");
+    const masterCss = read("masterclass-cinematic-a.css") + read("masterclass-cinematic-b.css");
+    const checkinCss = read("checkin.css");
+    for (const css of [sharedCss, masterCss, checkinCss]) {
+      expect(css).not.toMatch(/font-family:\s*Inter/i);
+    }
+    expect(sharedCss).not.toContain("background-size: 32px 32px");
+    expect(masterclass).not.toContain('class="gate-kicker"');
+    expect(masterclass).not.toContain('<p class="eyebrow">FREE MASTERCLASS');
+    expect(course).not.toContain('20-CLASS ONE-PERSON VENTURE BUILDER</p>');
+    expect(hub).not.toContain('CLASS[Λ] · ONE-PERSON AI TEAM</p>');
+    expect(checkinCss).not.toMatch(/font-family:\s*Inter/i);
+  });
+
   it("contains no hardcoded event date", () => {
     const pages = `${hub}\n${masterclass}\n${course}`;
     expect(pages).not.toMatch(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}\b/i);
