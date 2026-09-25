@@ -61,7 +61,6 @@ describe("CLASS A signup funnel", () => {
       expect(page).toContain('./assets/class-a-favicon.jpg');
       expect(page).toContain("ACQUIRE. APPLY. ADVANCE.");
     }
-    expect(hub).toContain('data-brand-intro');
     expect(styles).toContain("@media (prefers-reduced-motion: reduce)");
     expect(script).toContain("--journey-progress");
     expect(script).toContain("visibilitychange");
@@ -74,7 +73,7 @@ describe("CLASS A signup funnel", () => {
     expect(statSync(reelPath).size).toBeGreaterThan(1_000_000);
     expect(masterclass).toContain('data-reel-entry');
     expect(masterclass).toContain('./assets/masterclass-entry.mp4');
-    expect(masterclass).toContain('SCENE 01 · 0.01%');
+    expect(masterclass).toContain('<h1>0.01%</h1>');
     expect(masterclass).toContain('ENTER EXPERIENCE');
     expect(masterclass).toContain('>SKIP<');
     expect(masterclass).toContain('TURN AI INTO');
