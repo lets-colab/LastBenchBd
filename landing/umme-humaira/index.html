@@ -83,7 +83,28 @@
       background:
         radial-gradient(circle at 72% 40%, transparent 0 28%, rgba(7,18,13,.10) 52%, rgba(7,18,13,.70) 100%),
         linear-gradient(90deg, rgba(7,18,13,.80) 0 34%, rgba(7,18,13,.025) 68%, rgba(7,18,13,.32) 100%);
+      transition:opacity .7s cubic-bezier(.16,1,.3,1);
     }
+    .scene-rail{
+      position:fixed;right:22px;top:50%;z-index:var(--z-nav);pointer-events:none;
+      transform:translateY(-50%);display:grid;gap:8px;justify-items:end;
+      color:rgba(225,238,230,.62);text-align:right;
+      transition:color .45s ease,opacity .45s ease;
+    }
+    .scene-rail::after{
+      content:"";width:1px;height:86px;background:rgba(255,255,255,.18);margin-top:8px
+    }
+    .scene-count{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800}
+    .scene-name{font-size:.76rem;letter-spacing:.11em;text-transform:uppercase;font-weight:750;max-width:18ch}
+    body[data-scene="identity"] .scene-rail,
+    body[data-scene="fields"] .scene-rail,
+    body[data-scene="education"] .scene-rail{color:rgba(10,48,31,.56)}
+    body[data-scene="identity"] .scene-rail::after,
+    body[data-scene="fields"] .scene-rail::after,
+    body[data-scene="education"] .scene-rail::after{background:rgba(8,84,51,.22)}
+    body:not([data-scene="top"]) .portrait-orbit::before,
+    body:not([data-scene="top"]) .portrait-orbit::after,
+    body:not([data-scene="top"]) .hud-scan{animation-play-state:paused!important}
 
     .progress{
       position:fixed;left:0;top:0;z-index:60;height:3px;width:100%;
@@ -367,6 +388,29 @@
     .identity-facts strong{font-size:.88rem;color:#355241}
     .identity-facts span{font-weight:650}
 
+    .journey-motion{
+      position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:.72
+    }
+    .journey-thread{
+      position:absolute;top:8%;bottom:6%;width:1px;
+      background:linear-gradient(180deg,transparent,rgba(68,209,140,.24),rgba(183,167,216,.18),transparent);
+      transform-origin:top center;transform:scaleY(.16);
+      transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity .6s ease;opacity:.28
+    }
+    .journey-thread::after{
+      content:"";position:absolute;width:6px;height:6px;border-radius:50%;left:50%;top:var(--node,42%);
+      transform:translate(-50%,-50%);background:rgba(220,239,226,.72);
+      box-shadow:0 0 0 5px rgba(68,209,140,.07)
+    }
+    .journey-thread:nth-child(1){left:68%;--node:24%}
+    .journey-thread:nth-child(2){left:75%;--node:48%}
+    .journey-thread:nth-child(3){left:82%;--node:68%}
+    .journey-thread:nth-child(4){left:89%;--node:36%}
+    body[data-scene="journey"] .journey-thread{transform:scaleY(1);opacity:1}
+    body[data-scene="journey"] .journey-thread:nth-child(2){transition-delay:.08s}
+    body[data-scene="journey"] .journey-thread:nth-child(3){transition-delay:.16s}
+    body[data-scene="journey"] .journey-thread:nth-child(4){transition-delay:.24s}
+
     .timeline{position:relative;max-width:980px;--timeline-progress:0}
     .timeline::before,.timeline::after{
       content:"";position:absolute;left:14px;top:0;bottom:0;width:1px
@@ -423,13 +467,35 @@
       border:1px solid rgba(68,209,140,.18);box-shadow:0 0 0 70px rgba(68,209,140,.04),0 0 0 140px rgba(68,209,140,.02)
     }
     .research .section-head p{color:#bfd0c4}
+    .research-signal{
+      position:absolute;right:-4%;top:5%;width:min(58vw,820px);height:78%;
+      opacity:.44;pointer-events:none;z-index:1;overflow:visible
+    }
+    .research-signal path{
+      fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;
+      stroke-dasharray:10 12;animation:signalFlow 11s linear infinite;
+      animation-play-state:paused
+    }
+    .research-signal .signal-a{stroke:rgba(68,209,140,.58)}
+    .research-signal .signal-b{stroke:rgba(183,167,216,.50);animation-duration:15s;animation-direction:reverse}
+    .research-signal circle{fill:#d8efe1;opacity:.5;transform-box:fill-box;transform-origin:center;animation:signalPulse 2.8s ease-in-out infinite;animation-play-state:paused}
+    body[data-scene="research"] .research-signal path,
+    body[data-scene="research"] .research-signal circle{animation-play-state:running}
+    @keyframes signalFlow{to{stroke-dashoffset:-220}}
+    @keyframes signalPulse{50%{opacity:1;transform:scale(1.7)}}
+
     .papers{display:grid;gap:0;position:relative;z-index:2}
     .paper{
-      display:grid;grid-template-columns:160px minmax(0,1fr) 44px;gap:28px;align-items:start;
+      --paper-z:0px;display:grid;grid-template-columns:160px minmax(0,1fr) 44px;gap:28px;align-items:start;
       padding:34px 0;border-top:1px solid rgba(255,255,255,.18);text-decoration:none;
-      transition:padding-left .28s cubic-bezier(.16,1,.3,1),border-color .28s ease
+      transform:perspective(1200px) translate3d(0,0,var(--paper-z)) rotateX(0deg);
+      transform-origin:center center;
+      transition:transform .38s cubic-bezier(.16,1,.3,1),padding-left .28s cubic-bezier(.16,1,.3,1),border-color .28s ease,background .28s ease
     }
-    .paper:hover,.paper:focus-visible{padding-left:10px;border-color:rgba(255,255,255,.34)}
+    .paper:hover,.paper:focus-visible{
+      --paper-z:28px;padding-left:10px;border-color:rgba(255,255,255,.34);
+      background:linear-gradient(90deg,rgba(255,255,255,.035),transparent 72%)
+    }
     .paper:last-child{border-bottom:1px solid rgba(255,255,255,.18)}
     .paper-meta{color:#90aa99;font-size:.9rem;font-weight:650;line-height:1.5}
     .paper h3{font-size:clamp(1.55rem,3vw,2.55rem);line-height:1.08;max-width:30ch}
@@ -439,7 +505,24 @@
     }
     .paper:hover .arrow{transform:translate(4px,-4px);border-color:var(--green-bright)}
 
-    .education-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px)}
+    .education-motion{
+      position:absolute;right:4%;top:10%;width:min(34vw,430px);aspect-ratio:1;
+      pointer-events:none;opacity:.35
+    }
+    .education-orbit{
+      position:absolute;inset:0;border:1px solid rgba(8,113,63,.22);border-radius:50%;
+      animation:eduOrbit 18s linear infinite;animation-play-state:paused
+    }
+    .education-orbit::before{
+      content:"";position:absolute;width:8px;height:8px;border-radius:50%;
+      top:12%;left:19%;background:var(--green)
+    }
+    .education-orbit.b{inset:18%;border-color:rgba(183,167,216,.5);animation-duration:12s;animation-direction:reverse}
+    .education-orbit.c{inset:36%;border-style:dashed;animation-duration:8s}
+    body[data-scene="education"] .education-orbit{animation-play-state:running}
+    @keyframes eduOrbit{to{transform:rotate(360deg)}}
+
+    .education-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);position:relative;z-index:2}
     .edu{
       min-height:300px;padding:28px 0;border-top:2px solid var(--green);
       display:flex;flex-direction:column;justify-content:space-between
@@ -453,6 +536,23 @@
       padding:120px max(20px,calc((100vw - var(--max))/2)) 52px;
       background:var(--ink);overflow:hidden
     }
+    .contact-radar{
+      position:absolute;right:-7vw;top:50%;width:min(48vw,620px);aspect-ratio:1;
+      border:1px solid rgba(68,209,140,.16);border-radius:50%;transform:translateY(-50%);
+      pointer-events:none;opacity:.55
+    }
+    .contact-radar::before,.contact-radar::after{
+      content:"";position:absolute;border:1px solid rgba(183,167,216,.16);border-radius:50%
+    }
+    .contact-radar::before{inset:22%}
+    .contact-radar::after{inset:42%}
+    .contact-radar i{
+      position:absolute;left:50%;top:50%;width:48%;height:1px;transform-origin:left center;
+      background:linear-gradient(90deg,rgba(68,209,140,.7),transparent);
+      animation:radarSweep 7s linear infinite;animation-play-state:paused
+    }
+    body[data-scene="contact"] .contact-radar i{animation-play-state:running}
+    @keyframes radarSweep{to{transform:rotate(360deg)}}
     .contact-inner{position:relative;z-index:2;min-width:0;max-width:100%}
     .contact h2{font-size:clamp(3.6rem,10vw,7.6rem);line-height:.9;max-width:9ch}
     .contact p{color:#c7d3ca;font-size:1.12rem;max-width:55ch;margin:26px 0 0}
@@ -507,8 +607,19 @@
       .hud-label.b{left:5%;right:auto;top:68%}
       .hud-label.c{display:none}
       .hud-scan{right:-10%;top:34%;width:90%}
+      .scene-rail{right:12px;top:auto;bottom:12px;transform:none;gap:3px}
+      .scene-rail::after{display:none}
+      .scene-name{font-size:.58rem;max-width:16ch}
+      .scene-count{font-size:.56rem}
+      .journey-thread:nth-child(1){left:76%}
+      .journey-thread:nth-child(2){left:84%}
+      .journey-thread:nth-child(3){left:92%}
+      .journey-thread:nth-child(4){display:none}
+      .research-signal{width:110vw;right:-50%;top:4%;opacity:.28}
+      .education-motion{width:74vw;right:-35%;top:3%;opacity:.22}
+      .contact-radar{width:86vw;right:-46vw;opacity:.34}
       .nav.is-scrolled{backdrop-filter:none}
-      .paper:hover,.paper:focus-visible{padding-left:0}
+      .paper:hover,.paper:focus-visible{padding-left:0;transform:none}
     }
     @media (max-width:560px){
       .nav-inner{width:calc(100% - 28px)}
@@ -541,7 +652,7 @@
       .portrait-caption{transform:none!important}
       .title-motion{transform:none!important;transition:none!important}
       .portrait-orbit::before,.portrait-orbit::after,.hud-scan{animation:none!important}
-      .cinematic-hud{display:none!important}
+      .cinematic-hud,.scene-rail,.journey-motion,.research-signal,.education-motion,.contact-radar{display:none!important}
     }
   </style>
   <script type="application/ld+json">
@@ -568,6 +679,10 @@
   <div class="progress" id="progress" aria-hidden="true"></div>
   <canvas id="webgl" aria-hidden="true"></canvas>
   <div class="vignette" aria-hidden="true"></div>
+  <div class="scene-rail" aria-hidden="true">
+    <span class="scene-count">01 / 07</span>
+    <span class="scene-name">Identity</span>
+  </div>
 
   <nav class="nav" aria-label="Primary">
     <div class="nav-inner">
@@ -616,7 +731,7 @@
       <div class="scroll-cue" aria-hidden="true"><span class="scroll-dot"></span><span>Scroll through the academic journey</span></div>
     </section>
 
-    <section class="light-section" aria-labelledby="identity-title">
+    <section class="light-section" id="identity" aria-labelledby="identity-title">
       <div class="section-head" data-reveal>
         <h2 id="identity-title">Teaching is the visible layer. Thinking is the work beneath it.</h2>
       </div>
@@ -634,6 +749,9 @@
     </section>
 
     <section class="dark-section" id="journey" aria-labelledby="journey-title">
+      <div class="journey-motion" aria-hidden="true">
+        <i class="journey-thread"></i><i class="journey-thread"></i><i class="journey-thread"></i><i class="journey-thread"></i>
+      </div>
       <div class="section-head" data-reveal>
         <h2 id="journey-title">A teaching journey built across roles, institutions and classrooms.</h2>
         <p>From teaching assistance to permanent faculty, the progression is less about titles than continuity: explaining difficult ideas clearly, building analytical confidence and connecting theory to real decisions.</p>
@@ -660,7 +778,7 @@
       </div>
     </section>
 
-    <section class="light-section" aria-labelledby="fields-title">
+    <section class="light-section" id="fields" aria-labelledby="fields-title">
       <div class="fields-layout">
         <div class="fields-intro" data-reveal>
           The subject areas form a connected system: statements become signals, signals become decisions, and decisions become behaviour.
@@ -683,6 +801,11 @@
     </section>
 
     <section class="research" id="research" aria-labelledby="research-title">
+      <svg class="research-signal" viewBox="0 0 900 700" aria-hidden="true" focusable="false">
+        <path class="signal-a" d="M20 590 C120 545 175 610 265 520 S420 360 505 390 S650 250 720 300 S815 165 880 120"/>
+        <path class="signal-b" d="M15 470 C115 515 185 430 280 455 S455 280 545 330 S700 205 885 245"/>
+        <circle cx="265" cy="520" r="4"/><circle cx="505" cy="390" r="4"/><circle cx="720" cy="300" r="4"/><circle cx="545" cy="330" r="4"/>
+      </svg>
       <div class="section-head" data-reveal>
         <h2 id="research-title">Research at the intersection of markets and human response.</h2>
         <p>Two 2023 peer-reviewed publications examine how the Russia–Ukraine conflict affected financial markets and investor attitudes.</p>
@@ -702,6 +825,9 @@
     </section>
 
     <section class="light-section" id="education" aria-labelledby="education-title">
+      <div class="education-motion" aria-hidden="true">
+        <i class="education-orbit a"></i><i class="education-orbit b"></i><i class="education-orbit c"></i>
+      </div>
       <div class="section-head" data-reveal>
         <h2 id="education-title">Academic foundations across Bangladesh and Australia.</h2>
       </div>
@@ -724,6 +850,7 @@
     </section>
 
     <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact-radar" aria-hidden="true"><i></i></div>
       <div class="contact-inner">
         <h2 id="contact-title">Continue the academic conversation.</h2>
         <p>For research, academic collaboration or university correspondence, use her institutional email or verified academic profiles.</p>
@@ -753,6 +880,21 @@
     const portraitStage = document.querySelector('[data-depth-stage]');
     const timeline = document.querySelector('.timeline');
     const cinematicHud = document.querySelector('.cinematic-hud');
+    const sceneRail = document.querySelector('.scene-rail');
+    const sceneCount = document.querySelector('.scene-count');
+    const sceneName = document.querySelector('.scene-name');
+    const sceneDefs = [
+      {id:'top',label:'Identity',render3d:true},
+      {id:'identity',label:'Teaching',render3d:false},
+      {id:'journey',label:'Academic Journey',render3d:true},
+      {id:'fields',label:'Fields of Focus',render3d:false},
+      {id:'research',label:'Research',render3d:true},
+      {id:'education',label:'Education',render3d:false},
+      {id:'contact',label:'Conversation',render3d:true}
+    ];
+    const sceneEls = sceneDefs.map(s=>document.getElementById(s.id));
+    let activeSceneIndex = 0;
+    let resumeCinematic = ()=>{};
     const timelineItems = [...document.querySelectorAll('.timeline-item')];
     const navLinks = [...document.querySelectorAll('[data-nav]')];
     const navStatus = document.querySelector('.nav-status');
@@ -802,8 +944,37 @@
       });
     }
 
+    function resolveSceneIndex(){
+      const probe = innerHeight * .48;
+      let idx = 0;
+      sceneEls.forEach((el,i)=>{
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        if (r.top <= probe) idx = i;
+      });
+      return idx;
+    }
+
+    function applyScene(index){
+      if (index === activeSceneIndex && body.dataset.scene) return;
+      activeSceneIndex = index;
+      const scene = sceneDefs[index] || sceneDefs[0];
+      body.dataset.scene = scene.id;
+      if (sceneCount) sceneCount.textContent = String(index+1).padStart(2,'0') + ' / ' + String(sceneDefs.length).padStart(2,'0');
+      if (sceneName) sceneName.textContent = scene.label;
+      resumeCinematic();
+    }
+
+    function sectionProgress(el){
+      if (!el) return 0;
+      const r = el.getBoundingClientRect();
+      const travel = Math.max(1,r.height + innerHeight);
+      return Math.min(1,Math.max(0,(innerHeight-r.top)/travel));
+    }
+
     function updateNarrativeDepth(){
       scrollFrame = 0;
+      applyScene(resolveSceneIndex());
       const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
       const pageP = Math.min(1, Math.max(0, scrollY / max));
       progress.style.transform = 'scaleX(' + pageP + ')';
@@ -828,6 +999,13 @@
         const tp = Math.min(1,Math.max(0,(innerHeight*.64-r.top)/span));
         timeline.style.setProperty('--timeline-progress',tp.toFixed(4));
       }
+
+      const research = document.getElementById('research');
+      const education = document.getElementById('education');
+      const contact = document.getElementById('contact');
+      if (research) research.style.setProperty('--scene-p',sectionProgress(research).toFixed(4));
+      if (education) education.style.setProperty('--scene-p',sectionProgress(education).toFixed(4));
+      if (contact) contact.style.setProperty('--scene-p',sectionProgress(contact).toFixed(4));
     }
 
     function scheduleScrollUpdate(){
@@ -957,6 +1135,62 @@
         ribbon.rotation.set(.72,.18,.26);
         group.add(ribbon);
 
+        const marketGroup = new THREE.Group();
+        const marketPts = [];
+        for(let i=0;i<28;i++){
+          const x = -2.15 + i*.16;
+          const y = -.55 + i*.055 + Math.sin(i*.72)*.22 + Math.cos(i*.21)*.08;
+          const z = Math.sin(i*.43)*.24;
+          marketPts.push(new THREE.Vector3(x,y,z));
+        }
+        const marketCurve = new THREE.CatmullRomCurve3(marketPts);
+        const marketTube = new THREE.Mesh(
+          new THREE.TubeGeometry(marketCurve,liteMode?56:120,liteMode?.012:.018,5,false),
+          new THREE.MeshBasicMaterial({color:green,transparent:true,opacity:.0})
+        );
+        marketGroup.add(marketTube);
+        const marketTube2 = marketTube.clone();
+        marketTube2.material = new THREE.MeshBasicMaterial({color:lavender,transparent:true,opacity:.0});
+        marketTube2.position.y = -.24; marketTube2.scale.set(.92,.82,.92);
+        marketGroup.add(marketTube2);
+        marketGroup.position.set(.25,.1,-.6);
+        marketGroup.rotation.set(-.15,.18,-.08);
+        group.add(marketGroup);
+
+        const helixGroup = new THREE.Group();
+        const helixPositions = [];
+        for(let i=0;i<100;i++){
+          const q=i/99;
+          const a=q*Math.PI*7;
+          helixPositions.push(Math.cos(a)*.72,(q-.5)*3.5,Math.sin(a)*.72);
+        }
+        const helixGeo = new THREE.BufferGeometry();
+        helixGeo.setAttribute('position',new THREE.Float32BufferAttribute(helixPositions,3));
+        const helix = new THREE.Line(
+          helixGeo,
+          new THREE.LineBasicMaterial({color:green,transparent:true,opacity:0})
+        );
+        helixGroup.add(helix);
+        const helix2 = helix.clone();
+        helix2.material = new THREE.LineBasicMaterial({color:lavender,transparent:true,opacity:0});
+        helix2.rotation.y=Math.PI;
+        helixGroup.add(helix2);
+        group.add(helixGroup);
+
+        const publicationGroup = new THREE.Group();
+        const pubMaterialA = new THREE.MeshPhysicalMaterial({
+          color:'#d8efe1',roughness:.32,metalness:.08,transparent:true,opacity:0
+        });
+        const pubMaterialB = new THREE.MeshPhysicalMaterial({
+          color:'#cdbfe8',roughness:.32,metalness:.08,transparent:true,opacity:0
+        });
+        const pubA = new THREE.Mesh(new THREE.BoxGeometry(1.18,.76,.045),pubMaterialA);
+        const pubB = new THREE.Mesh(new THREE.BoxGeometry(1.18,.76,.045),pubMaterialB);
+        pubA.position.set(-.76,.42,.35); pubA.rotation.set(.08,-.30,-.07);
+        pubB.position.set(.72,-.42,.10); pubB.rotation.set(-.06,.28,.06);
+        publicationGroup.add(pubA,pubB);
+        group.add(publicationGroup);
+
         scene.add(new THREE.AmbientLight('#d7f1df',liteMode ? 1.4 : 1.8));
         const key = new THREE.PointLight('#56e39f',liteMode ? 5.5 : 9,12);
         key.position.set(3,3,4);
@@ -981,37 +1215,50 @@
         addEventListener('resize',resize,{passive:true});
 
         const clock = new THREE.Clock();
-        let sceneActive = true;
         let animationFrame = 0;
         let lastLiteFrame = 0;
-        const heroObserver = new IntersectionObserver(([entry])=>{
-          sceneActive = entry.isIntersecting;
-          if (sceneActive && !document.hidden && !animationFrame) animationFrame=requestAnimationFrame(animate);
-        },{threshold:.02});
-        if (hero) heroObserver.observe(hero);
+        let sceneOpacity = 1;
+        let targetSceneOpacity = 1;
+
+        resumeCinematic = ()=>{
+          const def = sceneDefs[activeSceneIndex] || sceneDefs[0];
+          targetSceneOpacity = def.render3d ? 1 : 0;
+          if (def.render3d && !document.hidden && !animationFrame) animationFrame=requestAnimationFrame(animate);
+        };
 
         function animate(ts=0){
           animationFrame = 0;
-          if (!sceneActive || document.hidden) return;
+          if (document.hidden) return;
           if (liteMode && ts-lastLiteFrame < 32) {
             animationFrame=requestAnimationFrame(animate);
             return;
           }
           if (liteMode) lastLiteFrame = ts;
-          const t = clock.getElapsedTime();
-          const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-          const p = Math.min(1,Math.max(0,scrollY/max));
-          const heroP = Math.min(1,Math.max(0,scrollY/Math.max(1,innerHeight*.92)));
-          canvas.style.opacity = String(Math.max(0,(liteMode ? .86 : 1) - heroP*(liteMode ? .70 : .82)));
 
+          const def = sceneDefs[activeSceneIndex] || sceneDefs[0];
+          targetSceneOpacity = def.render3d ? 1 : 0;
+          sceneOpacity += (targetSceneOpacity-sceneOpacity)*.08;
+          canvas.style.opacity = String((liteMode?.82:1)*sceneOpacity);
+          if (sceneOpacity < .015 && !def.render3d) return;
+
+          const t = clock.getElapsedTime();
+          const sceneId = def.id;
           pointerX += (targetX-pointerX)*.04;
           pointerY += (targetY-pointerY)*.04;
 
-          group.rotation.y = heroP*2.25 + t*(liteMode ? .045 : .07) + pointerX;
-          group.rotation.x = .18 + Math.sin(heroP*Math.PI*1.4)*.28 + pointerY;
-          group.position.x = innerWidth > 900 ? 1.18 - heroP*.36 : (innerWidth < 560 ? .12 : .42);
-          group.position.y = innerWidth > 900 ? .02 + Math.sin(heroP*Math.PI*2)*.16 : -.52 + heroP*.18;
-          group.scale.setScalar((liteMode ? .88 : 1.08) + Math.sin(heroP*Math.PI)*.10);
+          const targets = {
+            top:{x:innerWidth>900?1.18:.12,y:innerWidth>900?.02:-.52,s:liteMode?.88:1.08,rx:.18,ry:.15,cz:liteMode?5.25:5.55,cx:0},
+            journey:{x:innerWidth>900?-1.45:-.15,y:.05,s:liteMode?.78:.92,rx:.12,ry:1.05,cz:5.9,cx:.18},
+            research:{x:innerWidth>900?1.62:.18,y:innerWidth>900?.05:-.34,s:liteMode?.94:1.14,rx:-.06,ry:-.55,cz:5.35,cx:-.12},
+            contact:{x:innerWidth>900?1.05:.10,y:.18,s:liteMode?.72:.88,rx:.08,ry:.35,cz:6.15,cx:0}
+          };
+          const st = targets[sceneId] || targets.top;
+          group.position.x += (st.x-group.position.x)*.045;
+          group.position.y += (st.y-group.position.y)*.045;
+          const gs = group.scale.x + (st.s-group.scale.x)*.045;
+          group.scale.setScalar(gs);
+          group.rotation.x += ((st.rx+pointerY)-group.rotation.x)*.045;
+          group.rotation.y += ((st.ry+pointerX)-group.rotation.y)*.045;
 
           core.rotation.x = -t*.13;
           core.rotation.z = t*.10;
@@ -1021,22 +1268,52 @@
           ribbon.rotation.y = .18 + Math.sin(t*.35)*.16;
 
           rings.forEach((ring,i)=>{
-            ring.rotation.z += .0006*(i+1);
-            ring.rotation.x += .00022*(3-i);
+            ring.rotation.z += .0008*(i+1);
+            ring.rotation.x += .00030*(3-i);
           });
 
-          const mix = .5 + .5*Math.sin(p*Math.PI*2);
-          core.material.color.copy(greenDeep).lerp(lavender,mix*.23);
-          camera.position.z = (liteMode ? 5.25 : 5.55) - heroP*.72;
-          camera.position.x = Math.sin(heroP*Math.PI)*.18;
+          const topMix = sceneId==='top' ? 1 : 0;
+          const journeyMix = sceneId==='journey' ? 1 : 0;
+          const researchMix = sceneId==='research' ? 1 : 0;
+          const contactMix = sceneId==='contact' ? 1 : 0;
+
+          core.material.opacity += (((sceneId==='research'?.34:.78))-core.material.opacity)*.08;
+          wire.material.opacity += (((sceneId==='research'?.10:.20))-wire.material.opacity)*.08;
+          ribbon.material.opacity += (((sceneId==='top'?.32:sceneId==='contact'?.16:.08))-ribbon.material.opacity)*.08;
+          points.material.opacity += (((sceneId==='top'?.46:sceneId==='research'?.20:.12))-points.material.opacity)*.08;
+          marketTube.material.opacity += ((researchMix*(liteMode?.42:.68))-marketTube.material.opacity)*.10;
+          marketTube2.material.opacity += ((researchMix*(liteMode?.25:.44))-marketTube2.material.opacity)*.10;
+          helix.material.opacity += ((journeyMix*(liteMode?.38:.62))-helix.material.opacity)*.10;
+          helix2.material.opacity += ((journeyMix*(liteMode?.22:.40))-helix2.material.opacity)*.10;
+          pubMaterialA.opacity += ((researchMix*(liteMode?.42:.66))-pubMaterialA.opacity)*.10;
+          pubMaterialB.opacity += ((researchMix*(liteMode?.36:.58))-pubMaterialB.opacity)*.10;
+
+          marketGroup.rotation.y = .18 + Math.sin(t*.24)*.12;
+          marketGroup.rotation.z = -.08 + Math.sin(t*.31)*.035;
+          publicationGroup.rotation.y = Math.sin(t*.22)*.10;
+          publicationGroup.position.z = researchMix ? Math.sin(t*.45)*.08 : -.4;
+          helixGroup.rotation.y = t*.09;
+          helixGroup.rotation.z = Math.sin(t*.18)*.08;
+
+          const pulse = .5+.5*Math.sin(t*.9);
+          pubA.position.z=.35+pulse*.06;
+          pubB.position.z=.10+(1-pulse)*.05;
+
+          const sceneColorMix = researchMix*.45 + journeyMix*.15 + contactMix*.10;
+          core.material.color.copy(greenDeep).lerp(lavender,sceneColorMix);
+
+          camera.position.z += (st.cz-camera.position.z)*.05;
+          camera.position.x += (st.cx-camera.position.x)*.05;
+          camera.position.y += ((sceneId==='research'?.06:0)-camera.position.y)*.05;
           camera.lookAt(0,0,0);
 
           renderer.render(scene,camera);
           animationFrame=requestAnimationFrame(animate);
         }
+        applyScene(resolveSceneIndex());
         animationFrame=requestAnimationFrame(animate);
         document.addEventListener('visibilitychange',()=>{
-          if (!document.hidden && sceneActive && !animationFrame) animationFrame=requestAnimationFrame(animate);
+          if (!document.hidden) resumeCinematic();
         },{passive:true});
       } catch (err) {
         document.getElementById('webgl').style.display = 'none';
