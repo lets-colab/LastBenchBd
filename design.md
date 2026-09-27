@@ -285,3 +285,112 @@ For every new feature ask:
 6. Is this live now or future-blueprint complexity?
 
 If those answers are unclear, do not add the feature to a primary user journey yet.
+
+---
+
+## 16. Cross-engine cinematic experience law
+
+The Last Bench ecosystem should feel like one premium product family without turning the three operating engines into visual clones.
+
+### Shared cinematic grammar
+
+Every major public experience may use cinematic depth, spatial transitions and 3D only when the motion helps the user understand a change in state, story or system.
+
+Shared rules:
+
+- **85% clarity / 15% spectacle.** The interaction must remain understandable without the cinematic layer.
+- **One idea per scene.** Do not stack multiple sales messages into one visual moment.
+- **Motion preserves context.** A scene should transform into the next state rather than disappear into unrelated animation.
+- **Depth has meaning.** Foreground = current action, mid-ground = system/context, background = possibility or continuity.
+- **No forced viewing.** Video, 3D and narrative sequences must have an immediate skip path and cannot block the primary CTA.
+- **Sound is opt-in.** Never autoplay audible media.
+- **Reduced-motion is a first-class mode.** Preserve hierarchy and state change without camera travel, parallax or large transforms.
+- **Performance tiers.** Heavy rendering may simplify on lower-powered/mobile devices without removing the core story or CTA.
+- **Exact brand assets only.** Cinematic treatment must never redraw, distort, recolor or approximate Last Bench, CLASS[Λ] or co.lab marks.
+
+### Last Bench parent world
+
+The corporate Last Bench experience represents **possibility, access and forward motion**.
+
+Preferred metaphors:
+
+- the bench as a starting point, not a limitation
+- multiple paths converging into credible opportunity
+- progress signals, thresholds, gates and evidence
+- human relationships carrying context forward
+
+The parent experience must not become a Malaysia travel site, a CLASS[Λ] course page or a co.lab agency portfolio.
+
+### Education & Mobility world
+
+The current Malaysia service may own the literal journey language:
+
+- distance
+- departure
+- cities
+- flight
+- arrival
+- settlement
+- continuity after landing
+
+The Malaysia cinematic environment belongs to Education & Mobility. Do not copy airports, planes, Kuala Lumpur skylines or the same travel camera path into CLASS[Λ] or co.lab.
+
+### CLASS[Λ] world
+
+CLASS[Λ] represents **intelligence becoming proof**.
+
+Visual law:
+
+- near-black / graphite / metallic silver
+- exact CLASS[Λ] lockup
+- the metallic **20** and orbital system as a recurring capability object
+- Last Bench green only as restrained progress / energy / CTA signal
+- editorial typography, large negative space, controlled technical detail
+- no generic robot, chatbot, neon-AI or course-platform aesthetic
+
+Masterclass entry choreography:
+
+1. **Scene 01 — Reel:** the approved cinematic reel begins at black with 0.01%, offers **ENTER EXPERIENCE** and immediate **SKIP**, and enables sound only after user interaction.
+2. The reel plays as the opening scene, not as a detached splash screen.
+3. Around **23.6 seconds**, the reel freezes briefly and transforms into the interactive metallic 20 / orbital CLASS[Λ] system.
+4. The narrative then progresses through **Command → Research → Build → Create → Sell → Operate**.
+5. Core transformation copy: **TURN AI INTO YOUR TEAM.**
+6. Outcome framing: **Build and run a one-person business with AI.**
+7. The registration CTA remains available before the film ends.
+
+### co.lab world
+
+co.lab represents **growth architecture becoming a living system**.
+
+Canonical sequence:
+
+**Collaboration → Connection → Community**
+
+Preferred spatial metaphors:
+
+- blueprint layers aligning into one system
+- independent nodes connecting into a network
+- strategy becoming repeatable operating rails
+- community signals compounding outward
+- growth loops, not funnels that reset
+
+co.lab’s own visual authority is monochrome / soft gray with **Electric Blue #2D7CFF at no more than roughly 5% usage**, primarily for action, active state and system energy. The experience may use depth, particles, orbit/network geometry, an interactive globe and camera transitions, but it must not drift into purple/cyan cyberpunk, generic AI neon or CLASS[Λ] metallic-course styling.
+
+### Premium interaction standard
+
+Use Apple-level product discipline as a quality benchmark, not as a visual imitation:
+
+- immediate comprehension before decoration
+- decisive hierarchy and generous optical spacing
+- one obvious primary action per state
+- restrained copy with high information value
+- animation that feels physically continuous and interruptible
+- crisp typography and consistent role scales
+- minimum 44×44px touch targets
+- visible keyboard focus and logical navigation
+- fast perceived loading; never make users wait for nonessential 3D
+- no layout jump when media or fonts arrive
+- graceful failure when WebGL, media playback or network quality is limited
+- every transition should answer: **what changed, why, and what can I do next?**
+
+The standard is not “more animation.” The standard is **less confusion, stronger emotion, and more precise control**.

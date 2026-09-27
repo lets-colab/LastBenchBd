@@ -28,3 +28,25 @@ Table: `public.class_a_registrations`
 The browser uses the project’s publishable key. RLS permits validated inserts for `anon` and `authenticated` while preventing public row reads.
 
 These files are copied into the production artifact by `scripts/build-site.mjs`.
+
+
+## Cinematic masterclass contract
+
+The free masterclass route uses the approved builders reel as Scene 01.
+
+- `ENTER EXPERIENCE` starts the source reel immediately with sound after the user gesture.
+- Desktop/laptop playback is edge-to-edge full-screen; mobile remains full-screen.
+- The reel is intentionally cut at the final CLASS[Λ] lockup (`26.88s`), before the Last Bench end card in the source media.
+- The exact locked CLASS[Λ] logo asset holds briefly on black, then the live website is revealed.
+- Last Bench ownership appears only after the cinematic handoff, as secondary ecosystem attribution.
+- The conversion hierarchy is: cinematic intro → outcome hero → six-part operating journey → final seat CTA → registration.
+- The duplicated six-card manifesto was removed; the full 20-class program is a secondary footer route, not a competing hero action.
+
+
+## Impeccable quality floor
+
+The CLASS[Λ] web system uses the repository Impeccable detector as a bounded visual-quality gate. The current masterclass, course, hub, and staff check-in surfaces are expected to remain free of detector findings for: overused typography, undersized functional text, excessive tracking, decorative grid fields, green ambient glow, low-contrast text, and layout-triggering width animation. Protected brand assets remain deterministic and unchanged.
+
+Regression tests in `tests/class-a-funnel.test.ts` lock the cinematic hierarchy and the known Impeccable quality regressions before release.
+
+Production smoke fingerprints track the distilled CLASS[Λ] copy and staff check-in hierarchy so post-deploy verification tests the current interface rather than superseded wording.

@@ -1,6 +1,10 @@
-# Cloudflare Pages SPA entry routes.
-# Keep these specific: Cloudflare applies redirect rules even when a static
-# asset exists, so a broad /app/* rewrite would break /app/_expo assets.
+# SPA entry-route contract.
+# Netlify/Cloudflare can consume these rewrites directly. GitHub Pages does not
+# support rewrite rules, so scripts/build-site.mjs materializes every exact
+# /app route below as an index.html and uses a custom 404 fallback for dynamic
+# /app/admin/*, /app/cohort/* and /app/tutor/* routes.
+# Keep the rules specific so application assets under /app/_expo and /app/assets
+# are never rewritten as SPA HTML.
 /app/ai-guidance /app/index.html 200
 /app/applications /app/index.html 200
 /app/application-detail /app/index.html 200

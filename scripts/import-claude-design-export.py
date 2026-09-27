@@ -91,7 +91,7 @@ def build_preview(src: Path, repo: Path) -> None:
         '<script src="./image-slot.js"></script>',
         '<script src="./claude-design-image-slot.js"></script>',
     )
-    out = out.replace('href="Last Bench Dashboard.dc.html"', 'href="/app/"')
+    out = out.replace('href="Last Bench Dashboard.dc.html"', 'href="./app/"')
     out = out.replace(
         '<title>Last Bench — From Last Bench. To The World.</title>',
         '<title>Last Bench — Claude Design Preview</title>\n'

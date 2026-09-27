@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Design system contract
+        run: pnpm design:check
+
       - name: Typecheck
         run: pnpm check
 
@@ -94,7 +97,7 @@ jobs:
           echo "Built API did not become healthy in time"
           exit 1
 
-      - name: Build complete Netlify site
+      - name: Build complete production site
         run: pnpm build:web:production
         env:
           EXPO_PUBLIC_API_BASE_URL: https://api.example.invalid

@@ -32,20 +32,64 @@ for (const [name, value] of origins) {
 const checks = [
   { name: "API custom-domain health", url: `${apiOrigin}/api/health`, expectJson: true, dnsOnFailure: true },
   ...(renderOrigin ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }] : []),
-  { name: "Landing", url: `${webOrigin}/`, expectHtml: true, expectIncludes: ["claude-design-support.js", "bench-ai.js"] },
-  { name: "Blueprint business layer", url: `${webOrigin}/lastbench-blueprint.js`, expectIncludes: ["STUDY. SETTLE.", "TRACK MY JOURNEY", "UNIVERSITY EXPLORER"] },
-  ...(renderOrigin
-    ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }]
-    : []),
   {
-    name: "Landing",
+    name: "Corporate landing",
     url: `${webOrigin}/`,
     expectHtml: true,
-    expectIncludes: ["claude-design-support.js", "bench-ai.js", "/rest/v1/lastbench_signups"],
+    expectIncludes: [
+      "<title>Last Bench — Opportunity Accelerator</title>",
+      "Education, capability and business connected by community",
+      "OPPORTUNITY ACCELERATOR",
+      "EDUCATION & MOBILITY",
+      "CLASS[Λ]",
+      "co.lab",
+      "Community connects everything.",
+      "claude-design-support.js",
+      "bench-ai.js",
+    ],
+  },
+  {
+    name: "Runtime blueprint alignment",
+    url: `${webOrigin}/lastbench-blueprint.js`,
+    expectIncludes: [
+      "Opportunity Accelerator",
+      "Education & Mobility",
+      "CLASS[Λ]",
+      "co.lab",
+      "Community + Platform",
+      "currentEducationMarket:'Malaysia'",
+      "lb-malaysia-service",
+    ],
   },
   { name: "Student app", url: `${webOrigin}/app/`, expectHtml: true },
   { name: "CLASS signup hub", url: `${webOrigin}/class-a/`, expectHtml: true },
-  { name: "CLASS masterclass", url: `${webOrigin}/class-a/masterclass.html`, expectHtml: true },
+  {
+    name: "CLASS masterclass",
+    url: `${webOrigin}/class-a/masterclass.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "masterclass-entry.mp4",
+      "data-intro-end-card",
+      "<h1>0.01%</h1>",
+      "ENTER EXPERIENCE",
+      "TURN AI INTO",
+      "YOUR TEAM.",
+      "Research · Build · Create · Sell · Operate",
+      "10 SEATS ONLY · RESERVE YOUR FREE SEAT",
+    ],
+  },
+  {
+    name: "CLASS attendance check-in",
+    url: `${webOrigin}/class-a/checkin.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "CLASS[Λ] staff check-in · Class 0",
+      "REDEEM ATTENDANCE.",
+      "MARK ATTENDED →",
+      "checkin.js",
+      "last-bench-bench.png",
+    ],
+  },
   { name: "CLASS course", url: `${webOrigin}/class-a/course.html`, expectHtml: true },
 ];
 
@@ -101,6 +145,6 @@ console.log("- Authenticated tRPC request succeeds");
 console.log("- Logout causes the next protected request to be rejected");
 console.log("- Real homepage and CLASS[Λ] submissions appear in their intended Supabase tables");
 console.log("- Supabase migration ledger remains reconciled with drizzle/MIGRATION_STATUS.md");
-console.log("- Homepage business logic matches the current Last Bench mobility blueprint");
+console.log("- Homepage business logic matches the current Opportunity Accelerator blueprint and keeps Malaysia scoped to Education & Mobility");
 
 process.exitCode = failed ? 1 : 0;

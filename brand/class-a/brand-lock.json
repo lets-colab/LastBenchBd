@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "brand": "CLASS[Λ]",
+  "namespace": "class-a",
+  "canonical": true,
+  "assets": {
+    "primaryLogo": {
+      "path": "brand/class-a/class-a-logo.jpg",
+      "gitBlobSha": "38cff9c2a3a1de786859cf014b264d343027a4a4",
+      "source": "landing/class-a/assets/class-a-logo.jpg"
+    },
+    "favicon": {
+      "path": "brand/class-a/class-a-favicon.jpg",
+      "gitBlobSha": "4b457f1f510b55434cfbcfa62d1d0a5a47665eb8",
+      "source": "landing/class-a/assets/class-a-favicon.jpg"
+    },
+    "parentMark": {
+      "path": "brand/class-a/last-bench-parent-mark.png",
+      "gitBlobSha": "6bedefa5e936807ac0de88d9cfd3b7bc6145c3bc",
+      "source": "landing/class-a/assets/last-bench-bench.png"
+    }
+  },
+  "policy": {
+    "generativeLogoCreation": false,
+    "redrawAllowed": false,
+    "recolorAllowed": false,
+    "lambdaSubstitutionAllowed": false,
+    "parentChildLogoFusionAllowed": false
+  }
+}
