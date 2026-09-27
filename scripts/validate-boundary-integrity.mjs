@@ -3,7 +3,7 @@
 /**
  * Last Bench cross-engine boundary regression gate.
  *
- * Prevents a learner/student/public surface from absorbing internal operating
+ * Prevents learner-facing CLASS[Λ] surfaces from absorbing internal operating
  * context merely because two engines share an underlying capability.
  *
  * Canonical principle:
@@ -11,37 +11,53 @@
  */
 
 import fs from "node:fs";
+import path from "node:path";
 
-const checks = [
+const learnerRoot = "landing/class-a";
+const textExtensions = new Set([".html", ".js", ".mjs", ".md", ".json", ".css", ".txt"]);
+
+function collectTextFiles(dir) {
+  if (!fs.existsSync(dir)) return [];
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      out.push(...collectTextFiles(full));
+      continue;
+    }
+    if (textExtensions.has(path.extname(entry.name).toLowerCase())) out.push(full);
+  }
+  return out;
+}
+
+const learnerFiles = collectTextFiles(learnerRoot);
+
+const forbidden = [
+  { label: "ProjectX operating identity", pattern: /\bProjectX\b/i },
+  { label: "Moontakim internal ownership", pattern: /\bMoontakim\b/i },
+  { label: "ProjectX operator guide", pattern: /Website Building 101\s*[—-]\s*No-Tech Guide/i },
+  { label: "internal client-delivery SOP", pattern: /client[- ]delivery\s+SOP/i },
   {
-    label: "CLASS learner/public surfaces",
-    files: [
-      "landing/class-a/index.html",
-      "landing/class-a/masterclass.html",
-      "landing/class-a/masterclass-cinematic.js",
-      "landing/class-a/course.html",
-    ],
-    forbidden: [
-      /ProjectX/i,
-      /required deposit/i,
-      /Moontakim/i,
-      /Website Building 101\s*[—-]\s*No-Tech Guide/i,
-      /client[- ]delivery SOP/i,
-    ],
+    label: "client deposit operating rule",
+    pattern: /(?:\bclient\b[\s\S]{0,100}\bdeposit\b|\bdeposit\b[\s\S]{0,100}\bclient\b)/i,
   },
 ];
 
 let failed = false;
 
-for (const check of checks) {
-  for (const file of check.files) {
-    if (!fs.existsSync(file)) continue;
-    const content = fs.readFileSync(file, "utf8");
-    for (const pattern of check.forbidden) {
-      if (pattern.test(content)) {
-        failed = true;
-        console.error(`FAIL  ${check.label}: ${file} contains forbidden cross-engine context matching ${pattern}`);
-      }
+if (!learnerFiles.length) {
+  failed = true;
+  console.error(`FAIL  no textual CLASS learner/runtime files discovered under ${learnerRoot}`);
+}
+
+for (const file of learnerFiles) {
+  const content = fs.readFileSync(file, "utf8");
+  for (const rule of forbidden) {
+    if (rule.pattern.test(content)) {
+      failed = true;
+      console.error(
+        `FAIL  CLASS learner boundary: ${file} contains ${rule.label} matching ${rule.pattern}`
+      );
     }
   }
 }
@@ -73,6 +89,7 @@ if (fs.existsSync("landing/class-a/README.md")) {
 }
 
 if (!failed) {
+  console.log(`PASS  scanned ${learnerFiles.length} CLASS learner/runtime text files`);
   console.log("PASS  cross-engine audience boundary checks");
   console.log("PASS  CLASS registration semantic contract checks");
 }
