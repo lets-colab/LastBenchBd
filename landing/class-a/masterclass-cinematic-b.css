@@ -6,3 +6,7 @@
 .success-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
 .success-actions .button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;}
 @media(max-width:680px){.success-actions{display:grid;grid-template-columns:1fr;}.success-actions .button{width:100%;}.session-card{padding:16px;}}
+
+.consent-check{display:grid!important;grid-template-columns:22px 1fr;gap:12px;align-items:start;margin-top:22px!important;color:#aeb4bb!important;font-size:13px!important;font-weight:500!important;letter-spacing:0!important;line-height:1.5;text-transform:none!important;cursor:pointer;}
+.consent-check input{width:20px!important;height:20px!important;margin:1px 0 0!important;accent-color:var(--green);border:1px solid rgba(255,255,255,.25)!important;border-radius:5px!important;}
+.consent-check span{display:block;}
