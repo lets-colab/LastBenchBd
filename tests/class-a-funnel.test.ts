@@ -100,7 +100,7 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain("CLAIM YOUR PASS.");
     expect(masterclassScript).toContain("class_a_register_online");
     expect(masterclassScript).toContain("/class-a/pass.html#code=");
-    expect(masterclassScript).toContain("ADD TO GOOGLE CALENDAR");
+    expect(masterclass).toContain("ADD TO GOOGLE CALENDAR");
     expect(pass).toContain("YOUR MASTERCLASS PASS.");
     expect(pass).toContain("LIVE ATTENDANCE PROOF");
     expect(passScript).toContain("class_a_get_session_pass");
@@ -109,7 +109,7 @@ describe("CLASS A signup funnel", () => {
     expect(liveControl).toContain("ISSUE LIVE");
     expect(liveControl).toContain("ATTENDANCE CODE.");
     expect(liveControlScript).toContain("class_a_issue_current_live_code");
-    expect(liveControlScript).toContain("BUILD-");
+    expect(liveControl).toContain("BUILD-XXXXXX");
   });
 
   it("keeps join signals separate from verified attendance", () => {
