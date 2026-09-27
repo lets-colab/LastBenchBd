@@ -57,6 +57,7 @@ The following production migration versions are present in the connected Supabas
 | `20260927213216` | `class_a_online_masterclass_os_v1` | Live session, recurring enrollment, attendance-evidence and notification-outbox foundation; exact SQL committed at `drizzle/migrations/20260927213216_class_a_online_masterclass_os_v1.sql` |
 | `20260927213315` | `class_a_online_masterclass_hardening` | Exact email+phone identity matching plus covering FK indexes; exact SQL committed at `drizzle/migrations/20260927213315_class_a_online_masterclass_hardening.sql` |
 | `20260927213629` | `class_a_online_live_code_control` | Staff-key-gated temporary BUILD-code control for the active online session; exact SQL committed at `drizzle/migrations/20260927213629_class_a_online_live_code_control.sql` |
+| `20260927214437` | `class_a_online_recording_consent` | Requires and timestamps explicit recording/transcription acceptance for online enrollment without conflating it with marketing permission; exact SQL committed at `drizzle/migrations/20260927214437_class_a_online_recording_consent.sql` |
 
 
 ## Supabase identity + storage verification
@@ -155,6 +156,7 @@ Verified:
 - The new session/enrollment/live-code/evidence/notification tables expose no direct table privileges to `anon` or `authenticated`.
 - An invalid personal pass returns `invalid_code` and no participant data.
 - A wrong staff key returns `invalid_staff_key` and does not issue a live attendance code.
+- Online enrollment requires explicit recording/transcription acceptance; the timestamp is stored on the session enrollment and is explicitly not marketing/publicity consent.
 - `portal_open` and `join_click` are evidence signals only; verified attendance is a separate mutation requiring personal-pass plus active live BUILD-code evidence (or a future trusted Meet/staff source).
 - The hardening migration resolved the new unindexed-FK advisor findings. Remaining performance advisor output is informational unused-index data at current traffic levels.
 - Security advisor WARNs remain for browser-callable `SECURITY DEFINER` CLASS RPCs. These RPCs are intentionally capability-bounded for the public registration/pass flow, while underlying tables remain direct-access denied. Treat this as an explicit security-review item rather than silently suppressing the advisor.
