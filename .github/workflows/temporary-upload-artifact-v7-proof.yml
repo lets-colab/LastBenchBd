@@ -1,0 +1,28 @@
+name: Temporary upload-artifact v7 proof
+
+on:
+  push:
+    branches:
+      - dependabot/github_actions/actions/upload-artifact-7
+    paths:
+      - .github/workflows/temporary-upload-artifact-v7-proof.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prove-upload-artifact-v7:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create proof payload
+        run: |
+          mkdir -p proof
+          printf 'upload-artifact-v7-proof\n' > proof/result.txt
+
+      - name: Upload proof with v7
+        uses: actions/upload-artifact@v7
+        with:
+          name: upload-artifact-v7-proof
+          path: proof/result.txt
+          if-no-files-found: error
