@@ -62,6 +62,51 @@ for (const file of learnerFiles) {
   }
 }
 
+const commercialTruthPath = "landing/class-a/commercial-truth.json";
+if (!fs.existsSync(commercialTruthPath)) {
+  failed = true;
+  console.error(`FAIL  CLASS commercial truth contract missing: ${commercialTruthPath}`);
+} else {
+  const commercial = JSON.parse(fs.readFileSync(commercialTruthPath, "utf8"));
+  const publicCourseFiles = ["landing/class-a/index.html", "landing/class-a/course.html"];
+  const displayedBdtPrices = [];
+  for (const file of publicCourseFiles) {
+    if (!fs.existsSync(file)) continue;
+    const content = fs.readFileSync(file, "utf8");
+    for (const match of content.matchAll(/৳\s*([0-9][0-9,]*)/g)) {
+      displayedBdtPrices.push({ file, amount: Number(match[1].replaceAll(",", "")) });
+    }
+  }
+
+  if (commercial.price_status !== "approved") {
+    if (commercial.course_price_bdt !== null) {
+      failed = true;
+      console.error("FAIL  unapproved commercial truth must keep course_price_bdt=null");
+    }
+    for (const hit of displayedBdtPrices) {
+      failed = true;
+      console.error(`FAIL  unapproved CLASS numeric price exposed in ${hit.file}: BDT ${hit.amount}`);
+    }
+  } else {
+    if (!Number.isFinite(commercial.course_price_bdt) || commercial.course_price_bdt <= 0) {
+      failed = true;
+      console.error("FAIL  approved CLASS price requires positive course_price_bdt");
+    }
+    if (!commercial.approval_source) {
+      failed = true;
+      console.error("FAIL  approved CLASS price requires approval_source");
+    }
+    for (const hit of displayedBdtPrices) {
+      if (hit.amount !== commercial.course_price_bdt) {
+        failed = true;
+        console.error(
+          `FAIL  CLASS displayed price mismatch in ${hit.file}: ${hit.amount} != approved ${commercial.course_price_bdt}`
+        );
+      }
+    }
+  }
+}
+
 const semanticsFiles = [
   "landing/class-a/README.md",
   "drizzle/MIGRATION_STATUS.md",
