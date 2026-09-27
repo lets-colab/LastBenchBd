@@ -18,6 +18,7 @@ on:
       - theme.config.js
       - scripts/validate-design-system.mjs
       - scripts/validate-boundary-integrity.mjs
+      - drizzle/MIGRATION_STATUS.md
       - landing/class-a/**
       - .github/workflows/deploy-github-pages.yml
   pull_request:
@@ -37,6 +38,7 @@ on:
       - theme.config.js
       - scripts/validate-design-system.mjs
       - scripts/validate-boundary-integrity.mjs
+      - drizzle/MIGRATION_STATUS.md
       - landing/class-a/**
       - .github/workflows/deploy-github-pages.yml
   workflow_dispatch:
