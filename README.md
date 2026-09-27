@@ -30,7 +30,7 @@ Strategic progression: **Access → Capability → Creation → Ownership.**
 
 This is not a mandatory funnel. People can enter through the engine relevant to their need.
 
-For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experience rules, read [`design.md`](./design.md).
+For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For company operating law, ownership and source authority, read [`OPERATING_SYSTEM.md`](./OPERATING_SYSTEM.md). For brand identity, read [`brand/last-bench/BRAND_BLUEPRINT.md`](./brand/last-bench/BRAND_BLUEPRINT.md). For experience rules, read [`design.md`](./design.md).
 
 ---
 
@@ -215,11 +215,12 @@ No production user, credential, admissions result, business outcome or verificat
 
 ## Brand guardrails
 
-Canonical logo assets live under `assets/branding/` and `landing/assets/`.
+Canonical logo assets live under `assets/branding/` and `landing/assets/`. The current founder lock is documented in [`brand/last-bench/BRAND_BLUEPRINT.md`](./brand/last-bench/BRAND_BLUEPRINT.md).
 
-- Do not redraw or approximate approved logos.
-- Do not regenerate approved marks with AI.
-- Do not distort proportions or recolor outside approved variants.
+- Use only the exact approved Last Bench mark; every older redraw/approximation is deprecated.
+- Keep placement transparent: black wordmark on light backgrounds, white wordmark on dark backgrounds, with the approved green bench-arrow and tagline treatment.
+- Do not regenerate approved marks with AI or manufacture variants with filters/tracing.
+- Do not distort proportions or recolor outside exact approved variants.
 - Preserve the established Last Bench green/white/charcoal visual system.
 - Keep CLASS[Λ] and co.lab in their own approved visual namespaces.
 
@@ -252,10 +253,12 @@ When documentation disagrees:
 1. Current explicit user direction recorded in canonical business/product documents.
 2. Current code + verified runtime/infrastructure behavior for implementation claims.
 3. `PRODUCT.md` for business/product architecture.
-4. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
-5. `README.md` / `AGENT.md` / `design.md`.
-6. Feature-specific documentation.
-7. Historical design handoffs and archived notes.
+4. `OPERATING_SYSTEM.md` for company operating law, ownership and source authority.
+5. `brand/last-bench/BRAND_BLUEPRINT.md` plus locked brand assets for identity.
+6. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
+7. `README.md` / `AGENT.md` / `design.md`.
+8. Feature-specific documentation.
+9. Historical profiles, design handoffs, screenshots and archived notes.
 
 The active repository is **`lets-colab/LastBenchBd`**.
 
