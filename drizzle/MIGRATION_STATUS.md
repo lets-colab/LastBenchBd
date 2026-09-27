@@ -1,6 +1,6 @@
 # Last Bench database migration status
 
-Last verified against the connected production Supabase project on **10 September 2026**.
+Last verified against the connected production Supabase project on **27 September 2026**.
 
 ## Canonical live migration path
 
@@ -26,6 +26,35 @@ Do not infer live migration state from filenames or `drizzle/meta/_journal.json`
 | `20260908102929` | `create_drx_social_engine_runtime` | DR.X social-engine runtime tables and supporting schema |
 | `20260908103022` | `add_drx_social_activation_gates` | DR.X social-engine activation/guardrail schema |
 | `20260910045538` | `lastbench_homepage_signups` | Repo `0005` — insert-only, RLS-protected homepage lead intake |
+
+### Live ledger additions verified on 27 September 2026
+
+The following production migration versions are present in the connected Supabase ledger. Their names and versions were re-read from production during the CLASS[Λ] reconciliation. This pass did **not** re-audit every historical migration body; only the 27 September classification migration below was reviewed/applied in this repair.
+
+| Supabase version | Supabase migration name | Verification note |
+| --- | --- | --- |
+| `20260911112712` | `class_a_signup_event_outbox` | Live ledger entry verified |
+| `20260911131733` | `class_a_registration_deduplication_guards` | Live ledger entry verified |
+| `20260915173440` | `drx_social_campaign_fk_indexes` | Live ledger entry verified |
+| `20260915173515` | `harden_class_a_function_security` | Live ledger entry verified |
+| `20260917212910` | `cmpass_founder_intelligence_v1` | Live ledger entry verified |
+| `20260917213031` | `cmpass_live_core_count_triggers` | Live ledger entry verified |
+| `20260917213043` | `cmpass_fix_class_a_count_scope` | Live ledger entry verified |
+| `20260917213136` | `cmpass_public_count_events` | Live ledger entry verified |
+| `20260919121334` | `class_a_confirmed_attendance_flow` | Live ledger entry verified |
+| `20260919121356` | `fix_class_a_register_returning_alias` | Live ledger entry verified |
+| `20260919135931` | `create_colab_projectx_crm` | Live ledger entry verified |
+| `20260919135956` | `secure_colab_projectx_internal_access` | Live ledger entry verified |
+| `20260919140045` | `harden_colab_updated_at_search_path` | Live ledger entry verified |
+| `20260920010801` | `index_projectx_experiment_fk` | Live ledger entry verified |
+| `20260922010629` | `class_a_signup_event_sync_targets` | Live ledger entry verified |
+| `20260922101731` | `secure_cmpass_governance_tables_rls` | Live ledger entry verified |
+| `20260922101903` | `restrict_internal_trigger_functions` | Live ledger entry verified |
+| `20260922102007` | `index_cmpass_foreign_keys` | Live ledger entry verified |
+| `20260922111941` | `class_a_confirm_legacy_registrations` | Live ledger entry verified |
+| `20260922112143` | `class_a_pass_delivery_evidence` | Live ledger entry verified |
+| `20260927110907` | `class_a_registration_truth_classification` | Applied and verified in this repair; exact schema SQL is committed at `drizzle/migrations/20260927110907_class_a_registration_truth_classification.sql` |
+
 
 ## Supabase identity + storage verification
 
@@ -86,6 +115,18 @@ Performance advisor:
   - `drx_social_send_ledger.campaign_id`
 
 These two index opportunities are not a current release blocker because both tables are empty, but they should be addressed through a reviewed migration before social-engine traffic becomes meaningful. Do not add or remove production indexes solely to silence an advisor without confirming the query path.
+
+## Security and performance posture — 27 September 2026
+
+The post-change Supabase advisors were run after `class_a_registration_truth_classification`.
+
+- No classification-migration-specific security or performance blocker was reported.
+- Existing informational default-deny `RLS Enabled No Policy` notices remain on server-owned tables.
+- Existing WARN findings remain for the two public CLASS[Λ] `SECURITY DEFINER` RPCs (`class_a_register_confirmed` and `class_a_redeem_attendance`) because public roles can execute them. Do not revoke those calls blindly: verify the intended public registration/staff-redemption contract first.
+- Leaked-password protection is currently disabled in Supabase Auth.
+- Performance findings are informational unused-index notices at the current traffic level.
+
+These pre-existing warnings are tracked separately from this registration-truth repair; the 27 September migration did not add a privileged function, policy or index.
 
 ## Required workflow for schema changes
 
