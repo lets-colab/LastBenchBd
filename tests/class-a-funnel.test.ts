@@ -105,7 +105,7 @@ describe("CLASS A signup funnel", () => {
     expect(masterclassScript).toContain("p_recording_consent");
     expect(masterclassScript).toContain("/class-a/pass.html#code=");
     expect(masterclass).toContain("ADD TO GOOGLE CALENDAR");
-    expect(pass).toContain("YOUR MASTERCLASS PASS.");
+    expect(pass).toContain("<h1>YOUR<br>MASTERCLASS PASS.</h1>");
     expect(pass).toContain("LIVE ATTENDANCE PROOF");
     expect(passScript).toContain("class_a_get_session_pass");
     expect(passScript).toContain("class_a_record_session_signal");
