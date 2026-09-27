@@ -17,6 +17,9 @@ on:
       - design-system/**
       - theme.config.js
       - scripts/validate-design-system.mjs
+      - scripts/validate-boundary-integrity.mjs
+      - drizzle/MIGRATION_STATUS.md
+      - landing/class-a/**
       - .github/workflows/deploy-github-pages.yml
   pull_request:
     branches: [main]
@@ -34,6 +37,9 @@ on:
       - design-system/**
       - theme.config.js
       - scripts/validate-design-system.mjs
+      - scripts/validate-boundary-integrity.mjs
+      - drizzle/MIGRATION_STATUS.md
+      - landing/class-a/**
       - .github/workflows/deploy-github-pages.yml
   workflow_dispatch:
 
@@ -49,6 +55,9 @@ jobs:
 
       - name: Verify canonical design system contract
         run: node scripts/validate-design-system.mjs
+
+      - name: Verify cross-engine audience boundaries
+        run: node scripts/validate-boundary-integrity.mjs
 
       - name: Verify canonical opportunity-accelerator contract
         run: |

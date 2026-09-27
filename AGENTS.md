@@ -97,6 +97,31 @@ Content jobs:
 - referrals/partnerships under verified terms
 - community/alumni/mentor contribution
 
+## Founder judgment + boundary integrity
+
+Before changing a material user-facing or operator-facing surface, simulate the actual target person:
+
+> **I am [target audience]. Why am I seeing this?**
+
+A shared capability does not authorize a shared operating interface.
+
+- CLASS[Λ] learner surfaces may teach website/MVP capability, but must not expose ProjectX pipeline, client deposit rules, Moontakim workflow, internal ProjectX CRM, or unrelated Education & Mobility operations.
+- ProjectX may use neutral website-building principles, but CLASS curriculum is not ProjectX operating authority.
+- Education & Mobility student/family surfaces must not absorb CLASS or ProjectX operations merely because Last Bench connects the engines.
+- Corporate/Founder surfaces may map engines together when the relationship is explicitly MAP / HANDOFF / governed evidence.
+- Reuse neutral capability; do not reuse context blindly.
+
+For material metrics, naming the correct database is insufficient. Bind:
+**source + object + filter + population + unit + time + meaning**.
+
+Examples:
+- 14 raw CLASS registration rows are not 14 genuine learners.
+- confirmation status is not attendance.
+- a HubSpot contact is not a deal or payment.
+- a proposal is not revenue.
+
+If a term/link/owner/workflow would make a target user reasonably ask “why is this here?”, fail closed and fix the boundary before publishing.
+
 ## Content principles
 
 Every piece of content must do at least one of five jobs:
