@@ -88,6 +88,13 @@ The parent runtime is aligned to the Opportunity Accelerator architecture. Malay
 - Canonical-domain DNS still points at Netlify and is the remaining web-host cutover gate. Do **not** claim `lastbenchbd.com` is served by GitHub Pages until DNS and the release fingerprint prove it.
 - Current `main` builds the complete host-neutral production site successfully.
 
+### Cloudflare
+
+- Cloudflare remains part of the DNS/control-plane layer, not the authoritative Last Bench web or API deployment runtime.
+- GitHub checks named `Workers Builds: lastbenchbd` and `Workers Builds: the-last-bench` come from legacy Cloudflare Worker Git integrations. They are not canonical release gates.
+- Do **not** add Wrangler configuration, Worker entrypoints or duplicate Cloudflare deployment code merely to make those legacy checks green. The correct remediation is to disconnect those Worker Git integrations in Cloudflare unless the production architecture is explicitly changed and re-approved.
+- Canonical runtime evidence remains GitHub Pages build/deploy + production smoke for the web, Render health for the API, and Supabase health/migration evidence for data/auth.
+
 ### API
 
 - Hosting: Render
