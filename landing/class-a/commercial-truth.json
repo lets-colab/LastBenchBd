@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "product": "CLASS[Λ] 20-Class One-Person Venture Builder",
+  "currency": "BDT",
+  "course_price_bdt": null,
+  "price_status": "open_unapproved",
+  "approval_source": "https://app.notion.com/p/3e8b855610d081cb9721e1a8fd500a50",
+  "rule": "Do not publish or quote a numeric course price until founder approval closes the pricing economics gate.",
+  "updated_at": "2026-09-28"
+}
