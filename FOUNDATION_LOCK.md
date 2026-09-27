@@ -30,6 +30,9 @@ Important product state must have one authoritative source, one owner, one verif
 - `pnpm db:push` remains intentionally blocked while legacy Drizzle snapshots are incomplete; production DDL uses reviewed SQL through Supabase migrations.
 - Production smoke monitoring is automated by `.github/workflows/production-smoke.yml` and distinguishes the Render control-plane origin from the custom API hostname.
 
+- Cloudflare is not an authoritative Last Bench application deployment target in the current topology. The GitHub checks `Workers Builds: lastbenchbd` and `Workers Builds: the-last-bench` are legacy Worker Git integrations and should be disconnected in Cloudflare rather than satisfied by introducing duplicate Wrangler/Worker deployment code.
+- Until those external integrations are disconnected, their failed checks are tracked as infrastructure drift, not as evidence that the canonical GitHub Pages + Render runtime failed. They must never override a failing canonical gate, and they must never be converted into a false green by adding an unapproved duplicate runtime.
+
 See [`drizzle/MIGRATION_STATUS.md`](./drizzle/MIGRATION_STATUS.md) for database reconciliation evidence.
 
 ## Gate A — Database truth ✅ foundation locked
