@@ -71,11 +71,33 @@ const checks = [
       "masterclass-entry.mp4",
       "data-intro-end-card",
       "<h1>0.01%</h1>",
-      "ENTER EXPERIENCE",
+      "ACCEPT INVITATION",
       "TURN AI INTO",
       "YOUR TEAM.",
       "Research · Build · Create · Sell · Operate",
-      "10 SEATS ONLY · RESERVE YOUR FREE SEAT",
+      "LIVE ONLINE · FREE MASTERCLASS · 0.01% BUILDERS",
+    ],
+  },
+  {
+    name: "CLASS personal masterclass pass",
+    url: `${webOrigin}/class-a/pass.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "YOUR",
+      "MASTERCLASS PASS.",
+      "LIVE ATTENDANCE PROOF",
+      "pass.js",
+    ],
+  },
+  {
+    name: "CLASS instructor live control",
+    url: `${webOrigin}/class-a/live-control.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "DR.X LIVE · INSTRUCTOR CONTROL",
+      "ISSUE LIVE",
+      "ATTENDANCE CODE.",
+      "live-control.js",
     ],
   },
   {
@@ -144,6 +166,9 @@ console.log("- Returning Supabase session survives refresh");
 console.log("- Authenticated tRPC request succeeds");
 console.log("- Logout causes the next protected request to be rejected");
 console.log("- Real homepage and CLASS[Λ] submissions appear in their intended Supabase tables");
+console.log("- Online CLASS[Λ] registration creates a session enrollment without rewriting historical attendance");
+console.log("- Personal pass opens from its private code and join-click remains a signal, not attendance");
+console.log("- Live attendance becomes verified only after personal-pass + active BUILD-code evidence");
 console.log("- Supabase migration ledger remains reconciled with drizzle/MIGRATION_STATUS.md");
 console.log("- Homepage business logic matches the current Opportunity Accelerator blueprint and keeps Malaysia scoped to Education & Mobility");
 
