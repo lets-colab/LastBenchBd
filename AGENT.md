@@ -1,6 +1,6 @@
 # AGENT.md — Operating Manual for AI Agents Working on Last Bench
 
-This file is the handoff brief for any AI agent working on this repository. Read it first. Before any production-sensitive change also read `PRODUCT.md`, `design.md`, `FOUNDATION_LOCK.md`; for database work read `drizzle/MIGRATION_STATUS.md`.
+This file is the handoff brief for any AI agent working on this repository. Read it first. Before any production-sensitive change also read `PRODUCT.md`, `OPERATING_SYSTEM.md`, `brand/last-bench/BRAND_BLUEPRINT.md`, `design.md`, and `FOUNDATION_LOCK.md`; for database work read `drizzle/MIGRATION_STATUS.md`.
 
 ---
 
@@ -30,6 +30,10 @@ Do not turn that service promise into the parent-company definition.
 The ecosystem is not a mandatory funnel. Students, learners, founders, businesses and partners may enter through the engine relevant to their need.
 
 Strategic progression thesis: **Access → Capability → Creation → Ownership.**
+
+Operating loop: **OFFICE → ONE Main → real source record → execute → proof → update the same task → Daily Close → Co.MPASS**. See `OPERATING_SYSTEM.md` for the full authority map and role ownership.
+
+Truth states: **ACTUAL · TARGET · FORECAST · UNKNOWN**. Execution states: **PLANNED → BUILT → TESTED → LIVE → PROVEN**. Never promote a simulated, planned, stale or unverified state to current fact.
 
 Non-negotiable product principles:
 
@@ -278,9 +282,11 @@ When documentation disagrees:
 1. Current explicit user direction recorded in canonical decision/product documents.
 2. Current code + verified runtime/infrastructure behavior for implementation claims.
 3. `PRODUCT.md` for business/product architecture.
-4. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
-5. `README.md` / `AGENT.md` / `design.md`.
-6. Feature-specific documentation.
+4. `OPERATING_SYSTEM.md` for company operating law, ownership and source authority.
+5. `brand/last-bench/BRAND_BLUEPRINT.md` plus locked assets for identity.
+6. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
+7. `README.md` / `AGENT.md` / `design.md`.
+8. Feature-specific documentation.
 7. Historical design handoffs and archived notes.
 
 Historical Malaysia-first design snapshots remain useful evidence of the service experience, but they no longer define the parent-company category.
