@@ -14,6 +14,10 @@ const script = read("cinematic.js");
 const styles = read("cinematic.css");
 const masterclassScript = read("masterclass-cinematic.js");
 const masterclassStyles = read("masterclass-cinematic-a.css") + read("masterclass-cinematic-b.css");
+const pass = read("pass.html");
+const passScript = read("pass.js");
+const liveControl = read("live-control.html");
+const liveControlScript = read("live-control.js");
 
 describe("CLASS A signup funnel", () => {
   it("keeps all three routes linked", () => {
@@ -74,12 +78,12 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain('data-reel-entry');
     expect(masterclass).toContain('./assets/masterclass-entry.mp4');
     expect(masterclass).toContain('<h1>0.01%</h1>');
-    expect(masterclass).toContain('ENTER EXPERIENCE');
+    expect(masterclass).toContain('ACCEPT INVITATION');
     expect(masterclass).toContain('>SKIP<');
     expect(masterclass).toContain('TURN AI INTO');
     expect(masterclass).toContain('YOUR TEAM.');
     expect(masterclass).toContain('Research · Build · Create · Sell · Operate');
-    expect(masterclass).toContain('10 SEATS ONLY · RESERVE YOUR FREE SEAT');
+    expect(masterclass).toContain('LIVE ONLINE · FREE MASTERCLASS · 0.01% BUILDERS');
     expect(masterclass).toContain('data-intro-end-card');
     expect(masterclass).not.toContain('class="intro-bench"');
     expect(masterclass).not.toContain('class="manifesto"');
@@ -88,6 +92,31 @@ describe("CLASS A signup funnel", () => {
     expect(masterclassScript).toContain('film.muted = false');
     expect(masterclassStyles).toContain('object-fit:cover');
     expect(masterclassStyles).toContain('.intro-end-card');
+  });
+
+  it("locks the online admission, pass and evidence flow", () => {
+    expect(masterclass).toContain("You’ve been invited to join them.");
+    expect(masterclass).toContain("LIVE ONLINE · GOOGLE MEET");
+    expect(masterclass).toContain("CLAIM YOUR PASS.");
+    expect(masterclassScript).toContain("class_a_register_online");
+    expect(masterclassScript).toContain("/class-a/pass.html#code=");
+    expect(masterclassScript).toContain("ADD TO GOOGLE CALENDAR");
+    expect(pass).toContain("YOUR MASTERCLASS PASS.");
+    expect(pass).toContain("LIVE ATTENDANCE PROOF");
+    expect(passScript).toContain("class_a_get_session_pass");
+    expect(passScript).toContain("class_a_record_session_signal");
+    expect(passScript).toContain("class_a_verify_live_attendance");
+    expect(liveControl).toContain("ISSUE LIVE");
+    expect(liveControl).toContain("ATTENDANCE CODE.");
+    expect(liveControlScript).toContain("class_a_issue_current_live_code");
+    expect(liveControlScript).toContain("BUILD-");
+  });
+
+  it("keeps join signals separate from verified attendance", () => {
+    expect(pass).toContain("Joining the room is a signal. The live code verifies attendance.");
+    expect(passScript).toContain("p_signal:'join_click'");
+    expect(passScript).toContain("class_a_verify_live_attendance");
+    expect(passScript).not.toContain("p_signal:'attended'");
   });
 
   it("keeps the masterclass hierarchy focused on one conversion path", () => {
@@ -127,7 +156,7 @@ describe("CLASS A signup funnel", () => {
   });
 
   it("contains no hardcoded event date", () => {
-    const pages = `${hub}\n${masterclass}\n${course}`;
+    const pages = `${hub}\n${masterclass}\n${course}\n${pass}\n${liveControl}`;
     expect(pages).not.toMatch(/\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}\b/i);
     expect(pages).not.toMatch(/\b20\d{2}-\d{2}-\d{2}\b/);
   });
