@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#050607">
+  <title>CLASS[Λ] — Live Control</title>
+  <link rel="icon" type="image/png" href="./assets/last-bench-bench.png">
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./live-control.css">
+</head>
+<body>
+  <main class="shell">
+    <header><img src="./assets/class-a-logo.jpg" alt="CLASS Lambda"><img class="bench" src="./assets/last-bench-bench.png" alt="Last Bench"></header>
+    <section class="card">
+      <p class="eyebrow">DR.X LIVE · INSTRUCTOR CONTROL</p>
+      <h1>ISSUE LIVE<br>ATTENDANCE CODE.</h1>
+      <p class="lead">Generate a temporary BUILD code during the session. Students enter it from their personal CLASS[Λ] pass. The code alone is not enough: it must match their private pass.</p>
+      <form data-form>
+        <label for="staff-key">STAFF KEY</label>
+        <input id="staff-key" name="staff_key" type="password" autocomplete="current-password" placeholder="Staff control key" required>
+        <label for="minutes">VALID FOR</label>
+        <select id="minutes" name="minutes">
+          <option value="10">10 minutes</option>
+          <option value="20" selected>20 minutes</option>
+          <option value="30">30 minutes</option>
+        </select>
+        <button type="submit">GENERATE LIVE CODE →</button>
+      </form>
+      <p class="status" data-status role="status" aria-live="polite"></p>
+      <div class="live-code" data-result hidden>
+        <span data-session>CLASS[Λ] LIVE</span>
+        <strong data-code>BUILD-XXXXXX</strong>
+        <small data-expiry></small>
+        <p>Display this code on screen while it is active. Do not share the staff key.</p>
+      </div>
+    </section>
+  </main>
+  <script src="./live-control.js" defer></script>
+</body>
+</html>
