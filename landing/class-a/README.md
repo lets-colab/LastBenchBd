@@ -3,7 +3,10 @@
 Three date-free conversion routes share one cinematic design, motion and registration system:
 
 - `/class-a/` — entry hub for choosing the free masterclass or full course.
-- `/class-a/masterclass.html` — free CLASS[Λ] Masterclass / Class 0 registration.
+- `/class-a/masterclass.html` — free CLASS[Λ] Masterclass / Class 0 invitation and registration.
+- `/class-a/pass.html` — private-code attendee surface for schedule, Calendar, Meet entry and live attendance proof.
+- `/class-a/live-control.html` — staff-only live control for issuing temporary BUILD attendance codes.
+- `/class-a/checkin.html` — retained legacy/manual staff check-in fallback.
 - `/class-a/course.html` — paid 20-Class One-Person Venture Builder registration.
 
 ## Product contract
@@ -14,7 +17,8 @@ Three date-free conversion routes share one cinematic design, motion and registr
 - All pages cross-link through the same `CLASS[Λ] · ACQUIRE. APPLY. ADVANCE.` system.
 - No dates are hardcoded.
 - Motion is lightweight, progressively enhanced and disabled for reduced-motion users.
-- Both registration forms use the same Supabase table and RLS-protected insert route.
+- Person/program identity remains in `public.class_a_registrations`; recurring live-masterclass participation uses a separate session-enrollment layer.
+- The online masterclass registers through a controlled Supabase RPC; the paid-course form keeps its existing registration route.
 - Static Netlify form markup remains present as a no-JavaScript fallback and deploy-time form declaration.
 
 ## Data contract
@@ -23,7 +27,7 @@ Table: `public.class_a_registrations`
 
 - Masterclass `program`: `masterclass`
 - Full course `program`: `course`
-- Source values include `class-a-cinematic-masterclass`, `class-a-cinematic-course`, and the current builders-cinematic masterclass route.
+- Source values include historical cinematic sources, `class-a-cinematic-course`, and the current online masterclass source `class-a-online-masterclass-v1`.
 - `record_kind`: `genuine` | `test` | `internal_test`
 - Only `record_kind='genuine'` belongs in learner/lead, CRM-linkage, confirmation and attendance KPI populations.
 - `test` and `internal_test` rows remain in Supabase for auditability but are excluded from learner/lead metrics and CRM creation.
@@ -38,12 +42,12 @@ These files are copied into the production artifact by `scripts/build-site.mjs`.
 
 The free masterclass route uses the approved builders reel as Scene 01.
 
-- `ENTER EXPERIENCE` starts the source reel immediately with sound after the user gesture.
+- `ACCEPT INVITATION` starts the source reel immediately with sound after the user gesture.
 - Desktop/laptop playback is edge-to-edge full-screen; mobile remains full-screen.
 - The reel is intentionally cut at the final CLASS[Λ] lockup (`26.88s`), before the Last Bench end card in the source media.
 - The exact locked CLASS[Λ] logo asset holds briefly on black, then the live website is revealed.
 - Last Bench ownership appears only after the cinematic handoff, as secondary ecosystem attribution.
-- The conversion hierarchy is: cinematic intro → outcome hero → six-part operating journey → final seat CTA → registration.
+- The conversion hierarchy is: 0.01% invitation → cinematic intro → outcome hero → six-part operating journey → invitation acceptance → registration → personal pass.
 - The duplicated six-card manifesto was removed; the full 20-class program is a secondary footer route, not a competing hero action.
 
 
@@ -54,3 +58,28 @@ The CLASS[Λ] web system uses the repository Impeccable detector as a bounded vi
 Regression tests in `tests/class-a-funnel.test.ts` lock the cinematic hierarchy and the known Impeccable quality regressions before release.
 
 Production smoke fingerprints track the distilled CLASS[Λ] copy and staff check-in hierarchy so post-deploy verification tests the current interface rather than superseded wording.
+
+
+## Online masterclass operating contract
+
+The free masterclass is now modeled as a recurring online session rather than a one-time physical check-in.
+
+Canonical data:
+- `public.class_a_sessions` — session schedule, Google Meet URL, recording/transcript references and analysis state.
+- `public.class_a_session_enrollments` — one person's enrollment in one live session and their hashed personal pass.
+- `public.class_a_session_attendance_evidence` — evidence ledger for `portal_open`, `join_click`, `live_code`, future Meet reports and staff evidence.
+- `public.class_a_session_notifications` — outbox for confirmation, calendar, 24-hour reminder, 6-hour reminder, room-open and post-class follow-up.
+- `public.class_a_live_checkin_codes` — short-lived instructor BUILD codes.
+
+Evidence law:
+- Opening a pass is not attendance.
+- Clicking Join is not attendance.
+- Verified online attendance requires the attendee's private pass plus a currently valid live BUILD code, or a future trusted Meet/staff evidence source.
+- Historical September attendance is never backfilled or inferred from registration.
+
+Session activation:
+- The seeded `class-0-online-next` session stays `planning` until a real date/time and Google Meet URL are set.
+- Scheduling the session automatically calculates pending 24-hour, 6-hour, 15-minute room-open and post-class notification due times.
+- The notification table is an outbox, not proof that a WhatsApp/email/calendar message was delivered. Delivery workers must write delivery evidence back before a notification becomes `sent`.
+
+Public browser access is capability-bounded through reviewed RPCs; the underlying session, enrollment, attendance-evidence and notification tables remain direct-read/write denied to `anon` and `authenticated`.
