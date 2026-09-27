@@ -9,10 +9,11 @@ Three date-free conversion routes share one cinematic design, motion and registr
 ## Product contract
 
 - Masterclass is explicitly **FREE** and requests no payment.
-- Full course is **৳5,000** and captures an application only; payment is handled separately.
+- Full course captures an application only. **No course price may be published until the founder pricing gate is approved and `commercial-truth.json` is updated with the approved amount + source.**
 - The full course presents all 20 classes and all 20 proof-of-work outputs.
 - All pages cross-link through the same `CLASS[Λ] · ACQUIRE. APPLY. ADVANCE.` system.
 - No dates are hardcoded.
+- Public commercial claims are governed by `commercial-truth.json`; code is not allowed to approve its own price.
 - Motion is lightweight, progressively enhanced and disabled for reduced-motion users.
 - Both registration forms use the same Supabase table and RLS-protected insert route.
 - Static Netlify form markup remains present as a no-JavaScript fallback and deploy-time form declaration.
