@@ -1,6 +1,6 @@
 # Last Bench database migration status
 
-Last verified against the connected production Supabase project on **27 September 2026**.
+Last verified against the connected production Supabase project on **28 September 2026**.
 
 ## Canonical live migration path
 
@@ -53,7 +53,11 @@ The following production migration versions are present in the connected Supabas
 | `20260922102007` | `index_cmpass_foreign_keys` | Live ledger entry verified |
 | `20260922111941` | `class_a_confirm_legacy_registrations` | Live ledger entry verified |
 | `20260922112143` | `class_a_pass_delivery_evidence` | Live ledger entry verified |
-| `20260927110907` | `class_a_registration_truth_classification` | Applied and verified in this repair; exact schema SQL is committed at `drizzle/migrations/20260927110907_class_a_registration_truth_classification.sql` |
+| `20260927110907` | `class_a_registration_truth_classification` | Applied and verified; exact SQL committed at `drizzle/migrations/20260927110907_class_a_registration_truth_classification.sql` |
+| `20260927213216` | `class_a_online_masterclass_os_v1` | Live session, recurring enrollment, attendance-evidence and notification-outbox foundation; exact SQL committed at `drizzle/migrations/20260927213216_class_a_online_masterclass_os_v1.sql` |
+| `20260927213315` | `class_a_online_masterclass_hardening` | Exact email+phone identity matching plus covering FK indexes; exact SQL committed at `drizzle/migrations/20260927213315_class_a_online_masterclass_hardening.sql` |
+| `20260927213629` | `class_a_online_live_code_control` | Staff-key-gated temporary BUILD-code control for the active online session; exact SQL committed at `drizzle/migrations/20260927213629_class_a_online_live_code_control.sql` |
+| `20260927214437` | `class_a_online_recording_consent` | Requires and timestamps explicit recording/transcription acceptance for online enrollment without conflating it with marketing permission; exact SQL committed at `drizzle/migrations/20260927214437_class_a_online_recording_consent.sql` |
 
 
 ## Supabase identity + storage verification
@@ -141,3 +145,21 @@ These pre-existing warnings are tracked separately from this registration-truth 
 9. Update this ledger with the exact Supabase migration version.
 
 Do not restore automated `drizzle-kit generate && drizzle-kit migrate` production behavior until `drizzle/meta` has been regenerated and compared against both the current schema and the Supabase ledger.
+
+
+## CLASS[Λ] online masterclass verification — 28 September 2026
+
+The online masterclass migrations were applied to the connected production Supabase project and then persisted under their exact live migration versions.
+
+Verified:
+- `class-0-online-next` exists as a `planning` Google Meet session with timezone `Asia/Dhaka`; no date, time or join URL was invented.
+- The new session/enrollment/live-code/evidence/notification tables expose no direct table privileges to `anon` or `authenticated`.
+- An invalid personal pass returns `invalid_code` and no participant data.
+- A wrong staff key returns `invalid_staff_key` and does not issue a live attendance code.
+- Online enrollment requires explicit recording/transcription acceptance; the timestamp is stored on the session enrollment and is explicitly not marketing/publicity consent.
+- `portal_open` and `join_click` are evidence signals only; verified attendance is a separate mutation requiring personal-pass plus active live BUILD-code evidence (or a future trusted Meet/staff source).
+- The hardening migration resolved the new unindexed-FK advisor findings. Remaining performance advisor output is informational unused-index data at current traffic levels.
+- Security advisor WARNs remain for browser-callable `SECURITY DEFINER` CLASS RPCs. These RPCs are intentionally capability-bounded for the public registration/pass flow, while underlying tables remain direct-access denied. Treat this as an explicit security-review item rather than silently suppressing the advisor.
+- Supabase Auth leaked-password protection remains disabled; this is a pre-existing Auth posture item unrelated to the CLASS public pass flow.
+
+Activation remains separate from schema readiness: schedule-dependent calendar/reminder delivery cannot be marked LIVE until the real session time and Google Meet event exist and an outbound sender writes delivery evidence to the notification outbox.

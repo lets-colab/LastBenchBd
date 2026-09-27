@@ -58,6 +58,8 @@ Public health automation targets:
 - `https://lastbenchbd.com/app/`
 - `https://lastbenchbd.com/class-a/`
 - `https://lastbenchbd.com/class-a/masterclass.html`
+- `https://lastbenchbd.com/class-a/pass.html`
+- `https://lastbenchbd.com/class-a/live-control.html`
 - `https://lastbenchbd.com/class-a/course.html`
 - `https://api.lastbenchbd.com/api/health`
 - diagnostic control plane: `https://last-bench-api-v2.onrender.com/api/health`
@@ -94,13 +96,13 @@ Before declaring authenticated production complete, verify:
 
 ## Gate D — Forms and conversion proof
 
-The repository homepage now posts to the RLS-protected Supabase table `public.lastbench_signups`. CLASS[Λ] posts to `public.class_a_registrations`; compatibility Netlify markup remains during the host transition. Historical Netlify submissions are retained.
+The repository homepage posts to the RLS-protected Supabase table `public.lastbench_signups`. CLASS[Λ] person/program identity remains in `public.class_a_registrations`. The online masterclass now adds a recurring session-enrollment layer, personal pass, schedule-aware notification outbox and evidence-based attendance verification; compatibility Netlify markup remains during the host transition. Historical Netlify submissions are retained.
 
 Before declaring conversion flows complete:
 
 - [x] Homepage intake schema, insert-only RLS and public REST transport are verified in production Supabase.
 - [ ] A real production homepage journey creates the expected `lastbench_signups` row.
-- [ ] A real CLASS[Λ] masterclass journey creates the expected `class_a_registrations` row.
+- [ ] A real CLASS[Λ] online masterclass journey creates/reuses the expected genuine `class_a_registrations` identity and creates the expected `class_a_session_enrollments` row without rewriting historical attendance.
 - [ ] A real CLASS[Λ] course journey creates the expected `class_a_registrations` row.
 - [ ] Receipt is verified in the intended Supabase table rather than inferred from a thank-you screen.
 
@@ -163,7 +165,7 @@ Automate or certify these journeys before declaring the complete product release
 2. Student application → mentor/admin update → student sees sanitized state.
 3. Message A → B → B reads → unread state updates.
 4. Tutor referral → earned commission → payout reservation.
-5. Homepage/CLASS[Λ] form → confirmed Supabase row.
+5. Homepage/CLASS[Λ] form → confirmed Supabase row; online masterclass → personal session enrollment → join signal → independent attendance evidence.
 6. Logout → protected API call is rejected.
 7. Returning browser session → authenticated after refresh.
 

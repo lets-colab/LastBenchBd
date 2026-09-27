@@ -32,9 +32,9 @@
 
     <div class="intro-gate" data-intro-gate>
       <h1>0.01%</h1>
-      <p class="gate-copy">Some people are wired to build. Enter with sound to experience the story.</p>
+      <p class="gate-copy">Most people will use AI. The 0.01% will build with it. You’ve been invited to join them.</p>
       <div class="gate-actions">
-        <button class="button button-primary" type="button" data-enter>ENTER EXPERIENCE</button>
+        <button class="button button-primary" type="button" data-enter>ACCEPT INVITATION</button>
         <button class="button button-ghost" type="button" data-skip>SKIP</button>
       </div>
       <p class="sound-note">Sound begins after you enter.</p>
@@ -50,9 +50,9 @@
       <img src="./assets/class-a-logo.jpg" alt="CLASS Lambda — Acquire. Apply. Advance.">
     </a>
     <div class="topbar-actions">
-      <span class="seat-chip"><i></i> 10 SEATS ONLY · RESERVE YOUR FREE SEAT</span>
+      <span class="seat-chip"><i></i> LIVE ONLINE · FREE MASTERCLASS · 0.01% BUILDERS</span>
       <img class="bench-mark" src="./assets/last-bench-bench.png" alt="Last Bench">
-      <button class="mini-cta" type="button" data-open-signup>RESERVE FREE SEAT →</button>
+      <button class="mini-cta" type="button" data-open-signup>ACCEPT INVITATION →</button>
     </div>
   </header>
 
@@ -64,10 +64,10 @@
         <p class="hero-lead">Build and run a <strong>one-person business with AI.</strong></p>
         <p class="hero-meta">Research · Build · Create · Sell · Operate</p>
         <div class="hero-actions">
-          <button class="button button-primary" type="button" data-open-signup>RESERVE YOUR FREE SEAT</button>
+          <button class="button button-primary" type="button" data-open-signup>ACCEPT YOUR INVITATION</button>
           <button class="button button-ghost" type="button" data-replay>REPLAY STORY</button>
         </div>
-        <p class="hero-micro">CHITTAGONG · LIMITED IN-PERSON SEATS · NO PAYMENT REQUIRED</p>
+        <p class="hero-micro">LIVE ONLINE · GOOGLE MEET · FREE REGISTRATION · NO PAYMENT REQUIRED</p>
       </div>
 
       <div class="hero-object" data-hero-object aria-label="Metallic 20 surrounded by orbital rings">
@@ -116,10 +116,10 @@
       <div class="final-glow" aria-hidden="true"></div>
       <img class="final-object" src="./assets/class-a-20-orbit.jpg" alt="Metallic CLASS Lambda 20 symbol">
       <div class="final-copy">
-        <h2>YOUR SEAT<br>IS WAITING.</h2>
-        <p>See the AI team in motion. Leave with a clearer operating model for building and running more with less.</p>
-        <button class="button button-primary button-large" type="button" data-open-signup>CLAIM YOUR FREE SEAT →</button>
-        <p class="final-note">Chittagong · Free registration · Limited in-person seats</p>
+        <h2>YOUR INVITATION<br>IS OPEN.</h2>
+        <p>Accept your invitation to the live 0.01% Builders Masterclass. Your personal CLASS[Λ] pass becomes your single route to the schedule, live room and attendance verification.</p>
+        <button class="button button-primary button-large" type="button" data-open-signup>ACCEPT MY INVITATION →</button>
+        <p class="final-note">Live online · Free registration · Schedule and room access delivered through your CLASS[Λ] pass</p>
       </div>
     </section>
   </main>
@@ -138,8 +138,8 @@
       <div class="signup-orbit" aria-hidden="true"></div>
       <div class="signup-head">
         <p class="eyebrow">CLASS[Λ] · CLASS 0</p>
-        <h2>CLAIM YOUR SEAT.</h2>
-        <p>Four quick steps. No payment.</p>
+        <h2>CLAIM YOUR PASS.</h2>
+        <p>Four quick steps. Your live-session pass is issued instantly. No payment.</p>
       </div>
 
       <div class="steps" aria-label="Registration progress"><span class="is-active"></span><span></span><span></span><span></span></div>
@@ -167,21 +167,35 @@
           <option>Regular AI user</option>
           <option>Already building with AI</option>
         </select>
+        <label class="consent-check">
+          <input type="checkbox" name="recording_consent" value="yes" required>
+          <span>I understand this live session may be recorded and transcribed for learning and quality improvement. This does not grant permission to use my image, voice, or words in public marketing.</span>
+        </label>
         <input class="honeypot" name="company" autocomplete="off" tabindex="-1" aria-hidden="true">
-        <button type="submit" class="signup-next signup-submit">CLAIM MY SEAT →</button>
+        <button type="submit" class="signup-next signup-submit">CLAIM MY PASS →</button>
       </div>
 
       <div class="signup-status" data-signup-status role="status" aria-live="polite"></div>
       <div class="signup-alert" data-signup-alert role="alert" aria-live="assertive" hidden></div>
       <div class="signup-success" data-signup-success hidden>
         <p class="success-kicker">YOU'RE IN.</p>
-        <h2>SEAT RESERVED.</h2>
-        <p>Your CLASS[Λ] registration has been received. Your seat is confirmed. Keep this code — it is your attendance pass. No payment is collected here.</p>
+        <h2>PASS ISSUED.</h2>
+        <p>Your CLASS[Λ] invitation is confirmed. This personal pass is your route to the live online masterclass, calendar, room access and attendance verification. No payment is collected here.</p>
         <div class="pass-card">
-          <canvas width="220" height="220" data-qr aria-label="Registration QR code"></canvas>
-          <div><span>CLASS[Λ] · CLASS 0</span><strong data-pass-code>—</strong><small>Present this code at check-in.</small><small data-confirmed-at></small></div>
+          <canvas width="220" height="220" data-qr aria-label="Personal CLASS Lambda pass QR code"></canvas>
+          <div><span>CLASS[Λ] · 0.01% BUILDERS</span><strong data-pass-code>—</strong><small>Keep this private. It identifies your masterclass enrollment.</small><small data-confirmed-at></small></div>
         </div>
-        <div class="success-actions"><button type="button" class="button button-ghost" data-copy-pass>COPY CODE</button><button type="button" class="button button-ghost" data-close-signup>DONE</button></div>
+        <div class="session-card" data-session-card>
+          <span class="session-state" data-session-status>SESSION · PLANNING</span>
+          <strong data-session-title>CLASS[Λ] — The 0.01% Builders Masterclass</strong>
+          <small data-session-time>The next live session is being scheduled. Your pass is already reserved.</small>
+        </div>
+        <div class="success-actions">
+          <a class="button button-primary" data-calendar-link hidden target="_blank" rel="noopener">ADD TO GOOGLE CALENDAR →</a>
+          <a class="button button-ghost" data-pass-link target="_blank" rel="noopener">OPEN MY PASS</a>
+          <button type="button" class="button button-ghost" data-copy-pass>COPY CODE</button>
+          <button type="button" class="button button-ghost" data-close-signup>DONE</button>
+        </div>
       </div>
     </form>
   </dialog>

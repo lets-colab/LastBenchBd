@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#050607">
+  <title>CLASS[Λ] — My Masterclass Pass</title>
+  <link rel="icon" type="image/png" href="./assets/last-bench-bench.png">
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./pass.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <img class="logo" src="./assets/class-a-logo.jpg" alt="CLASS Lambda — Acquire. Apply. Advance.">
+      <img class="bench" src="./assets/last-bench-bench.png" alt="Last Bench">
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">CLASS[Λ] · 0.01% BUILDERS</p>
+      <h1>YOUR<br>MASTERCLASS PASS.</h1>
+      <p class="lead">One personal route to the schedule, live room and verified attendance.</p>
+    </section>
+
+    <section class="lookup" data-lookup>
+      <form data-pass-form>
+        <label for="pass-code">PERSONAL PASS CODE</label>
+        <div class="input-row">
+          <input id="pass-code" name="pass_code" autocomplete="off" spellcheck="false" placeholder="CLA-XXXXXX-XXXXXX" required>
+          <button type="submit">OPEN PASS →</button>
+        </div>
+      </form>
+      <p class="status" data-status role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="pass" data-pass hidden>
+      <div class="pass-head">
+        <div>
+          <p class="state" data-session-state>SESSION · PLANNING</p>
+          <h2 data-session-title>CLASS[Λ] — The 0.01% Builders Masterclass</h2>
+        </div>
+        <span class="badge" data-enrollment-status>CONFIRMED</span>
+      </div>
+
+      <div class="identity">
+        <span>BUILDER</span>
+        <strong data-name>—</strong>
+        <small data-session-time>The next live session is being scheduled.</small>
+      </div>
+
+      <div class="actions">
+        <a class="primary" data-calendar hidden target="_blank" rel="noopener">ADD TO GOOGLE CALENDAR →</a>
+        <a class="primary" data-join hidden target="_blank" rel="noopener">JOIN LIVE ROOM →</a>
+        <button class="secondary" type="button" data-copy>COPY PASS CODE</button>
+      </div>
+
+      <div class="attendance">
+        <p class="eyebrow">LIVE ATTENDANCE PROOF</p>
+        <h3>Joining the room is a signal. The live code verifies attendance.</h3>
+        <p>During the masterclass, the instructor will reveal a temporary BUILD code. Enter it here from your personal pass.</p>
+        <form data-attendance-form>
+          <label for="live-code">LIVE BUILD CODE</label>
+          <div class="input-row">
+            <input id="live-code" name="live_code" autocomplete="one-time-code" spellcheck="false" placeholder="BUILD-XXXXXX" required>
+            <button type="submit">VERIFY ATTENDANCE →</button>
+          </div>
+        </form>
+        <p class="status" data-attendance-status role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <footer>CLASS[Λ] · A LAST BENCH CAPABILITY EXPERIENCE</footer>
+  </main>
+  <script src="./pass.js" defer></script>
+</body>
+</html>
