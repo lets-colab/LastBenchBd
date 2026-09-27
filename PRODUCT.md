@@ -19,6 +19,20 @@ Last Bench connects people to credible opportunities and helps them turn those o
 
 The architecture is **not** a mandatory funnel. People may enter through Education, CLASS[Λ], co.lab or a relevant community/partner pathway depending on their need and stage.
 
+## Accountable operating structure
+
+Last Bench currently operates through a small accountable team. Role ownership is part of the business architecture, while detailed workflow and source authority live in [`OPERATING_SYSTEM.md`](./OPERATING_SYSTEM.md).
+
+| Owner | Role | Primary ownership |
+| --- | --- | --- |
+| **Sayem Ahmed** | CEO | Strategic partnerships, institutional relationships, expansion and distribution |
+| **Fahim Shahbaz Mahmud** | COO | Accepted Education & Mobility conversion and repeatable student-journey operations |
+| **Erfan Uddin / Dr.X** | Co-founder & CBIO | Business architecture, brand governance, CLASS[Λ], co.lab, systems, innovation and major operating decisions |
+| **Rifat Bin Rashid** | Business Development Manager | New acquisition, qualification and governed handoff to the correct owner |
+| **Abdul Moontakim** | Project Manager / ProjectX Manager | co.lab ProjectX website acquisition, verification, delivery and proof |
+
+Operating law: **one current owner → one next action → one date → one evidence source.**
+
 ## Strategic progression model
 
 The human progression thesis is:
@@ -190,6 +204,19 @@ Visual law: **dark for emotion, white for trust, green for progress.**
 - Canonical logo assets live under `assets/branding/` and must never be approximated or redrawn.
 
 CLASS[Λ] and co.lab keep their own approved visual namespaces. Shared ownership does not mean visual homogenization.
+
+## Operating-system contract
+
+The canonical company loop is:
+
+**OFFICE → ONE Main → real source record → execute → proof → update the same task → Daily Close → Co.MPASS**
+
+Notion is the human front door and task layer; the authoritative student, learner, commercial or project record remains in its governed source system. Slack communicates decisions and exceptions. Co.MPASS summarizes governed evidence. Miro explains the system visually. GitHub holds canonical business, brand, technical and decision documentation.
+
+Truth states: **ACTUAL · TARGET · FORECAST · UNKNOWN**.  
+Execution states: **PLANNED → BUILT → TESTED → LIVE → PROVEN**.
+
+See [`OPERATING_SYSTEM.md`](./OPERATING_SYSTEM.md) for ownership, authority, cadence and release boundaries.
 
 ## North-star product logic
 
