@@ -23,9 +23,13 @@ Table: `public.class_a_registrations`
 
 - Masterclass `program`: `masterclass`
 - Full course `program`: `course`
-- Source values: `class-a-cinematic-masterclass`, `class-a-cinematic-course`
+- Source values include `class-a-cinematic-masterclass`, `class-a-cinematic-course`, and the current builders-cinematic masterclass route.
+- `record_kind`: `genuine` | `test` | `internal_test`
+- Only `record_kind='genuine'` belongs in learner/lead, CRM-linkage, confirmation and attendance KPI populations.
+- `test` and `internal_test` rows remain in Supabase for auditability but are excluded from learner/lead metrics and CRM creation.
+- Each Supabase registration ID remains an event identity. CRM person identity is deduplicated by normalized email, so repeat registrations may point to one HubSpot contact.
 
-The browser uses the project’s publishable key. RLS permits validated inserts for `anon` and `authenticated` while preventing public row reads.
+The browser uses the project’s publishable key. RLS permits validated inserts for `anon` and `authenticated` while preventing public row reads. Public form submissions default to `record_kind='genuine'`; known test/internal verification submissions must be reclassified in the canonical Supabase row rather than deleted or hidden in a parallel ledger.
 
 These files are copied into the production artifact by `scripts/build-site.mjs`.
 
