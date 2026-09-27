@@ -334,8 +334,7 @@
 
   form?.addEventListener('submit', async event => {
     event.preventDefault();
-    const current = steps[step]?.querySelector('select, input:not(.honeypot)');
-    if (!current?.checkValidity()) { current?.reportValidity(); return; }
+    if (!form.checkValidity()) { form.reportValidity(); return; }
     const honeypot = form.querySelector('[name="company"]');
     if (honeypot?.value) return;
 
@@ -345,7 +344,8 @@
       p_phone: String(data.get('phone') || '').trim(),
       p_email: String(data.get('email') || '').trim(),
       p_skill_level: String(data.get('skill') || '').trim() || null,
-      p_source: 'class-a-online-masterclass-v1'
+      p_source: 'class-a-online-masterclass-v1',
+      p_recording_consent: data.get('recording_consent') === 'yes'
     };
 
     status.classList.remove('is-error');
@@ -367,6 +367,11 @@
       const result = Array.isArray(rows) ? rows[0] : rows;
       if (!result) throw new Error('No confirmation returned');
 
+      if (result.outcome === 'recording_consent_required') {
+        status.textContent = 'PLEASE ACCEPT THE RECORDING AND TRANSCRIPTION NOTICE TO JOIN THIS LIVE SESSION.';
+        status.classList.add('is-error');
+        return;
+      }
       if (result.outcome === 'already_registered') {
         status.textContent = `YOU ARE ALREADY ENROLLED IN THIS LIVE SESSION. YOUR EXISTING PASS ENDS IN ${result.pass_code_last4 || '••••'}. USE THE PASS WE SENT YOU, OR CONTACT THE CLASS[Λ] TEAM IF YOU NEED ACCESS RECOVERED.`;
         status.classList.add('is-error');
