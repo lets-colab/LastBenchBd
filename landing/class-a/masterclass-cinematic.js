@@ -349,7 +349,7 @@
     };
 
     status.classList.remove('is-error');
-    status.textContent = 'CONFIRMING YOUR SEAT…';
+    status.textContent = 'ISSUING YOUR PASS…';
     const submit = form.querySelector('.signup-submit');
     submit.disabled = true;
 
