@@ -193,6 +193,11 @@
   const success = document.querySelector('[data-signup-success]');
   const passCode = document.querySelector('[data-pass-code]');
   const qrCanvas = document.querySelector('[data-qr]');
+  const sessionStatus = document.querySelector('[data-session-status]');
+  const sessionTitle = document.querySelector('[data-session-title]');
+  const sessionTime = document.querySelector('[data-session-time]');
+  const calendarLink = document.querySelector('[data-calendar-link]');
+  const passLink = document.querySelector('[data-pass-link]');
   let step = 0;
 
   const SUPABASE_URL = 'https://tocxdyqlrvzthpexnmxe.supabase.co';
@@ -232,7 +237,7 @@
   const confirmedAt = document.querySelector('[data-confirmed-at]');
 
   async function drawQR(code) {
-    const checkInUrl = `${location.origin}/class-a/checkin.html?code=${encodeURIComponent(code)}`;
+    const checkInUrl = `${location.origin}/class-a/pass.html#code=${encodeURIComponent(code)}`;
     try {
       if (window.QRCode?.toCanvas) {
         await window.QRCode.toCanvas(qrCanvas, checkInUrl, { width: 220, margin: 1, color: { dark: '#050607', light: '#ffffff' } });
@@ -260,6 +265,62 @@
     } catch (_) { return ''; }
   }
 
+  function formatSessionTime(startValue, endValue, timezone = 'Asia/Dhaka') {
+    if (!startValue) return 'The next live session is being scheduled. Your pass is already reserved.';
+    try {
+      const start = new Date(startValue);
+      const end = endValue ? new Date(endValue) : null;
+      const date = new Intl.DateTimeFormat('en-GB', {
+        timeZone: timezone, weekday: 'long', day: '2-digit', month: 'short', year: 'numeric'
+      }).format(start);
+      const time = new Intl.DateTimeFormat('en-GB', {
+        timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: true
+      }).format(start);
+      const endTime = end ? new Intl.DateTimeFormat('en-GB', {
+        timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: true
+      }).format(end) : null;
+      return `${date} · ${time}${endTime ? `–${endTime}` : ''} · Bangladesh time`;
+    } catch (_) {
+      return 'Live-session schedule confirmed. Open your personal pass for the latest details.';
+    }
+  }
+
+  function compactUtc(value) {
+    return new Date(value).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+  }
+
+  function buildGoogleCalendarUrl(result) {
+    if (!result.session_starts_at) return '';
+    const start = compactUtc(result.session_starts_at);
+    const end = compactUtc(result.session_ends_at || new Date(new Date(result.session_starts_at).getTime() + 2 * 60 * 60 * 1000));
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: result.session_title || 'CLASS[Λ] — The 0.01% Builders Masterclass',
+      dates: `${start}/${end}`,
+      details: 'Your personal CLASS[Λ] masterclass pass contains the latest room and attendance details.',
+      location: result.session_join_url || 'Online · Google Meet'
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  }
+
+  function renderSession(result, code) {
+    if (sessionStatus) sessionStatus.textContent = `SESSION · ${String(result.session_status || 'planning').toUpperCase()}`;
+    if (sessionTitle) sessionTitle.textContent = result.session_title || 'CLASS[Λ] — The 0.01% Builders Masterclass';
+    if (sessionTime) sessionTime.textContent = formatSessionTime(result.session_starts_at, result.session_ends_at, result.session_timezone);
+    const personalUrl = `${location.origin}/class-a/pass.html#code=${encodeURIComponent(code)}`;
+    if (passLink) passLink.href = personalUrl;
+    const calendarUrl = buildGoogleCalendarUrl(result);
+    if (calendarLink) {
+      if (calendarUrl) {
+        calendarLink.href = calendarUrl;
+        calendarLink.hidden = false;
+      } else {
+        calendarLink.hidden = true;
+        calendarLink.removeAttribute('href');
+      }
+    }
+  }
+
   document.querySelector('[data-copy-pass]')?.addEventListener('click', async () => {
     const code = passCode?.textContent?.trim();
     if (!code || code === '—') return;
@@ -284,7 +345,7 @@
       p_phone: String(data.get('phone') || '').trim(),
       p_email: String(data.get('email') || '').trim(),
       p_skill_level: String(data.get('skill') || '').trim() || null,
-      p_source: 'class-a-builders-cinematic-v3'
+      p_source: 'class-a-online-masterclass-v1'
     };
 
     status.classList.remove('is-error');
@@ -293,7 +354,7 @@
     submit.disabled = true;
 
     try {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/class_a_register_confirmed`, {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/class_a_register_online`, {
         method: 'POST',
         headers: {
           apikey: SUPABASE_PUBLISHABLE_KEY,
@@ -307,15 +368,31 @@
       if (!result) throw new Error('No confirmation returned');
 
       if (result.outcome === 'already_registered') {
-        status.textContent = `THIS EMAIL OR WHATSAPP IS ALREADY REGISTERED. YOUR EXISTING PASS ENDS IN ${result.redeem_code_last4 || '••••'}. CONTACT THE CLASS[Λ] TEAM IF YOU NEED THE FULL CODE AGAIN.`;
+        status.textContent = `YOU ARE ALREADY ENROLLED IN THIS LIVE SESSION. YOUR EXISTING PASS ENDS IN ${result.pass_code_last4 || '••••'}. USE THE PASS WE SENT YOU, OR CONTACT THE CLASS[Λ] TEAM IF YOU NEED ACCESS RECOVERED.`;
         status.classList.add('is-error');
         return;
       }
-      if (result.outcome !== 'confirmed' || !result.redeem_code) throw new Error('Confirmation was not issued');
+      if (result.outcome === 'identity_conflict') {
+        status.textContent = 'THIS EMAIL OR WHATSAPP IS ALREADY CONNECTED TO A DIFFERENT REGISTRATION IDENTITY. CONTACT THE CLASS[Λ] TEAM SO WE CAN VERIFY IT WITHOUT OVERWRITING ANYONE’S RECORD.';
+        status.classList.add('is-error');
+        return;
+      }
+      if (result.outcome === 'excluded_record') {
+        status.textContent = 'THIS RECORD IS NOT ELIGIBLE FOR LIVE ENROLLMENT. CONTACT THE CLASS[Λ] TEAM FOR REVIEW.';
+        status.classList.add('is-error');
+        return;
+      }
+      if (result.outcome === 'no_session') {
+        status.textContent = 'THE NEXT LIVE SESSION HAS NOT BEEN OPENED FOR ENROLLMENT YET. PLEASE TRY AGAIN AFTER THE CLASS[Λ] TEAM PUBLISHES IT.';
+        status.classList.add('is-error');
+        return;
+      }
+      if (result.outcome !== 'confirmed' || !result.pass_code) throw new Error('Confirmation was not issued');
 
-      if (passCode) passCode.textContent = result.redeem_code;
+      if (passCode) passCode.textContent = result.pass_code;
       if (confirmedAt) confirmedAt.textContent = `Confirmed · ${formatDhakaTime(result.confirmed_at)} · Bangladesh time`;
-      await drawQR(result.redeem_code);
+      renderSession(result, result.pass_code);
+      await drawQR(result.pass_code);
       steps.forEach(el => el.classList.remove('is-active'));
       form.querySelector('.steps')?.setAttribute('hidden','');
       form.querySelector('.signup-head')?.setAttribute('hidden','');
