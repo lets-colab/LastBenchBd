@@ -99,6 +99,10 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain("LIVE ONLINE · GOOGLE MEET");
     expect(masterclass).toContain("CLAIM YOUR PASS.");
     expect(masterclassScript).toContain("class_a_register_online");
+    expect(masterclass).toContain("may be recorded and transcribed for learning and quality improvement");
+    expect(masterclass).toContain("does not grant permission to use my image, voice, or words in public marketing");
+    expect(masterclass).toContain('name="recording_consent"');
+    expect(masterclassScript).toContain("p_recording_consent");
     expect(masterclassScript).toContain("/class-a/pass.html#code=");
     expect(masterclass).toContain("ADD TO GOOGLE CALENDAR");
     expect(pass).toContain("YOUR MASTERCLASS PASS.");
