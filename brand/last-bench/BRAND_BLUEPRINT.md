@@ -1,7 +1,8 @@
 # Last Bench — Canonical Brand Blueprint
 
-Status: **canonical parent-brand reference**  
-Repository: `lets-colab/LastBenchBd`
+Status: **canonical parent-brand reference — founder lock reconciled 2026-09-28**  
+Repository: `lets-colab/LastBenchBd`  
+Authority: latest explicit founder lock overrides older screenshots, mockups, recolors and reconstructed logo versions.
 
 ## 1. Brand definition
 
@@ -54,22 +55,51 @@ Use short declarative headlines, disciplined hierarchy, generous negative space,
 
 ## 4. Logo system
 
-Canonical files in this folder:
+### Founder lock — 27–28 September 2026
 
-- `logo-full.png` — production full lockup
-- `logo-icon.png` — production icon
-- `logo-lockups.png` — master/reference board
+The uploaded and approved Last Bench artwork is the **sole official brand mark**. Every older redraw, approximation, alternate construction, recolor or AI-generated version is deprecated unless the founder explicitly replaces this lock later.
 
-The exact fingerprints are in `brand-lock.json`.
+The identity consists of the exact:
+
+- stacked **LAST / BENCH** wordmark with the approved stylized **A**;
+- green bench + upward-arrow symbol;
+- tagline **CREATING A LASTING BENCHMARK**;
+- approved proportions, spacing and geometry.
+
+### Background behavior
+
+The logo must remain **transparent** when used as an overlay/brand asset.
+
+- On **light / white backgrounds**: use the exact approved variant with **black wordmark**, green bench-arrow, and the approved tagline treatment.
+- On **dark / black backgrounds**: use the exact approved variant with **white wordmark**, green bench-arrow, and the approved tagline treatment.
+- Do **not** recolor an asset with CSS filters, blend modes, image generation or tracing to manufacture the other variant. Use an exact approved source file.
+- The green bench-arrow remains the brand signal; do not convert it into a substitute logo treatment unless an exact approved variant explicitly contains that treatment.
+
+### Repository assets
+
+Current locked/reference assets include:
+
+- `landing/assets/logo-full.png` — current production transparent full lockup for dark backgrounds (white wordmark).
+- `landing/assets/logo-icon.png` — production icon where icon-only use is explicitly appropriate.
+- `assets/branding/logo-lockups.png` — approved reference board showing the identity construction and variants.
+- `design-system/brand-lock.json` — machine-readable byte/source lock for repository assets.
+
+The reference board is **reference evidence**, not permission to crop, redraw or recreate a logo from the board. If a required light-background transparent full-lockup source is not present as an exact approved asset in the working environment, do not improvise it.
 
 ### Non-negotiable logo rules
 
-- Never redraw, regenerate, recolor, approximate, trace, or type-substitute the mark.
+- Never redraw, regenerate, approximate, trace, vectorize, type-substitute or reconstruct the mark.
 - Never ask an image model to create or imitate the Last Bench logo.
 - Never use `design-system/logo.svg` in production.
-- Generate backgrounds/photography separately, then composite the exact logo asset afterward.
+- Never stretch, squash, rotate, skew, alter spacing or change the approved geometry.
+- Never substitute a previous logo version because it is easier to access.
+- Generate backgrounds/photography separately, then composite the exact approved logo asset afterward.
 - Preserve aspect ratio and clear space.
 - Inspect the actual saved/exported artifact before release.
+
+### Conflict rule
+
+If an older source says the logo must have a baked white background, says no transparent variant exists, or identifies a previous JPEG as the sole master, that instruction is **superseded by the 27–28 September 2026 founder lock**. The current rule is transparent placement with the approved black-on-light / white-on-dark wordmark behavior.
 
 ## 5. Visual language
 
