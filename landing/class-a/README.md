@@ -66,7 +66,7 @@ The free masterclass is now modeled as a recurring online session rather than a 
 
 Canonical data:
 - `public.class_a_sessions` — session schedule, Google Meet URL, recording/transcript references and analysis state.
-- `public.class_a_session_enrollments` — one person's enrollment in one live session, their hashed personal pass and the timestamp of explicit recording/transcription notice acceptance.
+- `public.class_a_session_enrollments` — one person's enrollment in one live session, recording-consent evidence, the short-lived WhatsApp-follow unlock gate and (after release) their hashed personal pass.
 - `public.class_a_session_attendance_evidence` — evidence ledger for `portal_open`, `join_click`, `live_code`, future Meet reports and staff evidence.
 - `public.class_a_session_notifications` — outbox for confirmation, calendar, 24-hour reminder, 6-hour reminder, room-open and post-class follow-up.
 - `public.class_a_live_checkin_codes` — short-lived instructor BUILD codes.
@@ -75,6 +75,13 @@ Consent law:
 - Online enrollment requires explicit acceptance that the live session may be recorded/transcribed for learning and quality improvement.
 - That acceptance is stored as `recording_consent_at` on the session enrollment.
 - Recording/transcription acceptance does **not** grant permission to publish the attendee's image, voice, words or testimonial for marketing.
+
+WhatsApp follow gate:
+- Registration reserves the session enrollment but the gated registration RPC does **not** return a pass code.
+- The attendee opens the official <CLASS[Λ]> | LEARN AI WhatsApp Channel, then returns and explicitly self-attests that they followed it.
+- WhatsApp does not expose a per-person follow callback to this site, so `channel_follow_self_attested_at` is self-attested evidence, not verified WhatsApp platform evidence.
+- Only the one-time unlock RPC releases a fresh personal pass code after that self-attestation.
+- Unlock tokens are hashed at rest and expire after 30 minutes.
 
 Evidence law:
 - Opening a pass is not attendance.

@@ -39,7 +39,7 @@ describe("CLASS A signup funnel", () => {
   });
 
   it("keeps the masterclass free and the course interest-only", () => {
-    expect(masterclass).toContain("No payment is collected here");
+    expect(masterclass).toContain("NO PAYMENT REQUIRED");
     expect(course).toContain("Payment is handled separately after acceptance");
     expect(course).not.toMatch(/type="(?:number|text)"[^>]+name="(?:card|payment|amount)"/i);
   });
@@ -98,11 +98,26 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain("You’ve been invited to join them.");
     expect(masterclass).toContain("LIVE ONLINE · GOOGLE MEET");
     expect(masterclass).toContain("CLAIM YOUR PASS.");
-    expect(masterclassScript).toContain("class_a_register_online");
+    expect(masterclassScript).toContain("class_a_register_online_gated");
+    expect(masterclassScript).toContain("class_a_unlock_online_pass");
+    expect(masterclassScript).toContain("p_follow_confirmed: true");
+    expect(masterclassScript).toContain("result.outcome !== 'follow_required'");
     expect(masterclass).toContain("may be recorded and transcribed for learning and quality improvement");
     expect(masterclass).toContain("does not grant permission to use my image, voice, or words in public marketing");
     expect(masterclass).toContain('name="recording_consent"');
     expect(masterclassScript).toContain("p_recording_consent");
+    expect(masterclass).toContain("https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00");
+    expect(masterclass).toContain("FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP");
+    expect(masterclass).toContain("FOLLOW CHANNEL →");
+    expect(masterclass).toContain("I'VE FOLLOWED — UNLOCK MY PASS");
+    expect(masterclass).toContain("data-pass-reveal hidden");
+    expect(masterclassScript).toContain("prepareWhatsappUnlock(result)");
+    expect(masterclassScript).toContain("result.unlock_token");
+    expect(masterclassScript).toContain("result.pass_code");
+    expect(masterclassScript).toContain("unlockPass?.addEventListener('click'");
+    expect(masterclassScript).toContain("sessionStorage.setItem('class_a_last_pass_url'");
+    expect(masterclassScript).not.toContain("location.assign(WHATSAPP_CHANNEL_URL)");
+    expect(masterclassScript).not.toContain("WHATSAPP_REDIRECT_SECONDS");
     expect(masterclassScript).toContain("/class-a/pass.html#code=");
     expect(masterclass).toContain("ADD TO GOOGLE CALENDAR");
     expect(pass).toContain("<h1>YOUR<br>MASTERCLASS PASS.</h1>");

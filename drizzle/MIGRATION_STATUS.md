@@ -58,6 +58,7 @@ The following production migration versions are present in the connected Supabas
 | `20260927213315` | `class_a_online_masterclass_hardening` | Exact email+phone identity matching plus covering FK indexes; exact SQL committed at `drizzle/migrations/20260927213315_class_a_online_masterclass_hardening.sql` |
 | `20260927213629` | `class_a_online_live_code_control` | Staff-key-gated temporary BUILD-code control for the active online session; exact SQL committed at `drizzle/migrations/20260927213629_class_a_online_live_code_control.sql` |
 | `20260927214437` | `class_a_online_recording_consent` | Requires and timestamps explicit recording/transcription acceptance for online enrollment without conflating it with marketing permission; exact SQL committed at `drizzle/migrations/20260927214437_class_a_online_recording_consent.sql` |
+| `20260928001145` | `class_a_whatsapp_follow_gated_pass` | Adds backward-compatible gated online registration + one-time unlock RPC so the pass code is not returned until the attendee self-attests the WhatsApp follow step; exact SQL committed at `drizzle/migrations/20260928001145_class_a_whatsapp_follow_gated_pass.sql` |
 
 
 ## Supabase identity + storage verification
@@ -163,3 +164,13 @@ Verified:
 - Supabase Auth leaked-password protection remains disabled; this is a pre-existing Auth posture item unrelated to the CLASS public pass flow.
 
 Activation remains separate from schema readiness: schedule-dependent calendar/reminder delivery cannot be marked LIVE until the real session time and Google Meet event exist and an outbound sender writes delivery evidence to the notification outbox.
+
+
+## WhatsApp follow-gated pass verification — 28 September 2026
+
+- Existing live `class_a_register_online` remains intact for backward compatibility until the new frontend is deployed.
+- New registrations through `class_a_register_online_gated` receive a short-lived one-time unlock token instead of a personal pass code.
+- The unlock token is stored only as a SHA-256 hash and expires after 30 minutes.
+- `class_a_unlock_online_pass` releases a fresh pass code only when the attendee explicitly submits the follow-confirmation step.
+- The resulting field is named `channel_follow_self_attested_at` because WhatsApp Channels does not expose a per-person follow callback to this site; this must not be represented as platform-verified follow evidence.
+- Direct access to the underlying enrollment table remains denied to browser roles. Supabase advisor WARNs for the two new browser-callable `SECURITY DEFINER` RPCs are intentional capability-endpoint findings and remain visible for review rather than being suppressed.
