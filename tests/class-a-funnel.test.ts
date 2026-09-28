@@ -77,7 +77,8 @@ describe("CLASS A signup funnel", () => {
     expect(statSync(reelPath).size).toBeGreaterThan(1_000_000);
     expect(masterclass).toContain('data-reel-entry');
     expect(masterclass).toContain('./assets/masterclass-entry.mp4');
-    expect(masterclass).toContain('<h1>0.01%</h1>');
+    expect(masterclass).toContain('class="intro-number"');
+    expect(masterclass).toContain('<h1><span>TURN AI INTO</span>');
     expect(masterclass).toContain('ACCEPT INVITATION');
     expect(masterclass).toContain('>SKIP<');
     expect(masterclass).toContain('TURN AI INTO');
@@ -92,6 +93,20 @@ describe("CLASS A signup funnel", () => {
     expect(masterclassScript).toContain('film.muted = false');
     expect(masterclassStyles).toContain('object-fit:cover');
     expect(masterclassStyles).toContain('.intro-end-card');
+  });
+
+  it("locks the 2026-09-28 CLASS 3D UI art direction", () => {
+    expect(masterclass).toContain('class="hero-system-stack"');
+    expect(masterclass).toContain('class="transform-rig"');
+    expect(masterclass).toContain('data-capability="5"');
+    expect(masterclassStyles).toContain('--green:#00c853');
+    expect(masterclassStyles).toContain('.system-pane');
+    expect(masterclassStyles).toContain('.journey.is-transforming');
+    expect(masterclassStyles).toContain('background-size:64px 64px');
+    expect(masterclassScript).toContain("journey?.setAttribute('data-scene'");
+    expect(masterclassScript).toContain("journey.classList.add('is-transforming')");
+    expect(styles).toContain('.class-ui-stack');
+    expect(script).toContain("className = 'class-ui-stack'");
   });
 
   it("locks the online admission, pass and evidence flow", () => {
