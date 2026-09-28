@@ -52,7 +52,7 @@ jobs:
             await Promise.race([page.evaluate(() => document.fonts?.ready), page.waitForTimeout(3500)]);
             await page.evaluate(() => sessionStorage.setItem('classa_intro_seen', '1'));
             await page.reload({ waitUntil: 'domcontentloaded', timeout: 15000 });
-            await page.waitForTimeout(500);
+            await page.waitForTimeout(1250);
 
             const result = await page.evaluate(() => {
               const root = getComputedStyle(document.documentElement);
@@ -67,6 +67,7 @@ jobs:
                 overflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
                 heroVisible: !!h1 && rect.width > 0 && rect.height > 0,
                 heroWithinViewport: !!rect && rect.left >= -2 && rect.right <= innerWidth + 2,
+                heroRect: rect ? { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: rect.width, height: rect.height } : null,
                 systemStack: !!stack,
                 transformRig: !!rig,
                 cta: !!cta,
