@@ -8,7 +8,7 @@
   --line: rgba(255, 255, 255, .12);
   --line-soft: rgba(255, 255, 255, .06);
   --accent: #00c853;
-  --accent-bright: #00e676;
+  --accent-bright: #00c853;
   --max: 1200px;
   --scene-x: 0px;
   --scene-y: 0px;
@@ -763,3 +763,16 @@ body.reel-locked { overflow: hidden; }
 .hub-page,.course-page,.hub-page .wrap,.course-page .wrap,.hub-hero,.course-page .hero,.path-section,.journey-section,.register-section,.phase-list,.phase,.path-card{background-color:#050607}
 .form-card{background-color:#0b0d10}
 .phase-list{border-top:0}
+
+/* CLASS[Λ] locked 3D UI world — 2026-09-28 */
+.hero-visual::before,.hub-visual::before{content:"";position:absolute;inset:34% -20% -18% -20%;z-index:0;opacity:.25;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='68' height='68' viewBox='0 0 68 68'%3E%3Cpath d='M0 .5H68M.5 0V68' stroke='%2300c853' stroke-opacity='.15' stroke-width='1'/%3E%3Ccircle cx='34' cy='34' r='1.2' fill='%2300c853' fill-opacity='.27'/%3E%3C/svg%3E");background-size:68px 68px;transform:perspective(850px) rotateX(68deg);transform-origin:center bottom;mask-image:linear-gradient(to top,#000,transparent 90%)}
+.class-ui-stack{position:absolute;z-index:5;right:-2%;top:15%;width:min(300px,33vw);height:58%;pointer-events:none;perspective:1000px;transform-style:preserve-3d}
+.class-ui-pane{position:absolute;right:0;width:100%;min-height:68px;padding:13px 15px;display:flex;align-items:center;gap:12px;border:1px solid rgba(0,200,83,.38);border-radius:14px;background:linear-gradient(145deg,rgba(11,18,15,.88),rgba(3,7,5,.75));box-shadow:0 22px 58px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.06);backdrop-filter:blur(12px);transform-style:preserve-3d}
+.class-ui-pane svg{width:28px;height:28px;fill:none;stroke:#00c853;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(0,200,83,.28))}
+.class-ui-pane span{display:grid;gap:2px}.class-ui-pane small{font-size:10px;color:#00c853;font-weight:900;letter-spacing:.04em}.class-ui-pane strong{font-size:12px;letter-spacing:-.01em}
+.class-ui-pane:nth-child(1){top:0;transform:translate3d(0,0,66px) rotateY(-8deg)}.class-ui-pane:nth-child(2){top:35%;transform:translate3d(-9%,0,38px) rotateY(-3deg)}.class-ui-pane:nth-child(3){top:70%;transform:translate3d(-1%,0,14px) rotateY(5deg)}
+.path-card,.phase,.form-card{border-color:rgba(255,255,255,.1);background:linear-gradient(145deg,rgba(10,14,12,.92),rgba(5,7,6,.88));box-shadow:0 22px 70px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.04)}
+.path-card:hover,.phase.is-current{border-color:rgba(0,200,83,.38);box-shadow:0 28px 78px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.05)}
+.primary,.submit,.mobile-stick a{background:#00c853;color:#001b0b}.tag,.path-meta,.phase header>span,.module-list em{color:#00c853}
+@media(max-width:760px){.class-ui-stack{right:-5%;top:24%;width:min(76vw,310px);opacity:.9}}
+@media(prefers-reduced-motion:reduce){.class-ui-pane{transform:none!important}}
