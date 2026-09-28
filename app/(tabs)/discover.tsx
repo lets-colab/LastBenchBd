@@ -19,7 +19,7 @@ interface ChatMsg { id: string; role: "user" | "assistant"; content: string }
 const WELCOME: ChatMsg = {
   id: "welcome",
   role: "assistant",
-  content: "Hello! I'm your study-abroad advisor with memory — I'll remember what we discuss across sessions. Ask me about universities, visas, or your application.",
+  content: "Hello — I’m Dr. X inside Last Bench. I can help you structure questions about universities, visas, or your application and preserve this conversation across sessions. Verify high-stakes details with official sources or a human.",
 };
 
 export default function DiscoverScreen() {
@@ -32,7 +32,7 @@ export default function DiscoverScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
-  // Sayem's AI (the main journey advisor) — see the AI Guides tab for Fahim/Erfan.
+  // Dr. X journey guidance uses the Sayem Ahmed profile scope for continuity with the existing data model.
   const chatMutation = trpc.aiGuidance.chat.useMutation();
   const historyQuery = trpc.aiGuidance.getChatHistory.useQuery({ guide: "sayem" }, { enabled: !!user });
   const cohortsQuery = trpc.cohort.getAll.useQuery();
@@ -107,7 +107,7 @@ export default function DiscoverScreen() {
       {/* Header */}
       <View className="px-6 pt-8 pb-4 gap-1">
         <Text className="text-3xl font-bold text-foreground">Discover</Text>
-        <Text className="text-sm text-muted">AI advisor with memory · Cohorts · Skills</Text>
+        <Text className="text-sm text-muted">Dr. X · Cohorts · Skills</Text>
       </View>
 
       {/* Segment Control */}
@@ -117,7 +117,7 @@ export default function DiscoverScreen() {
           className={`flex-1 py-2 rounded-lg items-center ${activeTab === "ai" ? "bg-primary" : ""}`}
         >
           <Text className={`text-sm font-semibold ${activeTab === "ai" ? "text-white" : "text-muted"}`}>
-            AI Advisor
+            Dr. X
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -130,7 +130,7 @@ export default function DiscoverScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* AI Advisor Tab */}
+      {/* Dr. X guidance tab */}
       {activeTab === "ai" && (
         <View className="flex-1">
           <ScrollView
