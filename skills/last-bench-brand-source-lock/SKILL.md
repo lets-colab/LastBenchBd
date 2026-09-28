@@ -47,6 +47,24 @@ Current production assets:
 
 Never use `design-system/logo.svg` in production. It is a legacy recreation retained only for historical compatibility.
 
+## Adaptive Transparent Logo Rule
+
+This is a hard identity rule and overrides older previews/mockups:
+
+- The logo must always be placed on a **transparent background**. Never bake a black, white, cream, or colored rectangle into the logo asset.
+- On **light/white backgrounds**, the `LAST BENCH` wordmark is black/charcoal.
+- On **dark/black backgrounds**, the `LAST BENCH` wordmark is white.
+- The **bench + rising-arrow mark stays Brand Green** in both cases.
+- The base tagline text follows wordmark contrast; `BENCHMARK` stays Brand Green.
+- Never add a rectangular logo plate merely to force contrast.
+- Never use the white-wordmark variant on a light background.
+- Never use the black-wordmark variant on a dark background.
+- If contrast is poor, reposition the logo or alter the surrounding composition; do not recolor the green mark or add a background box.
+
+Verified Canva working variants:
+- Light background / black wordmark / transparent: `MAHWdEIgzME`
+- Dark background / white wordmark / transparent: `MAHWdLPnTmc`
+
 ## Absolute Prohibitions
 
 For the Last Bench identity:
