@@ -776,3 +776,6 @@ body.reel-locked { overflow: hidden; }
 .primary,.submit,.mobile-stick a{background:#00c853;color:#001b0b}.tag,.path-meta,.phase header>span,.module-list em{color:#00c853}
 @media(max-width:760px){.class-ui-stack{right:0;top:24%;width:min(76vw,300px);opacity:.9}}
 @media(prefers-reduced-motion:reduce){.class-ui-pane{transform:none!important}}
+
+html,body{max-width:100%;overflow-x:clip}
+.hero-visual,.hub-visual{overflow:clip}
