@@ -26,5 +26,29 @@
     "tracingAllowed": false,
     "typeSubstitutionAllowed": false,
     "postGenerationCompositingRequired": true
+  },
+  "usage": {
+    "background": "transparent-only",
+    "lightBackground": {
+      "wordmark": "black-or-charcoal",
+      "taglineBase": "black-or-charcoal",
+      "benchArrow": "brand-green",
+      "benchmarkWord": "brand-green"
+    },
+    "darkBackground": {
+      "wordmark": "white",
+      "taglineBase": "white",
+      "benchArrow": "brand-green",
+      "benchmarkWord": "brand-green"
+    },
+    "logoPlateAllowed": false,
+    "bakedBackgroundAllowed": false,
+    "greenMarkMaySwitchToWhiteForContrast": false
+  },
+  "designToolReferences": {
+    "canva": {
+      "transparentLightBackgroundAssetId": "MAHWdEIgzME",
+      "transparentDarkBackgroundAssetId": "MAHWdLPnTmc"
+    }
   }
 }
