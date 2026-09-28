@@ -198,9 +198,15 @@
   const sessionTime = document.querySelector('[data-session-time]');
   const calendarLink = document.querySelector('[data-calendar-link]');
   const passLink = document.querySelector('[data-pass-link]');
+  const whatsappChannel = document.querySelector('[data-whatsapp-channel]');
+  const whatsappCountdown = document.querySelector('[data-whatsapp-countdown]');
+  const stayPass = document.querySelector('[data-stay-pass]');
+  let whatsappTimer = null;
   let step = 0;
 
   const SUPABASE_URL = 'https://tocxdyqlrvzthpexnmxe.supabase.co';
+  const WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00';
+  const WHATSAPP_REDIRECT_SECONDS = 8;
   const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_';
 
   function setStep(next) {
@@ -321,6 +327,45 @@
     }
   }
 
+  function stopWhatsappRedirect(message = 'Automatic redirect paused. Follow the channel whenever you are ready.') {
+    if (whatsappTimer) {
+      clearInterval(whatsappTimer);
+      whatsappTimer = null;
+    }
+    if (whatsappCountdown) whatsappCountdown.textContent = message;
+  }
+
+  function scheduleWhatsappRedirect(code) {
+    stopWhatsappRedirect();
+    const personalUrl = `${location.origin}/class-a/pass.html#code=${encodeURIComponent(code)}`;
+    try {
+      sessionStorage.setItem('class_a_last_pass_url', personalUrl);
+    } catch (_) {}
+
+    if (whatsappChannel) whatsappChannel.href = WHATSAPP_CHANNEL_URL;
+
+    let remaining = WHATSAPP_REDIRECT_SECONDS;
+    if (whatsappCountdown) {
+      whatsappCountdown.textContent = `Opening the WhatsApp channel in ${remaining} seconds. Save your pass first if you need to.`;
+    }
+
+    whatsappTimer = setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        clearInterval(whatsappTimer);
+        whatsappTimer = null;
+        location.assign(WHATSAPP_CHANNEL_URL);
+        return;
+      }
+      if (whatsappCountdown) {
+        whatsappCountdown.textContent = `Opening the WhatsApp channel in ${remaining} second${remaining === 1 ? '' : 's'}. Save your pass first if you need to.`;
+      }
+    }, 1000);
+  }
+
+  whatsappChannel?.addEventListener('click', () => stopWhatsappRedirect('Opening the CLASS[Λ] WhatsApp channel…'));
+  stayPass?.addEventListener('click', () => stopWhatsappRedirect());
+
   document.querySelector('[data-copy-pass]')?.addEventListener('click', async () => {
     const code = passCode?.textContent?.trim();
     if (!code || code === '—') return;
@@ -403,6 +448,7 @@
       form.querySelector('.signup-head')?.setAttribute('hidden','');
       status.textContent = '';
       success.hidden = false;
+      scheduleWhatsappRedirect(result.pass_code);
       form.reset();
     } catch (error) {
       console.error(error);
