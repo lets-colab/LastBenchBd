@@ -47,9 +47,11 @@ jobs:
 
           async function certify(label, viewport) {
             const page = await browser.newPage({ viewport });
-            await page.goto(base + '/masterclass.html?skip=1', { waitUntil: 'networkidle' });
+            await page.route('**/*.mp4', route => route.abort());
+            await page.goto(base + '/masterclass.html?skip=1', { waitUntil: 'domcontentloaded', timeout: 15000 });
+            await Promise.race([page.evaluate(() => document.fonts?.ready), page.waitForTimeout(3500)]);
             await page.evaluate(() => sessionStorage.setItem('classa_intro_seen', '1'));
-            await page.reload({ waitUntil: 'networkidle' });
+            await page.reload({ waitUntil: 'domcontentloaded', timeout: 15000 });
             await page.waitForTimeout(500);
 
             const result = await page.evaluate(() => {
@@ -71,12 +73,12 @@ jobs:
               };
             });
 
+            console.log(label, JSON.stringify(result));
+            await page.screenshot({ path: `visual-certification/masterclass-${label}-hero.png`, fullPage: false });
             if (result.green !== '#00c853') throw new Error(label + ': brand green drifted: ' + result.green);
             if (result.overflow > 2) throw new Error(label + ': horizontal overflow ' + result.overflow + 'px');
-            if (!result.heroVisible || !result.heroWithinViewport) throw new Error(label + ': hero headline is not safely visible');
+            if (!result.heroVisible || !result.heroWithinViewport) throw new Error(label + ': hero headline is not safely visible: ' + JSON.stringify(result));
             if (!result.systemStack || !result.transformRig || !result.cta) throw new Error(label + ': required 3D system primitives missing');
-
-            await page.screenshot({ path: `visual-certification/masterclass-${label}-hero.png`, fullPage: false });
 
             await page.evaluate(() => {
               const el = document.querySelector('[data-journey]');
@@ -101,7 +103,7 @@ jobs:
 
           for (const route of ['/', '/course.html', '/pass.html']) {
             const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
-            await page.goto(base + route, { waitUntil: 'networkidle' });
+            await page.goto(base + route, { waitUntil: 'domcontentloaded', timeout: 15000 });
             await page.waitForTimeout(400);
             const slug = route === '/' ? 'hub' : route.replace(/^\//,'').replace('.html','');
             await page.screenshot({ path: `visual-certification/${slug}-desktop.png`, fullPage: false });
@@ -122,6 +124,7 @@ jobs:
           node class-a-visual.mjs
 
       - name: Upload visual certification evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: class-a-visual-certification
