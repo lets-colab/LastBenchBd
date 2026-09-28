@@ -106,10 +106,13 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain("https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00");
     expect(masterclass).toContain("FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP");
     expect(masterclass).toContain("FOLLOW ON WHATSAPP →");
-    expect(masterclassScript).toContain("WHATSAPP_REDIRECT_SECONDS = 8");
-    expect(masterclassScript).toContain("location.assign(WHATSAPP_CHANNEL_URL)");
+    expect(masterclass).toContain("I'VE FOLLOWED — UNLOCK MY PASS");
+    expect(masterclass).toContain("data-pass-reveal hidden");
+    expect(masterclassScript).toContain("prepareWhatsappUnlock(result)");
+    expect(masterclassScript).toContain("unlockPass?.addEventListener('click'");
     expect(masterclassScript).toContain("sessionStorage.setItem('class_a_last_pass_url'");
-    expect(masterclass).toContain("STAY ON MY PASS");
+    expect(masterclassScript).not.toContain("location.assign(WHATSAPP_CHANNEL_URL)");
+    expect(masterclassScript).not.toContain("WHATSAPP_REDIRECT_SECONDS");
     expect(masterclassScript).toContain("/class-a/pass.html#code=");
     expect(masterclass).toContain("ADD TO GOOGLE CALENDAR");
     expect(pass).toContain("<h1>YOUR<br>MASTERCLASS PASS.</h1>");
