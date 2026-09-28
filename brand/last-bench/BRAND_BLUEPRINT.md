@@ -62,6 +62,24 @@ Canonical files in this folder:
 
 The exact fingerprints are in `brand-lock.json`.
 
+### Adaptive transparent logo rule
+
+This rule overrides any older mockup or preview treatment:
+
+- **Logo background is always transparent.** Never export or place the Last Bench logo with a baked-in black, white, cream, or colored rectangle.
+- **Light/white background:** use the black/charcoal `LAST BENCH` wordmark. The bench + rising-arrow mark stays Brand Green.
+- **Dark/black background:** use the white `LAST BENCH` wordmark. The bench + rising-arrow mark stays Brand Green.
+- The non-green portion of the tagline follows the wordmark contrast: black/charcoal on light backgrounds, white on dark backgrounds. `BENCHMARK` remains Brand Green.
+- **Never add a logo plate/box** merely to create contrast. Move the logo to a suitable area or adjust the surrounding composition instead.
+- Do not recolor the green bench-arrow to solve contrast.
+- Do not use a white-wordmark variant on a light background or a black-wordmark variant on a dark background.
+
+For Canva, the currently verified transparent working variants are:
+- light-background / black-wordmark: asset `MAHWdEIgzME`
+- dark-background / white-wordmark: asset `MAHWdLPnTmc`
+
+These Canva IDs are workflow references, not substitutes for the repository brand master.
+
 ### Non-negotiable logo rules
 
 - Never redraw, regenerate, recolor, approximate, trace, or type-substitute the mark.

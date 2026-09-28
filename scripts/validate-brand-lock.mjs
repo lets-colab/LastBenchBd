@@ -124,6 +124,9 @@ for (const [key, expected] of Object.entries({
   postGenerationCompositingRequired: true,
   savedArtifactReviewRequired: true,
   unknownBrandFactsMayBeInvented: false,
+  logoBackgroundMustBeTransparent: true,
+  logoPlateAllowed: false,
+  greenMarkMaySwitchToWhiteForContrast: false,
 })) {
   if (policy[key] !== expected) {
     fail("brand-lock policy." + key + " must be " + expected);
@@ -177,6 +180,25 @@ if (tokens?.governance?.productionIcon !== canonical?.productionIcon?.path) {
 }
 if (tokens?.governance?.logoMaster !== canonical?.masterReference?.path) {
   fail("tokens.governance.logoMaster must match brand-lock canonical masterReference path");
+}
+
+const adaptive = lock?.adaptiveLogoUsage ?? {};
+for (const [context, expectedWordmark, expectedTagline] of [
+  ["lightBackground", "black-or-charcoal", "black-or-charcoal"],
+  ["darkBackground", "white", "white"],
+]) {
+  if (adaptive?.[context]?.wordmark !== expectedWordmark) {
+    fail("adaptiveLogoUsage." + context + ".wordmark must be " + expectedWordmark);
+  }
+  if (adaptive?.[context]?.taglineBase !== expectedTagline) {
+    fail("adaptiveLogoUsage." + context + ".taglineBase must be " + expectedTagline);
+  }
+  if (adaptive?.[context]?.benchArrow !== "brand-green") {
+    fail("adaptiveLogoUsage." + context + ".benchArrow must remain brand-green");
+  }
+  if (adaptive?.[context]?.benchmarkWord !== "brand-green") {
+    fail("adaptiveLogoUsage." + context + ".benchmarkWord must remain brand-green");
+  }
 }
 
 const lockedIdentity = lock?.lockedIdentity ?? {};
@@ -304,6 +326,43 @@ for (const [key, expected] of Object.entries({
   }
 }
 
+const lastBenchBrandLock = JSON.parse(readText("brand/last-bench/brand-lock.json"));
+for (const docPath of [
+  "brand/last-bench/BRAND_BLUEPRINT.md",
+  "brand/last-bench/ART_DIRECTION.md",
+  "brand/last-bench/LOGO_USAGE.md",
+]) {
+  readText(docPath);
+}
+const artDirection = readText("brand/last-bench/ART_DIRECTION.md");
+for (const required of [
+  "Dark for emotion. White for trust. Green for progress.",
+  "logo background is **always transparent**",
+  "black/charcoal wordmark",
+  "white wordmark",
+  "bench + rising arrow stays Brand Green",
+]) {
+  if (!artDirection.includes(required)) {
+    fail("Last Bench art direction is missing required rule: " + required);
+  }
+}
+const logoUsage = readText("brand/last-bench/LOGO_USAGE.md");
+for (const required of [
+  "transparent background",
+  "black/charcoal",
+  "white",
+  "Brand Green bench + rising arrow",
+]) {
+  if (!logoUsage.includes(required)) {
+    fail("Last Bench logo usage standard is missing required rule: " + required);
+  }
+}
+for (const refPath of lastBenchBrandLock?.visualReferences ?? []) {
+  if (!existsSync(full(refPath))) {
+    fail("Missing Last Bench visual reference: " + refPath);
+  }
+}
+
 const homepage = readText("landing/index.html");
 if (!homepage.includes("assets/logo-full.png")) {
   fail("landing/index.html must reference the canonical production full logo asset");
@@ -317,10 +376,10 @@ for (const requiredRule of [
   "Never ask an image model to draw",
   "The compositor, not the image generator, owns brand placement.",
   "Inspect the actual saved/exported artifact",
-  "Never ask the user to re-upload a canonical asset before completing the asset-resolution preflight.",
-  "## PATCH-Only Edit Rule",
-  "White/light background -> use the exact approved transparent black-wordmark variant.",
-  "Black/dark background -> use the exact approved transparent white-wordmark variant.",
+  "The logo must always be placed on a **transparent background**.",
+  "the `LAST BENCH` wordmark is black/charcoal",
+  "the `LAST BENCH` wordmark is white",
+  "bench + rising-arrow mark stays Brand Green",
 ]) {
   if (!brandSkill.includes(requiredRule)) {
     fail("Brand source lock skill is missing required rule: " + requiredRule);
