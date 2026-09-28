@@ -329,33 +329,67 @@
   }
 
   function prepareWhatsappUnlock(result) {
-    pendingPass = result;
+    pendingPass = result && result.unlock_token ? result : null;
     if (whatsappChannel) whatsappChannel.href = WHATSAPP_CHANNEL_URL;
     if (unlockPass) unlockPass.disabled = true;
-    if (followNote) followNote.textContent = 'Open the channel first. This page will keep your reserved pass ready.';
+    if (followNote) followNote.textContent = 'Open the channel first. Your pass has not been released yet.';
     if (followGate) followGate.hidden = false;
     if (passReveal) passReveal.hidden = true;
   }
 
   whatsappChannel?.addEventListener('click', () => {
+    if (!pendingPass?.unlock_token) return;
     if (unlockPass) unlockPass.disabled = false;
     if (followNote) followNote.textContent = 'After following the channel, return here and tap “I’VE FOLLOWED — UNLOCK MY PASS”.';
   });
 
   unlockPass?.addEventListener('click', async () => {
-    if (!pendingPass?.pass_code) return;
-    const result = pendingPass;
-    if (passCode) passCode.textContent = result.pass_code;
-    if (confirmedAt) confirmedAt.textContent = `Confirmed · ${formatDhakaTime(result.confirmed_at)} · Bangladesh time`;
-    renderSession(result, result.pass_code);
-    await drawQR(result.pass_code);
-    const personalUrl = `${location.origin}/class-a/pass.html#code=${encodeURIComponent(result.pass_code)}`;
-    try { sessionStorage.setItem('class_a_last_pass_url', personalUrl); } catch (_) {}
-    if (followGate) followGate.hidden = true;
-    if (passReveal) passReveal.hidden = false;
-    pendingPass = null;
-  });
+    if (!pendingPass?.unlock_token || unlockPass.disabled) return;
+    unlockPass.disabled = true;
+    if (followNote) followNote.textContent = 'Unlocking your personal CLASS[Λ] pass…';
 
+    try {
+      const response = await fetch(SUPABASE_URL + '/rest/v1/rpc/class_a_unlock_online_pass', {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          p_unlock_token: pendingPass.unlock_token,
+          p_follow_confirmed: true
+        })
+      });
+      if (!response.ok) throw new Error('Pass unlock failed (' + response.status + ')');
+      const rows = await response.json();
+      const result = Array.isArray(rows) ? rows[0] : rows;
+
+      if (!result || result.outcome === 'invalid_or_expired_unlock') {
+        if (followNote) followNote.textContent = 'This unlock window expired. Submit the registration again to restart the follow step.';
+        unlockPass.disabled = false;
+        return;
+      }
+      if (result.outcome !== 'unlocked' || !result.pass_code) {
+        if (followNote) followNote.textContent = 'Your pass could not be released. Please try the follow step again.';
+        unlockPass.disabled = false;
+        return;
+      }
+
+      if (passCode) passCode.textContent = result.pass_code;
+      if (confirmedAt) confirmedAt.textContent = 'Confirmed · ' + formatDhakaTime(result.confirmed_at) + ' · Bangladesh time';
+      renderSession(result, result.pass_code);
+      await drawQR(result.pass_code);
+      const personalUrl = location.origin + '/class-a/pass.html#code=' + encodeURIComponent(result.pass_code);
+      try { sessionStorage.setItem('class_a_last_pass_url', personalUrl); } catch (_) {}
+      if (followGate) followGate.hidden = true;
+      if (passReveal) passReveal.hidden = false;
+      pendingPass = null;
+    } catch (error) {
+      console.error(error);
+      if (followNote) followNote.textContent = 'Pass unlock failed. Check your connection and try again.';
+      unlockPass.disabled = false;
+    }
+  });
   document.querySelector('[data-copy-pass]')?.addEventListener('click', async () => {
     const code = passCode?.textContent?.trim();
     if (!code || code === '—') return;
@@ -379,17 +413,17 @@
       p_phone: String(data.get('phone') || '').trim(),
       p_email: String(data.get('email') || '').trim(),
       p_skill_level: String(data.get('skill') || '').trim() || null,
-      p_source: 'class-a-online-masterclass-v1',
+      p_source: 'class-a-online-masterclass-v2',
       p_recording_consent: data.get('recording_consent') === 'yes'
     };
 
     status.classList.remove('is-error');
-    status.textContent = 'ISSUING YOUR PASS…';
+    status.textContent = 'RESERVING YOUR REGISTRATION…';
     const submit = form.querySelector('.signup-submit');
     submit.disabled = true;
 
     try {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/class_a_register_online`, {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/class_a_register_online_gated`, {
         method: 'POST',
         headers: {
           apikey: SUPABASE_PUBLISHABLE_KEY,
@@ -407,8 +441,8 @@
         status.classList.add('is-error');
         return;
       }
-      if (result.outcome === 'already_registered') {
-        status.textContent = `YOU ARE ALREADY ENROLLED IN THIS LIVE SESSION. YOUR EXISTING PASS ENDS IN ${result.pass_code_last4 || '••••'}. USE THE PASS WE SENT YOU, OR CONTACT THE CLASS[Λ] TEAM IF YOU NEED ACCESS RECOVERED.`;
+      if (result.outcome === 'already_unlocked') {
+        status.textContent = 'YOU ARE ALREADY ENROLLED AND YOUR PASS HAS ALREADY BEEN UNLOCKED. USE YOUR EXISTING PASS, OR CONTACT THE CLASS[Λ] TEAM IF YOU NEED ACCESS RECOVERED.';
         status.classList.add('is-error');
         return;
       }
@@ -427,7 +461,7 @@
         status.classList.add('is-error');
         return;
       }
-      if (result.outcome !== 'confirmed' || !result.pass_code) throw new Error('Confirmation was not issued');
+      if (result.outcome !== 'follow_required' || !result.unlock_token) throw new Error('Follow gate was not issued');
 
       steps.forEach(el => el.classList.remove('is-active'));
       form.querySelector('.steps')?.setAttribute('hidden','');
