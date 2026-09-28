@@ -178,29 +178,41 @@
       <div class="signup-status" data-signup-status role="status" aria-live="polite"></div>
       <div class="signup-alert" data-signup-alert role="alert" aria-live="assertive" hidden></div>
       <div class="signup-success" data-signup-success hidden>
-        <p class="success-kicker">YOU'RE IN.</p>
-        <h2>PASS ISSUED.</h2>
-        <p>Your CLASS[Λ] invitation is confirmed. This personal pass is your route to the live online masterclass, calendar, room access and attendance verification. No payment is collected here.</p>
-        <div class="pass-card">
-          <canvas width="220" height="220" data-qr aria-label="Personal CLASS Lambda pass QR code"></canvas>
-          <div><span>CLASS[Λ] · 0.01% BUILDERS</span><strong data-pass-code>—</strong><small>Keep this private. It identifies your masterclass enrollment.</small><small data-confirmed-at></small></div>
+        <div data-follow-gate>
+          <p class="success-kicker">REGISTRATION CONFIRMED.</p>
+          <h2>ONE STEP LEFT.</h2>
+          <p>Follow <strong>&lt;CLASS[Λ]&gt; | LEARN AI</strong> on WhatsApp, then return here to unlock your personal masterclass pass.</p>
+          <div class="whatsapp-follow">
+            <span>STEP 2 OF 2</span>
+            <strong>FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP</strong>
+            <small>WhatsApp does not give this page a per-person follow confirmation. After you follow, return here and confirm to reveal your pass.</small>
+          </div>
+          <div class="success-actions">
+            <a class="button button-primary" data-whatsapp-channel href="https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00" target="_blank" rel="noopener">FOLLOW CHANNEL →</a>
+            <button type="button" class="button button-ghost" data-unlock-pass disabled>I'VE FOLLOWED — UNLOCK MY PASS</button>
+          </div>
+          <p class="follow-note" data-follow-note>Open the channel first. This page will keep your reserved pass ready.</p>
         </div>
-        <div class="session-card" data-session-card>
-          <span class="session-state" data-session-status>SESSION · PLANNING</span>
-          <strong data-session-title>CLASS[Λ] — The 0.01% Builders Masterclass</strong>
-          <small data-session-time>The next live session is being scheduled. Your pass is already reserved.</small>
-        </div>
-        <div class="whatsapp-follow" data-whatsapp-follow>
-          <span>ONE MORE STEP</span>
-          <strong>FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP</strong>
-          <small data-whatsapp-countdown>Opening the channel in 8 seconds. Save your pass first if you need to.</small>
-        </div>
-        <div class="success-actions">
-          <a class="button button-primary" data-whatsapp-channel href="https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00" rel="noopener">FOLLOW ON WHATSAPP →</a>
-          <a class="button button-primary" data-calendar-link hidden target="_blank" rel="noopener">ADD TO GOOGLE CALENDAR →</a>
-          <a class="button button-ghost" data-pass-link target="_blank" rel="noopener">OPEN MY PASS</a>
-          <button type="button" class="button button-ghost" data-copy-pass>COPY CODE</button>
-          <button type="button" class="button button-ghost" data-stay-pass>STAY ON MY PASS</button>
+
+        <div data-pass-reveal hidden>
+          <p class="success-kicker">YOU'RE IN.</p>
+          <h2>PASS UNLOCKED.</h2>
+          <p>Your CLASS[Λ] pass is now available. Keep the code private — it is your route to the live session and attendance verification.</p>
+          <div class="pass-card">
+            <canvas width="220" height="220" data-qr aria-label="Personal CLASS Lambda pass QR code"></canvas>
+            <div><span>CLASS[Λ] · 0.01% BUILDERS</span><strong data-pass-code>—</strong><small>Keep this private. It identifies your masterclass enrollment.</small><small data-confirmed-at></small></div>
+          </div>
+          <div class="session-card" data-session-card>
+            <span class="session-state" data-session-status>SESSION · PLANNING</span>
+            <strong data-session-title>CLASS[Λ] — The 0.01% Builders Masterclass</strong>
+            <small data-session-time>The next live session is being scheduled. Your pass is already reserved.</small>
+          </div>
+          <div class="success-actions">
+            <a class="button button-primary" data-calendar-link hidden target="_blank" rel="noopener">ADD TO GOOGLE CALENDAR →</a>
+            <a class="button button-ghost" data-pass-link target="_blank" rel="noopener">OPEN MY PASS</a>
+            <button type="button" class="button button-ghost" data-copy-pass>COPY CODE</button>
+            <button type="button" class="button button-ghost" data-close-signup>DONE</button>
+          </div>
         </div>
       </div>
     </form>
