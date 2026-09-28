@@ -1,7 +1,7 @@
 ---
 name: last-bench-brand-source-lock
 description: Mandatory identity-fidelity workflow for every Last Bench visual, poster, social asset, website, deck, Canva/Figma file, image-generation request, or marketing artifact. Prevents logo hallucination, brand recall drift, invented slogans, and source substitution by forcing canonical assets, deterministic fingerprints, post-generation compositing, and saved-artifact QA.
-version: 1.1.0
+version: 1.0.0
 user-invocable: true
 ---
 
@@ -35,23 +35,6 @@ When sources disagree, use this order:
 
 A screenshot, generated poster, Canva design, Figma frame, or remembered appearance can never override the canonical logo file.
 
-## Mandatory Asset-Resolution Preflight
-
-Before saying a canonical Last Bench asset is unavailable, before asking the user to upload it again, and before substituting any asset, resolve sources in this order:
-
-1. Current-turn attachments and explicit user-provided files.
-2. Current conversation/project files.
-3. ChatGPT Library or other authorized persistent file sources.
-4. The canonical Last Bench repository and its source-lock manifest.
-5. Authorized connected design systems or storage that have already been used for the brand, including Canva/Drive when available.
-6. Only after those checks fail may the user be asked to provide the exact asset again.
-
-Never treat "not attached in this immediate turn" as equivalent to "unavailable."
-
-If a newer explicit user instruction conflicts with an older repository or Library lock, the newer explicit instruction wins. Mark the older source as stale for the current task; do not silently merge the conflict and do not fall back to the stale asset.
-
-Never ask the user to re-upload a canonical asset before completing the asset-resolution preflight.
-
 ## Canonical Identity Assets
 
 The machine-readable source of truth is `design-system/brand-lock.json`.
@@ -64,15 +47,23 @@ Current production assets:
 
 Never use `design-system/logo.svg` in production. It is a legacy recreation retained only for historical compatibility.
 
-## Background Variant Rule
+## Adaptive Transparent Logo Rule
 
-The current explicit Last Bench application rule is contextual, not recoloring:
+This is a hard identity rule and overrides older previews/mockups:
 
-- White/light background -> use the exact approved transparent black-wordmark variant.
-- Black/dark background -> use the exact approved transparent white-wordmark variant.
-- Never place either variant inside a white or black rectangle.
-- Never recolor one locked variant to manufacture the other.
-- Retrieve the exact approved variant from an authoritative source. If the needed exact variant cannot be resolved after the mandatory asset-resolution preflight, stop that branding step rather than approximating it.
+- The logo must always be placed on a **transparent background**. Never bake a black, white, cream, or colored rectangle into the logo asset.
+- On **light/white backgrounds**, the `LAST BENCH` wordmark is black/charcoal.
+- On **dark/black backgrounds**, the `LAST BENCH` wordmark is white.
+- The **bench + rising-arrow mark stays Brand Green** in both cases.
+- The base tagline text follows wordmark contrast; `BENCHMARK` stays Brand Green.
+- Never add a rectangular logo plate merely to force contrast.
+- Never use the white-wordmark variant on a light background.
+- Never use the black-wordmark variant on a dark background.
+- If contrast is poor, reposition the logo or alter the surrounding composition; do not recolor the green mark or add a background box.
+
+Verified Canva working variants:
+- Light background / black wordmark / transparent: `MAHWdEIgzME`
+- Dark background / white wordmark / transparent: `MAHWdLPnTmc`
 
 ## Absolute Prohibitions
 
@@ -89,20 +80,7 @@ For the Last Bench identity:
 - Never invent a tagline, slogan, phone number, partnership, ranking, scholarship condition, visa claim, rebate condition, ticket promise, or outcome to fill a layout.
 - Never call a draft or preview "brand-correct" until the saved/exported artifact is inspected.
 
-If the canonical asset cannot be accessed after the mandatory asset-resolution preflight, stop the branding step. Leave a reserved blank area or ask for the asset. Do not fabricate a placeholder.
-
-## PATCH-Only Edit Rule
-
-For a narrowly scoped correction to an accepted design, treat the request as a PATCH, not a redesign:
-
-1. Freeze every previously accepted visual element and all unrelated pixels/content.
-2. Use the current accepted artifact as the edit target.
-3. Replace only the explicitly requested region or element.
-4. Do not regenerate the composition merely to change a logo, line of copy, date, program name, photo, or other bounded element.
-5. Compare the result against the source after the edit.
-6. Reject or redo the edit if any locked or unrelated element changed.
-
-A request such as "use the right logo" means: resolve the exact approved logo variant, replace only the logo region, and preserve the rest of the artifact unchanged.
+If the canonical asset cannot be accessed, stop the branding step. Leave a reserved blank area or ask for the asset. Do not fabricate a placeholder.
 
 ## Mandatory Two-Stage Visual Workflow
 
@@ -253,7 +231,7 @@ Check:
 
 ## Failure Rules
 
-- Canonical asset unavailable after the mandatory asset-resolution preflight -> stop branding; do not substitute or ask for a re-upload prematurely.
+- Canonical asset unavailable -> stop branding; do not substitute.
 - Fingerprint mismatch -> fail.
 - Generated fake logo present -> remove it; do not publish.
 - Unapproved slogan/claim -> remove or request approval.
