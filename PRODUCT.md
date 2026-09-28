@@ -152,6 +152,22 @@ Each surface should lead with the promise relevant to the person who entered it.
 
 The corporate Last Bench profile may show the full ecosystem. Service-specific pages should remain focused on the service they are selling.
 
+## Public intelligence — Dr. X
+
+Last Bench exposes **Dr. X** as its single public intelligence identity. **Bench AI is retired as a visible product name.** Models, providers and legacy script filenames remain implementation details.
+
+Dr. X may appear as the general Last Bench guide or power interactive founder profiles, but the founder identity remains the real person:
+
+- **Sayem Ahmed** — Co-founder & CEO;
+- **Fahim Shahbaz Mahmud** — Co-founder & COO;
+- **Erfan Uddin** — Co-founder & Chief Business & Innovation Officer, **also known as Dr. X**.
+
+Founder profile UI uses the person's full name and may show **Powered by Dr. X** as a secondary intelligence label. Do not append `AI` to founder names or create independent founder brains.
+
+Public founder profiles may use only approved portraits, canonical Last Bench role/mandate information and externally verified profile/social links. Generated profile replies must disclose that they are powered by Dr. X and are not direct statements from the founder unless an exact human statement has been verified.
+
+The public Last Bench Dr. X context is project-scoped and minimum-necessary. It must never expose Erfan's private/global Founder DR.X memory, unrelated ventures, credentials, private communications or unrestricted internal company context.
+
 ## Trust rules
 
 - Truth builds trust.
