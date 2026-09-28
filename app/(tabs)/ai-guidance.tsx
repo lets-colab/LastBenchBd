@@ -1,5 +1,6 @@
 import {
   Image,
+  Linking,
   ScrollView,
   Text,
   View,
@@ -23,6 +24,7 @@ type FounderProfile = {
   duty: string;
   placeholder: string;
   portrait: ImageSourcePropType;
+  links: { label: string; url: string }[];
 };
 
 // Real Last Bench founders. Dr. X powers the interaction layer; these are not AI identities.
@@ -34,6 +36,7 @@ const GUIDES: Record<GuideKey, FounderProfile> = {
     duty: "Vision, academic partnerships, public trust, and the overall Last Bench promise.",
     placeholder: "Ask about Sayem Ahmed’s Last Bench role or your journey…",
     portrait: require("../../assets/founders/sayem-ahmed.jpg"),
+    links: [{ label: "Last Bench", url: "https://lastbenchbd.com" }],
   },
   fahim: {
     name: "Fahim Shahbaz Mahmud",
@@ -41,6 +44,10 @@ const GUIDES: Record<GuideKey, FounderProfile> = {
     duty: "Operations, delivery, quality, compliance, sales execution, and repeatability.",
     placeholder: "Ask about Fahim’s operating role or what to research next…",
     portrait: require("../../assets/founders/fahim-shahbaz-mahmud.jpg"),
+    links: [
+      { label: "LinkedIn", url: "https://bd.linkedin.com/in/fahim-shahbaz-mahmud-765255124" },
+      { label: "Last Bench", url: "https://lastbenchbd.com" },
+    ],
   },
   erfan: {
     name: "Erfan Uddin",
@@ -49,6 +56,7 @@ const GUIDES: Record<GuideKey, FounderProfile> = {
     duty: "Business, brand, innovation, growth, product ecosystem, and systems design.",
     placeholder: "Ask about Erfan Uddin, Dr. X, systems, or your next step…",
     portrait: require("../../assets/founders/erfan-uddin.jpg"),
+    links: [{ label: "Last Bench", url: "https://lastbenchbd.com" }],
   },
 };
 
@@ -222,6 +230,22 @@ export default function FounderProfilesScreen() {
             >
               INTERACTIVE PROFILE · POWERED BY DR. X
             </Text>
+            <View className="flex-row flex-wrap gap-2 pt-1">
+              {guide.links.map((link) => (
+                <TouchableOpacity
+                  key={link.url}
+                  onPress={() => void Linking.openURL(link.url)}
+                  accessibilityRole="link"
+                  accessibilityLabel={`Open ${guide.name} ${link.label}`}
+                  className="rounded-full px-3 py-2"
+                  style={{ borderWidth: 1, borderColor: "rgba(255,255,255,.18)" }}
+                >
+                  <Text style={{ color: CINE.text }} className="text-[9px] font-semibold">
+                    {link.label} ↗
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </View>
       </View>
