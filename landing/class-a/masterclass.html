@@ -31,7 +31,7 @@
     </div>
 
     <div class="intro-gate" data-intro-gate>
-      <h1>0.01%</h1>
+      <div class="intro-number" role="img" aria-label="0.01 percent">0.01%</div>
       <p class="gate-copy">Most people will use AI. The 0.01% will build with it. You’ve been invited to join them.</p>
       <div class="gate-actions">
         <button class="button button-primary" type="button" data-enter>ACCEPT INVITATION</button>
@@ -58,9 +58,9 @@
 
   <main>
     <section class="hero" id="hero" data-hero>
-      <div class="hero-grid"></div>
+      <div class="hero-grid" aria-hidden="true"></div><div class="hero-scanline" aria-hidden="true"></div>
       <div class="hero-copy">
-        <h2><span>TURN AI INTO</span><br><span>YOUR TEAM.</span></h2>
+        <h1><span>TURN AI INTO</span><br><span>YOUR TEAM.</span></h1>
         <p class="hero-lead">Build and run a <strong>one-person business with AI.</strong></p>
         <p class="hero-meta">Research · Build · Create · Sell · Operate</p>
         <div class="hero-actions">
@@ -78,6 +78,11 @@
         <span class="object-label label-a">BUILD</span>
         <span class="object-label label-b">AI TEAM</span>
         <span class="object-label label-c">OPERATE</span>
+        <div class="hero-system-stack" aria-hidden="true">
+          <div class="system-pane system-pane-you"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.25"/><path d="M5.5 20c.5-4.2 2.7-6.3 6.5-6.3s6 2.1 6.5 6.3"/></svg><span><small>YOU</small><strong>Decide the outcome</strong></span></div>
+          <div class="system-pane system-pane-ai"><svg viewBox="0 0 24 24"><path d="M9 4h6l3 3v10l-3 3H9l-3-3V7z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span><small>AI</small><strong>Helps you think</strong></span></div>
+          <div class="system-pane system-pane-systems"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span><small>SYSTEMS</small><strong>Make it repeatable</strong></span></div>
+        </div>
       </div>
 
       <div class="scroll-cue" aria-hidden="true"><span>SCROLL TO ENTER</span><b>↓</b></div>
@@ -92,6 +97,20 @@
           <div class="world-orbit world-orbit-1"></div>
           <div class="world-orbit world-orbit-2"></div>
           <div class="world-ray"></div>
+          <div class="transform-rig" data-transform-rig>
+            <span class="rig-spine rig-spine-a"></span><span class="rig-spine rig-spine-b"></span>
+            <div class="rig-panel rig-panel-a"><small>YOU</small><strong>OUTCOME</strong><i></i></div>
+            <div class="rig-panel rig-panel-b"><small>AI</small><strong>THINK</strong><i></i></div>
+            <div class="rig-panel rig-panel-c"><small>SYSTEMS</small><strong>EXECUTE</strong><i></i></div>
+            <div class="capability-ring">
+              <span class="capability-node is-active" data-capability="0"><b>01</b><strong>COMMAND</strong></span>
+              <span class="capability-node" data-capability="1"><b>02</b><strong>RESEARCH</strong></span>
+              <span class="capability-node" data-capability="2"><b>03</b><strong>BUILD</strong></span>
+              <span class="capability-node" data-capability="3"><b>04</b><strong>CREATE</strong></span>
+              <span class="capability-node" data-capability="4"><b>05</b><strong>SELL</strong></span>
+              <span class="capability-node" data-capability="5"><b>06</b><strong>OPERATE</strong></span>
+            </div><span class="rig-lock-flash"></span>
+          </div>
         </div>
 
         <div class="journey-copy" data-journey-copy>
