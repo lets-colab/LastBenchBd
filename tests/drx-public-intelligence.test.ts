@@ -34,7 +34,7 @@ describe("Dr. X public intelligence identity", () => {
   it("publishes only bounded public founder profile data and no guessed LinkedIn identities", () => {
     const profiles = read("landing/founder-profile-data.js");
     expect(profiles).toContain("No private Founder DR.X / Second Brain context is shipped to the browser");
-    expect((profiles.match(/data:image\/jpeg;base64/g) || []).length).toBe(3);
+    expect((profiles.match(/portrait: dataUri\('/g) || []).length).toBe(3);
     expect(profiles).toContain("fahim-shahbaz-mahmud-765255124");
     expect((profiles.match(/linkedin\.com/g) || []).length).toBe(1);
     expect(profiles).toContain("Also known as Dr. X");
