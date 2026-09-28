@@ -114,6 +114,9 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain("LIVE ONLINE · GOOGLE MEET");
     expect(masterclass).toContain("CLAIM YOUR PASS.");
     expect(masterclassScript).toContain("class_a_register_online_gated");
+    expect(masterclassScript).toContain("class_a_public_session");
+    expect(masterclass).toContain("data-public-session-chip");
+    expect(masterclass).toContain("data-public-session-meta");
     expect(masterclassScript).toContain("class_a_unlock_online_pass");
     expect(masterclassScript).toContain("p_follow_confirmed: true");
     expect(masterclassScript).toContain("result.outcome !== 'follow_required'");
