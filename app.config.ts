@@ -95,6 +95,11 @@ const config: ExpoConfig = {
       },
     ],
   ],
+  extra: {
+    eas: {
+      projectId: "abffbcd3-7fbc-4b73-b519-1fcf5dad4e36",
+    },
+  },
   experiments: {
     baseUrl: process.env.EXPO_BASE_URL ?? "",
     typedRoutes: true,
