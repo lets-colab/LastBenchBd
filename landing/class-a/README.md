@@ -95,3 +95,18 @@ Session activation:
 - The notification table is an outbox, not proof that a WhatsApp/email/calendar message was delivered. Delivery workers must write delivery evidence back before a notification becomes `sent`.
 
 Public browser access is capability-bounded through reviewed RPCs; the underlying session, enrollment, attendance-evidence and notification tables remain direct-read/write denied to `anon` and `authenticated`.
+
+
+## 2026-09-28 3D UI art-direction lock
+
+The approved current CLASS[Λ] style anchor is the 10-frame 3D UI/UX reference supplied by the user on 2026-09-28 (1536×768; SHA-256 `0ed2b411f61566e0e50a97af254b04193037c43a3378431d573ccc4435b2a165`).
+
+Production rules:
+- exact protected CLASS[Λ] assets remain unchanged;
+- UI energy uses original Brand Green `#00C853`;
+- near-black spatial world + smoked dimensional panes + metallic 20 + orbit geometry + technical coordinate floor;
+- scroll transitions mechanically disassemble/reconfigure/reassemble the same operating-system world;
+- no generic neon-AI, robot, card-grid or unrelated accent system;
+- motion remains original CLASS[Λ] interaction design and reduced-motion safe.
+
+Acceptance target is **24/24 applicable Impeccable heuristic quality + 0.5 CLASS[Λ] signature-experience bonus**. The bonus is not a heuristic score and cannot offset a usability or accessibility defect.
