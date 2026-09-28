@@ -331,6 +331,7 @@ for (const docPath of [
   "brand/last-bench/BRAND_BLUEPRINT.md",
   "brand/last-bench/ART_DIRECTION.md",
   "brand/last-bench/LOGO_USAGE.md",
+  "brand/last-bench/STYLE_DNA.md",
 ]) {
   readText(docPath);
 }
@@ -346,6 +347,25 @@ for (const required of [
     fail("Last Bench art direction is missing required rule: " + required);
   }
 }
+const styleDNA = readText("brand/last-bench/STYLE_DNA.md");
+for (const required of [
+  "Warm white / off-white trust field",
+  "Bold black editorial typography",
+  "Topographic contour language",
+  "The black wave / grounded lower field",
+  "5–12%",
+]) {
+  if (!styleDNA.includes(required)) {
+    fail("Last Bench STYLE_DNA is missing required execution rule: " + required);
+  }
+}
+if (tokens?.artDirection?.approvedDate !== "2026-09-28") {
+  fail("design-system/tokens.json must carry the approved Last Bench art-direction date");
+}
+if (tokens?.artDirection?.colorBalance?.brandGreenPct !== "5-12") {
+  fail("Last Bench art direction must keep green within the approved 5–12% light-composition guidance");
+}
+
 const logoUsage = readText("brand/last-bench/LOGO_USAGE.md");
 for (const required of [
   "transparent background",

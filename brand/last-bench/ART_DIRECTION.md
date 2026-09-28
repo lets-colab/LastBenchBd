@@ -303,3 +303,29 @@ Before publishing any branded visual, verify:
 - saved/exported artifact inspected.
 
 If any identity rule fails, the visual is not ready.
+
+
+## 16. Approved Style DNA — 28 September 2026
+
+The approved cross-format execution language is now formalized in [STYLE_DNA.md](STYLE_DNA.md).
+
+The defining composition is:
+
+**warm-white trust field + bold black editorial type + restrained green progress accents + topographic/journey texture + grounded black or photographic lower field.**
+
+Recurring approved devices:
+
+- stacked uppercase headlines with one meaningful green phrase;
+- thin topographic contour lines in corners and dark fields;
+- a smooth black lower wave with restrained green edge/route detail;
+- Kuala Lumpur skyline as either line-art or realistic photography for Malaysia-specific work;
+- Bangladesh → Malaysia route graphics using minimal dots, dashed path, aircraft and pin;
+- thin-line circular service icons;
+- strong negative space;
+- QR/CTA modules placed in a clean dark zone;
+- staff collateral using warm-white fronts and dark backs;
+- black lanyard with exact logo/icon repetition and subtle contour texture.
+
+Green should typically occupy only **5–12%** of a light-led composition. Warm white should remain the dominant trust field.
+
+These rules are execution grammar, not permission to reuse stale factual copy from reference mockups. Contact details, university facts, offers, QR destinations and operational claims must still be verified separately.

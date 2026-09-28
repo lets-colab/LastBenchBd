@@ -7,3 +7,104 @@
    Hind Siliguri covers Bengali (বাংলা) copy. */
 @import url("https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&display=swap");
+
+
+/* Last Bench canonical art-direction utilities — 2026-09-28.
+   These utilities encode layout language only. They never recreate protected logos. */
+.lb-art-paper {
+  background: var(--lb-color-warm-white);
+  color: var(--lb-color-charcoal);
+}
+
+.lb-art-dark {
+  background: var(--lb-color-charcoal);
+  color: #fff;
+}
+
+.lb-art-headline {
+  font-family: var(--lb-font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: .94;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+.lb-art-headline-accent {
+  color: var(--lb-color-brand-green);
+}
+
+.lb-art-contours {
+  position: relative;
+  isolation: isolate;
+}
+
+.lb-art-contours::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: var(--lb-art-contour-opacity-light);
+  background:
+    radial-gradient(120% 70% at 0% 0%, transparent 0 37%, currentColor 37.2% 37.5%, transparent 37.7% 44%, currentColor 44.2% 44.5%, transparent 44.7% 52%, currentColor 52.2% 52.5%, transparent 52.7%),
+    radial-gradient(100% 65% at 100% 100%, transparent 0 42%, currentColor 42.2% 42.5%, transparent 42.7% 50%, currentColor 50.2% 50.5%, transparent 50.7%);
+}
+
+.lb-art-dark.lb-art-contours::before {
+  opacity: var(--lb-art-contour-opacity-dark);
+}
+
+.lb-art-lower-wave {
+  position: relative;
+  overflow: hidden;
+  background: var(--lb-art-wave-fill);
+  color: #fff;
+}
+
+.lb-art-lower-wave::before {
+  content: "";
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  top: -26px;
+  height: 48px;
+  border-top: 2px solid var(--lb-art-wave-accent);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  pointer-events: none;
+}
+
+.lb-art-service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(108px, 1fr));
+  gap: clamp(14px, 2vw, 28px);
+  align-items: start;
+}
+
+.lb-art-service-icon {
+  width: 52px;
+  height: 52px;
+  border: 1.5px solid var(--lb-color-brand-green);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  color: var(--lb-color-brand-green);
+}
+
+.lb-art-route {
+  color: var(--lb-color-brand-green);
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 5;
+}
+
+.lb-art-qr-zone {
+  background: var(--lb-color-charcoal);
+  color: #fff;
+  border-top: 1px solid rgba(0,200,83,.48);
+}
+
+@media (max-width: 640px) {
+  .lb-art-headline { line-height: .98; }
+  .lb-art-service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

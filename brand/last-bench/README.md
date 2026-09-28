@@ -6,6 +6,7 @@ This folder is the canonical human + agent entry point for Last Bench identity.
 
 - `BRAND_BLUEPRINT.md` — brand architecture, colors, typography and production rules
 - `ART_DIRECTION.md` — look, feel, photography, composition, campaign and motion direction
+- `STYLE_DNA.md` — approved execution grammar for posters, roll-ups, walls, IDs, web and campaign systems
 - `LOGO_USAGE.md` — mandatory transparent adaptive-logo rule
 - `brand-lock.json` — machine-readable identity policy
 - `logo-full.png` — existing production lockup source

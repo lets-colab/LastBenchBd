@@ -65,6 +65,23 @@ Verified Canva working variants:
 - Light background / black wordmark / transparent: `MAHWdEIgzME`
 - Dark background / white wordmark / transparent: `MAHWdLPnTmc`
 
+## Style DNA Retrieval Gate
+
+Before producing or reviewing any Last Bench branded visual, read:
+
+1. `brand/last-bench/LOGO_USAGE.md`
+2. `brand/last-bench/ART_DIRECTION.md`
+3. `brand/last-bench/STYLE_DNA.md`
+4. `brand/last-bench/brand-lock.json`
+
+The approved execution grammar is:
+
+**warm-white trust field + bold black editorial type + restrained green progress accents + topographic/journey texture + grounded black or photographic lower field.**
+
+For light-led campaign work, green should usually remain about **5–12%** of the visual field. Reuse the signature devices—stacked headlines, contour texture, black lower wave, journey route, skyline context, thin circular service icons—rather than inventing a new visual gimmick for each campaign.
+
+Reference mockups may contain stale copy/contact details. Learn their **visual language**, not their factual content.
+
 ## Absolute Prohibitions
 
 For the Last Bench identity:
