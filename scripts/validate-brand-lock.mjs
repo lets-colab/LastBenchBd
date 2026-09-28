@@ -124,6 +124,9 @@ for (const [key, expected] of Object.entries({
   postGenerationCompositingRequired: true,
   savedArtifactReviewRequired: true,
   unknownBrandFactsMayBeInvented: false,
+  logoBackgroundMustBeTransparent: true,
+  logoPlateAllowed: false,
+  greenMarkMaySwitchToWhiteForContrast: false,
 })) {
   if (policy[key] !== expected) {
     fail("brand-lock policy." + key + " must be " + expected);
@@ -177,6 +180,25 @@ if (tokens?.governance?.productionIcon !== canonical?.productionIcon?.path) {
 }
 if (tokens?.governance?.logoMaster !== canonical?.masterReference?.path) {
   fail("tokens.governance.logoMaster must match brand-lock canonical masterReference path");
+}
+
+const adaptive = lock?.adaptiveLogoUsage ?? {};
+for (const [context, expectedWordmark, expectedTagline] of [
+  ["lightBackground", "black-or-charcoal", "black-or-charcoal"],
+  ["darkBackground", "white", "white"],
+]) {
+  if (adaptive?.[context]?.wordmark !== expectedWordmark) {
+    fail("adaptiveLogoUsage." + context + ".wordmark must be " + expectedWordmark);
+  }
+  if (adaptive?.[context]?.taglineBase !== expectedTagline) {
+    fail("adaptiveLogoUsage." + context + ".taglineBase must be " + expectedTagline);
+  }
+  if (adaptive?.[context]?.benchArrow !== "brand-green") {
+    fail("adaptiveLogoUsage." + context + ".benchArrow must remain brand-green");
+  }
+  if (adaptive?.[context]?.benchmarkWord !== "brand-green") {
+    fail("adaptiveLogoUsage." + context + ".benchmarkWord must remain brand-green");
+  }
 }
 
 const lockedIdentity = lock?.lockedIdentity ?? {};
@@ -317,6 +339,10 @@ for (const requiredRule of [
   "Never ask an image model to draw",
   "The compositor, not the image generator, owns brand placement.",
   "Inspect the actual saved/exported artifact",
+  "The logo must always be placed on a **transparent background**.",
+  "the `LAST BENCH` wordmark is black/charcoal",
+  "the `LAST BENCH` wordmark is white",
+  "bench + rising-arrow mark stays Brand Green",
 ]) {
   if (!brandSkill.includes(requiredRule)) {
     fail("Brand source lock skill is missing required rule: " + requiredRule);
