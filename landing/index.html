@@ -910,6 +910,12 @@ class Component extends DCLogic {
     if (this.envRT) this.envRT.dispose();
     this.killHls();
     if (this.radioAudio) try { this.radioAudio.pause(); } catch (_) {}
+    if (this.globeCanvas && this.onGlobeContextLost) this.globeCanvas.removeEventListener('webglcontextlost', this.onGlobeContextLost);
+    if (this.globeRenderer) {
+      try { this.globeRenderer.dispose(); } catch (_) {}
+      this.globeRenderer = null;
+    }
+    if (this.renderer && this.onCityContextLost) this.renderer.domElement.removeEventListener('webglcontextlost', this.onCityContextLost);
     if (this.renderer) this.renderer.dispose();
     if (this.birdTimer) clearInterval(this.birdTimer);
     if (this.actx) try { this.actx.close(); } catch (_) {}
@@ -1200,14 +1206,39 @@ class Component extends DCLogic {
   // ─── DEPARTURE: one continuous pull-back from a Dhaka street to orbit and down into KL ───
   initGlobe() {
     const T = window.THREE;
-    if (!T || !this.globeCanvas || this.globeRenderer) return;
+    if (!T || !this.globeCanvas || this.globeRenderer || this.globeContextLost) return;
     const cv = this.globeCanvas;
-    const r = new T.WebGLRenderer({ canvas: cv, alpha: true, antialias: true, powerPreference: 'high-performance', logarithmicDepthBuffer: true });
-    r.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const small = window.innerWidth < 760;
+    const constrainedGpu = small && (((navigator.deviceMemory || 0) > 0 && navigator.deviceMemory <= 6) || window.devicePixelRatio > 1.75);
+    let r;
+    try {
+      r = new T.WebGLRenderer({
+        canvas: cv,
+        alpha: true,
+        antialias: !small,
+        powerPreference: constrainedGpu ? 'default' : 'high-performance',
+        logarithmicDepthBuffer: true,
+      });
+    } catch (err) {
+      this.globeContextLost = true;
+      cv.style.visibility = 'hidden';
+      console.warn('[Last Bench] Departure WebGL unavailable — using resilient static fallback.', err);
+      return;
+    }
+    r.setPixelRatio(Math.min(window.devicePixelRatio, constrainedGpu ? 1 : (small ? 1.25 : 1.75)));
     r.toneMapping = T.ACESFilmicToneMapping;
     r.toneMappingExposure = 2.0;
     if ('outputColorSpace' in r) r.outputColorSpace = T.SRGBColorSpace;
     this.globeRenderer = r;
+    this.globeContextLost = false;
+    this.onGlobeContextLost = () => {
+      this.globeContextLost = true;
+      cv.style.visibility = 'hidden';
+      const host = cv.parentElement;
+      if (host) host.style.background = 'radial-gradient(circle at 50% 38%,rgba(0,200,83,.16),transparent 42%),linear-gradient(180deg,#07170d 0%,#04140B 62%,#07130c 100%)';
+      console.warn('[Last Bench] Departure WebGL context lost — switched to static fallback.');
+    };
+    cv.addEventListener('webglcontextlost', this.onGlobeContextLost, false);
     const scene = new T.Scene();
     scene.background = null;
     this.depFog = new T.FogExp2(0x3b2718, 0.0034);
@@ -1215,7 +1246,6 @@ class Component extends DCLogic {
     const cam = new T.PerspectiveCamera(44, 1, 0.5, 400000);
     this.globeScene = scene; this.globeCam = cam;
     const glow = this.glowTex();
-    const small = window.innerWidth < 760;
 
     // Earth at true scale, 1 unit = 1 km, with Dhaka's ground point pinned at the origin.
     // Everything below — street, camera, arc — lives in that one space, so the zoom out
@@ -1644,14 +1674,14 @@ class Component extends DCLogic {
   }
 
   resizeGlobe() {
-    if (!this.globeRenderer || !this.globeCanvas) return;
+    if (!this.globeRenderer || !this.globeCanvas || this.globeContextLost) return;
     const w = this.globeCanvas.clientWidth || 1, h = this.globeCanvas.clientHeight || 1;
     this.globeRenderer.setSize(w, h, false);
     this.globeCam.aspect = w / h; this.globeCam.updateProjectionMatrix();
   }
 
   drawGlobe(prog, time) {
-    if (!this.globeRenderer) return;
+    if (!this.globeRenderer || this.globeContextLost) return;
     const T = window.THREE;
     const cam = this.globeCam;
     const dt = Math.min(0.05, this._depDt || 0.016);
@@ -1780,9 +1810,9 @@ class Component extends DCLogic {
   // comes from Natural Earth via TopoJSON — never drawn by hand.
   earthTextures(small) {
     const T = window.THREE;
-    const W = small ? 2048 : 4096, H = W / 2;
+    const W = small ? 1024 : 4096, H = W / 2;
     const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
-    const dayCv = mk(W, H), nightCv = mk(W / 2, H / 2), maskCv = mk(W / 2, H / 2), cloudCv = mk(1024, 512);
+    const dayCv = mk(W, H), nightCv = mk(W / 2, H / 2), maskCv = mk(W / 2, H / 2), cloudCv = mk(small ? 512 : 1024, small ? 256 : 512);
     this._earthCv = { dayCv, nightCv, maskCv, W, H };
 
     // ocean: depth gradient plus low-frequency bathymetry
@@ -2199,11 +2229,12 @@ class Component extends DCLogic {
   init() {
     const T = window.THREE;
     const small = window.innerWidth < 760;
+    const constrainedGpu = small && (((navigator.deviceMemory || 0) > 0 && navigator.deviceMemory <= 6) || window.devicePixelRatio > 1.75);
     this.small = small;
     const camera = new T.PerspectiveCamera(small ? 68 : 58, window.innerWidth / window.innerHeight, 0.1, 3000);
     this.camera = camera;
-    const renderer = new T.WebGLRenderer({ antialias: !small, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, small ? 1.5 : 2));
+    const renderer = new T.WebGLRenderer({ antialias: !small, powerPreference: constrainedGpu ? 'default' : 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, constrainedGpu ? 1 : (small ? 1.25 : 2)));
     this.cityBox = () => ({ w: (this.mount && this.mount.clientWidth) || window.innerWidth, h: (this.mount && this.mount.clientHeight) || window.innerHeight });
     { const b = this.cityBox(); renderer.setSize(b.w, b.h); camera.aspect = b.w / b.h; camera.updateProjectionMatrix(); }
     if ('outputColorSpace' in renderer) renderer.outputColorSpace = T.SRGBColorSpace;
@@ -2215,6 +2246,14 @@ class Component extends DCLogic {
     this.mount.appendChild(renderer.domElement);
     { const b = this.cityBox(); renderer.setSize(b.w, b.h); camera.aspect = b.w / b.h; camera.updateProjectionMatrix(); }
     this.renderer = renderer;
+    this.cityContextLost = false;
+    this.onCityContextLost = () => {
+      this.cityContextLost = true;
+      renderer.domElement.style.display = 'none';
+      if (!this.state.webglFailed) this.setState({ webglFailed: true });
+      console.warn('[Last Bench] City WebGL context lost — switched to CSS fallback.');
+    };
+    renderer.domElement.addEventListener('webglcontextlost', this.onCityContextLost, false);
 
     this.hemiNight = new T.Color(0x6a8fc0); this.hemiDay = new T.Color(0xdfeeff);
     this.moonNight = new T.Color(0xbcd2ff); this.sunDay = new T.Color(0xfff2dc);
@@ -2222,7 +2261,8 @@ class Component extends DCLogic {
     // Render tier — auto-clamped on small screens so mid-range Android never runs the full pipeline.
     const tiers = { 'Cinematic': 2, 'Balanced': 1, 'Performance': 0 };
     let tier = tiers[this.props.renderQuality] ?? 2;
-    if (small) tier = Math.min(tier, 1);
+    if (constrainedGpu) tier = 0;
+    else if (small) tier = Math.min(tier, 1);
     if (this.reducedMotion) tier = Math.min(tier, 1);
     this.tier = tier;
 
@@ -2774,7 +2814,7 @@ class Component extends DCLogic {
     }
 
     this.watchPerf(performance.now());
-    this.renderComposite();
+    if (!this.cityContextLost) this.renderComposite();
   }
 }
 </script>
