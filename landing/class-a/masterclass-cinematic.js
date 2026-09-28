@@ -199,14 +199,15 @@
   const calendarLink = document.querySelector('[data-calendar-link]');
   const passLink = document.querySelector('[data-pass-link]');
   const whatsappChannel = document.querySelector('[data-whatsapp-channel]');
-  const whatsappCountdown = document.querySelector('[data-whatsapp-countdown]');
-  const stayPass = document.querySelector('[data-stay-pass]');
-  let whatsappTimer = null;
+  const unlockPass = document.querySelector('[data-unlock-pass]');
+  const followGate = document.querySelector('[data-follow-gate]');
+  const followNote = document.querySelector('[data-follow-note]');
+  const passReveal = document.querySelector('[data-pass-reveal]');
+  let pendingPass = null;
   let step = 0;
 
   const SUPABASE_URL = 'https://tocxdyqlrvzthpexnmxe.supabase.co';
   const WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00';
-  const WHATSAPP_REDIRECT_SECONDS = 8;
   const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_';
 
   function setStep(next) {
@@ -327,44 +328,33 @@
     }
   }
 
-  function stopWhatsappRedirect(message = 'Automatic redirect paused. Follow the channel whenever you are ready.') {
-    if (whatsappTimer) {
-      clearInterval(whatsappTimer);
-      whatsappTimer = null;
-    }
-    if (whatsappCountdown) whatsappCountdown.textContent = message;
-  }
-
-  function scheduleWhatsappRedirect(code) {
-    stopWhatsappRedirect();
-    const personalUrl = `${location.origin}/class-a/pass.html#code=${encodeURIComponent(code)}`;
-    try {
-      sessionStorage.setItem('class_a_last_pass_url', personalUrl);
-    } catch (_) {}
-
+  function prepareWhatsappUnlock(result) {
+    pendingPass = result;
     if (whatsappChannel) whatsappChannel.href = WHATSAPP_CHANNEL_URL;
-
-    let remaining = WHATSAPP_REDIRECT_SECONDS;
-    if (whatsappCountdown) {
-      whatsappCountdown.textContent = `Opening the WhatsApp channel in ${remaining} seconds. Save your pass first if you need to.`;
-    }
-
-    whatsappTimer = setInterval(() => {
-      remaining -= 1;
-      if (remaining <= 0) {
-        clearInterval(whatsappTimer);
-        whatsappTimer = null;
-        location.assign(WHATSAPP_CHANNEL_URL);
-        return;
-      }
-      if (whatsappCountdown) {
-        whatsappCountdown.textContent = `Opening the WhatsApp channel in ${remaining} second${remaining === 1 ? '' : 's'}. Save your pass first if you need to.`;
-      }
-    }, 1000);
+    if (unlockPass) unlockPass.disabled = true;
+    if (followNote) followNote.textContent = 'Open the channel first. This page will keep your reserved pass ready.';
+    if (followGate) followGate.hidden = false;
+    if (passReveal) passReveal.hidden = true;
   }
 
-  whatsappChannel?.addEventListener('click', () => stopWhatsappRedirect('Opening the CLASS[Λ] WhatsApp channel…'));
-  stayPass?.addEventListener('click', () => stopWhatsappRedirect());
+  whatsappChannel?.addEventListener('click', () => {
+    if (unlockPass) unlockPass.disabled = false;
+    if (followNote) followNote.textContent = 'After following the channel, return here and tap “I’VE FOLLOWED — UNLOCK MY PASS”.';
+  });
+
+  unlockPass?.addEventListener('click', async () => {
+    if (!pendingPass?.pass_code) return;
+    const result = pendingPass;
+    if (passCode) passCode.textContent = result.pass_code;
+    if (confirmedAt) confirmedAt.textContent = `Confirmed · ${formatDhakaTime(result.confirmed_at)} · Bangladesh time`;
+    renderSession(result, result.pass_code);
+    await drawQR(result.pass_code);
+    const personalUrl = `${location.origin}/class-a/pass.html#code=${encodeURIComponent(result.pass_code)}`;
+    try { sessionStorage.setItem('class_a_last_pass_url', personalUrl); } catch (_) {}
+    if (followGate) followGate.hidden = true;
+    if (passReveal) passReveal.hidden = false;
+    pendingPass = null;
+  });
 
   document.querySelector('[data-copy-pass]')?.addEventListener('click', async () => {
     const code = passCode?.textContent?.trim();
@@ -439,16 +429,12 @@
       }
       if (result.outcome !== 'confirmed' || !result.pass_code) throw new Error('Confirmation was not issued');
 
-      if (passCode) passCode.textContent = result.pass_code;
-      if (confirmedAt) confirmedAt.textContent = `Confirmed · ${formatDhakaTime(result.confirmed_at)} · Bangladesh time`;
-      renderSession(result, result.pass_code);
-      await drawQR(result.pass_code);
       steps.forEach(el => el.classList.remove('is-active'));
       form.querySelector('.steps')?.setAttribute('hidden','');
       form.querySelector('.signup-head')?.setAttribute('hidden','');
       status.textContent = '';
       success.hidden = false;
-      scheduleWhatsappRedirect(result.pass_code);
+      prepareWhatsappUnlock(result);
       form.reset();
     } catch (error) {
       console.error(error);
