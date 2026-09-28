@@ -128,6 +128,8 @@
   const sceneTitle = document.querySelector('[data-scene-title]');
   const sceneBody = document.querySelector('[data-scene-body]');
   const indices = Array.from(document.querySelectorAll('[data-index]'));
+  const capabilityNodes = Array.from(document.querySelectorAll('[data-capability]'));
+  let transformTimer = 0;
   const scenes = [
     { kicker: 'COMMAND AI', title: 'STOP ASKING.\nSTART DIRECTING.', body: 'AI becomes useful when you stop treating it like a search box and start giving it roles, context, standards and outcomes.' },
     { kicker: 'RESEARCH', title: 'TURN ASSUMPTIONS\nINTO EVIDENCE.', body: 'Use AI to compare markets, pressure-test ideas and surface the evidence that should shape your next decision.' },
@@ -143,6 +145,18 @@
     index = Math.max(0, Math.min(scenes.length - 1, index));
     if (index === activeScene) return;
     activeScene = index;
+    const mechanics = [
+      {yaw:-7,pitch:2,roll:-1,x:-10,y:0},{yaw:8,pitch:-2,roll:1,x:8,y:-8},{yaw:-11,pitch:4,roll:-2,x:-4,y:6},
+      {yaw:12,pitch:-3,roll:2,x:10,y:-4},{yaw:-6,pitch:1,roll:-2,x:-8,y:8},{yaw:0,pitch:0,roll:0,x:0,y:-10}
+    ][index];
+    journey?.setAttribute('data-scene', String(index));
+    root.style.setProperty('--rig-yaw', mechanics.yaw + 'deg'); root.style.setProperty('--rig-pitch', mechanics.pitch + 'deg');
+    root.style.setProperty('--rig-roll', mechanics.roll + 'deg'); root.style.setProperty('--rig-shift-x', mechanics.x + 'px'); root.style.setProperty('--rig-shift-y', mechanics.y + 'px');
+    capabilityNodes.forEach((el,i)=>el.classList.toggle('is-active',i===index));
+    if (!reduced.matches && journey) {
+      journey.classList.remove('is-transforming'); void journey.offsetWidth; journey.classList.add('is-transforming');
+      window.clearTimeout(transformTimer); transformTimer = window.setTimeout(()=>journey.classList.remove('is-transforming'),820);
+    }
     journeyCopy?.classList.add('is-switching');
     window.setTimeout(() => {
       const s = scenes[index];
