@@ -1,0 +1,43 @@
+{
+  "cli": {
+    "appVersionSource": "remote",
+    "requireCommit": true
+  },
+  "build": {
+    "production": {
+      "distribution": "store",
+      "environment": "production",
+      "node": "22.14.0",
+      "pnpm": "9.12.0",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_BASE_URL": "https://api.lastbenchbd.com",
+        "EXPO_PUBLIC_SUPABASE_URL": "https://tocxdyqlrvzthpexnmxe.supabase.co",
+        "EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_"
+      },
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "simulator": false
+      }
+    },
+    "preview": {
+      "extends": "production",
+      "distribution": "internal",
+      "autoIncrement": false,
+      "android": {
+        "buildType": "apk"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
+      },
+      "ios": {}
+    }
+  }
+}
