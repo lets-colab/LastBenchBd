@@ -76,6 +76,9 @@ const checks = [
       "YOUR TEAM.",
       "Research · Build · Create · Sell · Operate",
       "LIVE ONLINE · FREE MASTERCLASS · 0.01% BUILDERS",
+      "FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP",
+      "FOLLOW CHANNEL →",
+      "I'VE FOLLOWED — UNLOCK MY PASS",
     ],
   },
   {
