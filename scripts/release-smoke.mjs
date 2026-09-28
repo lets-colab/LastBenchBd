@@ -70,7 +70,10 @@ const checks = [
     expectIncludes: [
       "masterclass-entry.mp4",
       "data-intro-end-card",
-      "<h1>0.01%</h1>",
+      "class=\"intro-number\"",
+      "<h1><span>TURN AI INTO</span>",
+      "hero-system-stack",
+      "transform-rig",
       "ACCEPT INVITATION",
       "TURN AI INTO",
       "YOUR TEAM.",
