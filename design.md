@@ -161,23 +161,52 @@ Private student documents belong in the approved authenticated storage path. Nev
 
 ---
 
-## 9. Bench AI
+## 9. Dr. X + interactive founder profiles
 
-Bench AI is a guidance layer, not an admissions oracle and not the corporate identity of Last Bench.
+**Dr. X is the single visible intelligence identity for Last Bench.** The previous public name **Bench AI is retired**. The legacy `landing/bench-ai.js` filename may remain only as a compatibility implementation detail and must not reappear as a user-facing assistant identity.
 
-Within the Malaysia service it may:
+### Public Dr. X role
 
-- explain the six-stage journey
-- help structure a university shortlist
-- compare profile, budget and intake constraints
-- explain common process concepts
-- identify missing questions/documents
-- route to Journey OS
-- escalate to a human
+Within Last Bench, Dr. X may:
 
-It must not invent current fees, visa probability, scholarship percentages, entry requirements, university partnership status or application status.
+- explain the Last Bench ecosystem and route people to Education & Mobility, CLASS[Λ], co.lab or the relevant partner path;
+- explain the six-stage Malaysia journey and help structure research questions;
+- help users compare profile, budget and intake constraints without fabricating volatile facts;
+- identify missing questions/documents and route authenticated users toward the Journey OS;
+- surface approved founder-profile information and provide an interactive profile experience;
+- escalate high-stakes or current-verification questions to the appropriate human owner.
 
-High-stakes guidance should identify what requires current official verification and where human judgment is needed.
+Dr. X must not invent current fees, visa probability, scholarship percentages, entry requirements, university partnership status, application status or any other high-trust fact.
+
+### Founder identity rule
+
+The founder profiles are **human-first real profiles**, not separate AI brands.
+
+Use the founders' full names:
+
+- **Sayem Ahmed** — Co-founder & CEO;
+- **Fahim Shahbaz Mahmud** — Co-founder & COO;
+- **Erfan Uddin** — Co-founder & Chief Business & Innovation Officer.
+
+Do not publish labels such as `Sayem AI`, `Fahim AI`, `Erfan AI`, `AI Twin` or `AI Clone` as the founder identity.
+
+Each interactive founder profile may carry the small sublabel **Powered by Dr. X**. On Erfan Uddin's profile, explicitly state **Also known as Dr. X**.
+
+### Founder source and trust rule
+
+Founder profile content must come from approved Last Bench identity assets, current canonical founder mandates and verified public/profile sources.
+
+- use approved real portraits; never generate or approximate a founder's face;
+- show an external LinkedIn/social/profile link only after its exact URL has been verified;
+- do not infer biography, achievements, companies, contact details or social accounts merely because a search result looks plausible;
+- generated interactive-profile replies are **not direct statements from the founder** unless an exact statement/source has been verified and attributed;
+- consequential requests must escalate to the human founder/team rather than fabricate personal authorization.
+
+### Privacy / scope boundary
+
+The public Last Bench Dr. X surface is a **project-scoped projection**, not access to Erfan's private Founder DR.X or global Second Brain.
+
+The browser must never receive unrestricted personal founder memory, unrelated venture context, credentials, internal strategy, private communications or cross-project data. Public founder interaction receives only the minimum approved Last Bench/public profile context required for the request.
 
 ---
 
