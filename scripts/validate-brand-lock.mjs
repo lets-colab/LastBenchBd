@@ -317,6 +317,10 @@ for (const requiredRule of [
   "Never ask an image model to draw",
   "The compositor, not the image generator, owns brand placement.",
   "Inspect the actual saved/exported artifact",
+  "Never ask the user to re-upload a canonical asset before completing the asset-resolution preflight.",
+  "## PATCH-Only Edit Rule",
+  "White/light background -> use the exact approved transparent black-wordmark variant.",
+  "Black/dark background -> use the exact approved transparent white-wordmark variant.",
 ]) {
   if (!brandSkill.includes(requiredRule)) {
     fail("Brand source lock skill is missing required rule: " + requiredRule);
