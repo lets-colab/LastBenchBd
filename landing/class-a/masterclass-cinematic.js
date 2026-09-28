@@ -306,6 +306,46 @@
     }
   }
 
+  async function hydratePublicSession() {
+    const chip = document.querySelector('[data-public-session-chip]');
+    const meta = document.querySelector('[data-public-session-meta]');
+    const finalLine = document.querySelector('[data-public-session-final]');
+    try {
+      const response = await fetch(SUPABASE_URL + '/rest/v1/rpc/class_a_public_session', {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          Authorization: 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: '{}'
+      });
+      if (!response.ok) return;
+      const payload = await response.json();
+      const session = Array.isArray(payload) ? payload[0] : payload;
+      if (!session?.starts_at) return;
+
+      const start = new Date(session.starts_at);
+      const end = session.ends_at ? new Date(session.ends_at) : null;
+      const zone = session.timezone || 'Asia/Dhaka';
+      const day = new Intl.DateTimeFormat('en-GB',{timeZone:zone,day:'2-digit',month:'short'}).format(start).toUpperCase();
+      const weekday = new Intl.DateTimeFormat('en-GB',{timeZone:zone,weekday:'short'}).format(start).toUpperCase();
+      const startTime = new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'numeric',minute:'2-digit',hour12:true}).format(start);
+      const endTime = end ? new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'numeric',minute:'2-digit',hour12:true}).format(end) : '';
+      if (chip) chip.innerHTML = '<i></i> ' + day + ' · ' + startTime + ' · LIVE ONLINE';
+      if (meta) meta.textContent = weekday + ' ' + day + ' · ' + startTime + (endTime ? '–' + endTime : '') + ' · GOOGLE MEET · FREE REGISTRATION';
+      if (finalLine) finalLine.textContent = weekday + ' ' + day + ' · ' + startTime + (endTime ? '–' + endTime : '') + ' · Google Meet · Free registration';
+      if (session.registration_open === false) {
+        document.querySelectorAll('[data-open-signup]').forEach(el => {
+          el.disabled = true;
+          el.textContent = 'REGISTRATION CLOSED';
+        });
+      }
+    } catch (_) {}
+  }
+
+  hydratePublicSession();
+
   function compactUtc(value) {
     return new Date(value).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
   }
