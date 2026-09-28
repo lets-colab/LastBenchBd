@@ -109,7 +109,7 @@ Current product hierarchy:
 - Progression: **AI Driver → AI Builder → AI Creator → AI Operator → AI Founder.**
 - Final venture gates: **Select → Validate → Design → Automate → Launch.**
 
-Its visual system is cinematic, near-black, editorial and proof-led. Do not automatically inherit Last Bench green/white service-page styling into CLASS[Λ]. Likewise, CLASS[Λ]'s dark 3D language must not overwrite the parent brand or Education & Mobility surfaces.
+Its visual system is cinematic, near-black, editorial and proof-led. The latest approved art direction adds smoked dimensional UI panes, original Brand Green #00C853 as the active energy signal, a perspective technical coordinate floor, and cinematic mechanical reconfiguration between scroll states. The page should feel like one AI operating system assembling and transforming, not a stack of generic SaaS cards. Do not automatically inherit Last Bench green/white service-page styling into CLASS[Λ]. Likewise, CLASS[Λ]'s dark 3D language must not overwrite the parent brand or Education & Mobility surfaces.
 
 The core product principle is **proof > attendance; output > certificate**.
 
@@ -381,7 +381,7 @@ Masterclass entry choreography:
 
 1. **Scene 01 — Reel:** the approved cinematic reel begins at black with 0.01%, offers **ENTER EXPERIENCE** and immediate **SKIP**, and enables sound only after user interaction.
 2. The reel plays as the opening scene, not as a detached splash screen.
-3. Around **23.6 seconds**, the reel freezes briefly and transforms into the interactive metallic 20 / orbital CLASS[Λ] system.
+3. Around **26.88 seconds**, the approved reel is cut on the final CLASS[Λ] lockup, before the Last Bench end card; the exact CLASS[Λ] mark holds briefly, then the website transforms into the interactive metallic 20 / orbital system.
 4. The narrative then progresses through **Command → Research → Build → Create → Sell → Operate**.
 5. Core transformation copy: **TURN AI INTO YOUR TEAM.**
 6. Outcome framing: **Build and run a one-person business with AI.**
