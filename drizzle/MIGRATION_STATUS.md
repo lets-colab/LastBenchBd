@@ -1,5 +1,16 @@
 # Last Bench database migration status
 
+## Public-function default privilege hardening — 28 September 2026
+
+- Production Supabase default privileges for functions created by `postgres` in `public` are now fail-closed for `PUBLIC`, `anon`, and `authenticated`.
+- Verified current default function ACL: `postgres=EXECUTE`, `service_role=EXECUTE`; no default EXECUTE for browser roles.
+- Existing CLASS[Λ] browser-callable RPC permissions were intentionally left unchanged to avoid breaking registration, pass, attendance, and staff check-in flows.
+- Current Supabase advisor warnings for those explicit `SECURITY DEFINER` capability endpoints remain visible and require endpoint-specific abuse/rate-limit review; they must not be silenced by blind grant revocation.
+- This control is durable in `20260928180500_default_deny_public_function_execute.sql`.
+- Leaked-password protection remains an Auth configuration item outside the SQL migration surface.
+- `pg_net` schema relocation remains deferred until dependency/relocatability checks prove it will not break existing database jobs or hooks.
+
+
 Last verified against the connected production Supabase project on **28 September 2026**.
 
 ## Canonical live migration path
