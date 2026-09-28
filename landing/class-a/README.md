@@ -110,3 +110,14 @@ Production rules:
 - motion remains original CLASS[Λ] interaction design and reduced-motion safe.
 
 Acceptance target is **24/24 applicable Impeccable heuristic quality + 0.5 CLASS[Λ] signature-experience bonus**. The bonus is not a heuristic score and cannot offset a usability or accessibility defect.
+
+
+## Current live session — scheduled 28 September 2026
+
+- Session: `class-0-online-next`
+- Date: **Thursday, 1 October 2026**
+- Time: **8:00–9:30 PM Asia/Dhaka**
+- Platform: **Google Meet**
+- Calendar event ID: `i7nvnon6v0tdlm809r0qe99m9k`
+- The Meet URL is stored server-side in `public.class_a_sessions` and returned only through the personal pass/registration capability flow.
+- The public landing page hydrates schedule metadata from `class_a_public_session()`; rescheduling no longer requires hardcoded UI edits.
