@@ -39,7 +39,7 @@ describe("CLASS A signup funnel", () => {
   });
 
   it("keeps the masterclass free and the course interest-only", () => {
-    expect(masterclass).toContain("No payment is collected here");
+    expect(masterclass).toContain("NO PAYMENT REQUIRED");
     expect(course).toContain("Payment is handled separately after acceptance");
     expect(course).not.toMatch(/type="(?:number|text)"[^>]+name="(?:card|payment|amount)"/i);
   });
