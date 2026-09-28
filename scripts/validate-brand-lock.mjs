@@ -326,6 +326,43 @@ for (const [key, expected] of Object.entries({
   }
 }
 
+const lastBenchBrandLock = JSON.parse(readText("brand/last-bench/brand-lock.json"));
+for (const docPath of [
+  "brand/last-bench/BRAND_BLUEPRINT.md",
+  "brand/last-bench/ART_DIRECTION.md",
+  "brand/last-bench/LOGO_USAGE.md",
+]) {
+  readText(docPath);
+}
+const artDirection = readText("brand/last-bench/ART_DIRECTION.md");
+for (const required of [
+  "Dark for emotion. White for trust. Green for progress.",
+  "logo background is **always transparent**",
+  "black/charcoal wordmark",
+  "white wordmark",
+  "bench + rising arrow stays Brand Green",
+]) {
+  if (!artDirection.includes(required)) {
+    fail("Last Bench art direction is missing required rule: " + required);
+  }
+}
+const logoUsage = readText("brand/last-bench/LOGO_USAGE.md");
+for (const required of [
+  "transparent background",
+  "black/charcoal",
+  "white",
+  "Brand Green bench + rising arrow",
+]) {
+  if (!logoUsage.includes(required)) {
+    fail("Last Bench logo usage standard is missing required rule: " + required);
+  }
+}
+for (const refPath of lastBenchBrandLock?.visualReferences ?? []) {
+  if (!existsSync(full(refPath))) {
+    fail("Missing Last Bench visual reference: " + refPath);
+  }
+}
+
 const homepage = readText("landing/index.html");
 if (!homepage.includes("assets/logo-full.png")) {
   fail("landing/index.html must reference the canonical production full logo asset");
