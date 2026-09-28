@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./claude-design-support.js"></script>
+<script src="./founder-profile-data.js"></script>
 <script src="./bench-ai.js" defer></script>
 </head>
 <body>
@@ -117,12 +118,16 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div onClick="{{ stopProp }}" style="width:min(620px,100%);max-height:86vh;overflow-y:auto;background:rgba(5,16,10,.94);border:1px solid rgba(0,200,83,.38);border-radius:24px;padding:clamp(20px,4vw,36px);text-align:left;display:flex;flex-direction:column;gap:17px;box-shadow:0 30px 90px rgba(0,0,0,.7);box-sizing:border-box;">
         <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
           <div style="width:104px;height:130px;border-radius:16px;padding:3px;background:linear-gradient(150deg,#00C853,#FFB300);flex:none;box-sizing:border-box;">
-            <image-slot id="{{ founderSlotId }}" shape="rounded" radius="13" placeholder="{{ founderPhotoPh }}" style="width:98px;height:124px;"></image-slot>
+            <image-slot id="{{ founderSlotId }}" shape="rounded" radius="13" src="{{ founderPhotoSrc }}" placeholder="{{ founderPhotoPh }}" style="width:98px;height:124px;"></image-slot>
           </div>
           <div style="min-width:180px;flex:1;">
             <div style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(22px,3.6vw,32px);line-height:1.08;letter-spacing:-.01em;color:#fff;">{{ founderName }}</div>
             <div style="font-size:11.5px;font-weight:600;letter-spacing:.18em;color:#00E676;margin-top:8px;text-transform:uppercase;">{{ founderRole }}</div>
             <div style="font-size:12px;color:rgba(242,247,243,.6);margin-top:6px;">{{ founderTag }}</div>
+            <sc-if value="{{ founderHasAlias }}" hint-placeholder-val="{{ false }}">
+              <div style="font-size:11px;font-weight:600;letter-spacing:.12em;color:#fff;margin-top:7px;text-transform:uppercase;">{{ founderAlias }}</div>
+            </sc-if>
+            <div style="font-size:10px;font-weight:600;letter-spacing:.16em;color:rgba(0,230,118,.76);margin-top:7px;text-transform:uppercase;">Powered by Dr. X</div>
           </div>
         </div>
         <div style="border:1px solid rgba(0,200,83,.25);border-radius:14px;padding:15px 17px;background:rgba(0,200,83,.06);">
@@ -136,6 +141,14 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           </div>
         </div>
         <p style="margin:0;font-size:13.5px;line-height:1.65;color:rgba(242,247,243,.82);text-wrap:pretty;">{{ founderLine }}</p>
+        <sc-if value="{{ founderHasLinks }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <sc-for list="{{ founderLinks }}" as="fl" hint-placeholder-count="2">
+              <a href="{{ fl.href }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;min-height:38px;padding:0 13px;border-radius:999px;border:1px solid rgba(255,255,255,.18);color:#fff;text-decoration:none;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;" style-hover="border-color:#00E676;color:#00E676;">{{ fl.label }} ↗</a>
+            </sc-for>
+          </div>
+        </sc-if>
+        <button onClick="{{ openFounderDrx }}" style="align-self:flex-start;min-height:46px;background:#00C853;border:0;color:#04140b;font-weight:700;font-size:12px;letter-spacing:.1em;padding:12px 20px;border-radius:999px;cursor:pointer;font-family:'Sora','Hind Siliguri',sans-serif;" style-hover="background:#00E676;">{{ founderAskLabel }} →</button>
         <div style="font-size:11.5px;line-height:1.5;color:rgba(242,247,243,.42);">{{ t.photoNote }}</div>
         <button onClick="{{ closeFounder }}" style="align-self:flex-start;min-height:48px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:500;font-size:13px;letter-spacing:.08em;padding:13px 28px;border-radius:999px;cursor:pointer;font-family:'Sora','Hind Siliguri',sans-serif;" style-hover="border-color:#00C853;color:#00E676;">{{ t.backBench }}</button>
       </div>
@@ -419,12 +432,13 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
         <sc-for list="{{ founders }}" as="f" hint-placeholder-count="3">
           <div role="button" tabindex="0" data-founder="{{ f.key }}" onClick="{{ openFounder }}" onKeyDown="{{ openFounderKey }}" style="width:{{ f.cardW }};cursor:pointer;background:rgba(5,16,10,.66);border:1px solid rgba(0,200,83,.26);border-radius:16px;padding:9px 9px 12px;backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;gap:7px;box-sizing:border-box;transition:transform .35s ease,border-color .35s ease;" style-hover="transform:translateY(-5px);border-color:#00E676;">
             <div style="width:100%;aspect-ratio:3/4;border-radius:12px;padding:2px;background:linear-gradient(150deg,#00C853,#FFB300);box-sizing:border-box;">
-              <image-slot id="founder-{{ f.key }}" shape="rounded" radius="11" placeholder="{{ f.photoPh }}" style="width:100%;height:100%;"></image-slot>
+              <image-slot id="founder-{{ f.key }}" shape="rounded" radius="11" src="{{ f.photoSrc }}" placeholder="{{ f.photoPh }}" style="width:100%;height:100%;"></image-slot>
             </div>
             <div style="font-family:var(--lb-font-display);font-weight:600;font-size:13.5px;color:#fff;text-align:center;line-height:1.18;">{{ f.name }}</div>
             <sc-if value="{{ showRole }}" hint-placeholder-val="{{ true }}">
               <div style="font-size:11px;font-weight:600;letter-spacing:.16em;color:#00E676;text-align:center;line-height:1.3;">{{ f.role }}</div>
             </sc-if>
+            <div style="font-size:8.5px;font-weight:600;letter-spacing:.12em;color:rgba(242,247,243,.46);text-align:center;text-transform:uppercase;">Powered by Dr. X</div>
           </div>
         </sc-for>
       </div>
@@ -555,14 +569,14 @@ class Component extends DCLogic {
     // Founders — verified titles and operating mandates only. No inferred personal biography.
     this.FOUNDERS = {
       en: {
-        sayem: { name: 'Sayem Ahmed', role: 'Co-founder & Chief Executive Officer', tag: 'The trust-builder', duties: ['Vision and capital', 'Academic partnerships', 'Public trust and accountability'], line: 'Sayem protects the promise Last Bench makes to every student and parent who takes it seriously.' },
-        fahim: { name: 'Fahim Shahbaz Mahmud', role: 'Co-founder & Chief Operating Officer', tag: 'Makes it repeatable', duties: ['Student journey operations', 'Guidance quality and consistency', 'Turning one good outcome into a process'], line: 'Fahim makes the journey repeatable, so the student after you gets the same clarity you did.' },
-        erfan: { name: 'Erfan Uddin', role: 'Co-founder & Chief Business and Innovation Officer', tag: 'Turns the journey into a system', duties: ['Community and cohorts', 'New capability and partnerships', 'Expanding what the platform can carry'], line: 'Erfan turns the journey into an expandable system — the bench is longer than it looks.' },
+        sayem: { name: 'Sayem Ahmed', role: 'Co-founder & Chief Executive Officer', alias: '', tag: 'The trust-builder', duties: ['Vision and capital', 'Academic partnerships', 'Public trust and accountability'], line: 'Sayem protects the promise Last Bench makes to every student and parent who takes it seriously.' },
+        fahim: { name: 'Fahim Shahbaz Mahmud', role: 'Co-founder & Chief Operating Officer', alias: '', tag: 'Makes it repeatable', duties: ['Operations and delivery', 'Quality and compliance', 'Sales execution', 'Repeatability and execution cadence'], line: 'Fahim makes the journey repeatable, so the student after you gets the same clarity you did.' },
+        erfan: { name: 'Erfan Uddin', role: 'Co-founder & Chief Business & Innovation Officer', alias: 'Also known as Dr. X', tag: 'Turns the journey into a system', duties: ['Business and brand', 'Innovation and growth', 'Product ecosystem', 'Systems design'], line: 'Erfan turns the journey into an expandable system — the bench is longer than it looks.' },
       },
       bn: {
-        sayem: { name: 'Sayem Ahmed', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান নির্বাহী কর্মকর্তা', tag: 'আস্থার নির্মাতা', duties: ['ভিশন ও মূলধন', 'একাডেমিক পার্টনারশিপ', 'জনআস্থা ও জবাবদিহি'], line: 'লাস্ট বেঞ্চ প্রতিটি শিক্ষার্থী ও অভিভাবককে যে প্রতিশ্রুতি দেয়, সায়েম তা রক্ষা করেন।' },
-        fahim: { name: 'Fahim Shahbaz Mahmud', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান পরিচালন কর্মকর্তা', tag: 'যাত্রাকে পুনরাবৃত্তিযোগ্য করেন', duties: ['শিক্ষার্থী যাত্রার পরিচালনা', 'গাইডেন্সের গুণমান ও ধারাবাহিকতা', 'একটি ভালো ফলাফলকে প্রক্রিয়ায় রূপ দেওয়া'], line: 'ফাহিম যাত্রাকে পুনরাবৃত্তিযোগ্য করেন, যেন আপনার পরের শিক্ষার্থীও একই স্পষ্টতা পায়।' },
-        erfan: { name: 'Erfan Uddin', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান ব্যবসা ও উদ্ভাবন কর্মকর্তা', tag: 'যাত্রাকে সিস্টেমে রূপ দেন', duties: ['কমিউনিটি ও কোহর্ট', 'নতুন সক্ষমতা ও পার্টনারশিপ', 'প্ল্যাটফর্মের ধারণক্ষমতা বাড়ানো'], line: 'এরফান যাত্রাকে একটি বিস্তারযোগ্য সিস্টেমে রূপ দেন — বেঞ্চটি দেখতে যতটা, তার চেয়ে লম্বা।' },
+        sayem: { name: 'Sayem Ahmed', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান নির্বাহী কর্মকর্তা', alias: '', tag: 'আস্থার নির্মাতা', duties: ['ভিশন ও মূলধন', 'একাডেমিক পার্টনারশিপ', 'জনআস্থা ও জবাবদিহি'], line: 'লাস্ট বেঞ্চ প্রতিটি শিক্ষার্থী ও অভিভাবককে যে প্রতিশ্রুতি দেয়, সায়েম তা রক্ষা করেন।' },
+        fahim: { name: 'Fahim Shahbaz Mahmud', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান পরিচালন কর্মকর্তা', alias: '', tag: 'যাত্রাকে পুনরাবৃত্তিযোগ্য করেন', duties: ['অপারেশন ও ডেলিভারি', 'গুণমান ও কমপ্লায়েন্স', 'সেলস এক্সিকিউশন', 'পুনরাবৃত্তিযোগ্যতা ও এক্সিকিউশন ক্যাডেন্স'], line: 'ফাহিম যাত্রাকে পুনরাবৃত্তিযোগ্য করেন, যেন আপনার পরের শিক্ষার্থীও একই স্পষ্টতা পায়।' },
+        erfan: { name: 'Erfan Uddin', role: 'সহ-প্রতিষ্ঠাতা ও প্রধান ব্যবসা ও উদ্ভাবন কর্মকর্তা', alias: 'Dr. X নামেও পরিচিত', tag: 'যাত্রাকে সিস্টেমে রূপ দেন', duties: ['ব্যবসা ও ব্র্যান্ড', 'উদ্ভাবন ও প্রবৃদ্ধি', 'প্রোডাক্ট ইকোসিস্টেম', 'সিস্টেম ডিজাইন'], line: 'এরফান যাত্রাকে একটি বিস্তারযোগ্য সিস্টেমে রূপ দেন — বেঞ্চটি দেখতে যতটা, তার চেয়ে লম্বা।' },
       },
     };
 
@@ -590,14 +604,14 @@ class Component extends DCLogic {
         pin: 'OPEN THE REAL KLCC BENCH IN MAPS →',
         a5Kicker: '05 — TAKE YOUR SEAT', a5L1: 'YOU WON’T SIT', a5L2: 'HERE ALONE.',
         benchKicker: 'THE LAST BENCH', benchL1: '', benchL2: '', arriveLine: 'Admission is only the beginning.',
-        a5Sub: 'Three founders keep this bench. Tap one to read what they’re accountable for.',
+        a5Sub: 'Three founders keep this bench. Tap a founder to explore their verified profile and ask through Dr. X.',
         signupTitle: 'TAKE YOUR SEAT', signupSub: 'From Bangladesh to Malaysia — the journey starts with a name.',
         signupConsent: 'By submitting, you agree that Last Bench may contact you by WhatsApp, phone, or email about your Malaysia study journey.',
         phName: 'Full name', phEmail: 'Email or phone',
         joinedTitle: 'WELCOME TO THE BENCH.', joinedSub: 'Your seat is reserved. Your dashboard is ready.', enterDash: 'Enter your dashboard →',
         foot1: 'LAST BENCH © 2026', foot2: 'FROM LAST BENCH. TO THE WORLD.', foot3: 'CHITTAGONG · KUALA LUMPUR',
         mandate: 'ACCOUNTABLE FOR', backBench: '← Back to the bench',
-        photoNote: 'Placeholder portrait — a real approved photo will replace this. Titles and mandates are verified; nothing here is inferred.',
+        photoNote: 'Approved founder identity sources only. Interactive replies are powered by Dr. X and are not direct statements from the founder unless explicitly verified. External profile links appear only when the exact URL has been verified.',
         arrived: 'ARRIVED · FAST-TRAVEL COMPLETE', engaged: 'FAST-TRAVEL ENGAGED',
         svHint: 'STREET VIEW 360 · DRAG TO LOOK AROUND', returnJourney: '← Return to the journey',
         sCost: 'TOTAL / YEAR', sIelts: 'IELTS', sEmgs: 'EMGS', sWeeks: 'PROCESSING', sGpa: 'GRADES',
@@ -633,14 +647,14 @@ class Component extends DCLogic {
         a4Sub: 'এই বেঞ্চটি কেএলসিসি পার্কে, সেই টাওয়ারগুলোর পায়ের কাছে যেগুলোর মধ্য দিয়ে আপনি উড়ে এলেন। আমরা এটি পরিষ্কার রেখেছি — চারপাশ দেখুন।',
         pin: 'মানচিত্রে বাস্তব কেএলসিসি বেঞ্চ খুলুন →',
         a5Kicker: '০৫ — আপনার আসন নিন', a5L1: 'আপনি একা', a5L2: 'বসবেন না।',
-        a5Sub: 'তিনজন প্রতিষ্ঠাতা এই বেঞ্চ রক্ষা করেন। তাঁরা কী কাজের জন্য দায়বদ্ধ, পড়তে ট্যাপ করুন।',
+        a5Sub: 'তিনজন প্রতিষ্ঠাতা এই বেঞ্চ রক্ষা করেন। যাচাইকৃত প্রোফাইল দেখতে এবং Dr. X-এর মাধ্যমে জানতে একজন প্রতিষ্ঠাতাকে ট্যাপ করুন।',
         signupTitle: 'আপনার আসন নিন', signupSub: 'বাংলাদেশ থেকে মালয়েশিয়া — যাত্রা শুরু হয় একটি নাম দিয়ে।',
         signupConsent: 'জমা দিলে আপনি সম্মতি দিচ্ছেন যে মালয়েশিয়ায় পড়াশোনার বিষয়ে লাস্ট বেঞ্চ WhatsApp, ফোন বা ইমেইলে আপনার সঙ্গে যোগাযোগ করতে পারে।',
         phName: 'পূর্ণ নাম', phEmail: 'ইমেইল বা ফোন',
         joinedTitle: 'বেঞ্চে স্বাগতম।', joinedSub: 'আপনার আসন সংরক্ষিত। আপনার ড্যাশবোর্ড প্রস্তুত।', enterDash: 'ড্যাশবোর্ডে যান →',
         foot1: 'লাস্ট বেঞ্চ © ২০২৬', foot2: 'লাস্ট বেঞ্চ থেকে। বিশ্বের পথে।', foot3: 'চট্টগ্রাম · কুয়ালালামপুর',
         mandate: 'যার জন্য দায়বদ্ধ', backBench: '← বেঞ্চে ফিরে যান',
-        photoNote: 'প্লেসহোল্ডার ছবি — অনুমোদিত বাস্তব ছবি এটি প্রতিস্থাপন করবে। পদবি ও দায়িত্ব যাচাইকৃত; এখানে কিছুই অনুমান করা নয়।',
+        photoNote: 'শুধু অনুমোদিত প্রতিষ্ঠাতা পরিচয়-সূত্র ব্যবহার করা হয়েছে। ইন্টার‌্যাক্টিভ উত্তর Dr. X দ্বারা চালিত এবং স্পষ্টভাবে যাচাই না হলে প্রতিষ্ঠাতার সরাসরি বক্তব্য নয়। সঠিক URL যাচাই হলেই বাহ্যিক প্রোফাইল লিংক দেখানো হয়।',
         arrived: 'পৌঁছে গেছেন · ফাস্ট-ট্রাভেল সম্পন্ন', engaged: 'ফাস্ট-ট্রাভেল চালু',
         svHint: 'স্ট্রিট ভিউ ৩৬০ · ঘুরে দেখতে টেনে দেখুন', returnJourney: '← যাত্রায় ফিরে যান',
         sCost: 'মোট / বছর', sIelts: 'IELTS', sEmgs: 'EMGS', sWeeks: 'প্রসেসিং', sGpa: 'গ্রেড',
@@ -663,6 +677,8 @@ class Component extends DCLogic {
     const t = this.I18N[lang];
     const fset = this.FOUNDERS[lang];
     const f = fset[this.state.founder] || {};
+    const publicProfiles = window.LB_FOUNDER_PROFILES || {};
+    const currentPublicProfile = publicProfiles[this.state.founder] || {};
     const step = this.state.beyondStep;
     const rs = this.state.radio;
     const feel = this.FEELS[this.props.cameraFeel] || this.FEELS['Cinematic Drift'];
@@ -719,7 +735,8 @@ class Component extends DCLogic {
       founders: ['sayem', 'fahim', 'erfan'].map((key) => ({
         key, name: fset[key].name, role: roleShort[key],
         cardW: short ? '74px' : (narrow ? 'calc(33.333% - 8px)' : '132px'),
-        photoPh: fset[key].name + ' — photo coming soon',
+        photoPh: fset[key].name + ' — approved founder portrait',
+        photoSrc: (publicProfiles[key] && publicProfiles[key].portrait) || '',
       })),
       showRole: !short,
       compactSeat: compact,
@@ -731,9 +748,28 @@ class Component extends DCLogic {
       stopProp: (e) => e.stopPropagation(),
       founderOpen: !!this.state.founder,
       founderSlotId: 'founder-' + (this.state.founder || 'sayem'),
-      founderPhotoPh: f.name ? f.name + ' — photo coming soon' : '',
+      founderPhotoPh: f.name ? f.name + ' — approved founder portrait' : '',
+      founderPhotoSrc: currentPublicProfile.portrait || '',
       founderName: f.name, founderRole: f.role, founderTag: f.tag, founderLine: f.line,
+      founderAlias: f.alias || currentPublicProfile.alias || '',
+      founderHasAlias: !!(f.alias || currentPublicProfile.alias),
       founderDuties: (f.duties || []).map((d, i) => ({ key: i, text: d })),
+      founderLinks: (currentPublicProfile.links || []).map((link, i) => ({ key: i, label: link.label, href: link.href })),
+      founderHasLinks: !!(currentPublicProfile.links && currentPublicProfile.links.length),
+      founderAskLabel: f.name ? ('ASK ' + f.name.toUpperCase()) : 'ASK DR. X',
+      openFounderDrx: () => {
+        if (!f.name || !window.LB_DRX_OPEN) return;
+        window.LB_DRX_OPEN({
+          surface: 'founder_profile',
+          project: 'lastbench',
+          founderKey: this.state.founder,
+          name: f.name,
+          role: f.role,
+          alias: f.alias || currentPublicProfile.alias || '',
+          duties: (f.duties || []).slice(),
+          publicOnly: true
+        });
+      },
 
       seatName: this.state.seatName || '', seatContact: this.state.seatContact || '',
       seatCompany: this.state.seatCompany || '',

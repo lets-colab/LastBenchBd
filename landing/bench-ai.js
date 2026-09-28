@@ -5,9 +5,9 @@
   const CONTACT_SECONDARY = '01726 494917';
   const CONTACT_EMAIL = 'info@lastbenchbd.com';
 
+  // Legacy filename retained for compatibility with the verified landing export.
+  // The visible intelligence identity is Dr. X; "Bench AI" is retired as a public identity.
   // Keep the business/blueprint layer separate from the Claude Design runtime.
-  // The homepage already loads Bench AI, so this is the smallest safe integration
-  // point that preserves the verified design export while adding current product logic.
   if (!document.querySelector('script[data-lb-blueprint]')) {
     const blueprint = document.createElement('script');
     blueprint.src = './lastbench-blueprint.js';
@@ -44,39 +44,42 @@
   const launcher = document.createElement('button');
   launcher.className = 'lb-ai-launcher';
   launcher.type = 'button';
-  launcher.setAttribute('aria-label', 'Chat with Bench AI');
+  launcher.setAttribute('aria-label', 'Chat with Dr. X');
   launcher.setAttribute('aria-expanded', 'false');
   launcher.innerHTML = '<svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M4 19V8a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H9l-5 4z" fill="currentColor"/><circle cx="10" cy="11.5" r="1.5" fill="#00E676"/><circle cx="15.5" cy="11.5" r="1.5" fill="#00E676"/></svg>';
 
   const panel = document.createElement('section');
   panel.className = 'lb-ai-panel';
   panel.setAttribute('role', 'dialog');
-  panel.setAttribute('aria-label', 'Bench AI study guidance');
+  panel.setAttribute('aria-label', 'Dr. X — Last Bench Intelligence');
   panel.setAttribute('data-open', 'false');
   panel.innerHTML = `
     <div class="lb-ai-head">
-      <div class="lb-ai-title"><span class="lb-ai-dot"></span><div><div class="lb-ai-name">BENCH AI</div><div class="lb-ai-status">GUIDANCE · VERIFY BEFORE APPLYING</div></div></div>
+      <div class="lb-ai-title"><span class="lb-ai-dot"></span><div><div class="lb-ai-name">DR. X</div><div class="lb-ai-status">LAST BENCH INTELLIGENCE · VERIFY BEFORE ACTING</div></div></div>
       <button class="lb-ai-close" type="button" aria-label="Close Bench AI">×</button>
     </div>
     <div class="lb-ai-log" aria-live="polite"></div>
     <div class="lb-ai-chips"></div>
     <form class="lb-ai-form">
-      <label style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" for="lb-ai-input">Ask Bench AI</label>
-      <input id="lb-ai-input" class="lb-ai-input" autocomplete="off" maxlength="700" placeholder="Ask about education, CLASS[Λ], co.lab, or your next step…">
+      <label style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" for="lb-ai-input">Ask Dr. X</label>
+      <input id="lb-ai-input" class="lb-ai-input" autocomplete="off" maxlength="700" placeholder="Ask Dr. X about Last Bench or your next step…">
       <button class="lb-ai-send" type="submit" aria-label="Send message">→</button>
     </form>
-    <div class="lb-ai-note">Bench AI gives orientation, not guarantees. Verify current fees, entry requirements, scholarships, partner offers and visa rules with official sources before acting.</div>`;
+    <div class="lb-ai-note">Dr. X uses approved Last Bench and public profile context for orientation, not guarantees. Founder-profile replies are generated and are not direct statements from the founder unless explicitly verified. Verify current fees, entry requirements, scholarships, partner offers and visa rules with official sources before acting.</div>`;
 
   document.body.appendChild(launcher);
   document.body.appendChild(panel);
 
   const close = panel.querySelector('.lb-ai-close');
+  const nameEl = panel.querySelector('.lb-ai-name');
+  const statusEl = panel.querySelector('.lb-ai-status');
   const log = panel.querySelector('.lb-ai-log');
   const chips = panel.querySelector('.lb-ai-chips');
   const form = panel.querySelector('.lb-ai-form');
   const input = panel.querySelector('.lb-ai-input');
   const history = [];
-  let seeded = false;
+  let activeFounder = null;
+  let seedKey = '';
 
   const addMessage = (role, text) => {
     const el = document.createElement('div');
@@ -100,6 +103,18 @@
 
   const fallback = (text) => {
     const t = text.toLowerCase();
+    if (activeFounder) {
+      const name = activeFounder.name || 'This founder';
+      const role = activeFounder.role || 'Last Bench founder';
+      const duties = Array.isArray(activeFounder.duties) ? activeFounder.duties : [];
+      if (/dr\.?\s*x|also known|alias/.test(t) && activeFounder.founderKey === 'erfan') {
+        return 'Erfan Uddin is also known as Dr. X. In Last Bench, Erfan remains the real person and co-founder; Dr. X is the governed founder-intelligence identity and operating layer. This interactive profile is powered by that layer and does not turn generated text into a direct human statement.';
+      }
+      if (/role|responsib|accountable|what.*do|mandate/.test(t)) {
+        return name + ' is ' + role + '. Approved Last Bench responsibilities: ' + (duties.length ? duties.join('; ') : 'see the verified founder mandate shown in this profile') + '.';
+      }
+      return 'You are exploring ' + name + ' through a verified Last Bench interactive profile powered by Dr. X. I can explain the approved role, responsibilities and public Last Bench context. Generated replies are not direct statements from ' + name + ' unless explicitly verified.';
+    }
     if (/what is last bench|opportunity accelerator|ecosystem|choose.*path|which.*path|three engine|how.*last bench/.test(t)) return 'Last Bench is an Opportunity Accelerator with three independent operating engines: Education & Mobility for access, CLASS[Λ] for capability, and co.lab for business & growth. Community + Platform connects relationships, proof and continuity across them. You can enter through the engine that matches your need; there is no mandatory funnel.';
     if (/journey|process|next step|milestone|malaysia admissions|education.*mobility/.test(t)) return 'Inside Education & Mobility, the current Malaysia service journey is Discover → Match → Apply → Secure → Prepare → Arrive. Malaysia is one active education market, not the definition of Last Bench. If you are already registered, open the Journey OS at /app/.';
     if (/status|track|tracking|application progress/.test(t)) return 'If you already joined Last Bench, use the Journey OS at /app/ to track your application. Important status changes should show a next step and evidence rather than leaving you inside a WhatsApp-only process.';
@@ -123,14 +138,31 @@
     addMessage('user', message);
     setChips([]);
 
-    const cfg = window.LB_AI || {};
+    const cfg = window.LB_DRX || window.LB_AI || {};
     if (cfg.endpoint) {
       history.push({ role: 'user', content: message });
       try {
         const res = await fetch(cfg.endpoint, {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ message, history: history.slice(-12) })
+          body: JSON.stringify({
+            message,
+            history: history.slice(-12),
+            context: activeFounder ? {
+              surface: 'founder_profile',
+              project: 'lastbench',
+              public_only: true,
+              founder_key: activeFounder.founderKey,
+              founder_name: activeFounder.name,
+              founder_role: activeFounder.role,
+              founder_alias: activeFounder.alias || '',
+              approved_responsibilities: activeFounder.duties || []
+            } : {
+              surface: 'lastbench_public',
+              project: 'lastbench',
+              public_only: true
+            }
+          })
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
@@ -146,13 +178,36 @@
     window.setTimeout(() => addMessage('ai', fallback(message)), 220);
   };
 
-  const openPanel = () => {
+  const openPanel = (context = null) => {
+    activeFounder = context && context.founderKey ? context : null;
+    const contextKey = activeFounder ? ('founder:' + activeFounder.founderKey) : 'drx';
+    nameEl.textContent = activeFounder ? activeFounder.name : 'DR. X';
+    statusEl.textContent = activeFounder
+      ? (activeFounder.founderKey === 'erfan'
+          ? 'ALSO KNOWN AS DR. X · INTERACTIVE PROFILE'
+          : 'POWERED BY DR. X · INTERACTIVE PROFILE')
+      : 'LAST BENCH INTELLIGENCE · VERIFY BEFORE ACTING';
+    input.placeholder = activeFounder
+      ? ('Ask about ' + activeFounder.name + ' and their Last Bench role…')
+      : 'Ask Dr. X about Last Bench or your next step…';
+
     panel.setAttribute('data-open', 'true');
     launcher.setAttribute('aria-expanded', 'true');
-    if (!seeded) {
-      seeded = true;
-      addMessage('ai', 'Hi — I’m Bench AI. Last Bench is an Opportunity Accelerator. I can route you to Education & Mobility, CLASS[Λ], co.lab, or the right partner path, and I’ll flag anything that needs current verification instead of guessing.');
-      setChips(['Choose my path', 'Education & Malaysia', 'CLASS[Λ]', 'co.lab']);
+
+    if (seedKey !== contextKey) {
+      seedKey = contextKey;
+      history.length = 0;
+      log.replaceChildren();
+      if (activeFounder) {
+        const aliasLine = activeFounder.founderKey === 'erfan'
+          ? ' Erfan Uddin is also known as Dr. X.'
+          : '';
+        addMessage('ai', 'You’re exploring the approved Last Bench profile of ' + activeFounder.name + '.' + aliasLine + ' I can answer from approved Last Bench and verified public profile information. Replies are powered by Dr. X and are not direct statements from ' + activeFounder.name + ' unless explicitly verified.');
+        setChips(['Role & responsibilities', 'Last Bench mandate', 'Verified profile information']);
+      } else {
+        addMessage('ai', 'Hi — I’m Dr. X, the governed intelligence layer inside Last Bench. I can route you to Education & Mobility, CLASS[Λ], co.lab, the founder profiles, or the right partner path, and I’ll flag anything that needs current verification instead of guessing.');
+        setChips(['Choose my path', 'Education & Malaysia', 'CLASS[Λ]', 'co.lab']);
+      }
     }
     window.setTimeout(() => input.focus(), 0);
   };
@@ -163,7 +218,9 @@
     launcher.focus();
   };
 
-  launcher.addEventListener('click', () => panel.getAttribute('data-open') === 'true' ? closePanel() : openPanel());
+  window.LB_DRX_OPEN = (context = null) => openPanel(context);
+  window.LB_AI_OPEN = window.LB_DRX_OPEN;
+  launcher.addEventListener('click', () => panel.getAttribute('data-open') === 'true' ? closePanel() : openPanel(null));
   close.addEventListener('click', closePanel);
   form.addEventListener('submit', (event) => { event.preventDefault(); send(input.value); });
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && panel.getAttribute('data-open') === 'true') closePanel(); });

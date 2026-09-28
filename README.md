@@ -43,7 +43,8 @@ For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experi
 | Identity | **Supabase Auth** | Email/password sessions; HTTP-only cookies on web, bearer/refresh tokens on native |
 | Database | **Supabase Postgres** | Drizzle schema + reviewed SQL migration ledger |
 | Private files | **Supabase Storage** | `student-documents`, private, per-user RLS |
-| AI | **OpenAI Responses API** | Server-side only; optional until a production API key is configured |
+| Public intelligence | **Dr. X** | Human-facing Last Bench intelligence identity; founder profiles remain real-person profiles powered by Dr. X |
+| AI execution provider | **OpenAI Responses API** | Current server-side provider when configured; replaceable implementation detail |
 | Canonical web | `https://lastbenchbd.com` | DNS cutover to the verified GitHub Pages deployment is the remaining host gate |
 | Canonical API | `https://api.lastbenchbd.com` | Render custom domain |
 
@@ -113,13 +114,23 @@ The bucket/policies are infrastructure foundation. The complete document-picker/
 
 ---
 
-## AI guidance
+## Dr. X public intelligence
 
-AI guidance calls the OpenAI Responses API directly from the Render server. `OPENAI_API_KEY` is server-only and never belongs in a static host or the Expo bundle.
+The public Last Bench intelligence identity is **Dr. X**. The previous visible **Bench AI** name is retired. The legacy `landing/bench-ai.js` filename remains temporarily for compatibility with the verified landing export and must not be treated as a separate product or brain.
 
-AI is deliberately an optional integration: the core API, auth, applications and other product functions must remain available when no OpenAI key is configured. `/api/health` reports `aiConfigured` and the overall degraded state.
+The founder experience is human-first:
 
-AI guidance must remain grounded in verified project data. Never invent or imply certainty around current fees, rankings, visa probability, scholarships, eligibility, admission probability, partner status, revenue, traction or other high-stakes facts. Escalate to a human owner when current verification or professional judgment is required.
+- **Sayem Ahmed** — Co-founder & CEO — interactive profile **Powered by Dr. X**;
+- **Fahim Shahbaz Mahmud** — Co-founder & COO — interactive profile **Powered by Dr. X**;
+- **Erfan Uddin** — Co-founder & Chief Business & Innovation Officer — **Also known as Dr. X**.
+
+Portraits must come from approved identity sources. Exact external founder-profile links are published only after URL verification. Generated founder-profile replies are not direct statements from the founder unless explicitly source-verified.
+
+Current runtime truth: AI guidance still calls the OpenAI Responses API from the Render server when `OPENAI_API_KEY` is configured. A future DR.X Gateway/provider route may replace or govern that provider, but repository identity changes do not prove that Gateway routing is live in production.
+
+The core API, auth, applications and other product functions must remain available when no AI provider key is configured. `/api/health` reports `aiConfigured` and the overall degraded state.
+
+Dr. X guidance must remain grounded in verified project data. Never invent or imply certainty around current fees, rankings, visa probability, scholarships, eligibility, admission probability, partner status, revenue, traction or other high-stakes facts. Escalate to a human owner when current verification or professional judgment is required. Public Dr. X/founder-profile requests are Last Bench-scoped and must not receive private Founder DR.X, unrelated-project or unrestricted Second Brain context.
 
 ---
 
