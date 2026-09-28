@@ -15,25 +15,29 @@ function adminClient() {
   const legacy = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || Deno.env.get("SUPABASE_SECRET_KEY") || "";
   let secret = legacy;
   if (secretJson) {
-    try { const parsed = JSON.parse(secretJson); secret = parsed.default || Object.values(parsed)[0] || legacy; } catch (_) {}
+    try {
+      const parsed = JSON.parse(secretJson);
+      secret = parsed.default || Object.values(parsed)[0] || legacy;
+    } catch (_) {}
   }
   if (!url || !secret) throw new Error("supabase_admin_not_configured");
   return createClient(url, String(secret), { auth: { persistSession: false, autoRefreshToken: false } });
 }
 function bdTime(value?: string | null) {
   if (!value) return "—";
-  try { return new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Dhaka",dateStyle:"medium",timeStyle:"short"}).format(new Date(value)); }
-  catch (_) { return String(value); }
+  try {
+    return new Intl.DateTimeFormat("en-GB", { timeZone:"Asia/Dhaka", dateStyle:"medium", timeStyle:"short" }).format(new Date(value));
+  } catch (_) { return String(value); }
 }
-async function sendSlack(text:string) {
+async function sendSlack(message:string) {
   if (SLACK_BOT_TOKEN) {
-    const res=await fetch("https://slack.com/api/chat.postMessage",{method:"POST",headers:{Authorization:`Bearer ${SLACK_BOT_TOKEN}`,"Content-Type":"application/json"},body:JSON.stringify({channel:CHANNEL_ID,text,unfurl_links:false,unfurl_media:false})});
+    const res=await fetch("https://slack.com/api/chat.postMessage",{method:"POST",headers:{Authorization:`Bearer ${SLACK_BOT_TOKEN}`,"Content-Type":"application/json"},body:JSON.stringify({channel:CHANNEL_ID,text:message,unfurl_links:false,unfurl_media:false})});
     const body=await res.json().catch(()=>({}));
     if(!res.ok||!body.ok) throw new Error(`slack_bot_failed:${body.error||res.status}`);
     return String(body.ts||"slack");
   }
   if (SLACK_WEBHOOK_URL) {
-    const res=await fetch(SLACK_WEBHOOK_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text})});
+    const res=await fetch(SLACK_WEBHOOK_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:message})});
     if(!res.ok) throw new Error(`slack_webhook_failed:${res.status}`);
     return "webhook";
   }
@@ -44,7 +48,11 @@ function calendarUrl(session:Row) {
   const compact=(value:string)=>new Date(value).toISOString().replace(/[-:]/g,"").replace(/\.\d{3}Z$/,"Z");
   const start=compact(session.starts_at);
   const end=compact(session.ends_at||new Date(new Date(session.starts_at).getTime()+90*60000).toISOString());
-  return "https://calendar.google.com/calendar/render?"+new URLSearchParams({action:"TEMPLATE",text:session.title||"CLASS[Λ] — The 0.01% Builders Masterclass",dates:`${start}/${end}`,details:"Your personal CLASS[Λ] pass contains the latest room and attendance details.",location:session.join_url||"Online · Google Meet"}).toString();
+  return "https://calendar.google.com/calendar/render?"+new URLSearchParams({
+    action:"TEMPLATE", text:session.title||"CLASS[Λ] — The 0.01% Builders Masterclass",
+    dates:`${start}/${end}`, details:"Your personal CLASS[Λ] pass contains the latest room and attendance details.",
+    location:session.join_url||"Online · Google Meet"
+  }).toString();
 }
 function emailCopy(kind:string,name:string,session:Row) {
   const when=session?.starts_at?bdTime(session.starts_at)+" Bangladesh time":"Schedule pending";
