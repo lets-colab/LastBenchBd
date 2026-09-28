@@ -59,6 +59,9 @@ The following production migration versions are present in the connected Supabas
 | `20260927213629` | `class_a_online_live_code_control` | Staff-key-gated temporary BUILD-code control for the active online session; exact SQL committed at `drizzle/migrations/20260927213629_class_a_online_live_code_control.sql` |
 | `20260927214437` | `class_a_online_recording_consent` | Requires and timestamps explicit recording/transcription acceptance for online enrollment without conflating it with marketing permission; exact SQL committed at `drizzle/migrations/20260927214437_class_a_online_recording_consent.sql` |
 | `20260928001145` | `class_a_whatsapp_follow_gated_pass` | Adds backward-compatible gated online registration + one-time unlock RPC so the pass code is not returned until the attendee self-attests the WhatsApp follow step; exact SQL committed at `drizzle/migrations/20260928001145_class_a_whatsapp_follow_gated_pass.sql` |
+| `20260928101946` | `class_a_public_session_status` | Browser-safe session-status RPC for authoritative schedule hydration without exposing the Meet URL; exact SQL committed at `drizzle/migrations/20260928101946_class_a_public_session_status.sql` |
+| `20260928103035` | `class_a_notification_worker_transport` | Enables pg_net/pg_cron invocation, worker triggers, attendance-Slack delivery evidence fields and the one-minute notification worker schedule; exact SQL committed at `drizzle/migrations/20260928103035_class_a_notification_worker_transport.sql` |
+| `20260928103519` | `class_a_schedule_oct1` | Locks the current live session to 1 Oct 2026, 20:00–21:30 Asia/Dhaka with the verified Google Calendar/Meet event; exact SQL committed at `drizzle/migrations/20260928103519_class_a_schedule_oct1.sql` |
 
 
 ## Supabase identity + storage verification
@@ -153,7 +156,7 @@ Do not restore automated `drizzle-kit generate && drizzle-kit migrate` productio
 The online masterclass migrations were applied to the connected production Supabase project and then persisted under their exact live migration versions.
 
 Verified:
-- `class-0-online-next` exists as a `planning` Google Meet session with timezone `Asia/Dhaka`; no date, time or join URL was invented.
+- `class-0-online-next` is now `scheduled` for **1 October 2026, 20:00–21:30 Asia/Dhaka** and is linked to the verified Google Calendar event `i7nvnon6v0tdlm809r0qe99m9k` and its Google Meet room.
 - The new session/enrollment/live-code/evidence/notification tables expose no direct table privileges to `anon` or `authenticated`.
 - An invalid personal pass returns `invalid_code` and no participant data.
 - A wrong staff key returns `invalid_staff_key` and does not issue a live attendance code.
@@ -163,7 +166,7 @@ Verified:
 - Security advisor WARNs remain for browser-callable `SECURITY DEFINER` CLASS RPCs. These RPCs are intentionally capability-bounded for the public registration/pass flow, while underlying tables remain direct-access denied. Treat this as an explicit security-review item rather than silently suppressing the advisor.
 - Supabase Auth leaked-password protection remains disabled; this is a pre-existing Auth posture item unrelated to the CLASS public pass flow.
 
-Activation remains separate from schema readiness: schedule-dependent calendar/reminder delivery cannot be marked LIVE until the real session time and Google Meet event exist and an outbound sender writes delivery evidence to the notification outbox.
+Session scheduling is now LIVE: the real Google Calendar event and Meet room exist, existing genuine registrants have been invited, and the public landing page hydrates the schedule from the browser-safe session RPC. Notification orchestration is LIVE at the database/worker layer through pg_net + pg_cron. Provider delivery remains fail-closed until deployable Slack/email transport credentials are configured; pending outbox rows are not falsely marked sent.
 
 
 ## WhatsApp follow-gated pass verification — 28 September 2026
@@ -174,3 +177,17 @@ Activation remains separate from schema readiness: schedule-dependent calendar/r
 - `class_a_unlock_online_pass` releases a fresh pass code only when the attendee explicitly submits the follow-confirmation step.
 - The resulting field is named `channel_follow_self_attested_at` because WhatsApp Channels does not expose a per-person follow callback to this site; this must not be represented as platform-verified follow evidence.
 - Direct access to the underlying enrollment table remains denied to browser roles. Supabase advisor WARNs for the two new browser-callable `SECURITY DEFINER` RPCs are intentional capability-endpoint findings and remain visible for review rather than being suppressed.
+
+
+## CLASS[Λ] notification worker verification — 28 September 2026
+
+- Supabase Edge Function `class-a-notification-worker` is deployed ACTIVE with JWT verification enabled.
+- `pg_net` and `pg_cron` are enabled; Supabase Vault already provides the secure invocation values.
+- Database triggers invoke the worker for new signup events, new session-notification rows and verified attendance updates.
+- A cron job invokes the worker every minute for due reminders/retries.
+- A direct pg_net invocation returned HTTP 200 from the worker.
+- The worker never marks Slack/email delivery as sent unless the provider request succeeds.
+- Slack provider support is implemented for either a bot token or incoming webhook; email provider support is implemented for Resend.
+- No deployable Slack bot/webhook credential or Resend credential is currently available to the worker. In that state the worker reports the transport as blocked and leaves the authoritative outbox pending rather than fabricating delivery.
+- Existing genuine masterclass registrants were separately covered by a real Google Calendar invite and a one-time Gmail confirmation from `info@lastbenchbd.com`.
+- Future registration/pass/calendar UI remains functional without the external providers; unattended provider delivery becomes active as soon as the corresponding transport secret is connected.
