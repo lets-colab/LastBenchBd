@@ -84,7 +84,8 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain('TURN AI INTO');
     expect(masterclass).toContain('YOUR TEAM.');
     expect(masterclass).toContain('Research · Build · Create · Sell · Operate');
-    expect(masterclass).toContain('LIVE ONLINE · FREE MASTERCLASS · 0.01% BUILDERS');
+    expect(masterclass).toContain('data-public-session-chip');
+    expect(masterclass).toContain('1 OCT · 8:00 PM · LIVE ONLINE');
     expect(masterclass).toContain('data-intro-end-card');
     expect(masterclass).not.toContain('class="intro-bench"');
     expect(masterclass).not.toContain('class="manifesto"');
@@ -111,7 +112,7 @@ describe("CLASS A signup funnel", () => {
 
   it("locks the online admission, pass and evidence flow", () => {
     expect(masterclass).toContain("You’ve been invited to join them.");
-    expect(masterclass).toContain("LIVE ONLINE · GOOGLE MEET");
+    expect(masterclass).toContain("GOOGLE MEET · FREE REGISTRATION");
     expect(masterclass).toContain("CLAIM YOUR PASS.");
     expect(masterclassScript).toContain("class_a_register_online_gated");
     expect(masterclassScript).toContain("class_a_public_session");
