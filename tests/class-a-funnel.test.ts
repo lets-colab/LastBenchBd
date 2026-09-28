@@ -85,7 +85,7 @@ describe("CLASS A signup funnel", () => {
     expect(masterclass).toContain('YOUR TEAM.');
     expect(masterclass).toContain('Research · Build · Create · Sell · Operate');
     expect(masterclass).toContain('data-public-session-chip');
-    expect(masterclass).toContain('1 OCT · 8:00 PM · LIVE ONLINE');
+    expect(masterclass).toContain('LIVE ONLINE · SESSION SCHEDULED');
     expect(masterclass).toContain('data-intro-end-card');
     expect(masterclass).not.toContain('class="intro-bench"');
     expect(masterclass).not.toContain('class="manifesto"');
