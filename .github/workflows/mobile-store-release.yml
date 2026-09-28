@@ -1,0 +1,82 @@
+name: Mobile Store Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: "Platform to release"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - android
+          - ios
+      auto_submit:
+        description: "Submit completed production builds to configured stores"
+        required: true
+        default: false
+        type: boolean
+
+concurrency:
+  group: mobile-store-release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run check
+      - run: pnpm run brand:check
+      - run: pnpm run design:check
+      - run: pnpm test
+
+  build:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: mobile-production
+    steps:
+      - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Verify Expo authentication is configured
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::error::EXPO_TOKEN is not configured in the mobile-production environment."
+            exit 1
+          fi
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: pnpm install --frozen-lockfile
+      - name: Build production binaries
+        env:
+          PLATFORM: ${{ inputs.platform }}
+          AUTO_SUBMIT: ${{ inputs.auto_submit }}
+        run: |
+          ARGS=(--platform "$PLATFORM" --profile production --non-interactive --wait)
+          if [ "$AUTO_SUBMIT" = "true" ]; then
+            ARGS+=(--auto-submit)
+          fi
+          eas build "${ARGS[@]}"
