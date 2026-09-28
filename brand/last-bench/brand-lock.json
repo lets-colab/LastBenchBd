@@ -26,5 +26,44 @@
     "tracingAllowed": false,
     "typeSubstitutionAllowed": false,
     "postGenerationCompositingRequired": true
-  }
+  },
+  "usage": {
+    "background": "transparent-only",
+    "lightBackground": {
+      "wordmark": "black-or-charcoal",
+      "taglineBase": "black-or-charcoal",
+      "benchArrow": "brand-green",
+      "benchmarkWord": "brand-green"
+    },
+    "darkBackground": {
+      "wordmark": "white",
+      "taglineBase": "white",
+      "benchArrow": "brand-green",
+      "benchmarkWord": "brand-green"
+    },
+    "logoPlateAllowed": false,
+    "bakedBackgroundAllowed": false,
+    "greenMarkMaySwitchToWhiteForContrast": false
+  },
+  "designToolReferences": {
+    "canva": {
+      "transparentLightBackgroundAssetId": "MAHWdEIgzME",
+      "transparentDarkBackgroundAssetId": "MAHWdLPnTmc"
+    }
+  },
+  "documents": {
+    "blueprint": "brand/last-bench/BRAND_BLUEPRINT.md",
+    "artDirection": "brand/last-bench/ART_DIRECTION.md",
+    "logoUsage": "brand/last-bench/LOGO_USAGE.md"
+  },
+  "visualReferences": [
+    "brand/last-bench/reference/logo-lockups.png",
+    "brand/last-bench/reference/brand-guide.png",
+    "brand/last-bench/reference/brand-guide-extended.png",
+    "brand/last-bench/reference/collateral-overview.png",
+    "brand/last-bench/reference/event-kit.png",
+    "brand/last-bench/reference/office-wall.png",
+    "brand/last-bench/reference/print-banners.png",
+    "brand/last-bench/reference/rollup-banner-community.png"
+  ]
 }
