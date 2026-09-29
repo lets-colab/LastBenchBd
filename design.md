@@ -43,9 +43,9 @@ The strategic progression thesis is **Access → Capability → Creation → Own
 A Last Bench corporate surface should explain the ecosystem in this order:
 
 1. **Brand truth** — the starting point is not the ceiling.
-2. **Category** — Last Bench is an Opportunity Accelerator.
-3. **Three operating engines** — Education & Mobility, CLASS[Λ], co.lab.
-4. **Connective layer** — Community + Platform.
+2. **Company** — Last Bench is the company.
+3. **Two laboratories** — CLASS[Λ] Human Lab and co.lab Business Lab.
+4. **Intelligence loop** — Co.MPASS converges governed evidence; Dr. X is the Founder Second Brain / Twin.
 5. **Multiple entry points** — people enter through the problem they actually have.
 6. **Proof and trust** — distinguish verified current operations from roadmap or proposed capability.
 7. **Relevant CTA** — route the user to the correct engine, not one universal sales funnel.
