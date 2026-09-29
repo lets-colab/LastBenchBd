@@ -6,13 +6,13 @@ Repository: `lets-colab/LastBenchBd`
 ## 1. Brand definition
 
 **Name:** Last Bench  
-**Category:** Opportunity Accelerator  
-**Descriptor:** Education · Capability · Business · Community  
+**Category:** Company / opportunity-building ecosystem  
+**Architecture descriptor:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain  
 **Brand promise:** **From where you are. To what you can build.**  
 **Official tagline:** **Creating a Lasting Benchmark**  
 **Approved slogan in the current design system:** **From Last Bench. To The World.**
 
-Last Bench is the parent opportunity platform. It connects education and mobility, capability building, business creation/growth, community, and the shared platform layer.
+Last Bench is the company. CLASS[Λ] builds builders; co.lab incubates, accelerates and grows businesses; Co.MPASS converges governed company evidence into context and direction; Dr. X is the Founder Second Brain / Twin that reasons and decides. Education & Mobility remains an operating/service domain rather than a separate top-level engine in the locked architecture.
 
 ## 2. Brand architecture
 
@@ -22,11 +22,11 @@ Helps Bangladeshi students navigate the journey to study, settle and succeed in 
 
 ### CLASS[Λ]
 
-Independent capability accelerator under the Last Bench ecosystem. It keeps its own visual namespace.
+Human Lab inside Last Bench. It builds builders through skill, execution and proof and keeps its own visual namespace.
 
 ### co.lab
 
-Independent Business & Growth namespace. Its canonical brand assets and blueprint live in the separate `lets-colab/letscolab` repository.
+Business Lab inside Last Bench. Its four doors are Ventures, Projects, Services and Community. ProjectX is Website Projects. Its canonical brand assets and blueprint live in the separate `lets-colab/letscolab` repository.
 
 Shared ownership does **not** mean identical visual treatment.
 
