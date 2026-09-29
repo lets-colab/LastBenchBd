@@ -6,15 +6,15 @@ This document is the production-trust contract for Last Bench. It separates veri
 
 Important product state must have one authoritative source, one owner, one verified state, and one safe mutation path.
 
-## Current verified foundation — 22 September 2026
+## Current verified foundation — 29 September 2026
 
 - Canonical repository: `lets-colab/LastBenchBd`.
 - Canonical web URL: `https://lastbenchbd.com`.
 - GitHub Pages is the primary production web deployment path. Workflow `.github/workflows/deploy-github-pages.yml` builds the exact host-neutral artifact from `main` and deploys it with GitHub Pages provenance.
 - The first GitHub Pages production run (`35683150738`) completed successfully for commit `c9f98c678a43a59c64cbc60e9d09851684a8b2b4`; both build and deploy jobs passed and GitHub reported `https://lets-colab.github.io/LastBenchBd/` as the deployment URL.
 - The immutable production artifact from that run is `lastbench-production-dist` `10675761617`, SHA-256 `e2fca9453673353c8a1f68d4099a21a7dd1d05f53c9c3106e72b6fb2707757c3`.
-- Automatic Netlify production deployment is retired. Netlify remains a legacy manual fallback only.
-- The canonical domain has **not** completed host cutover yet. DNS verified on 22 September 2026 still points the apex to Netlify addresses `75.2.60.5` / `99.83.231.61`, while `www.lastbenchbd.com` CNAMEs to `lastbenchbdd.netlify.app`. Therefore `lastbenchbd.com` must not be treated as proof of the GitHub Pages release until DNS is changed and the release fingerprint is re-verified.
+- GitHub Pages is the sole canonical production web host; the former Netlify hosting path is retired and removed from active repository architecture.
+- Canonical-domain DNS cutover was re-verified on 29 September 2026: the apex resolves to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153`; `www.lastbenchbd.com` CNAMEs to `lets-colab.github.io`; Cloudflare nameservers remain authoritative.
 - Current `main` builds the complete host-neutral production artifact successfully.
 - A release fingerprint prevents a stale homepage from passing production smoke checks.
 - Canonical API custom hostname: `https://api.lastbenchbd.com`.
@@ -50,7 +50,7 @@ The safe production migration path is:
 
 **Do not point `drizzle-kit migrate` or `pnpm db:push` blindly at production.**
 
-## Gate B — Production web/API routing ⚠ web cutover active
+## Gate B — Production web/API routing ✅ DNS cutover complete
 
 Public health automation targets:
 
@@ -71,8 +71,8 @@ Current verified state:
 - [x] Current repository builds the complete production web artifact.
 - [x] GitHub Pages build and deployment completed successfully from `main`.
 - [x] GitHub Pages generated a working deployment target at `https://lets-colab.github.io/LastBenchBd/`.
-- [ ] Move the canonical apex and `www` DNS away from Netlify to the GitHub Pages custom-domain configuration.
-- [ ] Verify `lastbenchbd.com` serves the same release fingerprint after DNS/HTTPS convergence.
+- [x] Canonical apex and `www` DNS point to the GitHub Pages custom-domain configuration.
+- [ ] Verify `lastbenchbd.com` serves the current release fingerprint and visually certify the rendered experience.
 
 A successful static build, deploy or green CI run is not production-routing proof.
 
@@ -140,8 +140,8 @@ Still required before broad public launch:
 - [x] PR safety template exists.
 - [x] Production smoke monitoring automatically opens/updates/closes a GitHub incident issue.
 - [x] CI rejects stale production-homepage assumptions through release fingerprinting.
-- [x] GitHub Pages production deployment is integrated with `main`; automatic Netlify production deployment is retired.
-- [ ] Complete canonical-domain DNS cutover to the verified GitHub Pages deployment.
+- [x] GitHub Pages production deployment is integrated with `main`; retired hosting configuration has been removed from active repository architecture.
+- [x] Canonical-domain DNS cutover to GitHub Pages is complete.
 
 ## Gate H — Mobile identity
 
