@@ -19,7 +19,7 @@ Three date-free conversion routes share one cinematic design, motion and registr
 - Motion is lightweight, progressively enhanced and disabled for reduced-motion users.
 - Person/program identity remains in `public.class_a_registrations`; recurring live-masterclass participation uses a separate session-enrollment layer.
 - The online masterclass registers through a controlled Supabase RPC; the paid-course form keeps its existing registration route.
-- Static Netlify form markup remains present as a no-JavaScript fallback and deploy-time form declaration.
+- Forms use the canonical Supabase intake path; no hosting-provider form integration is required.
 
 ## Data contract
 
