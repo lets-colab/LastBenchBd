@@ -20,7 +20,10 @@ const retired=[
  /three (?:independent )?operating engines/i,
  /Community \+ Platform connects/i,
  /CLASS\[Λ\] is the capability engine/i,
- /co\.lab is the business\s*&\s*growth engine/i
+ /co\.lab is the business\s*&\s*growth engine/i,
+ /Education & Mobility is (?:one |an )?operating engine/i,
+ /Community is the connective layer across the ecosystem/i,
+ /Community \+ Platform/i
 ];
 let failed=false;
 for(const file of activeFiles){
