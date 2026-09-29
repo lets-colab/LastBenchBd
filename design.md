@@ -15,7 +15,7 @@ The operating architecture is:
 1. **Education & Mobility — Access**: education pathways, university guidance, admissions/application support, visa/process guidance, pre-departure, settlement and student community.
 2. **CLASS[Λ] — Capability**: AI fluency, research, building, creation, growth, sales, automation and proof-of-work.
 3. **co.lab — Business & Growth**: brand development, business development, growth strategy, creative execution, creator/community systems, venture validation and automation.
-4. **Community + Platform — Connection & Continuity**: relationships, identity, verified progress, opportunity routing and long-term context across engines.
+4. **co.lab Community — Connection & Continuity**: relationships, identity, verified progress, opportunity routing and long-term context across engines.
 
 These are **multiple entry points**, not a mandatory funnel. A student may enter Education; a learner may enter CLASS[Λ] directly; a founder or business may enter co.lab directly.
 
