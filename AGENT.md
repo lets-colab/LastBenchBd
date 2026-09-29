@@ -6,9 +6,7 @@ This file is the handoff brief for any AI agent working on this repository. Read
 
 ## 1. Product identity
 
-**Last Bench** is an **Opportunity Accelerator**.
-
-Corporate descriptor: **Education · Capability · Business · Community.**
+**Last Bench is the company.** Current architecture version: **JEV 2026.09.29**.
 
 Brand promise: **From where you are. To what you can build.**
 
@@ -16,10 +14,11 @@ Last Bench is the umbrella platform. It is not defined by Malaysia, admissions, 
 
 Canonical architecture:
 
-1. **Education & Mobility — Access**: education pathways, admissions/application support, visa/process guidance, pre-departure, settlement and student community.
-2. **CLASS[Λ] — Capability**: AI, research, building, creation, growth, sales, automation and proof-of-work.
-3. **co.lab — Business & Growth**: brand development, business development, growth strategy, creative execution, creator/community systems, venture validation and automation.
-4. **Community + Platform — Connection & Continuity**: relationships, verified progress, opportunity routing and shared context across the ecosystem.
+1. **CLASS[Λ] — Human Lab:** builds builders through skill, execution and proof.
+2. **co.lab — Business Lab:** four doors — Ventures, Projects, Services, Community. Ventures are CLASS[Λ]-originated businesses formally admitted for incubation/acceleration. ProjectX = Website Projects. Community = Influencers, Ambassadors, Creators, Advisors.
+3. **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction.
+4. **Dr. X — Founder Second Brain / Twin:** governed memory, Founder Twin context, JEV judgment and reasoning for founder decisions.
+5. **Education & Mobility:** real operating/service domain inside Last Bench; not a separate top-level lab.
 
 **Malaysia Admissions is one current active service inside Education & Mobility. It is not the corporate backbone.**
 
@@ -27,15 +26,13 @@ The Malaysia service promise remains: **help Bangladeshi students study, settle 
 
 Do not turn that service promise into the parent-company definition.
 
-The ecosystem is not a mandatory funnel. Students, learners, founders, businesses and partners may enter through the engine relevant to their need.
-
-Strategic progression thesis: **Access → Capability → Creation → Ownership.**
+The company is a learning flywheel, not a mandatory funnel: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved labs → new evidence.**
 
 Non-negotiable product principles:
 
 1. Clarity first — show where the person stands and what comes next.
 2. Truth through evidence — never present demo, guessed or future-state values as current fact.
-3. Multiple entry points — do not force every user through Malaysia mobility.
+3. Relevance before complexity — route each person to the current operating/service path they need.
 4. Outcome before feature — explain the opportunity and next meaningful action before technology.
 5. Mentor-like tone — supportive and direct, not corporate filler.
 6. Mobile-first, one-handed usability where relevant.
