@@ -74,15 +74,15 @@ The parent runtime must align to JEV 2026.09.29. Malaysia remains a focused Educ
 
 ---
 
-## 3. Current production topology — verified 22 September 2026
+## 3. Current production topology — verified 29 September 2026
 
 ### Web
 
 - Canonical URL: `https://lastbenchbd.com`.
 - Primary production deployment: GitHub Pages from `main` via `.github/workflows/deploy-github-pages.yml`.
 - The verified Pages deployment for the canonical design-system release is built from repository commit provenance and immutable workflow artifacts.
-- Automatic Netlify production deployment is retired; Netlify is a legacy manual fallback only.
-- Canonical-domain DNS still points at Netlify and is the remaining web-host cutover gate. Do **not** claim `lastbenchbd.com` is served by GitHub Pages until DNS and the release fingerprint prove it.
+- GitHub Pages is the sole canonical production web host. The former Netlify hosting path is retired and removed from the active repository architecture.
+- Canonical-domain DNS cutover is complete: the apex resolves to GitHub Pages addresses and `www.lastbenchbd.com` CNAMEs to `lets-colab.github.io`, with Cloudflare remaining authoritative DNS.
 - Current `main` builds the complete host-neutral production site successfully.
 
 ### Cloudflare
@@ -208,8 +208,8 @@ Production DDL is explicit and reviewed.
 ## 8. Forms and conversion truth
 
 - The current homepage source submits directly to `public.lastbench_signups` through Supabase REST. Anonymous clients have INSERT only; submitted leads are not publicly readable.
-- CLASS[Λ] JavaScript submits to `public.class_a_registrations`; its HTML retains Netlify form markup only as a compatibility/no-JavaScript fallback during the host transition.
-- Historical Netlify submissions must be preserved, but they do not prove receipt for the new Supabase paths.
+- CLASS[Λ] submits to `public.class_a_registrations` through the canonical Supabase intake path; no hosting-provider form integration is part of the active contract.
+- Historical submissions from retired hosting systems are history only and do not prove receipt for current Supabase paths.
 
 A thank-you screen or HTTP 200 does not prove receipt. Verify a real row in the intended Supabase table for each active production conversion journey.
 
@@ -245,14 +245,14 @@ The design source of truth is version-controlled source + approved design assets
 
 In priority order:
 
-1. Move `lastbenchbd.com` apex and `www` DNS from legacy Netlify to the verified GitHub Pages custom-domain configuration, then re-run release smoke.
+1. Verify the canonical-domain release fingerprint and rendered experience against the current GitHub Pages deployment.
 2. Verify production Supabase Auth session journey end-to-end.
 3. Verify real receipt in Supabase for homepage and CLASS[Λ] conversion journeys.
 4. Finish the reviewed student document-picker/upload UI before calling upload complete.
 5. Resolve hidden `discover` / `community` route status.
 6. Lock mobile app identity before any store release.
 7. Add persistent AI/message quotas when commercial usage policy is approved.
-8. Visually certify the canonical-domain render after DNS cutover; build/deploy success is not visual approval.
+8. Visually certify the canonical-domain render; build/deploy success is not visual approval.
 
 ---
 
