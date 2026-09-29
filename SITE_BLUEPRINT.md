@@ -196,7 +196,7 @@ Then show:
 
 Clarify visibly:
 
-> No engine is a prerequisite for another unless a specific product requires it.
+> No lab or service route is a prerequisite for another unless a specific product requires it.
 
 ---
 
@@ -374,7 +374,7 @@ Governance rule:
 
 1. **NOW** — operate the two labs with clear boundaries; improve active service quality; run CLASS[Λ]; grow co.lab; keep Co.MPASS/Dr. X evidence-governed.
 2. **PROVE** — make Journey OS, proof outcomes, ownership and delivery metrics reliable end-to-end.
-3. **COMPOUND** — strengthen alumni, referrals, community and permissioned cross-engine continuity.
+3. **COMPOUND** — strengthen alumni, referrals, community and permissioned cross-surface continuity.
 4. **EXPAND** — add new education corridors, products or markets only after evidence and operating readiness.
 
 Close with:
@@ -542,7 +542,7 @@ Never publish invented traction, fake testimonials, fake users, fabricated conve
 
 Desktop direction:
 
-**Last Bench logo** | Education | CLASS[Λ] | co.lab | Community | About | **Choose Your Path**
+**Last Bench logo** | Study in Malaysia | CLASS[Λ] | co.lab | About | **Choose Your Path**
 
 Mobile:
 
