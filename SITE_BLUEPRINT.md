@@ -141,41 +141,37 @@ Close with:
 
 ### 05 — THE REVEAL
 
-**LAST BENCH IS AN OPPORTUNITY ACCELERATOR.**
+**LAST BENCH IS THE COMPANY.**
 
-**Education · Capability · Business**  
-**Community connects everything.**
+**CLASS[Λ] builds builders. co.lab builds businesses.**  
+**Co.MPASS converges evidence. Dr. X supports founder decisions.**
 
-> One umbrella connecting credible opportunity to capability, systems and community — so progress can compound.
-
-Do not visually present Community as a fourth equal commercial engine.
+> Two laboratories connected by one governed learning-and-intelligence flywheel.
 
 ---
 
 ### 06 — BUSINESS ARCHITECTURE
 
-**THREE OPERATING ENGINES. ONE CONNECTIVE LAYER.**
+**TWO LABS. ONE INTELLIGENCE LOOP.**
 
-- **Education & Mobility** — Access
-- **CLASS[Λ]** — Capability
-- **co.lab** — Business & Growth
-- **Community + Platform** — Connection · continuity · identity · proof · opportunity routing
+- **CLASS[Λ]** — Human Lab — builds builders
+- **co.lab** — Business Lab — Ventures · Projects · Services · Community
+- **Co.MPASS** — Business Dashboard — context · evidence · clarity · direction
+- **Dr. X** — Founder Second Brain / Twin — reasoning · judgment · decision support
 
-Each engine has its own audience, promise, economics and visual namespace. The parent supplies trust and coherence.
+Education & Mobility remains a focused operating/service route. Each customer-facing surface keeps its own audience promise and visual namespace.
 
 ---
 
 ### 07 — ECOSYSTEM FLYWHEEL
 
-**OPPORTUNITY ENTERS.**  
-**PROOF COMPOUNDS.**  
-**OUTCOMES RETURN.**
+**BUILDERS LEARN.**  
+**BUSINESSES MOVE.**  
+**EVIDENCE RETURNS.**
 
 Visual loop:
 
-**Opportunity → Access → Capability → Creation → Proof → Value → New Opportunity**
-
-Community + Platform carries relationships, proof, stories and referrals around the loop.
+**CLASS[Λ] + co.lab activity → Evidence → Co.MPASS → Dr. X → Decision → Better CLASS[Λ] + co.lab → New Evidence**
 
 Close with:
 
@@ -341,7 +337,7 @@ Mark roadmap capability visibly where not yet live.
 
 ### 17 — BUSINESS MODEL
 
-**THREE REVENUE ENGINES. ONE PARENT TRUST LAYER.**
+**MULTIPLE ECONOMIC PATHS. ONE COMPANY.**
 
 - **Education & Mobility** — verified service and partner economics
 - **CLASS[Λ]** — program fees tied to proof-led delivery
@@ -376,7 +372,7 @@ Governance rule:
 
 **PROVE THE SYSTEM. THEN COMPOUND IT.**
 
-1. **NOW** — operate the three engines with clear boundaries; improve Malaysia service quality; run CLASS[Λ]; grow co.lab.
+1. **NOW** — operate the two labs with clear boundaries; improve active service quality; run CLASS[Λ]; grow co.lab; keep Co.MPASS/Dr. X evidence-governed.
 2. **PROVE** — make Journey OS, proof outcomes, ownership and delivery metrics reliable end-to-end.
 3. **COMPOUND** — strengthen alumni, referrals, community and permissioned cross-engine continuity.
 4. **EXPAND** — add new education corridors, products or markets only after evidence and operating readiness.
