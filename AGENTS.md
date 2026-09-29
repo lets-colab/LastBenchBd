@@ -76,7 +76,7 @@ Content jobs:
 - support belonging and settlement after arrival
 
 ### Learner / creator / operator
-Relevant engine: CLASS[Λ].
+Relevant lab: CLASS[Λ] — Human Lab.
 
 Content jobs:
 - show practical AI capability
@@ -85,7 +85,7 @@ Content jobs:
 - show the move from beginner to capable operator/founder without guaranteeing commercial outcomes
 
 ### Founder / business / brand
-Relevant engine: co.lab.
+Relevant lab: co.lab — Business Lab.
 
 Content jobs:
 - clarify positioning and business problems
