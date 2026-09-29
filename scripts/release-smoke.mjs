@@ -37,9 +37,9 @@ const checks = [
     url: `${webOrigin}/`,
     expectHtml: true,
     expectIncludes: [
-      "<title>Last Bench — Opportunity Accelerator</title>",
-      "Education, capability and business connected by community",
-      "OPPORTUNITY ACCELERATOR",
+      "<title>Last Bench — Build People. Build Business. Learn Faster.</title>",
+      "CLASS[Λ] builds builders",
+      "LAST BENCH",
       "EDUCATION & MOBILITY",
       "CLASS[Λ]",
       "co.lab",
