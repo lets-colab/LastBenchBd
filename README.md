@@ -4,13 +4,13 @@
 
 <h1 align="center">Last Bench</h1>
 
-<p align="center"><strong>Opportunity Accelerator</strong></p>
+<p align="center"><strong>The Company · Two Labs · One Intelligence Loop</strong></p>
 
-<p align="center"><strong>Education · Capability · Business · Community</strong></p>
+<p align="center"><strong>CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X</strong></p>
 
 <p align="center">From where you are. To what you can build.</p>
 
-<p align="center">Last Bench is the umbrella platform. Malaysia Admissions is one active service inside Education & Mobility; CLASS[Λ] is the capability engine; co.lab is the business & growth engine; Community + Platform connects opportunity, proof and continuity across the ecosystem.</p>
+<p align="center">Last Bench is the company. CLASS[Λ] builds builders. co.lab incubates, accelerates and grows businesses through Ventures, Projects, Services and Community. Co.MPASS converges governed evidence. Dr. X is the Founder Second Brain / Twin.</p>
 
 <p align="center">
   <a href="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml"><img src="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
@@ -21,14 +21,13 @@
 
 ## Business architecture
 
-- **Education & Mobility — Access:** current active service includes Malaysia Admissions and its study/settle/succeed journey.
-- **CLASS[Λ] — Capability:** free Class 0 + 20-Class One-Person Venture Builder; proof-of-work first.
-- **co.lab — Business & Growth:** brand development, business development, growth systems, creator/community systems, venture validation and automation.
-- **Community + Platform — Connection & Continuity:** relationships, opportunity routing, verified progress, referrals and shared context where operationally real.
+- **CLASS[Λ] — Human Lab:** builds builders through capability, execution and proof.
+- **co.lab — Business Lab:** Ventures · Projects · Services · Community. ProjectX = Website Projects.
+- **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction.
+- **Dr. X — Founder Second Brain / Twin:** governed memory, founder context, JEV judgment and reasoning for decisions.
+- **Education & Mobility:** an operating/service domain inside Last Bench; Malaysia Admissions is one current service.
 
-Strategic progression: **Access → Capability → Creation → Ownership.**
-
-This is not a mandatory funnel. People can enter through the engine relevant to their need.
+Flywheel: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved labs → new evidence.**
 
 For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experience rules, read [`design.md`](./design.md).
 
@@ -66,7 +65,7 @@ api.lastbenchbd.com/
 └── /api       → Express + tRPC runtime
 ```
 
-The current `/` marketing implementation is historically Malaysia-service-led. That implementation should not be treated as proof that Malaysia defines the parent company. Any corporate-homepage migration to the Opportunity Accelerator architecture must be deliberate, tested and visually verified so the active Malaysia conversion journey is not broken.
+The current `/` marketing implementation has historical Malaysia-service-led sections. They must remain correctly scoped as service content while the corporate framing follows JEV Architecture `2026.09.29`. Any migration must be tested and visually verified so the active Malaysia conversion journey is not broken.
 
 Repository surfaces:
 
@@ -217,7 +216,7 @@ A green build is not proof of a working product. Before calling the authenticate
 - [ ] logout prevents session resurrection
 - [ ] student document upload/download authorization is verified
 - [ ] homepage, CLASS[Λ] masterclass and CLASS[Λ] course receipt is verified with real production Supabase rows
-- [x] corporate runtime architecture is aligned to Opportunity Accelerator framing with Education & Mobility, CLASS[Λ], co.lab and the connective Community layer
+- [ ] corporate runtime architecture passes the JEV `2026.09.29` architecture-release gate on the canonical domain
 - [ ] visually verify the canonical-domain render after DNS cutover
 
 No production user, credential, admissions result, business outcome or verification evidence should ever be fabricated to satisfy this checklist.
@@ -262,7 +261,7 @@ When documentation disagrees:
 
 1. Current explicit user direction recorded in canonical business/product documents.
 2. Current code + verified runtime/infrastructure behavior for implementation claims.
-3. `PRODUCT.md` for business/product architecture.
+3. `architecture/JEV_VERSION.json` + `PRODUCT.md` for current business/product architecture.
 4. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
 5. `README.md` / `AGENT.md` / `design.md`.
 6. Feature-specific documentation.
