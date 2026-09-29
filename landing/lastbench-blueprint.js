@@ -9,7 +9,7 @@
 
   const COPY = {
     en: {
-      kicker: 'EDUCATION & MOBILITY · CURRENT MARKET — MALAYSIA',
+      kicker: 'MALAYSIA · EDUCATION & MOBILITY SERVICE',
       titleA: 'ACCESS WITH', titleB: 'CLARITY.',
       lede: 'Malaysia Admissions is one active service inside Last Bench Education & Mobility. It helps Bangladeshi students make credible education decisions, move through high-stakes application and visa processes, prepare for departure and continue with practical support after arrival.',
       steps: [
@@ -35,7 +35,7 @@
       portal: 'CHOOSE YOUR PATH →', portalAria: 'Choose your Last Bench path',
     },
     bn: {
-      kicker: 'এডুকেশন অ্যান্ড মোবিলিটি · বর্তমান মার্কেট — মালয়েশিয়া',
+      kicker: 'মালয়েশিয়া · এডুকেশন অ্যান্ড মোবিলিটি সেবা',
       titleA: 'স্পষ্টতার সাথে', titleB: 'অ্যাক্সেস।',
       lede: 'মালয়েশিয়া অ্যাডমিশন লাস্ট বেঞ্চের Education & Mobility বিভাগের একটি সক্রিয় সেবা। এটি শিক্ষার্থীদের বিশ্বাসযোগ্য শিক্ষা সিদ্ধান্ত, আবেদন ও ভিসা প্রক্রিয়া, প্রি-ডিপারচার প্রস্তুতি এবং পৌঁছানোর পর বাস্তব সহায়তায় সাহায্য করে।',
       steps: [
@@ -155,7 +155,7 @@
       projectX:'Website Projects',
       dashboard:'Co.MPASS',
       founderSecondBrain:'Dr. X',
-      currentEducationMarket:'Malaysia'
+      educationMobilityService:'Malaysia'
     };
     document.title=title;
     const setMeta=(selector,attribute,value)=>{
