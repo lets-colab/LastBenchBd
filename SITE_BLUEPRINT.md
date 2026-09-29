@@ -68,7 +68,7 @@ Education & Mobility remains an operating/service domain inside Last Bench and m
 The interactive profile must do five things exceptionally well:
 
 1. Make the Last Bench belief emotionally clear before explaining the company.
-2. Reveal **Opportunity Accelerator** only after the name and problem make the category feel inevitable.
+2. Reveal the **two labs + intelligence loop** only after the name and problem make the company model feel inevitable.
 3. Explain the Human Lab → Business Lab → evidence → intelligence flywheel without forcing every visitor through the same path.
 4. Route visitors to the operating/service path that matches their real need.
 5. Distinguish current reality from roadmap ambition and expose Co.MPASS/Dr. X only where their role improves understanding.
@@ -86,7 +86,7 @@ The live ChatGPT Site should follow this order. This is the web equivalent of th
 **FROM WHERE YOU ARE.**  
 **TO WHAT YOU CAN BUILD.**
 
-Small category cue: **Opportunity Accelerator**
+Small architecture cue: **HUMAN LAB · BUSINESS LAB · INTELLIGENCE**
 
 Support line:
 
@@ -556,9 +556,9 @@ The parent logo always returns to the parent profile/home.
 
 ### Corporate profile
 
-**Title:** `Last Bench — Opportunity Accelerator`
+**Title:** `Last Bench — Build People. Build Business. Learn Faster.`
 
-**Description:** `Education, capability and business connected by community — helping people turn credible opportunity into progress.`
+**Description:** `Last Bench is the company: CLASS[Λ] builds builders, co.lab builds businesses, Co.MPASS converges evidence, and Dr. X supports founder decisions.`
 
 Do not use Malaysia-only metadata on the corporate profile.
 
@@ -574,8 +574,8 @@ Do not call the live ChatGPT Site updated until all of the following are visuall
 - [ ] Original CLASS[Λ] logo is used in the CLASS section.
 - [ ] Original co.lab logo is used in the co.lab section.
 - [ ] Hero leads with the brand promise, not Malaysia.
-- [ ] Opportunity Accelerator is the parent category.
-- [ ] Community is visibly the connective layer, not a fourth equal business engine.
+- [ ] Last Bench is clearly presented as the company.
+- [ ] Community is correctly nested under co.lab with Influencers, Ambassadors, Creators and Advisors.
 - [ ] `Opportunity should compound, not reset` is communicated by the flywheel.
 - [ ] Multiple independent entry points are obvious.
 - [ ] Malaysia is shown as the current Education market/service.
