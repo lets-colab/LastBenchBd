@@ -2,22 +2,26 @@
 
 ## Canonical category
 
-**Opportunity Accelerator.**
+**Last Bench — the company.**
 
-**Corporate descriptor:** Education · Capability · Business · Community.
+**Operating model:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain.
 
 **Brand promise:** **From where you are. To what you can build.**
 
-Last Bench is the umbrella opportunity-acceleration platform. It is not defined by one country, one admissions corridor, one course or one consulting offer.
+Last Bench is the company. Its current locked architecture is a learning flywheel rather than a three-engine hierarchy.
 
-Last Bench connects people to credible opportunities and helps them turn those opportunities into progress through three operating engines and one connective layer:
+1. **CLASS[Λ] — Human Lab:** builds builders through skill, execution and proof.
+2. **co.lab — Business Lab:** incubates, accelerates and grows businesses through four doors:
+   - **Ventures:** businesses incubated or accelerated from the CLASS[Λ] founder pathway.
+   - **Projects:** defined build work; **ProjectX = Website Projects**.
+   - **Services:** repeatable brand, business and growth capabilities.
+   - **Community:** Influencers · Ambassadors · Creators · Advisors.
+3. **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction. It does not replace source systems or founder judgment.
+4. **Dr. X — Founder Second Brain / Twin:** combines governed memory, Founder Twin context, JEV judgment and reasoning to support founder decisions.
 
-1. **Education & Mobility — Access:** education pathways, university guidance, admissions/application support, scholarships/funding verification, visa/process guidance, pre-departure, settlement and student community.
-2. **CLASS[Λ] — Capability:** AI fluency, research, building, creation, growth, sales, automation and proof-of-work; the current flagship offer is the 20-Class One-Person Venture Builder.
-3. **co.lab — Business & Growth:** brand development, business development, growth strategy, creative execution, creator/community systems, venture validation, automation and market launch.
-4. **Community + Platform — Connection & Continuity:** shared relationships, identity, verified progress, opportunity routing, referrals, alumni, partners and long-term context.
+Business-facing loop: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved CLASS[Λ] + co.lab → new evidence.**
 
-The architecture is **not** a mandatory funnel. People may enter through Education, CLASS[Λ], co.lab or a relevant community/partner pathway depending on their need and stage.
+Education & Mobility remains a real operating/service domain inside Last Bench. It must not silently recreate the superseded “three engines + connective layer” architecture.
 
 ## Strategic progression model
 
@@ -82,9 +86,9 @@ The relationship should not reset after the flight lands:
 
 Community after arrival is part of the current Malaysia service promise. Progression into CLASS[Λ], co.lab or another opportunity pathway should only be shown when it is relevant, active and real.
 
-## CLASS[Λ] — Capability Accelerator
+## CLASS[Λ] — Human Lab
 
-CLASS[Λ] is a distinct capability engine inside the Last Bench ecosystem and may be an independent entry point.
+CLASS[Λ] is the Human Lab inside Last Bench. It builds builders through practical capability, execution and proof, and may be an independent entry point.
 
 Current product contract:
 
@@ -96,9 +100,9 @@ Current product contract:
 
 CLASS[Λ] is not merely an add-on to Malaysia admissions. Learners can enter directly.
 
-## co.lab — Business & Growth Accelerator
+## co.lab — Business Lab
 
-co.lab is a distinct Brand & Business Development business and may be an independent entry point.
+co.lab is the Business Lab inside Last Bench and may be an independent entry point. Its four doors are Ventures, Projects, Services and Community.
 
 Its current positioning is **The Growth Operating System for Modern Brands**, organized around:
 
