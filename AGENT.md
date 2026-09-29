@@ -114,7 +114,7 @@ Do not reintroduce Manus OAuth assumptions into current production documentation
 
 ---
 
-## 4. Service and engine boundaries
+## 4. Lab, service and operating boundaries
 
 ### Education & Mobility
 
@@ -147,9 +147,9 @@ Core sequence: **Collaboration → Connection → Community.**
 
 co.lab serves founders/businesses directly and must not be reduced to a CLASS[Λ] course module.
 
-### Community + Platform
+### co.lab Community
 
-Connective layer across engines. Shared identity, opportunity routing, referral systems or cross-engine context must be described as current only when implementation and evidence exist.
+Community is one of co.lab's four doors: Influencers, Ambassadors, Creators and Advisors. Shared identity, opportunity routing, referral systems or cross-company context are system capabilities, not a separate Community/Platform business layer, and must be described as current only when implementation and evidence exist.
 
 ---
 
