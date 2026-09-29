@@ -1,7 +1,7 @@
 # Last Bench — Canonical Website Blueprint
 
 **Status:** CURRENT SOURCE OF TRUTH  
-**Date:** 17 September 2026  
+**Date:** 29 September 2026  
 **Primary live interactive profile:** `https://last-bench-interactive-profile.lastbenchbd.chatgpt.site`  
 **Corporate domain target:** `https://lastbenchbd.com`  
 **Authority:** Read with `PRODUCT.md`, `design.md`, `FOUNDATION_LOCK.md`, canonical brand assets, and current release evidence. Latest explicit founder instruction overrides older website framing.
@@ -12,14 +12,14 @@
 
 ### Category
 
-**Last Bench = Opportunity Accelerator.**
+**Last Bench = the company.**
 
 ### Public descriptor
 
-**Education · Capability · Business**  
-**Community connects everything.**
-
-Community is the connective layer, not a fourth equal commercial engine.
+**CLASS[Λ] builds builders.**  
+**co.lab builds, incubates and accelerates businesses.**  
+**Co.MPASS converges company evidence.**  
+**Dr. X is the Founder Second Brain / Twin.**
 
 ### Brand promise
 
@@ -35,33 +35,33 @@ Last Bench is the umbrella opportunity-acceleration platform. It is **not** defi
 
 ## 2. Operating architecture
 
-Last Bench has **three operating engines and one connective layer**:
+Last Bench uses **two primary laboratories and one intelligence loop**:
 
-1. **Education & Mobility — Access**  
-   Education pathways, university guidance, admissions, mobility, settlement and student continuity.
+1. **CLASS[Λ] — Human Lab**  
+   Builds builders through skill, execution and proof.
 
-2. **CLASS[Λ] — Capability**  
-   AI fluency, building, creation, growth, sales, automation and proof-of-work.
+2. **co.lab — Business Lab**  
+   Four doors: **Ventures · Projects · Services · Community**.
+   - Ventures = CLASS[Λ]-originated businesses incubated / accelerated.
+   - Projects = defined build work; **ProjectX = Website Projects**.
+   - Services = repeatable brand, business and growth capabilities.
+   - Community = Influencers · Ambassadors · Creators · Advisors.
 
-3. **co.lab — Business & Growth**  
-   Brand development, business development, growth strategy, systems, community-led growth, venture validation and launch.
+3. **Co.MPASS — Business Dashboard**  
+   Converges governed evidence into company context, clarity and direction.
 
-4. **Community + Platform — Connection & Continuity**  
-   Relationships, identity, verified progress, referrals, alumni, partners, opportunity routing and long-term context where operationally real.
+4. **Dr. X — Founder Second Brain / Twin**  
+   Uses governed memory, Founder Twin context, JEV judgment and reasoning to support founder decisions.
+
+### Canonical flywheel
+
+**CLASS[Λ] + co.lab activity → governed reality/evidence → Co.MPASS → Dr. X → decision → improved CLASS[Λ] + co.lab → new evidence.**
+
+Education & Mobility remains an operating/service domain inside Last Bench and may have its own customer journey. It is not a reason to recreate the superseded “three engines + connective layer” corporate architecture.
 
 ### Experience rule
 
-> **MULTIPLE ENTRY POINTS. ONE FORWARD MOTION.**
-
-The ecosystem is not a mandatory funnel. A student may enter Education & Mobility, a learner may enter CLASS[Λ], a founder may enter co.lab, and a partner may enter through the relevant relationship.
-
-### Human progression thesis
-
-> **ACCESS → CAPABILITY → CREATION → OWNERSHIP**
-
-This is an outcome model, not a required purchase sequence.
-
----
+> **SHOW THE PERSON ONLY THE NEXT RELEVANT DOOR. KEEP THE INTELLIGENCE UNDERNEATH.**
 
 ## 3. Job of the interactive site
 
@@ -69,9 +69,9 @@ The interactive profile must do five things exceptionally well:
 
 1. Make the Last Bench belief emotionally clear before explaining the company.
 2. Reveal **Opportunity Accelerator** only after the name and problem make the category feel inevitable.
-3. Explain why Education, CLASS[Λ] and co.lab belong together without implying a mandatory funnel.
-4. Route visitors to the engine that matches their real need.
-5. Distinguish current reality from roadmap ambition without turning the experience into an internal operating manual.
+3. Explain the Human Lab → Business Lab → evidence → intelligence flywheel without forcing every visitor through the same path.
+4. Route visitors to the operating/service path that matches their real need.
+5. Distinguish current reality from roadmap ambition and expose Co.MPASS/Dr. X only where their role improves understanding.
 
 The experience should feel like **a belief becoming a company**, not a consultancy deck, generic SaaS page, or Malaysia admissions website.
 
