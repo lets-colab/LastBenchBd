@@ -44,7 +44,7 @@ If an initiative does not strengthen one of those, it should not automatically s
 
 ## Education & Mobility
 
-Education & Mobility is one operating engine inside Last Bench.
+Education & Mobility is an operating/service domain inside Last Bench. It is not a third lab, engine, or peer of CLASS[Λ] and co.lab.
 
 ### Current active service: Malaysia Admissions
 
@@ -114,13 +114,11 @@ Current capability lanes include brand development, business growth strategy, cr
 
 The co.lab venture-gate method can support CLASS[Λ] founder progression, but the standalone co.lab business must never be collapsed into a course module.
 
-## Community + Platform
+## Community
 
-Community is the connective layer across the ecosystem, not merely a fourth standalone product.
+Community is one of the four doors inside co.lab: **Influencers · Ambassadors · Creators · Advisors**. It must not be promoted into a separate Last Bench engine or connective architecture layer.
 
-Its role is to compound relationships and opportunity across students, learners, founders, businesses, alumni, tutors, creators, institutions and partners.
-
-Long-term platform logic may include shared identity, verified progress, opportunity routing, evidence, referrals and continuity across business units. These platform capabilities must not be presented as live unless verified.
+Cross-company continuity, shared identity, verified progress, opportunity routing, evidence and referrals are system capabilities governed through source systems, Co.MPASS, Dr. X and Time Machine. They are not a separate public business unit and must not be presented as live unless verified.
 
 ## Audiences and entry points
 
@@ -128,7 +126,7 @@ Long-term platform logic may include shared identity, verified progress, opportu
 
 Primary question: **“Help me access the right education opportunity with clarity.”**
 
-Relevant engine: Education & Mobility.
+Relevant route: Education & Mobility operating/service domain.
 
 ### Learner / creator / operator
 
@@ -146,7 +144,7 @@ Relevant engine: co.lab.
 
 Primary question: **“Help us create, distribute or connect credible opportunity.”**
 
-Relevant layer: the appropriate engine plus the shared community/platform relationship.
+Relevant route: the appropriate operating route; co.lab Community applies when the relationship is with Influencers, Ambassadors, Creators or Advisors.
 
 ## Experience rule
 
@@ -221,7 +219,7 @@ Optimize for:
 
 For every material initiative ask:
 
-1. Which engine or connective layer owns it?
+1. Which lab, co.lab door, or operating/service domain owns it?
 2. What opportunity does it accelerate?
 3. What is the person's next meaningful action?
 4. Who owns the outcome?
