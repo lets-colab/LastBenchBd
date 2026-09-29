@@ -4,11 +4,11 @@
 
 ## 1. Corporate identity
 
-**Category:** Opportunity Accelerator  
-**Corporate descriptor:** Education · Capability · Business · Community  
+**Company:** Last Bench  
+**Architecture descriptor:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X  
 **Brand promise:** **From where you are. To what you can build.**
 
-Last Bench is the umbrella platform. Malaysia is an active service within Education & Mobility, not the corporate backbone.
+Last Bench is the company. Malaysia is an active service within Education & Mobility, not the corporate backbone.
 
 The operating architecture is:
 
@@ -100,7 +100,7 @@ Avoid guaranteed visa approval, guaranteed scholarship percentages, guaranteed a
 
 ## 5. CLASS[Λ] design boundary
 
-CLASS[Λ] is the capability accelerator and a distinct visual/product namespace.
+CLASS[Λ] is the Human Lab and a distinct visual/product namespace.
 
 Current product hierarchy:
 
@@ -117,7 +117,7 @@ The core product principle is **proof > attendance; output > certificate**.
 
 ## 6. co.lab design boundary
 
-co.lab is the Business & Growth accelerator and a distinct visual/product namespace.
+co.lab is the Business Lab and a distinct visual/product namespace.
 
 Current positioning: **The Growth Operating System for Modern Brands.**
 
@@ -319,7 +319,7 @@ If those answers are unclear, do not add the feature to a primary user journey y
 
 ## 16. Cross-engine cinematic experience law
 
-The Last Bench ecosystem should feel like one premium product family without turning the three operating engines into visual clones.
+The Last Bench company should feel like one premium product family without turning the Human Lab, Business Lab or operating/service domains into visual clones.
 
 ### Shared cinematic grammar
 
