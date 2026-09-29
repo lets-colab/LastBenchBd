@@ -9,12 +9,11 @@ Turn the Last Bench brand strategy into clear, credible and consistent content a
 
 ## Locked brand foundation
 
-- **Category:** Opportunity Accelerator.
-- **Corporate descriptor:** Education · Capability · Business · Community.
+- **Company:** Last Bench.
 - **Brand promise:** From where you are. To what you can build.
-- **Architecture:** Education & Mobility / CLASS[Λ] / co.lab / Community + Platform connective layer.
-- **Strategic progression:** Access → Capability → Creation → Ownership.
-- **Entry model:** Multiple entry points. One forward motion.
+- **Architecture:** CLASS[Λ] Human Lab / co.lab Business Lab / Co.MPASS Business Dashboard / Dr. X Founder Second Brain.
+- **Flywheel:** build builders → incubate/accelerate businesses → evidence → Co.MPASS → Dr. X decision → learning back into both labs.
+- **Non-duplication:** patch canonical resources; never create parallel truth systems to represent the architecture.
 
 ### Education & Mobility
 - **Current active service:** Malaysia Admissions.
@@ -22,18 +21,23 @@ Turn the Last Bench brand strategy into clear, credible and consistent content a
 - **Malaysia is one service inside Education & Mobility, not the backbone or definition of Last Bench.**
 
 ### CLASS[Λ]
-- **Role:** Capability Accelerator.
+- **Role:** Human Lab — builds builders through skill, execution and proof.
 - **Current offer:** free Class 0 + 20-Class One-Person Venture Builder.
 - **Doctrine:** proof > attendance; output > certificate.
 
 ### co.lab
-- **Role:** Business & Growth Accelerator / Brand & Business Development.
-- **Positioning:** The Growth Operating System for Modern Brands.
+- **Role:** Business Lab.
+- **Doors:** Ventures · Projects · Services · Community.
+- **Ventures:** businesses incubated/accelerated from the CLASS[Λ] founder pathway.
+- **Projects:** ProjectX = Website Projects.
+- **Services:** repeatable brand, business and growth capabilities.
+- **Community:** Influencers · Ambassadors · Creators · Advisors.
 - **Sequence:** Collaboration → Connection → Community.
 
-### Community + Platform
-- **Role:** connective layer across relationships, opportunity, proof and continuity.
-- Do not present proposed platform capabilities as live without evidence.
+### Co.MPASS + Dr. X
+- **Co.MPASS:** Business Dashboard / convergence layer; company context, evidence and direction.
+- **Dr. X:** Founder Second Brain / Twin; governed reasoning and decision intelligence.
+- Do not promote architecture, simulation or generated output to ACTUAL business evidence.
 
 ## Positioning guardrails
 
