@@ -179,6 +179,6 @@ console.log("- Online CLASS[Λ] registration creates a session enrollment withou
 console.log("- Personal pass opens from its private code and join-click remains a signal, not attendance");
 console.log("- Live attendance becomes verified only after personal-pass + active BUILD-code evidence");
 console.log("- Supabase migration ledger remains reconciled with drizzle/MIGRATION_STATUS.md");
-console.log("- Homepage business logic matches the current Opportunity Accelerator blueprint and keeps Malaysia scoped to Education & Mobility");
+console.log("- Homepage business logic matches JEV 2026.09.29 and keeps Malaysia scoped to Education & Mobility");
 
 process.exitCode = failed ? 1 : 0;
