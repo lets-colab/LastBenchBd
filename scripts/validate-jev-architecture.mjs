@@ -23,7 +23,9 @@ const retired=[
  /co\.lab is the business\s*&\s*growth engine/i,
  /Education & Mobility is (?:one |an )?operating engine/i,
  /Community is the connective layer across the ecosystem/i,
- /Community \+ Platform/i
+ /Community \+ Platform/i,
+ /Relevant engine: CLASS\[Λ\]/i,
+ /Relevant engine: co\.lab/i
 ];
 let failed=false;
 for(const file of activeFiles){
