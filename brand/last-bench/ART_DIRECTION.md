@@ -7,7 +7,7 @@ This document defines how Last Bench should **feel**, not just which colors to u
 
 ## 1. Core visual idea
 
-Last Bench is an opportunity accelerator built around forward movement.
+Last Bench is the company: a human-and-business-building system connected by governed evidence and intelligence.
 
 The visual system should communicate:
 
@@ -16,6 +16,8 @@ The visual system should communicate:
 - **ambition without visual noise**
 - **progress without gimmicks**
 - **human aspiration supported by structure**
+- **two laboratories without visual confusion**
+- **intelligence present without exposing machinery**
 
 The governing visual law is:
 
