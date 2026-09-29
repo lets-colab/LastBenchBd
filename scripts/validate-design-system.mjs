@@ -36,7 +36,7 @@ try {
   tokens = {};
 }
 
-assertEqual(tokens?.governance?.category, "Opportunity Accelerator", "governance.category");
+assertEqual(tokens?.governance?.category, "Company", "governance.category");
 assertEqual(
   tokens?.governance?.brandPromise,
   "From where you are. To what you can build.",
