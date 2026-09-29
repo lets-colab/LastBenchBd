@@ -4,13 +4,13 @@
 
 Build Last Bench as **the company** while keeping the Human Lab, Business Lab and operating/service domains commercially clear.
 
-Parent category:
+Company model:
 
-**Opportunity Accelerator**
+**Last Bench — the company**
 
-Corporate descriptor:
+Architecture descriptor:
 
-**Education · Capability · Business · Community**
+**CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X**
 
 Brand promise:
 
