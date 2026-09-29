@@ -132,13 +132,13 @@ Relevant route: Education & Mobility operating/service domain.
 
 Primary question: **“Help me become capable, useful and commercially ready.”**
 
-Relevant engine: CLASS[Λ].
+Relevant lab: CLASS[Λ].
 
 ### Founder / business / brand
 
 Primary question: **“Help me build, position, systemize or grow.”**
 
-Relevant engine: co.lab.
+Relevant lab: co.lab.
 
 ### Partner / institution / community contributor
 
