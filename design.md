@@ -48,7 +48,7 @@ A Last Bench corporate surface should explain the ecosystem in this order:
 4. **Intelligence loop** — Co.MPASS converges governed evidence; Dr. X is the Founder Second Brain / Twin.
 5. **Multiple entry points** — people enter through the problem they actually have.
 6. **Proof and trust** — distinguish verified current operations from roadmap or proposed capability.
-7. **Relevant CTA** — route the user to the correct engine, not one universal sales funnel.
+7. **Relevant CTA** — route the user to the correct lab or service route, not one universal sales funnel.
 
 Corporate pages may show the whole system. They should not make Malaysia, CLASS[Λ] or co.lab appear to be the definition of Last Bench by itself.
 
@@ -131,9 +131,9 @@ co.lab can serve founders and businesses directly. Its venture-gate method may s
 
 ---
 
-## 7. Community + Platform
+## 7. co.lab Community
 
-Community is the connective layer across the ecosystem, not merely another card in a product grid.
+Community is one of co.lab's four doors — Influencers, Ambassadors, Creators and Advisors — not a separate Last Bench architecture layer.
 
 The experience may connect students, learners, founders, businesses, alumni, tutors, creators, institutions and partners where the relationship is relevant and permissioned.
 
@@ -317,7 +317,7 @@ If those answers are unclear, do not add the feature to a primary user journey y
 
 ---
 
-## 16. Cross-engine cinematic experience law
+## 16. Cross-surface cinematic experience law
 
 The Last Bench company should feel like one premium product family without turning the Human Lab, Business Lab or operating/service domains into visual clones.
 
