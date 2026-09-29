@@ -1,5 +1,7 @@
 name: JEV architecture release gate
 
+# Verification touch: 2026-09-29 JEV locked architecture
+
 on:
   push:
     branches: [main]
