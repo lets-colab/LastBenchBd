@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const ALIGNMENT_VERSION = '2026-09-22';
+  const ALIGNMENT_VERSION = '2026-09-29-jev-lock';
   const PARTNER_WHATSAPP = 'https://wa.me/8801300801785?text=I%20want%20to%20learn%20about%20the%20Last%20Bench%20partner%20pathway.';
   const CONTACT_EMAIL = 'info@lastbenchbd.com';
   const CONTACT_HREF = 'mailto:info@lastbenchbd.com?subject=Last%20Bench%20question';
@@ -142,15 +142,19 @@
   }
 
   function updateMetadata() {
-    const title='Last Bench — Opportunity Accelerator';
-    const description='Education, capability and business connected by community — helping people turn credible opportunity into progress.';
+    const title='Last Bench — Build People. Build Business. Learn Faster.';
+    const description='Last Bench is the company: CLASS[Λ] builds builders, co.lab incubates and accelerates businesses, Co.MPASS converges company evidence, and Dr. X supports founder decisions.';
     document.documentElement.dataset.businessBlueprintAligned=ALIGNMENT_VERSION;
-    document.documentElement.dataset.parentCategory='opportunity-accelerator';
+    document.documentElement.dataset.parentCategory='company';
     window.__LB_BLUEPRINT_ALIGNMENT__={
       version:ALIGNMENT_VERSION,
-      category:'Opportunity Accelerator',
-      engines:['Education & Mobility','CLASS[Λ]','co.lab'],
-      connectiveLayer:'Community + Platform',
+      company:'Last Bench',
+      humanLab:'CLASS[Λ]',
+      businessLab:'co.lab',
+      businessLabDoors:['Ventures','Projects','Services','Community'],
+      projectX:'Website Projects',
+      dashboard:'Co.MPASS',
+      founderSecondBrain:'Dr. X',
       currentEducationMarket:'Malaysia'
     };
     document.title=title;
