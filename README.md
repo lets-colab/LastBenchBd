@@ -37,14 +37,14 @@ For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experi
 
 | Layer | Platform | Contract |
 | --- | --- | --- |
-| Marketing + web app | **GitHub Pages** | `main` builds and deploys the exact production artifact; Netlify is legacy fallback only |
+| Marketing + web app | **GitHub Pages** | Sole canonical production web host; `main` builds and deploys the exact production artifact |
 | API | **Render** | Express + tRPC |
 | Identity | **Supabase Auth** | Email/password sessions; HTTP-only cookies on web, bearer/refresh tokens on native |
 | Database | **Supabase Postgres** | Drizzle schema + reviewed SQL migration ledger |
 | Private files | **Supabase Storage** | `student-documents`, private, per-user RLS |
 | Public intelligence | **Dr. X** | Human-facing Last Bench intelligence identity; founder profiles remain real-person profiles powered by Dr. X |
 | AI execution provider | **OpenAI Responses API** | Current server-side provider when configured; replaceable implementation detail |
-| Canonical web | `https://lastbenchbd.com` | DNS cutover to the verified GitHub Pages deployment is the remaining host gate |
+| Canonical web | `https://lastbenchbd.com` | DNS cutover to GitHub Pages complete; current release fingerprint/render verification remains a release gate |
 | Canonical API | `https://api.lastbenchbd.com` | Render custom domain |
 
 **Manus and Forge are not part of the supported production architecture.** Legacy integration modules and environment contracts have been removed.
@@ -209,7 +209,7 @@ A green build is not proof of a working product. Before calling the authenticate
 - [x] `api.lastbenchbd.com/api/health` returns semantic JSON health
 - [x] homepage Supabase REST intake accepts an anonymous insert without exposing lead reads
 - [x] GitHub Pages builds and deploys the verified production artifact from current `main`
-- [ ] `lastbenchbd.com` DNS serves the verified GitHub Pages release instead of the legacy Netlify host
+- [x] `lastbenchbd.com` DNS points to the GitHub Pages custom-domain configuration
 - [ ] fresh sign-in succeeds with a real user
 - [ ] returning session succeeds
 - [ ] authenticated API request succeeds
@@ -217,7 +217,7 @@ A green build is not proof of a working product. Before calling the authenticate
 - [ ] student document upload/download authorization is verified
 - [ ] homepage, CLASS[Λ] masterclass and CLASS[Λ] course receipt is verified with real production Supabase rows
 - [ ] corporate runtime architecture passes the JEV `2026.09.29` architecture-release gate on the canonical domain
-- [ ] visually verify the canonical-domain render after DNS cutover
+- [ ] visually verify the canonical-domain render and current release fingerprint
 
 No production user, credential, admissions result, business outcome or verification evidence should ever be fabricated to satisfy this checklist.
 
