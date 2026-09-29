@@ -47,7 +47,8 @@ describe("CLASS A signup funnel", () => {
   it("uses required labelled forms and the accepted Supabase program values", () => {
     for (const page of [masterclass, course]) {
       expect(page.match(/ required/g)?.length).toBeGreaterThanOrEqual(4);
-      expect(page).toContain('netlify-honeypot="company"');
+      expect(page).not.toContain('data-netlify');
+      expect(page).not.toContain('netlify-honeypot');
       expect(page).toContain('data-signup-form');
       expect(page).toContain('role="status"');
       expect(page).toContain('role="alert"');
