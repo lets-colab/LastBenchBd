@@ -2,7 +2,7 @@
 
 ## 1. Content objective
 
-Build Last Bench as an **Opportunity Accelerator** while keeping each active engine commercially clear.
+Build Last Bench as **the company** while keeping the Human Lab, Business Lab and operating/service domains commercially clear.
 
 Parent category:
 
@@ -99,7 +99,7 @@ Examples:
 
 ## 4. CLASS[Λ] content stream
 
-Positioning: **Capability Accelerator**.
+Positioning: **Human Lab — builds builders through skill, execution and proof.**
 
 Current offer:
 
@@ -116,7 +116,7 @@ Core content jobs:
 
 ## 5. co.lab content stream
 
-Positioning: **Business & Growth Accelerator / The Growth Operating System for Modern Brands.**
+Positioning: **Business Lab — Ventures · Projects · Services · Community.**
 
 Core sequence:
 
@@ -156,9 +156,9 @@ Do not mix all engines randomly in one week. Use clear campaign windows, series 
 
 ## 8. First 12 corporate + engine-aligned posts
 
-1. **Who Last Bench is** — Opportunity Accelerator: Education · Capability · Business · Community.
+1. **Who Last Bench is** — the company: CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X.
 2. **The philosophy** — From where you are. To what you can build.
-3. **The architecture** — Education & Mobility / CLASS[Λ] / co.lab / Community + Platform.
+3. **The architecture** — two labs + evidence → Co.MPASS → Dr. X → decisions → learning flywheel.
 4. **Multiple entry points** — you do not need to be a Malaysia student to enter Last Bench.
 5. **Malaysia Admissions** — one current Education & Mobility service, clearly scoped.
 6. **Malaysia journey map** — Discover → Match → Apply → Secure → Prepare → Arrive.
@@ -166,7 +166,7 @@ Do not mix all engines randomly in one week. Use clear campaign windows, series 
 8. **20 classes / 20 proofs** — what the venture-builder actually produces.
 9. **co.lab** — Collaboration → Connection → Community.
 10. **Proof over promises** — how Last Bench handles verification and trust.
-11. **Community as connective layer** — students, builders, founders, partners and alumni.
+11. **co.lab Community** — Influencers, Ambassadors, Creators and Advisors as a managed business-lab network.
 12. **Route me to the right path** — Education / CLASS[Λ] / co.lab enquiry split.
 
 ## 9. Format rules
