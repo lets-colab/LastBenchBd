@@ -15,19 +15,19 @@ Rebuild the public narrative to match `SITE_BLUEPRINT.md` exactly, using the 20-
 2. Your starting point should never define how far you can go.
 3. Last → Bench → Benchmark.
 4. Opportunity exists. The path is fragmented.
-5. Last Bench is an Opportunity Accelerator.
-6. Three operating engines. One connective layer.
-7. Opportunity enters. Proof compounds. Outcomes return.
+5. Last Bench is the company.
+6. Two laboratories. One intelligence loop.
+7. Builders and businesses create evidence; evidence becomes better decisions.
 8. Multiple entry points. One forward motion.
-9. Education & Mobility — Access with clarity.
+9. Education & Mobility — a focused operating/service route.
 10. Current Education Market — Malaysia.
 11. Beyond arrival — Settle → Belong → Progress → Return.
-12. CLASS[Λ] — Capability should end in proof.
+12. CLASS[Λ] — Human Lab: build builders through proof.
 13. AI Beginner → Venture-Ready Founder.
-14. co.lab — Business should move from clarity to growth.
+14. co.lab — Business Lab: Ventures · Projects · Services · Community.
 15. The Growth Operating System for Modern Brands.
-16. Community makes opportunity continuous.
-17. Three revenue engines. One parent trust layer.
+16. co.lab Community compounds relationships and distribution.
+17. Co.MPASS converges evidence. Dr. X turns context into founder decisions.
 18. Three founder mandates. One shared standard.
 19. Prove the system. Then compound it.
 20. From a Last Bench to a Lasting Benchmark.
@@ -50,12 +50,12 @@ Do not redraw, regenerate, type-substitute, recolor or approximate any logo.
 
 ## Corporate hierarchy
 
-**LAST BENCH — OPPORTUNITY ACCELERATOR**
+**LAST BENCH — THE COMPANY**
 
-**Education · Capability · Business**  
-**Community connects everything.**
-
-Community is the connective layer, not a fourth equal revenue engine.
+**CLASS[Λ] — HUMAN LAB**  
+**co.lab — BUSINESS LAB**  
+**Co.MPASS — BUSINESS DASHBOARD**  
+**Dr. X — FOUNDER SECOND BRAIN / TWIN**
 
 Malaysia is one current Education & Mobility market/service, not the parent-company backbone.
 
@@ -108,15 +108,15 @@ Publish only after visually verifying:
 - exact CLASS[Λ] logo
 - exact co.lab logo
 - parent hero is not Malaysia-led
-- Opportunity Accelerator is clear
+- Last Bench = the company is clear
 - flywheel communicates `Opportunity should compound, not reset`
 - multiple independent entry points are obvious
 - Malaysia is correctly nested under Education & Mobility
-- CLASS[Λ] is proof-led and independent
-- co.lab is standalone and independent
-- Community is the connective layer
+- CLASS[Λ] is clearly the Human Lab and proof-led
+- co.lab is clearly the Business Lab with four doors
+- Community is correctly nested under co.lab
 - roadmap is visibly separated from current reality
 - mobile layout works
 - reduced motion is respected
 - all CTAs resolve to a real route/action or honest placeholder
-- no obsolete Malaysia-first corporate copy remains
+- no obsolete Malaysia-first or retired three-engine corporate copy remains
