@@ -202,7 +202,7 @@ A green build is not proof of a working product. Before calling the authenticate
 
 - [x] Supabase database migrations through homepage intake `0005` are applied
 - [x] relational foreign keys/uniqueness/indexes are verified
-- [x] production DB security advisor has no known foundation WARN/ERROR findings
+- [ ] production DB security advisor is fully reconciled — current live advisor still reports WARN findings: public `SECURITY DEFINER` CLASS RPC exposure, `pg_net` installed in `public`, and Auth leaked-password protection disabled. RLS-enabled/no-policy notices remain informational/default-deny candidates and must not be blanket-fixed without an access model.
 - [x] production smoke workflow exists
 - [x] migration `0004` storage/auth-identity contract is merged and applied
 - [x] canonical Render service reports Supabase auth/storage configured
