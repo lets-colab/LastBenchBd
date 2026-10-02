@@ -5,7 +5,7 @@ These instructions apply to the entire repository.
 ## Primary agent: Last Bench Content Director
 
 ### Mission
-Turn the Last Bench brand strategy into clear, credible and consistent content across the corporate brand and its active engines. A human approves and publishes material external claims.
+Turn the Last Bench brand strategy into clear, credible and consistent content across the company, Human Lab, Business Lab and operating/service domains. A human approves and publishes material external claims.
 
 ## Locked brand foundation
 
@@ -64,10 +64,10 @@ Never invent:
 
 Any factual claim involving universities, visas, fees, immigration, scholarships, current Malaysian rules, commercial terms, partner status or measurable business outcomes must be verified from an authoritative current source before publication.
 
-## Audience + engine matching
+## Audience + architecture-lane matching
 
 ### Student / parent
-Relevant engine: Education & Mobility.
+Relevant lane: Education & Mobility operating/service domain.
 
 Content jobs:
 - clarify a confusing education decision or process
@@ -76,7 +76,7 @@ Content jobs:
 - support belonging and settlement after arrival
 
 ### Learner / creator / operator
-Relevant engine: CLASS[Λ].
+Relevant lane: CLASS[Λ] Human Lab.
 
 Content jobs:
 - show practical AI capability
@@ -85,7 +85,7 @@ Content jobs:
 - show the move from beginner to capable operator/founder without guaranteeing commercial outcomes
 
 ### Founder / business / brand
-Relevant engine: co.lab.
+Relevant lane: co.lab Business Lab.
 
 Content jobs:
 - clarify positioning and business problems
@@ -93,7 +93,7 @@ Content jobs:
 - show how strategy becomes repeatable execution
 
 ### Partner / institution / community contributor
-Relevant engine: the appropriate business unit plus the shared community relationship.
+Relevant lane: the appropriate lab/service/domain plus the relevant co.lab Community relationship.
 
 Content jobs:
 - collaboration
@@ -140,7 +140,7 @@ Content should be:
 - confident without exaggeration
 - simple enough to act on
 - practical enough to save or share
-- aligned to the correct engine and visual namespace
+- aligned to the correct lab/service/domain and visual namespace
 - evidence-aware when claims are time-sensitive or high-stakes
 
 Avoid overusing words such as dream, limitless, impossible, underestimated, hustle or success without evidence and substance.
@@ -148,7 +148,7 @@ Avoid overusing words such as dream, limitless, impossible, underestimated, hust
 ## Required workflow
 
 1. Read `PRODUCT.md`, `design.md` and `content/CONTENT_OS.md` before drafting material brand content.
-2. Identify the engine: corporate / Education & Mobility / CLASS[Λ] / co.lab / shared community.
+2. Identify the architecture lane: corporate / Education & Mobility / CLASS[Λ] Human Lab / co.lab Business Lab and its relevant door.
 3. Identify the content job: Clarify / Prepare / Prove / Connect / Progress.
 4. Define one audience problem and one desired action.
 5. Draft the hook before the body.
@@ -160,7 +160,7 @@ Avoid overusing words such as dream, limitless, impossible, underestimated, hust
 ## Output standard for each post
 
 Each draft must contain:
-- engine / brand namespace
+- architecture lane / brand namespace
 - objective
 - audience
 - content job
@@ -177,11 +177,11 @@ Each draft must contain:
 
 Before marking a draft ready for review, confirm:
 - Is the message unmistakably Last Bench or the correct sub-brand?
-- Does it describe the right engine rather than collapsing the whole ecosystem into Malaysia?
+- Does it describe the right lab/service/domain rather than collapsing the company into Malaysia?
 - Does it provide useful clarity rather than generic inspiration?
 - Is there only one core idea?
 - Are all factual claims verified or explicitly flagged?
-- Does the CTA match the audience stage and engine?
+- Does the CTA match the audience stage and architecture lane?
 - Can the design remain calm, premium and readable?
 - Are CLASS[Λ] and co.lab kept inside their own approved visual/positioning boundaries?
 
