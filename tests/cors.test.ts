@@ -46,9 +46,12 @@ function runMiddleware(origin?: string, method = "GET") {
 
 describe("credentialed CORS", () => {
   it("normalizes configured URLs to exact origins", () => {
-    expect([...getAllowedOrigins(productionEnv)]).toEqual([
-      "https://www.lastbenchbd.com","https://preview.example.com","https://preview.example.com",
+    const origins = [...getAllowedOrigins(productionEnv)];
+    expect(origins).toEqual([
+      "https://www.lastbenchbd.com",
+      "https://preview.example.com",
     ]);
+    expect(new Set(origins).size).toBe(origins.length);
   });
 
   it("allows an exact configured origin with credentials", () => {

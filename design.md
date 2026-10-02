@@ -10,14 +10,15 @@
 
 Last Bench is the company. Malaysia is an active service within Education & Mobility, not the corporate backbone.
 
-The operating architecture is:
+The current JEV 2026.09.29 architecture is:
 
-1. **Education & Mobility — Access**: education pathways, university guidance, admissions/application support, visa/process guidance, pre-departure, settlement and student community.
-2. **CLASS[Λ] — Capability**: AI fluency, research, building, creation, growth, sales, automation and proof-of-work.
-3. **co.lab — Business & Growth**: brand development, business development, growth strategy, creative execution, creator/community systems, venture validation and automation.
-4. **Community + Platform — Connection & Continuity**: relationships, identity, verified progress, opportunity routing and long-term context across engines.
+1. **CLASS[Λ] — Human Lab**: builds builders through skill, execution and proof.
+2. **co.lab — Business Lab**: Ventures · Projects · Services · Community. ProjectX is Website Projects; Community contains Influencers · Ambassadors · Creators · Advisors.
+3. **Co.MPASS — Business Dashboard**: converges governed company evidence into context, clarity and direction.
+4. **Dr. X — Founder Second Brain / Twin**: governed memory, founder context, JEV judgment and reasoning.
+5. **Education & Mobility — operating/service domain**: education pathways, university guidance, admissions/application support, visa/process guidance, pre-departure, settlement and student community.
 
-These are **multiple entry points**, not a mandatory funnel. A student may enter Education; a learner may enter CLASS[Λ] directly; a founder or business may enter co.lab directly.
+These are **multiple entry points**, not a mandatory funnel. A student may enter an Education & Mobility service; a learner may enter CLASS[Λ] directly; a founder or business may enter co.lab directly.
 
 The strategic progression thesis is **Access → Capability → Creation → Ownership**, but the UI must never imply that a person is required to buy every stage.
 
@@ -30,7 +31,7 @@ The strategic progression thesis is **Access → Capability → Creation → Own
 | **Clarity first** | A person should understand where they are and what comes next. | Show current stage, next milestone, accountable owner and evidence where a journey is being tracked. |
 | **Truth builds trust** | Never make an uncertain process look guaranteed. | Label what is verified, what can change and what requires current confirmation. |
 | **Opportunity before feature** | Products exist to move someone toward a meaningful opportunity. | Explain the outcome before the tool, workflow or technology. |
-| **Multiple entry points** | Last Bench is an ecosystem, not one linear funnel. | Lead with the engine relevant to the user's actual intent. |
+| **Multiple entry points** | Last Bench is an ecosystem, not one linear funnel. | Lead with the lab/service/domain relevant to the user's actual intent. |
 | **Community compounds** | Relationships should grow in value over time. | Make referrals, alumni, mentoring and opportunity continuity visible only when real. |
 | **Technology serves humans** | AI and automation support judgment; they do not fabricate certainty. | Escalate high-stakes choices to humans and show reasoning/evidence. |
 | **Mobile first** | Key audiences often use mid-range Android phones and variable connections. | Large touch targets, progressive enhancement, restrained payloads, graceful fallback. |
@@ -56,7 +57,7 @@ Corporate pages may show the whole system. They should not make Malaysia, CLASS[
 
 ## 4. Education & Mobility design rule
 
-Education & Mobility is one engine inside Last Bench. The current active service is Malaysia Admissions.
+Education & Mobility is an operating/service domain inside Last Bench. The current active service is Malaysia Admissions.
 
 The Malaysia service should remain highly focused on the student and parent problem it solves.
 
@@ -306,7 +307,7 @@ The product should measure **people reaching the next meaningful stage with veri
 
 For every new feature ask:
 
-1. Which engine or connective layer owns this?
+1. Which lab/service/domain or governed system owns this?
 2. What opportunity does it accelerate?
 3. What is the next meaningful action?
 4. Who owns the outcome?
