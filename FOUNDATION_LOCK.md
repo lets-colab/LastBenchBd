@@ -26,7 +26,7 @@ Important product state must have one authoritative source, one owner, one verif
 - Production web configuration for GitHub Pages is explicit in `.github/workflows/deploy-github-pages.yml` and uses the reviewed public API/Supabase values.
 - The live Supabase migration ledger includes the repository foundation migrations, Supabase identity/storage migration, CLASS[Λ] registration migration, DR.X social-engine runtime/activation migrations, and the insert-only homepage signup migration.
 - The homepage source now submits directly to `public.lastbench_signups`; public roles have INSERT only and cannot read, update or delete submitted leads.
-- Supabase security advisor currently has no WARN or ERROR findings; remaining RLS notices are informational and consistent with the server-owned default-deny model.
+- Supabase security advisor is **not currently warning-free**. Live review on 2 Oct 2026 reports: Auth leaked-password protection disabled; `pg_net` installed in `public` (non-relocatable in the current installation); and 11 CLASS `SECURITY DEFINER` RPCs executable by anon/authenticated roles. RLS-enabled/no-policy notices remain informational/default-deny candidates. Do not clear these findings by breaking public registration/check-in or adding blanket policies without an explicit access model.
 - `pnpm db:push` remains intentionally blocked while legacy Drizzle snapshots are incomplete; production DDL uses reviewed SQL through Supabase migrations.
 - Production smoke monitoring is automated by `.github/workflows/production-smoke.yml` and distinguishes the Render control-plane origin from the custom API hostname.
 
