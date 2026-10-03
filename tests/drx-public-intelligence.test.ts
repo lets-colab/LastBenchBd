@@ -19,7 +19,7 @@ describe("Dr. X public intelligence identity", () => {
   });
 
   it("keeps the public founders human-first and binds approved founder portraits", () => {
-    const landing = read("landing/index.html");
+    const landing = read("landing/malaysia/index.html");
     expect(landing).toContain("Sayem Ahmed");
     expect(landing).toContain("Fahim Shahbaz Mahmud");
     expect(landing).toContain("Erfan Uddin");
