@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./claude-design-support.js"></script>
-<script src="./founder-profile-data.js"></script>
-<script src="./bench-ai.js" defer></script>
+<script src="../claude-design-support.js"></script>
+<script src="../founder-profile-data.js"></script>
+<script src="../bench-ai.js" defer></script>
 </head>
 <body>
 <x-dc>
@@ -19,14 +19,14 @@
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#070b16">
 
-<link rel="icon" href="assets/logo-icon.png">
+<link rel="icon" href="../assets/logo-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="./claude-design-ds/tokens.css">
-<link rel="stylesheet" href="./claude-design-ds/styles.css">
-<script src="./claude-design-image-slot.js"></script>
-<script src="./vendor/three.min.js"></script>
+<link rel="stylesheet" href="../claude-design-ds/tokens.css">
+<link rel="stylesheet" href="../claude-design-ds/styles.css">
+<script src="../claude-design-image-slot.js"></script>
+<script src="../vendor/three.min.js"></script>
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
@@ -178,7 +178,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
   <!-- HUD -->
   <div style="position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px clamp(14px,3vw,28px);pointer-events:none;">
     <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-      <img src="assets/logo-icon.png" alt="Last Bench" style="width:62px;height:auto;display:block;filter:drop-shadow(0 0 8px rgba(0,200,83,.55));">
+      <img src="../assets/logo-icon.png" alt="Last Bench" style="width:62px;height:auto;display:block;filter:drop-shadow(0 0 8px rgba(0,200,83,.55));">
     </div>
     <div style="display:flex;align-items:center;gap:12px;font-size:11.5px;font-weight:500;letter-spacing:.2em;color:rgba(242,247,243,.65);">
       <button onClick="{{ toggleRadio }}" aria-label="Toggle sound" aria-pressed="{{ soundOn }}" style="pointer-events:auto;display:flex;align-items:center;gap:8px;min-height:44px;background:rgba(5,16,10,.6);border:1px solid {{ radioBd }};border-radius:999px;padding:7px 13px;color:{{ radioFg }};font-family:'Sora','Hind Siliguri',sans-serif;font-size:11px;font-weight:600;letter-spacing:.18em;cursor:pointer;backdrop-filter:blur(8px);white-space:nowrap;" style-hover="border-color:#00E676;background:rgba(0,200,83,.12);">
@@ -225,7 +225,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#fff;margin-bottom:9px;">CLASS[Λ]</div>
           <div style="font-family:var(--lb-font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">Human Lab</div>
           <div style="font-size:13px;line-height:1.6;color:rgba(242,247,243,.65);">Build capability through practical work and visible proof. CLASS[Λ] builds builders; it is independent from the Malaysia service route.</div>
-          <a href="./class-a/" style="display:inline-flex;margin-top:16px;color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.12em;">ENTER CLASS[Λ] →</a>
+          <a href="../class-a/" style="display:inline-flex;margin-top:16px;color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.12em;">ENTER CLASS[Λ] →</a>
         </div>
         <div style="border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:22px;background:rgba(255,255,255,.035);">
           <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#fff;margin-bottom:9px;">co.lab</div>
@@ -470,7 +470,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
             <div style="width:48px;height:48px;border-radius:50%;background:rgba(0,200,83,.14);border:1px solid #00C853;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 22 22"><path d="M4 11.5 L9 16.5 L18 6" stroke="#00E676" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
             <div style="font-family:var(--lb-font-display);font-weight:700;font-size:19px;color:#fff;">{{ joinedTitleName }}</div>
             <div style="font-size:12.5px;line-height:1.6;color:rgba(242,247,243,.7);">{{ t.joinedSub }}</div>
-            <a href="./app/" style="display:inline-flex;align-items:center;min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 28px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;">{{ t.enterDash }}</a>
+            <a href="../app/" style="display:inline-flex;align-items:center;min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 28px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;">{{ t.enterDash }}</a>
           </div>
         </sc-if>
       </div>
