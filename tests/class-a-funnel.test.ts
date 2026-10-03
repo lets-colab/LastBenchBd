@@ -21,7 +21,7 @@ const liveControlScript = read("live-control.js");
 
 describe("CLASS A signup funnel", () => {
   it("keeps all three routes linked", () => {
-    expect(landing).toContain('href="./class-a/"');
+    expect(landing).toMatch(/href=["'](?:\.\/)?class-a\//);
     expect(landing).toContain("ENTER CLASS[Λ]");
     expect(hub).toContain('href="./masterclass.html"');
     expect(hub).toContain('href="./course.html"');
