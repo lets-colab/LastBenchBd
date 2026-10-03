@@ -245,7 +245,11 @@
     if (dialog.open && typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open');
     body.classList.remove('no-scroll');
   }
-  document.querySelectorAll('[data-open-signup]').forEach(btn => btn.addEventListener('click', openSignup));
+  const signupButtons = Array.from(document.querySelectorAll('[data-open-signup]'));
+  signupButtons.forEach(btn => {
+    if (!btn.dataset.openLabel) btn.dataset.openLabel = btn.textContent.trim();
+    btn.addEventListener('click', openSignup);
+  });
   document.querySelectorAll('[data-close-signup]').forEach(btn => btn.addEventListener('click', closeSignup));
   dialog?.addEventListener('click', event => { if (event.target === dialog) closeSignup(); });
 
@@ -335,12 +339,14 @@
       if (chip) chip.innerHTML = '<i></i> ' + day + ' · ' + startTime + ' · LIVE ONLINE';
       if (meta) meta.textContent = weekday + ' ' + day + ' · ' + startTime + (endTime ? '–' + endTime : '') + ' · GOOGLE MEET · FREE REGISTRATION';
       if (finalLine) finalLine.textContent = weekday + ' ' + day + ' · ' + startTime + (endTime ? '–' + endTime : '') + ' · Google Meet · Free registration';
-      if (session.registration_open === false) {
-        document.querySelectorAll('[data-open-signup]').forEach(el => {
-          el.disabled = true;
-          el.textContent = 'REGISTRATION CLOSED';
-        });
-      }
+      const registrationOpen = session.registration_open !== false;
+      signupButtons.forEach(el => {
+        el.disabled = !registrationOpen;
+        el.setAttribute('aria-disabled', registrationOpen ? 'false' : 'true');
+        el.textContent = registrationOpen
+          ? (el.dataset.openLabel || 'REGISTER FREE')
+          : 'REGISTRATION CLOSED';
+      });
     } catch (_) {}
   }
 
