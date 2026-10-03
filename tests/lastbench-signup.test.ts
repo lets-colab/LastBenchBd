@@ -6,7 +6,7 @@ import { describe, expect, it } from "vitest";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path: string) => readFileSync(resolve(root, path), "utf8");
 
-const homepage = read("landing/index.html");
+const homepage = read("landing/malaysia/index.html");
 const preview = read("landing/claude-design-preview.html");
 const importer = read("scripts/import-claude-design-export.py");
 const promotion = read("scripts/promote-claude-design-homepage.py");
@@ -14,7 +14,7 @@ const migration = read("drizzle/0005_lastbench_signups.sql");
 const redirects = read("landing/_redirects");
 
 describe("Last Bench homepage signup", () => {
-  it("submits the production and preview experiences directly to Supabase", () => {
+  it("submits the Malaysia production journey and preview experience directly to Supabase", () => {
     for (const page of [homepage, preview]) {
       expect(page).toContain("/rest/v1/lastbench_signups");
       expect(page).toContain("sb_publishable_");

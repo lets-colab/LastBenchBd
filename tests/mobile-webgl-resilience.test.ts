@@ -2,10 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
-const landing = fs.readFileSync(path.join(process.cwd(), "landing/index.html"), "utf8");
+const landing = fs.readFileSync(path.join(process.cwd(), "landing/malaysia/index.html"), "utf8");
 
 describe("mobile WebGL resilience", () => {
-  it("keeps the cinematic homepage inside a conservative Android GPU budget", () => {
+  it("keeps the cinematic Malaysia journey inside a conservative Android GPU budget", () => {
     expect(landing).toContain("const constrainedGpu = small");
     expect(landing).toContain("constrainedGpu ? 1 : (small ? 1.25 : 1.75)");
     expect(landing).toContain("if (constrainedGpu) tier = 0");
