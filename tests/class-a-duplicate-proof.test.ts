@@ -19,14 +19,14 @@ describe("CLASS duplicate registration proof gate", () => {
     expect(sql).toContain("token_hash text not null");
     expect(sql).toContain("expires_at timestamptz not null");
     expect(sql).toContain("used_at timestamptz");
-    expect(sql).toContain("now() + '00:10:00'::interval");
-    expect(sql).toContain("and t.used_at IS NULL");
-    expect(sql).toContain("SET used_at = now()");
+    expect(sql).toContain("now()+interval '10 minutes'");
+    expect(sql).toContain("and t.used_at is null");
+    expect(sql).toContain("set used_at=now()");
   });
 
   it("fails closed when the proof is absent, wrong, expired, or replayed", () => {
     expect(sql.match(/duplicate_proof_invalid/g)?.length).toBeGreaterThanOrEqual(3);
-    expect(sql).toContain("t.token_hash = encode(extensions.digest(v_duplicate_proof, 'sha256'::text), 'hex'::text)");
+    expect(sql).toContain("t.token_hash=encode(extensions.digest(v_duplicate_proof,'sha256'),'hex')");
     expect(sql).toContain("t.expires_at > now()");
     expect(sql).toContain("FOR UPDATE");
   });
@@ -34,7 +34,7 @@ describe("CLASS duplicate registration proof gate", () => {
   it("preserves the public RPC names and separates duplicate proof from pass unlock proof", () => {
     expect(sql).toContain("FUNCTION public.class_a_register_online_gated");
     expect(sql).toContain("FUNCTION public.class_a_resolve_duplicate_registration");
-    expect(sql).toContain("'DUP-'::text");
-    expect(sql).toContain("'UNLOCK-'::text");
+    expect(sql).toContain("'DUP-'");
+    expect(sql).toContain("'UNLOCK-'");
   });
 });
