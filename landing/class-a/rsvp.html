@@ -48,6 +48,7 @@
   const params = new URLSearchParams(location.search);
   const token = params.get("token") || "";
   const action = params.get("action") || "";
+  history.replaceState(null, "", location.pathname);
   const labels = {
     joining: "YES — I’M JOINING TONIGHT",
     reschedule: "I CAN’T JOIN — RESCHEDULE MY INVITE",
