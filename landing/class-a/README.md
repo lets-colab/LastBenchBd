@@ -4,7 +4,8 @@ Three date-free conversion routes share one cinematic design, motion and registr
 
 - `/class-a/` — entry hub for choosing the free masterclass or full course.
 - `/class-a/masterclass.html` — free CLASS[Λ] Masterclass / Class 0 invitation and registration.
-- `/class-a/pass.html` — private-code attendee surface for schedule, Calendar, Meet entry and live attendance proof.\n- `/class-a/rsvp.html` — scanner-safe three-state confirmation surface for joining tonight, reschedule requests, or previous-attendee self-reporting.
+- `/class-a/pass.html` — private-code attendee surface for schedule, Calendar, Meet entry and live attendance proof.
+- `/class-a/rsvp.html` — scanner-safe three-state confirmation surface for joining tonight, reschedule requests, or previous-attendee self-reporting.
 - `/class-a/live-control.html` — staff-only live control for issuing temporary BUILD attendance codes.
 - `/class-a/checkin.html` — retained legacy/manual staff check-in fallback.
 - `/class-a/course.html` — paid 20-Class One-Person Venture Builder registration.
@@ -68,7 +69,8 @@ Canonical data:
 - `public.class_a_sessions` — session schedule, Google Meet URL, recording/transcript references and analysis state.
 - `public.class_a_session_enrollments` — one person's enrollment in one live session, recording-consent evidence, the short-lived WhatsApp-follow unlock gate and (after release) their hashed personal pass.
 - `public.class_a_session_attendance_evidence` — evidence ledger for `portal_open`, `join_click`, `live_code`, future Meet reports and staff evidence.
-- `public.class_a_session_notifications` — outbox for confirmation, calendar, 24-hour reminder, 6-hour reminder, room-open and post-class follow-up.\n- `public.class_a_session_rsvp_tokens` — hashed bearer-token RSVP capability for explicit three-state responses; underlying rows are not exposed to browser roles.
+- `public.class_a_session_notifications` — outbox for confirmation, calendar, 24-hour reminder, 6-hour reminder, room-open and post-class follow-up.
+- `public.class_a_session_rsvp_tokens` — hashed bearer-token RSVP capability for explicit three-state responses; underlying rows are not exposed to browser roles.
 - `public.class_a_live_checkin_codes` — short-lived instructor BUILD codes.
 
 Consent law:
