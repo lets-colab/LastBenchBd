@@ -5,9 +5,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LANDING = ROOT / "landing"
 SOURCE = LANDING / "claude-design-preview.html"
-TARGET = LANDING / "index.html"
+TARGET = LANDING / "malaysia" / "index.html"
 
-CANONICAL_TITLE = "The Last Bench — From Last Bench. To The World."
+CANONICAL_TITLE = "Study in Malaysia — Last Bench"
 CANONICAL_DESCRIPTION = (
     "A cinematic journey from Bangladesh to Malaysia. Last Bench helps Bangladeshi students "
     "explore study options, prepare their next step, and move forward with human guidance."
@@ -40,7 +40,7 @@ def main() -> None:
     )
 
     metadata = (
-        '\n<meta property="og:title" content="The Last Bench — From Last Bench. To The World.">\n'
+        '\n<meta property="og:title" content="Study in Malaysia — Last Bench">\n'
         '<meta property="og:description" content="A cinematic Bangladesh → Malaysia student journey with human guidance.">\n'
         '<meta property="og:image" content="./assets/logo-full.png">\n'
         '<meta property="og:type" content="website">\n'
@@ -73,6 +73,10 @@ def main() -> None:
     require(html, "contact_consent: true", "contact-consent payload")
     require(html, "Could not submit right now. Please try again.", "signup failure state")
 
+    html = html.replace('src="./', 'src="../').replace('href="./', 'href="../')
+    html = html.replace("url('./assets/", "url('../assets/")
+    html = html.replace('href="#lb-company"', 'href="../"')
+    TARGET.parent.mkdir(exist_ok=True)
     TARGET.write_text(html)
     print(f"Promoted Claude Design homepage to {TARGET.relative_to(ROOT)}")
 

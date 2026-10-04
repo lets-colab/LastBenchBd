@@ -32,9 +32,9 @@ jobs:
           test -s landing/claude-design-ds/tokens/tokens.css
           test -s landing/.image-slots.state.json
           test -s landing/assets/film-grain.svg
-          grep -q "./assets/film-grain.svg" landing/index.html
+          grep -q "./assets/film-grain.svg" landing/malaysia/index.html
           grep -q "./assets/film-grain.svg" landing/claude-design-preview.html
-          ! grep -q "data:image/svg+xml;utf8,<svg" landing/index.html
+          ! grep -q "data:image/svg+xml;utf8,<svg" landing/malaysia/index.html
           ! grep -q "data:image/svg+xml;utf8,<svg" landing/claude-design-preview.html
 
       - name: Commit hardened static export
@@ -42,7 +42,7 @@ jobs:
           set -euo pipefail
           git config user.name 'drx-design-hardening'
           git config user.email 'drx-design-hardening@users.noreply.github.com'
-          git add landing/index.html landing/claude-design-preview.html
+          git add landing/malaysia/index.html landing/claude-design-preview.html
           if git diff --cached --quiet; then
             echo 'Static export already hardened.'
             exit 0
