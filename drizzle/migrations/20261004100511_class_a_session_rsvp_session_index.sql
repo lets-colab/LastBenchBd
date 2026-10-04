@@ -1,0 +1,2 @@
+create index if not exists class_a_session_rsvp_tokens_session_id_idx
+on public.class_a_session_rsvp_tokens(session_id);
