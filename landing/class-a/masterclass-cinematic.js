@@ -513,16 +513,23 @@
       }
       if (result.outcome === 'duplicate_confirmation_required') {
         const registrationId = result.registration_id;
+        const duplicateProof = result.unlock_token;
+        if (!duplicateProof) {
+          throw new Error('Duplicate-resolution proof was not issued');
+        }
         status.innerHTML = '<strong>YOU HAVE SIGNED UP BEFORE.</strong><br>Are you signing up again because you could not join the previous masterclass, or was this registration a mistake?<div class="duplicate-actions"><button type="button" class="button button-primary" data-duplicate-missed>YES — I MISSED THE PREVIOUS CLASS</button><button type="button" class="button button-ghost" data-duplicate-mistake>NO — THIS WAS A MISTAKE</button></div>';
         const resolveDuplicate = async (reason) => {
           status.textContent = reason === 'mistake' ? 'CANCELLING THIS EXTRA REGISTRATION…' : 'MOVING YOUR EXISTING REGISTRATION TO THE CURRENT MASTERCLASS…';
           try {
+            const proofBoundReason = reason === 'missed_previous'
+              ? 'missed_previous:' + duplicateProof
+              : reason;
             const duplicateResponse = await fetch(SUPABASE_URL + '/rest/v1/rpc/class_a_resolve_duplicate_registration', {
               method: 'POST',
               headers: { apikey: SUPABASE_PUBLISHABLE_KEY, 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 p_registration_id: registrationId,
-                p_reason: reason,
+                p_reason: proofBoundReason,
                 p_recording_consent: payload.p_recording_consent
               })
             });
