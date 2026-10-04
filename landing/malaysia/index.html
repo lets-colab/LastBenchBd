@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-experience="malaysia">
 <head>
+<link rel="canonical" href="https://lastbenchbd.com/malaysia/">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../claude-design-support.js"></script>
@@ -11,11 +12,11 @@
 <x-dc>
 <helmet>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Last Bench — Build People. Build Business. Learn Faster.</title>
+<title>Study in Malaysia — Last Bench</title>
 <meta name="description" content="Last Bench is the company: CLASS[Λ] builds builders, co.lab builds businesses, Co.MPASS converges evidence, and Dr. X supports founder decisions.">
-<meta property="og:title" content="Last Bench — Build People. Build Business. Learn Faster.">
+<meta property="og:title" content="Study in Malaysia — Last Bench">
 <meta property="og:description" content="Last Bench is the company: CLASS[Λ] builds builders, co.lab builds businesses, Co.MPASS converges evidence, and Dr. X supports founder decisions.">
-<meta property="og:image" content="./assets/logo-full.png">
+<meta property="og:image" content="https://lastbenchbd.com/assets/logo-full.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#070b16">
 
@@ -25,7 +26,7 @@
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="stylesheet" href="../claude-design-ds/tokens.css">
 <link rel="stylesheet" href="../claude-design-ds/styles.css">
-<script src="../claude-design-image-slot.js"></script>
+
 <script src="../vendor/three.min.js"></script>
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
@@ -62,7 +63,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
     <div ref="{{ mountRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;"></div>
     <div ref="{{ scrimRef }}" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(12,22,44,.28),transparent 26%,transparent 72%,rgba(4,10,8,.42));"></div>
     <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse 128% 96% at 50% 42%,transparent 52%,rgba(0,0,0,.38) 100%);mix-blend-mode:multiply;"></div>
-    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('./assets/film-grain.svg');"></div>
+    <div ref="{{ grainRef }}" style="position:fixed;top:-10%;left:-10%;right:-10%;bottom:-10%;z-index:3;pointer-events:none;opacity:.08;animation:lbGrain .45s steps(4) infinite;background-image:url('../assets/film-grain.svg');"></div>
   </sc-if>
   <sc-if value="{{ webglFailed }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;background:radial-gradient(120% 55% at 50% 0%,rgba(20,44,74,.9),transparent 60%),linear-gradient(180deg,#0a0e1a 0%,#0d1420 32%,#0f1c14 64%,#123321 100%);"></div>
@@ -118,7 +119,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <div onClick="{{ stopProp }}" style="width:min(620px,100%);max-height:86vh;overflow-y:auto;background:rgba(5,16,10,.94);border:1px solid rgba(0,200,83,.38);border-radius:24px;padding:clamp(20px,4vw,36px);text-align:left;display:flex;flex-direction:column;gap:17px;box-shadow:0 30px 90px rgba(0,0,0,.7);box-sizing:border-box;">
         <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
           <div style="width:104px;height:130px;border-radius:16px;padding:3px;background:linear-gradient(150deg,#00C853,#FFB300);flex:none;box-sizing:border-box;">
-            <image-slot id="{{ founderSlotId }}" shape="rounded" radius="13" src="{{ founderPhotoSrc }}" placeholder="{{ founderPhotoPh }}" style="width:98px;height:124px;"></image-slot>
+            <img src="{{ founderPhotoSrc }}" alt="{{ founderPhotoPh }}" width="98" height="124" style="object-fit:cover;border-radius:13px;">
           </div>
           <div style="min-width:180px;flex:1;">
             <div style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(22px,3.6vw,32px);line-height:1.08;letter-spacing:-.01em;color:#fff;">{{ founderName }}</div>
@@ -198,7 +199,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <sc-if value="{{ hitzBlocked }}" hint-placeholder-val="{{ false }}">
         <button onClick="{{ openRadioPanel }}" style="pointer-events:auto;display:flex;align-items:center;min-height:44px;padding:0 13px;border:1px solid rgba(255,179,0,.5);border-radius:999px;color:#FFB300;background:rgba(5,16,10,.6);font-family:'Sora',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.16em;cursor:pointer;backdrop-filter:blur(8px);" style-hover="border-color:#FFB300;background:rgba(255,179,0,.12);">HITZ FM ↗</button>
       </sc-if>
-      <a href="#lb-company" aria-label="Choose your Last Bench path" style="pointer-events:auto;display:flex;align-items:center;flex:none;white-space:nowrap;min-height:48px;padding:0 20px;border-radius:999px;background:#00C853;color:#04140b;font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-decoration:none;box-shadow:0 6px 22px rgba(0,200,83,.32);" style-hover="background:#00E676;">{{ seatCta }}</a>
+      <a href="../" aria-label="Choose your Last Bench path" style="pointer-events:auto;display:flex;align-items:center;flex:none;white-space:nowrap;min-height:48px;padding:0 20px;border-radius:999px;background:#00C853;color:#04140b;font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-decoration:none;box-shadow:0 6px 22px rgba(0,200,83,.32);" style-hover="background:#00E676;">{{ seatCta }}</a>
       <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
         <span ref="{{ chapterRef }}" style="white-space:nowrap;">00 — DHAKA · DEPARTURE</span>
       </sc-if>
@@ -207,42 +208,6 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
   <div style="position:fixed;top:0;left:0;right:0;height:2px;z-index:7;background:rgba(255,255,255,.08);">
     <div ref="{{ progressRef }}" style="height:100%;width:100%;background:#00C853;transform:scaleX(0);transform-origin:left;box-shadow:0 0 12px #00C853;"></div>
   </div>
-
-  <!-- LAST BENCH · JEV ARCHITECTURE 2026.09.29 -->
-  <section id="lb-company" data-screen-label="Last Bench — The Company" style="position:relative;z-index:3;background:#04140B;min-height:92vh;display:flex;align-items:center;padding:96px 22px;">
-    <div style="width:min(1120px,100%);margin:0 auto;">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.3em;color:#00E676;margin-bottom:18px;">LAST BENCH · THE COMPANY</div>
-      <h1 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(34px,5.2vw,72px);line-height:1.02;letter-spacing:-.025em;margin:0;color:#fff;max-width:15ch;text-wrap:balance;">FROM WHERE YOU ARE.<br><span style="color:#00C853;">TO WHAT YOU CAN BUILD.</span></h1>
-      <p style="max-width:720px;font-size:clamp(15px,1.45vw,18px);line-height:1.7;color:rgba(242,247,243,.82);margin:26px 0 34px;text-wrap:pretty;">Last Bench connects credible opportunity to the capability, systems and relationships that help people turn it into progress.</p>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px;">
-        <div style="border:1px solid rgba(0,200,83,.28);border-radius:18px;padding:22px;background:rgba(255,255,255,.035);">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#00E676;margin-bottom:9px;">MALAYSIA · EDUCATION & MOBILITY SERVICE</div>
-          <div style="font-family:var(--lb-font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">Study in Malaysia</div>
-          <div style="font-size:13px;line-height:1.6;color:rgba(242,247,243,.65);">A focused Last Bench service journey for education decisions, applications, visa-process guidance, preparation and practical support after arrival.</div>
-          <a href="#lb-education" style="display:inline-flex;margin-top:16px;color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.12em;">START MALAYSIA JOURNEY →</a>
-        </div>
-        <div style="border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:22px;background:rgba(255,255,255,.035);">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#fff;margin-bottom:9px;">CLASS[Λ]</div>
-          <div style="font-family:var(--lb-font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">Human Lab</div>
-          <div style="font-size:13px;line-height:1.6;color:rgba(242,247,243,.65);">Build capability through practical work and visible proof. CLASS[Λ] builds builders; it is independent from the Malaysia service route.</div>
-          <a href="../class-a/" style="display:inline-flex;margin-top:16px;color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.12em;">ENTER CLASS[Λ] →</a>
-        </div>
-        <div style="border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:22px;background:rgba(255,255,255,.035);">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.18em;color:#fff;margin-bottom:9px;">co.lab</div>
-          <div style="font-family:var(--lb-font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">Business Lab</div>
-          <div style="font-size:13px;line-height:1.6;color:rgba(242,247,243,.65);">Ventures, Projects, Services and Community for founders, brands and operating teams.</div>
-          <a href="https://colab-growth-os.onrender.com" style="display:inline-flex;margin-top:16px;color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.12em;">ENTER co.lab →</a>
-        </div>
-        <div style="border:1px dashed rgba(255,255,255,.22);border-radius:18px;padding:22px;background:rgba(255,255,255,.02);">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.18em;color:rgba(242,247,243,.52);margin-bottom:9px;">PARTNERSHIPS</div>
-          <div style="font-family:var(--lb-font-display);font-size:22px;font-weight:700;color:#fff;margin-bottom:8px;">Partner / Institution</div>
-          <div style="font-size:13px;line-height:1.6;color:rgba(242,247,243,.65);">Start a partnership conversation and route it to the correct Last Bench owner without creating another business unit.</div>
-          <a href="mailto:info@lastbenchbd.com?subject=Last%20Bench%20Partnership" style="display:inline-flex;margin-top:16px;color:#00E676;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.12em;">START A PARTNERSHIP →</a>
-        </div>
-      </div>
-      <div style="margin-top:18px;padding:16px 18px;border-left:2px solid #00C853;background:rgba(0,200,83,.06);font-size:13px;line-height:1.65;color:rgba(242,247,243,.72);"><strong style="color:#fff;">One company. Two labs. Clear service routes.</strong> Malaysia is an Education & Mobility service route. CLASS[Λ] is the Human Lab. co.lab is the Business Lab, with Community nested inside co.lab.</div>
-    </div>
-  </section>
 
   <!-- MALAYSIA · EDUCATION & MOBILITY SERVICE ROUTE -->
   <section id="lb-education" ref="{{ departRef }}" data-screen-label="Malaysia Service — Bangladesh to Malaysia" style="position:relative;z-index:3;background:#04140B;min-height:460vh;">
@@ -258,7 +223,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           <h1 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(27px,4.8vw,66px);line-height:1.16;margin:0;color:#fff;max-width:17ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);">{{ t.legL1 }}<br><span style="color:#00C853;">{{ t.legL2 }}</span></h1>
         </sc-if>
         <p style="max-width:520px;font-size:clamp(14px,1.4vw,17px);line-height:1.62;color:rgba(242,247,243,.85);margin:24px 0 0;text-wrap:pretty;text-shadow:0 2px 18px rgba(0,0,0,.9);">{{ t.legSub }}</p>
-        <a class="lb-class-portal" href="#lb-company" aria-label="Choose your Last Bench path" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-height:50px;margin-top:24px;padding:0 28px;border:1px solid rgba(0,230,118,.64);border-radius:999px;background:rgba(0,200,83,.12);color:#00E676;font-family:'Sora','Hind Siliguri',sans-serif;font-size:12px;font-weight:700;letter-spacing:.11em;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(0,200,83,.14);" style-hover="background:rgba(0,200,83,.25);color:#fff;box-shadow:0 0 42px rgba(0,230,118,.25);">CHOOSE YOUR PATH →</a>        
+        <a class="lb-class-portal" href="../" aria-label="Choose your Last Bench path" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-height:50px;margin-top:24px;padding:0 28px;border:1px solid rgba(0,230,118,.64);border-radius:999px;background:rgba(0,200,83,.12);color:#00E676;font-family:'Sora','Hind Siliguri',sans-serif;font-size:12px;font-weight:700;letter-spacing:.11em;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(0,200,83,.14);" style-hover="background:rgba(0,200,83,.25);color:#fff;box-shadow:0 0 42px rgba(0,230,118,.25);">CHOOSE YOUR PATH →</a>
       </div>
       <div ref="{{ benchCopyRef }}" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(14px);z-index:2;width:min(760px,88vw);text-align:center;opacity:0;pointer-events:none;will-change:opacity,transform;padding:clamp(20px,3.6vh,40px) clamp(18px,3.4vw,44px);background:radial-gradient(ellipse 80% 118% at 50% 50%,rgba(2,9,5,.82) 0%,rgba(2,9,5,.58) 44%,rgba(2,9,5,.2) 72%,transparent 88%);">
         <div style="font-size:11.5px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:16px;">{{ t.benchKicker }}</div>
@@ -431,7 +396,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
         <sc-for list="{{ founders }}" as="f" hint-placeholder-count="3">
           <div role="button" tabindex="0" data-founder="{{ f.key }}" onClick="{{ openFounder }}" onKeyDown="{{ openFounderKey }}" style="width:{{ f.cardW }};cursor:pointer;background:rgba(5,16,10,.66);border:1px solid rgba(0,200,83,.26);border-radius:16px;padding:9px 9px 12px;backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;gap:7px;box-sizing:border-box;transition:transform .35s ease,border-color .35s ease;" style-hover="transform:translateY(-5px);border-color:#00E676;">
             <div style="width:100%;aspect-ratio:3/4;border-radius:12px;padding:2px;background:linear-gradient(150deg,#00C853,#FFB300);box-sizing:border-box;">
-              <image-slot id="founder-{{ f.key }}" shape="rounded" radius="11" src="{{ f.photoSrc }}" placeholder="{{ f.photoPh }}" style="width:100%;height:100%;"></image-slot>
+              <img src="{{ f.photoSrc }}" alt="{{ f.name }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:11px;">
             </div>
             <div style="font-family:var(--lb-font-display);font-weight:600;font-size:13.5px;color:#fff;text-align:center;line-height:1.18;">{{ f.name }}</div>
             <sc-if value="{{ showRole }}" hint-placeholder-val="{{ true }}">
@@ -735,7 +700,7 @@ class Component extends DCLogic {
         key, name: fset[key].name, role: roleShort[key],
         cardW: short ? '74px' : (narrow ? 'calc(33.333% - 8px)' : '132px'),
         photoPh: fset[key].name + ' — approved founder portrait',
-        photoSrc: (publicProfiles[key] && publicProfiles[key].portrait) || '',
+        photoSrc: publicProfiles[key]?.portrait ? new URL(publicProfiles[key].portrait, new URL('../', location.href)).href : '',
       })),
       showRole: !short,
       compactSeat: compact,
@@ -748,7 +713,7 @@ class Component extends DCLogic {
       founderOpen: !!this.state.founder,
       founderSlotId: 'founder-' + (this.state.founder || 'sayem'),
       founderPhotoPh: f.name ? f.name + ' — approved founder portrait' : '',
-      founderPhotoSrc: currentPublicProfile.portrait || '',
+      founderPhotoSrc: currentPublicProfile.portrait ? new URL(currentPublicProfile.portrait, new URL('../', location.href)).href : '',
       founderName: f.name, founderRole: f.role, founderTag: f.tag, founderLine: f.line,
       founderAlias: f.alias || currentPublicProfile.alias || '',
       founderHasAlias: !!(f.alias || currentPublicProfile.alias),
