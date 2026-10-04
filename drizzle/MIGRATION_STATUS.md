@@ -202,3 +202,15 @@ Session scheduling is now LIVE: the real Google Calendar event and Meet room exi
 - No deployable Slack bot/webhook credential or Resend credential is currently available to the worker. In that state the worker reports the transport as blocked and leaves the authoritative outbox pending rather than fabricating delivery.
 - Existing genuine masterclass registrants were separately covered by a real Google Calendar invite and a one-time Gmail confirmation from `info@lastbenchbd.com`.
 - Future registration/pass/calendar UI remains functional without the external providers; unattended provider delivery becomes active as soon as the corresponding transport secret is connected.
+
+
+## CLASS[Λ] three-state RSVP verification — 4 October 2026
+
+- Supabase migration `20261004095309_class_a_session_rsvp_tokens` is applied in production.
+- `public.class_a_session_rsvp_tokens` stores only SHA-256 token hashes plus the explicit response state: `joining`, `reschedule`, or `previous_attendee`.
+- Direct table access is denied to `anon` and `authenticated`; the service role is the only data-plane writer/reader for this capability.
+- Edge Function `class-a-rsvp` is ACTIVE, uses custom high-entropy bearer-token validation with JWT verification disabled only for that explicit public capability endpoint, and returns CORS only for `https://lastbenchbd.com`.
+- Runtime verification returned HTTP 200 for the health endpoint and HTTP 404 for a syntactically valid but unknown token, with no RSVP mutation.
+- The visible RSVP surface intentionally requires a second human confirmation click after the email button so automated link scanners cannot register attendance intent.
+
+- Follow-up migration `20261004100511_class_a_session_rsvp_session_index` adds the covering `session_id` index required by the post-DDL performance advisor.
