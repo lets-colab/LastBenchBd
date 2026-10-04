@@ -212,3 +212,5 @@ Session scheduling is now LIVE: the real Google Calendar event and Meet room exi
 - Edge Function `class-a-rsvp` is ACTIVE, uses custom high-entropy bearer-token validation with JWT verification disabled only for that explicit public capability endpoint, and returns CORS only for `https://lastbenchbd.com`.
 - Runtime verification returned HTTP 200 for the health endpoint and HTTP 404 for a syntactically valid but unknown token, with no RSVP mutation.
 - The visible RSVP surface intentionally requires a second human confirmation click after the email button so automated link scanners cannot register attendance intent.
+
+- Follow-up migration `20261004100511_class_a_session_rsvp_session_index` adds the covering `session_id` index required by the post-DDL performance advisor.
