@@ -99,6 +99,16 @@ const checks = [
     ],
   },
   {
+    name: "CLASS RSVP confirmation",
+    url: `${webOrigin}/class-a/rsvp.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "CONFIRM MY RESPONSE",
+      "class-a-rsvp",
+      "email-link scanners",
+    ],
+  },
+  {
     name: "CLASS instructor live control",
     url: `${webOrigin}/class-a/live-control.html`,
     expectHtml: true,
