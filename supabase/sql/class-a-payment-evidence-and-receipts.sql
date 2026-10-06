@@ -68,6 +68,11 @@ grant all on public.class_a_payments to service_role;
 grant all on public.class_a_payment_evidence to service_role;
 grant all on public.class_a_payment_events to service_role;
 
+create index if not exists class_a_payment_evidence_payment_id_idx
+  on public.class_a_payment_evidence(payment_id);
+create index if not exists class_a_payment_events_payment_id_idx
+  on public.class_a_payment_events(payment_id);
+
 insert into storage.buckets (id,name,public,file_size_limit,allowed_mime_types)
 values (
   'class-a-payment-proof','class-a-payment-proof',false,10485760,
