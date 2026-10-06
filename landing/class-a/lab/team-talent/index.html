@@ -54,7 +54,8 @@ input:focus-visible,textarea:focus-visible,.btn:focus-visible{outline:3px solid 
   </div>
   <div class="card">
     <h3>Governance boundary</h3>
-    <p class="truth">This tool is decision support, not an automatic hiring system. Protected-characteristic screening terms are blocked from the Job DNA in this MVP, and the tool does not make final employment decisions. HR must still review source evidence, validate job relevance, follow applicable employment law and apply company policy before progressing a candidate.</p>\n    <p class="truth" id="guardrailState" style="color:#9fe4b8">Guardrail active: no blocked screening terms detected.</p>
+    <p class="truth">This tool is decision support, not an automatic hiring system. Protected-characteristic screening terms are blocked from the Job DNA in this MVP, and the tool does not make final employment decisions. HR must still review source evidence, validate job relevance, follow applicable employment law and apply company policy before progressing a candidate.</p>
+    <p class="truth" id="guardrailState" style="color:#9fe4b8">Guardrail active: no blocked screening terms detected.</p>
   </div>
 </section>
 
@@ -80,9 +81,9 @@ input:focus-visible,textarea:focus-visible,.btn:focus-visible{outline:3px solid 
 <script>
 let currentResults=[];
 const $=id=>document.getElementById(id);
-const BLOCKED_SCREENING_TERMS=["gender","sex","male","female","religion","religious","race","ethnicity","ethnic","marital status","pregnancy","pregnant","disability","disabled","sexual orientation","nationality","national origin","age"];
+const BLOCKED_SCREENING_TERMS=["gender","sex","male","female","religion","religious","race","ethnicity","ethnic","marital status","pregnancy","pregnant","disability","disabled","sexual orientation","nationality","national origin","age","date of birth","dob"];
 function rawTerms(id){return $(id).value.split(",").map(x=>x.trim().toLowerCase()).filter(Boolean)}
-function blockedTerm(t){return BLOCKED_SCREENING_TERMS.some(x=>t===x||t.includes(x))}
+function hasPhrase(text,phrase){const esc=phrase.replace(/[.*+?^${}()|[\\]\\\\]/g,"\\function blockedTerm(t){return BLOCKED_SCREENING_TERMS.some(x=>t===x||t.includes(x))}");return new RegExp("(^|\\b)"+esc+"(\\b|$)","i").test(text)}\nfunction blockedTerm(t){return BLOCKED_SCREENING_TERMS.some(x=>hasPhrase(t,x))}
 function dna(){const mustRaw=rawTerms("must"),niceRaw=rawTerms("nice");const blocked=[...mustRaw,...niceRaw].filter(blockedTerm);return {title:$("jobTitle").value.trim()||"Untitled role",must:mustRaw.filter(t=>!blockedTerm(t)),nice:niceRaw.filter(t=>!blockedTerm(t)),blocked,years:Math.max(0,Number($("years").value)||0)}}
 function refreshDna(){const d=dna();$("mRole").textContent=d.title;$("mMust").textContent=d.must.length;$("mNice").textContent=d.nice.length;$("mYears").textContent=d.years+"y";const g=$("guardrailState");if(g){g.textContent=d.blocked.length?"Guardrail blocked screening term(s): "+[...new Set(d.blocked)].join(", ")+". Remove them from the hiring criteria.":"Guardrail active: no blocked screening terms detected.";g.style.color=d.blocked.length?"#ffcf72":"#9fe4b8"}}
 $("buildDna").addEventListener("click",refreshDna);
