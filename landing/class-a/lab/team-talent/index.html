@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>TEAM Talent Intelligence — Operational MVP | CLASS[Λ]</title>
+<meta name="description" content="Operational CLASS[Λ] live-build recruitment screening MVP for Rajib / Team Group.">
+<style>
+:root{--bg:#070908;--panel:#0f1312;--panel2:#151a18;--ink:#f4f7f5;--muted:#9ca7a2;--green:#00c853;--line:#28322e;--amber:#ffc85a;--red:#ff7777}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 84% 8%,#11341f 0,transparent 26%),var(--bg);color:var(--ink);line-height:1.5}
+.wrap{width:min(1200px,calc(100% - 28px));margin:auto}.top{position:sticky;top:0;background:rgba(7,9,8,.87);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);z-index:20}.nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:.07em}.brand img{width:35px;height:35px}.meta{font-size:12px;color:var(--muted)}
+.hero{padding:72px 0 42px}.eyebrow{color:var(--green);font-size:12px;letter-spacing:.12em;font-weight:900}.hero h1{font-size:clamp(42px,7vw,78px);letter-spacing:-.055em;line-height:.95;margin:13px 0 18px}.hero p{font-size:18px;color:#c8cfcc;max-width:850px}
+.grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:18px}.card{background:linear-gradient(180deg,#121715,#0c100f);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:18px}.card h2,.card h3{margin-top:0}
+label{display:block;font-size:12px;font-weight:800;color:#b8c2bd;margin:13px 0 6px;letter-spacing:.04em}input,textarea{width:100%;background:#080b0a;border:1px solid var(--line);border-radius:11px;color:var(--ink);padding:12px;font:inherit}textarea{min-height:110px;resize:vertical}
+.btn{border:1px solid var(--line);background:#111715;color:var(--ink);padding:11px 14px;border-radius:999px;font-weight:800;cursor:pointer}.btn.primary{background:var(--green);border-color:var(--green);color:#001b0b}.btn.warn{border-color:#685825;color:#f0cd76}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.truth{font-size:12px;color:var(--muted)}
+.dna{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{padding:14px;border:1px solid var(--line);border-radius:14px;background:#0a0e0d}.metric span{display:block;color:var(--muted);font-size:11px}.metric b{display:block;margin-top:5px;font-size:18px}
+.tableWrap{overflow:auto}.results{width:100%;border-collapse:collapse;min-width:790px}.results th,.results td{text-align:left;border-bottom:1px solid var(--line);padding:12px 10px;vertical-align:top}.results th{font-size:11px;color:var(--muted);letter-spacing:.07em}.score{font-size:22px;font-weight:900}.grade{display:inline-block;border-radius:999px;padding:4px 8px;border:1px solid #2f6947;color:#80f2a9;background:#0c2416;font-size:11px;font-weight:900}.grade.mid{border-color:#78632b;color:#efcf7e;background:#201b0c}.grade.low{border-color:#714040;color:#ff9b9b;background:#221010}
+.evidence{font-size:12px;color:#c0c9c4}.muted{color:var(--muted)}.empty{padding:42px 12px;text-align:center;color:var(--muted)}.case{display:grid;grid-template-columns:1fr 60px 1fr;gap:18px;align-items:stretch}.arrow{display:flex;align-items:center;justify-content:center;color:var(--green);font-size:28px}.case ul{padding-left:18px;color:#c7d0cb}.footer{padding:45px 0 70px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+input:focus-visible,textarea:focus-visible,.btn:focus-visible{outline:3px solid #6cff9a;outline-offset:2px}
+@media(max-width:900px){.grid,.case{grid-template-columns:1fr}.dna{grid-template-columns:1fr 1fr}.arrow{transform:rotate(90deg)}}@media(max-width:520px){.dna{grid-template-columns:1fr}.meta{display:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap nav"><div class="brand"><img src="../../assets/last-bench-bench.png" alt="Last Bench"><span>TEAM TALENT INTELLIGENCE</span></div><span class="meta">CLASS[Λ] LIVE BUILD · OPERATIONAL SAFE MVP</span></div></header>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">RAJIB / TEAM GROUP · RECRUITMENT CO-PILOT</div><h1>RAW CVs IN.<br>EXPLAINABLE SHORTLIST OUT.</h1><p>A browser-based recruitment decision-support MVP that converts a vacancy into a Job DNA, reads candidate text, scores only against job evidence, explains the result and lets HR export a shortlist. Candidate data stays in the browser.</p></section>
+
+<section class="card">
+  <div class="eyebrow">BEFORE → AFTER</div>
+  <div class="case">
+    <div><h3>Before: manual screening</h3><ul><li>Open CVs one by one.</li><li>Hold job requirements in human memory.</li><li>Repeated comparisons are slow and inconsistent.</li><li>Evidence for a shortlist is hard to audit.</li></ul></div>
+    <div class="arrow">→</div>
+    <div><h3>After: structured decision support</h3><ul><li>Define the Job DNA once.</li><li>Normalize candidate text.</li><li>Score visible evidence against requirements.</li><li>HR sees reasons, gaps and confidence before deciding.</li></ul></div>
+  </div>
+</section>
+
+<div class="grid">
+<section>
+  <div class="card">
+    <div class="eyebrow">01 · JOB DNA</div><h2>Define success for the role.</h2>
+    <label>Job title</label><input id="jobTitle" value="Senior Merchandiser">
+    <label>Must-have skills / terms (comma separated)</label><textarea id="must">merchandising, woven, buyer communication, costing, production follow-up</textarea>
+    <label>Nice-to-have skills / terms</label><textarea id="nice">ERP, team leadership, compliance, Excel</textarea>
+    <label>Minimum years of relevant experience</label><input id="years" type="number" min="0" max="40" value="5">
+    <div class="actions"><button class="btn primary" id="buildDna">BUILD JOB DNA</button><button class="btn" id="demo">LOAD DEMO CANDIDATES</button></div>
+  </div>
+  <div class="card">
+    <div class="eyebrow">02 · CANDIDATES</div><h2>Paste or load text evidence.</h2>
+    <p class="truth">Format multiple candidates as <strong>### CANDIDATE: Name</strong> followed by CV text. You can also select .txt or .csv files; they are read locally and never uploaded by this page.</p>
+    <textarea id="candidates" style="min-height:250px" placeholder="### CANDIDATE: Candidate A&#10;7 years merchandising...&#10;&#10;### CANDIDATE: Candidate B&#10;..."></textarea>
+    <label>Optional local text files</label><input id="files" type="file" multiple accept=".txt,.csv,text/plain,text/csv">
+    <div class="actions"><button class="btn primary" id="screen">SCREEN CANDIDATES</button><button class="btn" id="clear">CLEAR</button></div>
+  </div>
+  <div class="card">
+    <h3>Governance boundary</h3>
+    <p class="truth">This tool is decision support, not an automatic hiring system. It deliberately ignores protected characteristics and does not make final employment decisions. HR must review source evidence, validate job relevance and apply company policy before progressing a candidate.</p>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <div class="eyebrow">JOB DNA SNAPSHOT</div>
+    <div class="dna">
+      <div class="metric"><span>ROLE</span><b id="mRole">Senior Merchandiser</b></div>
+      <div class="metric"><span>MUST-HAVES</span><b id="mMust">5</b></div>
+      <div class="metric"><span>NICE-TO-HAVES</span><b id="mNice">4</b></div>
+      <div class="metric"><span>MIN EXPERIENCE</span><b id="mYears">5y</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><div><div class="eyebrow">03 · EXPLAINABLE SHORTLIST</div><h2 style="margin-bottom:0">Rank by visible job evidence.</h2></div><button class="btn" id="export" disabled>EXPORT CSV</button></div>
+    <div class="tableWrap"><div class="empty" id="empty">Build the Job DNA, add candidates, then run screening.</div><table class="results" id="table" hidden><thead><tr><th>CANDIDATE</th><th>SCORE</th><th>GRADE</th><th>CONFIDENCE</th><th>MATCHED EVIDENCE</th><th>GAPS</th></tr></thead><tbody id="rows"></tbody></table></div>
+  </div>
+</section>
+</div>
+</main>
+<footer class="footer"><div class="wrap">CLASS[Λ] · ACQUIRE · APPLY · ADVANCE. Operational learning MVP: browser-local evidence scoring, human decision required. Not a production ATS or a substitute for legal/privacy review.</div></footer>
+
+<script>
+let currentResults=[];
+const $=id=>document.getElementById(id);
+function terms(id){return $(id).value.split(",").map(x=>x.trim().toLowerCase()).filter(Boolean)}
+function dna(){return {title:$("jobTitle").value.trim()||"Untitled role",must:terms("must"),nice:terms("nice"),years:Math.max(0,Number($("years").value)||0)}}
+function refreshDna(){const d=dna();$("mRole").textContent=d.title;$("mMust").textContent=d.must.length;$("mNice").textContent=d.nice.length;$("mYears").textContent=d.years+"y"}
+$("buildDna").addEventListener("click",refreshDna);
+function parseCandidates(raw){
+  const parts=raw.split(/(?=^###\s*CANDIDATE\s*:\s*)/gmi).map(x=>x.trim()).filter(Boolean);
+  if(!parts.length && raw.trim()) return [{name:"Candidate 1",text:raw.trim()}];
+  return parts.map((part,i)=>{const m=part.match(/^###\s*CANDIDATE\s*:\s*(.+)$/mi);const name=m?m[1].trim():"Candidate "+(i+1);const text=part.replace(/^###\s*CANDIDATE\s*:\s*.+$/mi,"").trim();return {name,text}})
+}
+function yearsFrom(text){const xs=[...text.matchAll(/(\d+(?:\.\d+)?)\s*(?:\+\s*)?years?/gi)].map(m=>Number(m[1]));return xs.length?Math.max(...xs):0}
+function grade(score){if(score>=90)return["A+",""];if(score>=80)return["A",""];if(score>=70)return["B","mid"];if(score>=60)return["C","mid"];return["D","low"]}
+function evaluate(c,d){
+  const low=c.text.toLowerCase();
+  const mustHit=d.must.filter(t=>low.includes(t)),mustMiss=d.must.filter(t=>!low.includes(t));
+  const niceHit=d.nice.filter(t=>low.includes(t)),niceMiss=d.nice.filter(t=>!low.includes(t));
+  const exp=yearsFrom(c.text);
+  const mustScore=d.must.length?mustHit.length/d.must.length:1;
+  const niceScore=d.nice.length?niceHit.length/d.nice.length:1;
+  const expScore=d.years?Math.min(exp/d.years,1):1;
+  const score=Math.round((mustScore*.70+niceScore*.15+expScore*.15)*100);
+  const evidenceCount=mustHit.length+niceHit.length+(exp>0?1:0);
+  const confidence=Math.round(Math.min(100,35+evidenceCount*9+Math.min(c.text.length/35,30)));
+  return {...c,score,confidence,exp,mustHit,mustMiss,niceHit,niceMiss,grade:grade(score)};
+}
+function render(){
+  const tbody=$("rows");tbody.innerHTML="";
+  currentResults.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML="<td><strong>"+escapeHtml(r.name)+"</strong><div class='muted'>"+r.exp+"y detected</div></td><td><span class='score'>"+r.score+"</span>/100</td><td><span class='grade "+r.grade[1]+"'>"+r.grade[0]+"</span></td><td>"+r.confidence+"%</td><td class='evidence'>"+escapeHtml([...r.mustHit,...r.niceHit].join(", ")||"No direct keyword evidence")+"</td><td class='evidence'>"+escapeHtml(r.mustMiss.join(", ")||"No must-have gaps detected")+"</td>";tbody.appendChild(tr)});
+  $("empty").hidden=currentResults.length>0;$("table").hidden=currentResults.length===0;$("export").disabled=currentResults.length===0
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+$("screen").addEventListener("click",()=>{refreshDna();const cs=parseCandidates($("candidates").value);currentResults=cs.map(c=>evaluate(c,dna())).sort((a,b)=>b.score-a.score);render()});
+$("demo").addEventListener("click",()=>{$("candidates").value="### CANDIDATE: Samir Rahman\n7 years merchandising experience in woven apparel. Strong buyer communication, costing, production follow-up, Excel and team leadership. Worked with ERP and compliance coordination.\n\n### CANDIDATE: Nabila Karim\n5 years merchandising. Buyer communication and costing experience. Strong Excel skills and production planning exposure.\n\n### CANDIDATE: Tarek Hossain\n3 years retail operations and sales. Team leadership and Excel. Limited merchandising exposure.";});
+$("clear").addEventListener("click",()=>{$("candidates").value="";$("files").value="";currentResults=[];render()});
+$("files").addEventListener("change",async e=>{const chunks=[];for(const f of e.target.files){chunks.push("### CANDIDATE: "+f.name.replace(/\.[^.]+$/,"")+"\n"+await f.text())}$("candidates").value=[$("candidates").value.trim(),...chunks].filter(Boolean).join("\n\n")});
+$("export").addEventListener("click",()=>{const lines=[["Candidate","Score","Grade","Confidence","ExperienceDetected","MatchedEvidence","MustHaveGaps"],...currentResults.map(r=>[r.name,r.score,r.grade[0],r.confidence,r.exp,[...r.mustHit,...r.niceHit].join("; "),r.mustMiss.join("; ")])];const csv=lines.map(row=>row.map(v=>"\""+String(v).replaceAll("\"","\"\"")+"\"").join(",")).join("\n");const blob=new Blob([csv],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="TEAM-Talent-Intelligence-Shortlist.csv";a.click();URL.revokeObjectURL(a.href)});
+refreshDna();
+</script>
+</body>
+</html>
