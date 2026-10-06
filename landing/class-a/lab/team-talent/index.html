@@ -31,7 +31,7 @@ input:focus-visible,textarea:focus-visible,.btn:focus-visible{outline:3px solid 
   <div class="case">
     <div><h3>Before: manual screening</h3><ul><li>Open CVs one by one.</li><li>Hold job requirements in human memory.</li><li>Repeated comparisons are slow and inconsistent.</li><li>Evidence for a shortlist is hard to audit.</li></ul></div>
     <div class="arrow">→</div>
-    <div><h3>After: structured decision support</h3><ul><li>Define the Job DNA once.</li><li>Normalize candidate text.</li><li>Score visible evidence against requirements.</li><li>HR sees reasons, gaps and confidence before deciding.</li></ul></div>
+    <div><h3>After: structured decision support</h3><ul><li>Define the Job DNA once.</li><li>Normalize candidate text.</li><li>Score visible evidence against requirements.</li><li>HR sees reasons, gaps and evidence strength before deciding.</li></ul></div>
   </div>
 </section>
 
@@ -54,7 +54,8 @@ input:focus-visible,textarea:focus-visible,.btn:focus-visible{outline:3px solid 
   </div>
   <div class="card">
     <h3>Governance boundary</h3>
-    <p class="truth">This tool is decision support, not an automatic hiring system. It deliberately ignores protected characteristics and does not make final employment decisions. HR must review source evidence, validate job relevance and apply company policy before progressing a candidate.</p>
+    <p class="truth">This tool is decision support, not an automatic hiring system. Protected-characteristic screening terms are blocked from the Job DNA in this MVP, and the tool does not make final employment decisions. HR must still review source evidence, validate job relevance, follow applicable employment law and apply company policy before progressing a candidate.</p>
+    <p class="truth" id="guardrailState" style="color:#9fe4b8">Guardrail active: no blocked screening terms detected.</p>
   </div>
 </section>
 
@@ -69,8 +70,8 @@ input:focus-visible,textarea:focus-visible,.btn:focus-visible{outline:3px solid 
     </div>
   </div>
   <div class="card">
-    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><div><div class="eyebrow">03 · EXPLAINABLE SHORTLIST</div><h2 style="margin-bottom:0">Rank by visible job evidence.</h2></div><button class="btn" id="export" disabled>EXPORT CSV</button></div>
-    <div class="tableWrap"><div class="empty" id="empty">Build the Job DNA, add candidates, then run screening.</div><table class="results" id="table" hidden><thead><tr><th>CANDIDATE</th><th>SCORE</th><th>GRADE</th><th>CONFIDENCE</th><th>MATCHED EVIDENCE</th><th>GAPS</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><div><div class="eyebrow">03 · EXPLAINABLE SHORTLIST</div><h2 style="margin-bottom:0">Rank by visible job evidence. Match score and evidence strength are deterministic heuristics, not probability estimates.</h2></div><button class="btn" id="export" disabled>EXPORT CSV</button></div>
+    <div class="tableWrap"><div class="empty" id="empty">Build the Job DNA, add candidates, then run screening.</div><table class="results" id="table" hidden><thead><tr><th>CANDIDATE</th><th>SCORE</th><th>GRADE</th><th>EVIDENCE STRENGTH</th><th>MATCHED EVIDENCE</th><th>GAPS</th></tr></thead><tbody id="rows"></tbody></table></div>
   </div>
 </section>
 </div>
@@ -80,9 +81,11 @@ input:focus-visible,textarea:focus-visible,.btn:focus-visible{outline:3px solid 
 <script>
 let currentResults=[];
 const $=id=>document.getElementById(id);
-function terms(id){return $(id).value.split(",").map(x=>x.trim().toLowerCase()).filter(Boolean)}
-function dna(){return {title:$("jobTitle").value.trim()||"Untitled role",must:terms("must"),nice:terms("nice"),years:Math.max(0,Number($("years").value)||0)}}
-function refreshDna(){const d=dna();$("mRole").textContent=d.title;$("mMust").textContent=d.must.length;$("mNice").textContent=d.nice.length;$("mYears").textContent=d.years+"y"}
+const BLOCKED_SCREENING_TERMS=["gender","sex","male","female","religion","religious","race","ethnicity","ethnic","marital status","pregnancy","pregnant","disability","disabled","sexual orientation","nationality","national origin","age","date of birth","dob"];
+function rawTerms(id){return $(id).value.split(",").map(x=>x.trim().toLowerCase()).filter(Boolean)}
+function blockedTerm(t){const normalized=" "+t.toLowerCase().replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim()+" ";return BLOCKED_SCREENING_TERMS.some(x=>normalized.includes(" "+x+" "))}
+function dna(){const mustRaw=rawTerms("must"),niceRaw=rawTerms("nice");const blocked=[...mustRaw,...niceRaw].filter(blockedTerm);return {title:$("jobTitle").value.trim()||"Untitled role",must:mustRaw.filter(t=>!blockedTerm(t)),nice:niceRaw.filter(t=>!blockedTerm(t)),blocked,years:Math.max(0,Number($("years").value)||0)}}
+function refreshDna(){const d=dna();$("mRole").textContent=d.title;$("mMust").textContent=d.must.length;$("mNice").textContent=d.nice.length;$("mYears").textContent=d.years+"y";const g=$("guardrailState");if(g){g.textContent=d.blocked.length?"Guardrail blocked screening term(s): "+[...new Set(d.blocked)].join(", ")+". Remove them from the hiring criteria.":"Guardrail active: no blocked screening terms detected.";g.style.color=d.blocked.length?"#ffcf72":"#9fe4b8"}}
 $("buildDna").addEventListener("click",refreshDna);
 function parseCandidates(raw){
   const parts=raw.split(/(?=^###\s*CANDIDATE\s*:\s*)/gmi).map(x=>x.trim()).filter(Boolean);
@@ -101,12 +104,12 @@ function evaluate(c,d){
   const expScore=d.years?Math.min(exp/d.years,1):1;
   const score=Math.round((mustScore*.70+niceScore*.15+expScore*.15)*100);
   const evidenceCount=mustHit.length+niceHit.length+(exp>0?1:0);
-  const confidence=Math.round(Math.min(100,35+evidenceCount*9+Math.min(c.text.length/35,30)));
-  return {...c,score,confidence,exp,mustHit,mustMiss,niceHit,niceMiss,grade:grade(score)};
+  const evidenceStrength=Math.round(Math.min(100,35+evidenceCount*9+Math.min(c.text.length/35,30)));
+  return {...c,score,evidenceStrength,exp,mustHit,mustMiss,niceHit,niceMiss,grade:grade(score)};
 }
 function render(){
   const tbody=$("rows");tbody.innerHTML="";
-  currentResults.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML="<td><strong>"+escapeHtml(r.name)+"</strong><div class='muted'>"+r.exp+"y detected</div></td><td><span class='score'>"+r.score+"</span>/100</td><td><span class='grade "+r.grade[1]+"'>"+r.grade[0]+"</span></td><td>"+r.confidence+"%</td><td class='evidence'>"+escapeHtml([...r.mustHit,...r.niceHit].join(", ")||"No direct keyword evidence")+"</td><td class='evidence'>"+escapeHtml(r.mustMiss.join(", ")||"No must-have gaps detected")+"</td>";tbody.appendChild(tr)});
+  currentResults.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML="<td><strong>"+escapeHtml(r.name)+"</strong><div class='muted'>"+r.exp+"y detected</div></td><td><span class='score'>"+r.score+"</span>/100</td><td><span class='grade "+r.grade[1]+"'>"+r.grade[0]+"</span></td><td>"+r.evidenceStrength+"%</td><td class='evidence'>"+escapeHtml([...r.mustHit,...r.niceHit].join(", ")||"No direct keyword evidence")+"</td><td class='evidence'>"+escapeHtml(r.mustMiss.join(", ")||"No must-have gaps detected")+"</td>";tbody.appendChild(tr)});
   $("empty").hidden=currentResults.length>0;$("table").hidden=currentResults.length===0;$("export").disabled=currentResults.length===0
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
@@ -114,7 +117,7 @@ $("screen").addEventListener("click",()=>{refreshDna();const cs=parseCandidates(
 $("demo").addEventListener("click",()=>{$("candidates").value="### CANDIDATE: Samir Rahman\n7 years merchandising experience in woven apparel. Strong buyer communication, costing, production follow-up, Excel and team leadership. Worked with ERP and compliance coordination.\n\n### CANDIDATE: Nabila Karim\n5 years merchandising. Buyer communication and costing experience. Strong Excel skills and production planning exposure.\n\n### CANDIDATE: Tarek Hossain\n3 years retail operations and sales. Team leadership and Excel. Limited merchandising exposure.";});
 $("clear").addEventListener("click",()=>{$("candidates").value="";$("files").value="";currentResults=[];render()});
 $("files").addEventListener("change",async e=>{const chunks=[];for(const f of e.target.files){chunks.push("### CANDIDATE: "+f.name.replace(/\.[^.]+$/,"")+"\n"+await f.text())}$("candidates").value=[$("candidates").value.trim(),...chunks].filter(Boolean).join("\n\n")});
-$("export").addEventListener("click",()=>{const lines=[["Candidate","Score","Grade","Confidence","ExperienceDetected","MatchedEvidence","MustHaveGaps"],...currentResults.map(r=>[r.name,r.score,r.grade[0],r.confidence,r.exp,[...r.mustHit,...r.niceHit].join("; "),r.mustMiss.join("; ")])];const csv=lines.map(row=>row.map(v=>"\""+String(v).replaceAll("\"","\"\"")+"\"").join(",")).join("\n");const blob=new Blob([csv],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="TEAM-Talent-Intelligence-Shortlist.csv";a.click();URL.revokeObjectURL(a.href)});
+$("export").addEventListener("click",()=>{const lines=[["Candidate","Score","Grade","EvidenceStrength","ExperienceDetected","MatchedEvidence","MustHaveGaps"],...currentResults.map(r=>[r.name,r.score,r.grade[0],r.evidenceStrength,r.exp,[...r.mustHit,...r.niceHit].join("; "),r.mustMiss.join("; ")])];const csv=lines.map(row=>row.map(v=>"\""+String(v).replaceAll("\"","\"\"")+"\"").join(",")).join("\n");const blob=new Blob([csv],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="TEAM-Talent-Intelligence-Shortlist.csv";a.click();URL.revokeObjectURL(a.href)});
 refreshDna();
 </script>
 </body>
