@@ -1,5 +1,5 @@
 # SPA entry-route contract.
-# Netlify/Cloudflare can consume these rewrites directly. GitHub Pages does not
+# Cloudflare-compatible tooling can consume these rewrites directly. GitHub Pages does not
 # support rewrite rules, so scripts/build-site.mjs materializes every exact
 # /app route below as an index.html and uses a custom 404 fallback for dynamic
 # /app/admin/*, /app/cohort/* and /app/tutor/* routes.

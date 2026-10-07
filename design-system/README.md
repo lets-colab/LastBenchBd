@@ -2,7 +2,7 @@
 
 This directory is the canonical implementation contract for the **Last Bench parent brand**.
 
-Last Bench is an **Opportunity Accelerator** with three operating engines — Education & Mobility, CLASS[Λ], and co.lab — connected by Community + Platform. The parent visual law is:
+Last Bench is **the company**. CLASS[Λ] is the Human Lab; co.lab is the Business Lab with Ventures, Projects, Services and Community; Co.MPASS is the Business Dashboard / convergence layer; Dr. X is the Founder Second Brain / Twin. Education & Mobility remains an operating/service domain. The parent visual law is:
 
 > **Dark for emotion. White for trust. Green for progress.**
 

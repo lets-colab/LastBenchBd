@@ -7,7 +7,6 @@
 /tests/ @lets-colab
 /.github/workflows/ @lets-colab
 /render.yaml @lets-colab
-/netlify.toml @lets-colab
 /.env.example @lets-colab
 
 # Brand and public conversion surfaces

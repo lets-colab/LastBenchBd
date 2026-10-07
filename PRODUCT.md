@@ -2,22 +2,26 @@
 
 ## Canonical category
 
-**Opportunity Accelerator.**
+**Last Bench — the company.**
 
-**Corporate descriptor:** Education · Capability · Business · Community.
+**Operating model:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain.
 
 **Brand promise:** **From where you are. To what you can build.**
 
-Last Bench is the umbrella opportunity-acceleration platform. It is not defined by one country, one admissions corridor, one course or one consulting offer.
+Last Bench is the company. Its current locked architecture is a learning flywheel rather than a three-engine hierarchy.
 
-Last Bench connects people to credible opportunities and helps them turn those opportunities into progress through three operating engines and one connective layer:
+1. **CLASS[Λ] — Human Lab:** builds builders through skill, execution and proof.
+2. **co.lab — Business Lab:** incubates, accelerates and grows businesses through four doors:
+   - **Ventures:** businesses incubated or accelerated from the CLASS[Λ] founder pathway.
+   - **Projects:** defined build work; **ProjectX = Website Projects**.
+   - **Services:** repeatable brand, business and growth capabilities.
+   - **Community:** Influencers · Ambassadors · Creators · Advisors.
+3. **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction. It does not replace source systems or founder judgment.
+4. **Dr. X — Founder Second Brain / Twin:** combines governed memory, Founder Twin context, JEV judgment and reasoning to support founder decisions.
 
-1. **Education & Mobility — Access:** education pathways, university guidance, admissions/application support, scholarships/funding verification, visa/process guidance, pre-departure, settlement and student community.
-2. **CLASS[Λ] — Capability:** AI fluency, research, building, creation, growth, sales, automation and proof-of-work; the current flagship offer is the 20-Class One-Person Venture Builder.
-3. **co.lab — Business & Growth:** brand development, business development, growth strategy, creative execution, creator/community systems, venture validation, automation and market launch.
-4. **Community + Platform — Connection & Continuity:** shared relationships, identity, verified progress, opportunity routing, referrals, alumni, partners and long-term context.
+Business-facing loop: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved CLASS[Λ] + co.lab → new evidence.**
 
-The architecture is **not** a mandatory funnel. People may enter through Education, CLASS[Λ], co.lab or a relevant community/partner pathway depending on their need and stage.
+Education & Mobility remains a real operating/service domain inside Last Bench. It must not silently recreate the superseded “three engines + connective layer” architecture.
 
 ## Strategic progression model
 
@@ -40,7 +44,7 @@ If an initiative does not strengthen one of those, it should not automatically s
 
 ## Education & Mobility
 
-Education & Mobility is one operating engine inside Last Bench.
+Education & Mobility is an operating/service domain inside Last Bench. It is not a third lab, engine, or peer of CLASS[Λ] and co.lab.
 
 ### Current active service: Malaysia Admissions
 
@@ -82,9 +86,9 @@ The relationship should not reset after the flight lands:
 
 Community after arrival is part of the current Malaysia service promise. Progression into CLASS[Λ], co.lab or another opportunity pathway should only be shown when it is relevant, active and real.
 
-## CLASS[Λ] — Capability Accelerator
+## CLASS[Λ] — Human Lab
 
-CLASS[Λ] is a distinct capability engine inside the Last Bench ecosystem and may be an independent entry point.
+CLASS[Λ] is the Human Lab inside Last Bench. It builds builders through practical capability, execution and proof, and may be an independent entry point.
 
 Current product contract:
 
@@ -96,9 +100,9 @@ Current product contract:
 
 CLASS[Λ] is not merely an add-on to Malaysia admissions. Learners can enter directly.
 
-## co.lab — Business & Growth Accelerator
+## co.lab — Business Lab
 
-co.lab is a distinct Brand & Business Development business and may be an independent entry point.
+co.lab is the Business Lab inside Last Bench and may be an independent entry point. Its four doors are Ventures, Projects, Services and Community.
 
 Its current positioning is **The Growth Operating System for Modern Brands**, organized around:
 
@@ -110,13 +114,11 @@ Current capability lanes include brand development, business growth strategy, cr
 
 The co.lab venture-gate method can support CLASS[Λ] founder progression, but the standalone co.lab business must never be collapsed into a course module.
 
-## Community + Platform
+## Community
 
-Community is the connective layer across the ecosystem, not merely a fourth standalone product.
+Community is one of the four doors inside co.lab: **Influencers · Ambassadors · Creators · Advisors**. It must not be promoted into a separate Last Bench engine or connective architecture layer.
 
-Its role is to compound relationships and opportunity across students, learners, founders, businesses, alumni, tutors, creators, institutions and partners.
-
-Long-term platform logic may include shared identity, verified progress, opportunity routing, evidence, referrals and continuity across business units. These platform capabilities must not be presented as live unless verified.
+Cross-company continuity, shared identity, verified progress, opportunity routing, evidence and referrals are system capabilities governed through source systems, Co.MPASS, Dr. X and Time Machine. They are not a separate public business unit and must not be presented as live unless verified.
 
 ## Audiences and entry points
 
@@ -124,25 +126,25 @@ Long-term platform logic may include shared identity, verified progress, opportu
 
 Primary question: **“Help me access the right education opportunity with clarity.”**
 
-Relevant engine: Education & Mobility.
+Relevant route: Education & Mobility operating/service domain.
 
 ### Learner / creator / operator
 
 Primary question: **“Help me become capable, useful and commercially ready.”**
 
-Relevant engine: CLASS[Λ].
+Relevant lab: CLASS[Λ].
 
 ### Founder / business / brand
 
 Primary question: **“Help me build, position, systemize or grow.”**
 
-Relevant engine: co.lab.
+Relevant lab: co.lab.
 
 ### Partner / institution / community contributor
 
 Primary question: **“Help us create, distribute or connect credible opportunity.”**
 
-Relevant layer: the appropriate engine plus the shared community/platform relationship.
+Relevant route: the appropriate operating route; co.lab Community applies when the relationship is with Influencers, Ambassadors, Creators or Advisors.
 
 ## Experience rule
 
@@ -151,6 +153,22 @@ Relevant layer: the appropriate engine plus the shared community/platform relati
 Each surface should lead with the promise relevant to the person who entered it. Do not force Malaysia, CLASS[Λ] or co.lab to dominate a user journey that began for a different reason.
 
 The corporate Last Bench profile may show the full ecosystem. Service-specific pages should remain focused on the service they are selling.
+
+## Public intelligence — Dr. X
+
+Last Bench exposes **Dr. X** as its single public intelligence identity. **Bench AI is retired as a visible product name.** Models, providers and legacy script filenames remain implementation details.
+
+Dr. X may appear as the general Last Bench guide or power interactive founder profiles, but the founder identity remains the real person:
+
+- **Sayem Ahmed** — Co-founder & CEO;
+- **Fahim Shahbaz Mahmud** — Co-founder & COO;
+- **Erfan Uddin** — Co-founder & Chief Business & Innovation Officer, **also known as Dr. X**.
+
+Founder profile UI uses the person's full name and may show **Powered by Dr. X** as a secondary intelligence label. Do not append `AI` to founder names or create independent founder brains.
+
+Public founder profiles may use only approved portraits, canonical Last Bench role/mandate information and externally verified profile/social links. Generated profile replies must disclose that they are powered by Dr. X and are not direct statements from the founder unless an exact human statement has been verified.
+
+The public Last Bench Dr. X context is project-scoped and minimum-necessary. It must never expose Erfan's private/global Founder DR.X memory, unrelated ventures, credentials, private communications or unrestricted internal company context.
 
 ## Trust rules
 
@@ -201,7 +219,7 @@ Optimize for:
 
 For every material initiative ask:
 
-1. Which engine or connective layer owns it?
+1. Which lab, co.lab door, or operating/service domain owns it?
 2. What opportunity does it accelerate?
 3. What is the person's next meaningful action?
 4. Who owns the outcome?

@@ -31,10 +31,10 @@
     </div>
 
     <div class="intro-gate" data-intro-gate>
-      <h1>0.01%</h1>
-      <p class="gate-copy">Some people are wired to build. Enter with sound to experience the story.</p>
+      <div class="intro-number" role="img" aria-label="0.01 percent">0.01%</div>
+      <p class="gate-copy">Most people will use AI. The 0.01% will build with it. You’ve been invited to join them.</p>
       <div class="gate-actions">
-        <button class="button button-primary" type="button" data-enter>ENTER EXPERIENCE</button>
+        <button class="button button-primary" type="button" data-enter>ACCEPT INVITATION</button>
         <button class="button button-ghost" type="button" data-skip>SKIP</button>
       </div>
       <p class="sound-note">Sound begins after you enter.</p>
@@ -50,24 +50,24 @@
       <img src="./assets/class-a-logo.jpg" alt="CLASS Lambda — Acquire. Apply. Advance.">
     </a>
     <div class="topbar-actions">
-      <span class="seat-chip"><i></i> 10 SEATS ONLY · RESERVE YOUR FREE SEAT</span>
+      <span class="seat-chip" data-public-session-chip><i></i> LIVE ONLINE · SESSION SCHEDULED</span>
       <img class="bench-mark" src="./assets/last-bench-bench.png" alt="Last Bench">
-      <button class="mini-cta" type="button" data-open-signup>RESERVE FREE SEAT →</button>
+      <button class="mini-cta" type="button" data-open-signup>ACCEPT INVITATION →</button>
     </div>
   </header>
 
   <main>
     <section class="hero" id="hero" data-hero>
-      <div class="hero-grid"></div>
+      <div class="hero-grid" aria-hidden="true"></div><div class="hero-scanline" aria-hidden="true"></div>
       <div class="hero-copy">
-        <h2><span>TURN AI INTO</span><br><span>YOUR TEAM.</span></h2>
+        <h1><span>TURN AI INTO</span><br><span>YOUR TEAM.</span></h1>
         <p class="hero-lead">Build and run a <strong>one-person business with AI.</strong></p>
         <p class="hero-meta">Research · Build · Create · Sell · Operate</p>
         <div class="hero-actions">
-          <button class="button button-primary" type="button" data-open-signup>RESERVE YOUR FREE SEAT</button>
+          <button class="button button-primary" type="button" data-open-signup>ACCEPT YOUR INVITATION</button>
           <button class="button button-ghost" type="button" data-replay>REPLAY STORY</button>
         </div>
-        <p class="hero-micro">CHITTAGONG · LIMITED IN-PERSON SEATS · NO PAYMENT REQUIRED</p>
+        <p class="hero-micro" data-public-session-meta>LIVE ONLINE · GOOGLE MEET · FREE REGISTRATION</p>
       </div>
 
       <div class="hero-object" data-hero-object aria-label="Metallic 20 surrounded by orbital rings">
@@ -78,6 +78,11 @@
         <span class="object-label label-a">BUILD</span>
         <span class="object-label label-b">AI TEAM</span>
         <span class="object-label label-c">OPERATE</span>
+        <div class="hero-system-stack" aria-hidden="true">
+          <div class="system-pane system-pane-you"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.25"/><path d="M5.5 20c.5-4.2 2.7-6.3 6.5-6.3s6 2.1 6.5 6.3"/></svg><span><small>YOU</small><strong>Decide the outcome</strong></span></div>
+          <div class="system-pane system-pane-ai"><svg viewBox="0 0 24 24"><path d="M9 4h6l3 3v10l-3 3H9l-3-3V7z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span><small>AI</small><strong>Helps you think</strong></span></div>
+          <div class="system-pane system-pane-systems"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span><small>SYSTEMS</small><strong>Make it repeatable</strong></span></div>
+        </div>
       </div>
 
       <div class="scroll-cue" aria-hidden="true"><span>SCROLL TO ENTER</span><b>↓</b></div>
@@ -92,6 +97,20 @@
           <div class="world-orbit world-orbit-1"></div>
           <div class="world-orbit world-orbit-2"></div>
           <div class="world-ray"></div>
+          <div class="transform-rig" data-transform-rig>
+            <span class="rig-spine rig-spine-a"></span><span class="rig-spine rig-spine-b"></span>
+            <div class="rig-panel rig-panel-a"><small>YOU</small><strong>OUTCOME</strong><i></i></div>
+            <div class="rig-panel rig-panel-b"><small>AI</small><strong>THINK</strong><i></i></div>
+            <div class="rig-panel rig-panel-c"><small>SYSTEMS</small><strong>EXECUTE</strong><i></i></div>
+            <div class="capability-ring">
+              <span class="capability-node is-active" data-capability="0"><b>01</b><strong>COMMAND</strong></span>
+              <span class="capability-node" data-capability="1"><b>02</b><strong>RESEARCH</strong></span>
+              <span class="capability-node" data-capability="2"><b>03</b><strong>BUILD</strong></span>
+              <span class="capability-node" data-capability="3"><b>04</b><strong>CREATE</strong></span>
+              <span class="capability-node" data-capability="4"><b>05</b><strong>SELL</strong></span>
+              <span class="capability-node" data-capability="5"><b>06</b><strong>OPERATE</strong></span>
+            </div><span class="rig-lock-flash"></span>
+          </div>
         </div>
 
         <div class="journey-copy" data-journey-copy>
@@ -116,10 +135,10 @@
       <div class="final-glow" aria-hidden="true"></div>
       <img class="final-object" src="./assets/class-a-20-orbit.jpg" alt="Metallic CLASS Lambda 20 symbol">
       <div class="final-copy">
-        <h2>YOUR SEAT<br>IS WAITING.</h2>
-        <p>See the AI team in motion. Leave with a clearer operating model for building and running more with less.</p>
-        <button class="button button-primary button-large" type="button" data-open-signup>CLAIM YOUR FREE SEAT →</button>
-        <p class="final-note">Chittagong · Free registration · Limited in-person seats</p>
+        <h2>YOUR INVITATION<br>IS OPEN.</h2>
+        <p>Accept your invitation to the live 0.01% Builders Masterclass. Your personal CLASS[Λ] pass becomes your single route to the schedule, live room and attendance verification.</p>
+        <button class="button button-primary button-large" type="button" data-open-signup>ACCEPT MY INVITATION →</button>
+        <p class="final-note" data-public-session-final>Live online · Schedule confirmed · Google Meet · Free registration</p>
       </div>
     </section>
   </main>
@@ -131,15 +150,15 @@
   </footer>
 
   <dialog class="signup" data-signup>
-    <form class="signup-shell" name="class-a-masterclass" data-signup-form data-program="masterclass" data-netlify="true" netlify-honeypot="company" method="dialog" novalidate>
+    <form class="signup-shell" name="class-a-masterclass" data-signup-form data-program="masterclass" method="dialog" novalidate>
       <input type="hidden" name="form-name" value="class-a-masterclass">
       <input type="hidden" name="program" value="masterclass">
       <button class="signup-close" type="button" data-close-signup aria-label="Close registration">×</button>
       <div class="signup-orbit" aria-hidden="true"></div>
       <div class="signup-head">
         <p class="eyebrow">CLASS[Λ] · CLASS 0</p>
-        <h2>CLAIM YOUR SEAT.</h2>
-        <p>Four quick steps. No payment.</p>
+        <h2>CLAIM YOUR PASS.</h2>
+        <p>Four quick steps. Your live-session pass is issued instantly. No payment.</p>
       </div>
 
       <div class="steps" aria-label="Registration progress"><span class="is-active"></span><span></span><span></span><span></span></div>
@@ -167,26 +186,58 @@
           <option>Regular AI user</option>
           <option>Already building with AI</option>
         </select>
+        <label class="consent-check">
+          <input type="checkbox" name="recording_consent" value="yes" required>
+          <span>I understand this live session may be recorded and transcribed for learning and quality improvement. This does not grant permission to use my image, voice, or words in public marketing.</span>
+        </label>
         <input class="honeypot" name="company" autocomplete="off" tabindex="-1" aria-hidden="true">
-        <button type="submit" class="signup-next signup-submit">CLAIM MY SEAT →</button>
+        <button type="submit" class="signup-next signup-submit">CLAIM MY PASS →</button>
       </div>
 
       <div class="signup-status" data-signup-status role="status" aria-live="polite"></div>
       <div class="signup-alert" data-signup-alert role="alert" aria-live="assertive" hidden></div>
       <div class="signup-success" data-signup-success hidden>
-        <p class="success-kicker">YOU'RE IN.</p>
-        <h2>SEAT RESERVED.</h2>
-        <p>Your CLASS[Λ] registration has been received. Your seat is confirmed. Keep this code — it is your attendance pass. No payment is collected here.</p>
-        <div class="pass-card">
-          <canvas width="220" height="220" data-qr aria-label="Registration QR code"></canvas>
-          <div><span>CLASS[Λ] · CLASS 0</span><strong data-pass-code>—</strong><small>Present this code at check-in.</small><small data-confirmed-at></small></div>
+        <div data-follow-gate>
+          <p class="success-kicker">REGISTRATION CONFIRMED.</p>
+          <h2>ONE STEP LEFT.</h2>
+          <p>Follow <strong>&lt;CLASS[Λ]&gt; | LEARN AI</strong> on WhatsApp, then return here to unlock your personal masterclass pass.</p>
+          <div class="whatsapp-follow">
+            <span>STEP 2 OF 2</span>
+            <strong>FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP</strong>
+            <small>WhatsApp does not provide this page a per-person follow callback. After you follow, return here and confirm; only then will the server release your pass.</small>
+          </div>
+          <div class="success-actions">
+            <a class="button button-primary" data-whatsapp-channel href="https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00" target="_blank" rel="noopener">FOLLOW CHANNEL →</a>
+            <button type="button" class="button button-ghost" data-unlock-pass disabled>I'VE FOLLOWED — UNLOCK MY PASS</button>
+          </div>
+          <p class="follow-note" data-follow-note>Open the channel first. Your registration is reserved, but the pass code is not released until you complete this step.</p>
         </div>
-        <div class="success-actions"><button type="button" class="button button-ghost" data-copy-pass>COPY CODE</button><button type="button" class="button button-ghost" data-close-signup>DONE</button></div>
+
+        <div data-pass-reveal hidden>
+          <p class="success-kicker">YOU'RE IN.</p>
+          <h2>PASS UNLOCKED.</h2>
+          <p>Your CLASS[Λ] pass is now available. Keep the code private — it is your route to the live session and attendance verification.</p>
+          <div class="pass-card">
+            <canvas width="220" height="220" data-qr aria-label="Personal CLASS Lambda pass QR code"></canvas>
+            <div><span>CLASS[Λ] · 0.01% BUILDERS</span><strong data-pass-code>—</strong><small>Keep this private. It identifies your masterclass enrollment.</small><small data-confirmed-at></small></div>
+          </div>
+          <div class="session-card" data-session-card>
+            <span class="session-state" data-session-status>SESSION · PLANNING</span>
+            <strong data-session-title>CLASS[Λ] — The 0.01% Builders Masterclass</strong>
+            <small data-session-time>The next live session is being scheduled. Your pass is already reserved.</small>
+          </div>
+          <div class="success-actions">
+            <a class="button button-primary" data-calendar-link hidden target="_blank" rel="noopener">ADD TO GOOGLE CALENDAR →</a>
+            <a class="button button-ghost" data-pass-link target="_blank" rel="noopener">OPEN MY PASS</a>
+            <button type="button" class="button button-ghost" data-copy-pass>COPY CODE</button>
+            <button type="button" class="button button-ghost" data-close-signup>DONE</button>
+          </div>
+        </div>
       </div>
     </form>
   </dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js" defer></script>
-  <script src="./masterclass-cinematic.js" defer></script>
+  <script src="./masterclass-cinematic.js?v=20261003-2" defer></script>
 </body>
 </html>

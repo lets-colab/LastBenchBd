@@ -60,7 +60,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="ai-guidance"
         options={{
-          title: "AI Guides",
+          title: "Dr. X",
           tabBarIcon: ({ color }) => <IconSymbol size={24} name="bubble.left.and.bubble.right.fill" color={color} />
         }}
       />

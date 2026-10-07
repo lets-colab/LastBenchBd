@@ -29,20 +29,20 @@ jobs:
       - name: Verify production guards
         run: |
           set -euo pipefail
-          grep -q 'The Last Bench — From Last Bench. To The World.' landing/index.html
-          grep -q './bench-ai.js' landing/index.html
-          grep -q '/rest/v1/lastbench_signups' landing/index.html
-          grep -q 'contact_consent: true' landing/index.html
-          grep -q 'href="./app/"' landing/index.html
-          grep -q './vendor/three.min.js' landing/index.html
-          ! grep -q 'Claude Design Preview' landing/index.html
+          grep -q 'Study in Malaysia — Last Bench' landing/malaysia/index.html
+          grep -q '../bench-ai.js' landing/malaysia/index.html
+          grep -q '/rest/v1/lastbench_signups' landing/malaysia/index.html
+          grep -q 'contact_consent: true' landing/malaysia/index.html
+          grep -q 'href="../app/"' landing/malaysia/index.html
+          grep -q '../vendor/three.min.js' landing/malaysia/index.html
+          ! grep -q 'Claude Design Preview' landing/malaysia/index.html
 
       - name: Commit production candidate
         run: |
           set -euo pipefail
           git config user.name 'drx-design-promotion'
           git config user.email 'drx-design-promotion@users.noreply.github.com'
-          git add landing/index.html
+          git add landing/malaysia/index.html
           if git diff --cached --quiet; then
             echo 'Homepage already promoted.'
             exit 0

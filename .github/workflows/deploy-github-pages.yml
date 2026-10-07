@@ -7,6 +7,7 @@ on:
       - ".github/workflows/deploy-github-pages.yml"
       - ".github/workflows/production-smoke.yml"
       - "scripts/release-smoke.mjs"
+      - "scripts/release-contract.json"
       - "landing/**"
       - "app/**"
       - "components/**"

@@ -10,7 +10,10 @@
     "recolorLockedLogoAllowed": false,
     "postGenerationCompositingRequired": true,
     "savedArtifactReviewRequired": true,
-    "unknownBrandFactsMayBeInvented": false
+    "unknownBrandFactsMayBeInvented": false,
+    "logoBackgroundMustBeTransparent": true,
+    "logoPlateAllowed": false,
+    "greenMarkMaySwitchToWhiteForContrast": false
   },
   "canonicalAssets": {
     "masterReference": {
@@ -101,5 +104,25 @@
   "allowedLogoFilesInLandingAssets": [
     "landing/assets/logo-full.png",
     "landing/assets/logo-icon.png"
-  ]
+  ],
+  "adaptiveLogoUsage": {
+    "lightBackground": {
+      "wordmark": "black-or-charcoal",
+      "taglineBase": "black-or-charcoal",
+      "benchArrow": "brand-green",
+      "benchmarkWord": "brand-green"
+    },
+    "darkBackground": {
+      "wordmark": "white",
+      "taglineBase": "white",
+      "benchArrow": "brand-green",
+      "benchmarkWord": "brand-green"
+    }
+  },
+  "designToolReferences": {
+    "canva": {
+      "transparentLightBackgroundAssetId": "MAHWdEIgzME",
+      "transparentDarkBackgroundAssetId": "MAHWdLPnTmc"
+    }
+  }
 }

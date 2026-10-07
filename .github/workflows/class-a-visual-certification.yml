@@ -1,0 +1,134 @@
+name: CLASS Visual Certification
+
+on:
+  push:
+    paths:
+      - "landing/class-a/**"
+      - ".github/workflows/class-a-visual-certification.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install browser harness
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Render and validate CLASS Lambda
+        run: |
+          python3 -m http.server 4173 --directory landing/class-a >/tmp/class-a-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/masterclass.html >/dev/null && break
+            sleep 1
+          done
+
+          mkdir -p visual-certification
+          cat > class-a-visual.mjs <<'NODE'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+
+          const base = 'http://127.0.0.1:4173';
+          const browser = await chromium.launch({ headless: true });
+          const results = [];
+
+          async function certify(label, viewport) {
+            const page = await browser.newPage({ viewport });
+            await page.route('**/*.mp4', route => route.abort());
+            await page.goto(base + '/masterclass.html?skip=1', { waitUntil: 'domcontentloaded', timeout: 15000 });
+            await Promise.race([page.evaluate(() => document.fonts?.ready), page.waitForTimeout(3500)]);
+            await page.evaluate(() => sessionStorage.setItem('classa_intro_seen', '1'));
+            await page.reload({ waitUntil: 'domcontentloaded', timeout: 15000 });
+            await page.waitForTimeout(1250);
+
+            const result = await page.evaluate(() => {
+              const root = getComputedStyle(document.documentElement);
+              const hero = document.querySelector('#hero');
+              const h1 = hero?.querySelector('h1');
+              const stack = document.querySelector('.hero-system-stack');
+              const rig = document.querySelector('.transform-rig');
+              const cta = document.querySelector('[data-open-signup]');
+              const rect = h1?.getBoundingClientRect();
+              return {
+                green: root.getPropertyValue('--green').trim().toLowerCase(),
+                overflow: Math.max(0, document.documentElement.scrollWidth - innerWidth),
+                heroVisible: !!h1 && rect.width > 0 && rect.height > 0,
+                heroWithinViewport: !!rect && rect.left >= -2 && rect.right <= innerWidth + 2,
+                heroRect: rect ? { left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom, width: rect.width, height: rect.height } : null,
+                systemStack: !!stack,
+                transformRig: !!rig,
+                cta: !!cta,
+              };
+            });
+
+            console.log(label, JSON.stringify(result));
+            await page.screenshot({ path: `visual-certification/masterclass-${label}-hero.png`, fullPage: false });
+            if (result.green !== '#00c853') throw new Error(label + ': brand green drifted: ' + result.green);
+            if (result.overflow > 2) throw new Error(label + ': horizontal overflow ' + result.overflow + 'px');
+            if (!result.heroVisible || !result.heroWithinViewport) throw new Error(label + ': hero headline is not safely visible: ' + JSON.stringify(result));
+            if (!result.systemStack || !result.transformRig || !result.cta) throw new Error(label + ': required 3D system primitives missing');
+
+            await page.evaluate(() => {
+              const el = document.querySelector('[data-journey]');
+              const travel = Math.max(1, el.offsetHeight - innerHeight);
+              window.scrollTo(0, el.offsetTop + travel * 0.48);
+            });
+            await page.waitForTimeout(1000);
+            const scene = await page.locator('[data-journey]').getAttribute('data-scene');
+            if (!scene) throw new Error(label + ': journey did not resolve a transformation scene');
+            await page.screenshot({ path: `visual-certification/masterclass-${label}-journey.png`, fullPage: false });
+
+            await page.locator('#reserve').scrollIntoViewIfNeeded();
+            await page.waitForTimeout(500);
+            await page.screenshot({ path: `visual-certification/masterclass-${label}-final.png`, fullPage: false });
+
+            results.push({ label, viewport, scene, ...result });
+            await page.close();
+          }
+
+          await certify('desktop', { width: 1440, height: 1000 });
+          await certify('mobile', { width: 390, height: 844 });
+
+          for (const route of ['/', '/course.html', '/pass.html']) {
+            const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+            await page.goto(base + route, { waitUntil: 'domcontentloaded', timeout: 15000 });
+            await page.waitForTimeout(400);
+            const slug = route === '/' ? 'hub' : route.replace(/^\//,'').replace('.html','');
+            await page.screenshot({ path: `visual-certification/${slug}-desktop.png`, fullPage: false });
+            const overflow = await page.evaluate(() => Math.max(0, document.documentElement.scrollWidth - innerWidth));
+            if (overflow > 2) throw new Error(slug + ': horizontal overflow ' + overflow + 'px');
+            await page.close();
+          }
+
+          fs.writeFileSync('visual-certification/meta.json', JSON.stringify({
+            generatedAt: new Date().toISOString(),
+            commit: process.env.GITHUB_SHA,
+            results
+          }, null, 2));
+
+          await browser.close();
+          NODE
+
+          node class-a-visual.mjs
+
+      - name: Upload visual certification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: class-a-visual-certification
+          path: visual-certification/
+          retention-days: 14
+          if-no-files-found: error

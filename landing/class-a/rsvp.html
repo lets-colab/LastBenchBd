@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>CLASS[Λ] — Confirm Tonight</title>
+  <style>
+    :root{color-scheme:dark;--bg:#050607;--panel:#0d0f10;--line:#26292b;--text:#f7f7f5;--muted:#9ea3a6;--green:#00C853}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:
+      linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
+      radial-gradient(circle at 50% 0%,rgba(0,200,83,.08),transparent 38%),var(--bg);
+      background-size:34px 34px,34px 34px,auto,auto;color:var(--text);
+      font-family:Arial,Helvetica,sans-serif;display:grid;place-items:center;padding:24px}
+    main{width:min(100%,620px);background:rgba(13,15,16,.92);border:1px solid var(--line);border-radius:24px;padding:clamp(24px,5vw,42px);box-shadow:0 24px 80px rgba(0,0,0,.35)}
+    .brand{width:160px;max-width:48vw;height:auto;display:block;margin-bottom:32px}
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);font-weight:800;margin:0 0 12px}
+    h1{font-size:clamp(36px,8vw,66px);line-height:.96;letter-spacing:-.045em;margin:0 0 22px}
+    p{color:#d5d7d8;line-height:1.55;font-size:16px}
+    .choice{margin:24px 0;padding:18px;border:1px solid #303436;border-radius:16px;background:#111416;font-weight:800;color:#fff}
+    button,a.action{width:100%;border:0;border-radius:999px;padding:16px 20px;font:inherit;font-weight:900;text-decoration:none;text-align:center;display:block}
+    button{background:var(--green);color:#001a0b;cursor:pointer}
+    button:disabled{opacity:.55;cursor:wait}
+    a.action{margin-top:12px;background:#fff;color:#050607}
+    .muted{font-size:12px;color:var(--muted);margin-top:18px}
+    .status{margin-top:22px;padding:16px;border-radius:14px;background:#0a0c0d;border:1px solid #202426;display:none}
+    .status.show{display:block}
+    :focus-visible{outline:3px solid #fff;outline-offset:3px}
+  </style>
+</head>
+<body>
+<main>
+  <img class="brand" src="./assets/class-a-logo.jpg" alt="CLASS Lambda">
+  <p class="eyebrow">Tonight · RSVP</p>
+  <h1>CONFIRM<br>YOUR PLAN.</h1>
+  <p>Choose your response from the email, then confirm it here. Your answer is recorded only after you press the button below.</p>
+  <div id="choice" class="choice">Loading your selected response…</div>
+  <button id="confirm" type="button">CONFIRM MY RESPONSE</button>
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+  <p class="muted">This extra confirmation prevents automated email-link scanners from changing your RSVP.</p>
+</main>
+<script>
+(() => {
+  const API = "https://tocxdyqlrvzthpexnmxe.supabase.co/functions/v1/class-a-rsvp";
+  const params = new URLSearchParams(location.search);
+  const token = params.get("token") || "";
+  const action = params.get("action") || "";
+  history.replaceState(null, "", location.pathname);
+  const labels = {
+    joining: "YES — I’M JOINING TONIGHT",
+    reschedule: "I CAN’T JOIN — RESCHEDULE MY INVITE",
+    previous_attendee: "I’VE ALREADY ATTENDED A PREVIOUS MASTERCLASS"
+  };
+  const choice = document.getElementById("choice");
+  const button = document.getElementById("confirm");
+  const status = document.getElementById("status");
+
+  const valid = /^[A-Za-z0-9_-]{20,100}$/.test(token) && Boolean(labels[action]);
+  if (!valid) {
+    choice.textContent = "This confirmation link is invalid.";
+    button.disabled = true;
+    status.textContent = "Please open the latest CLASS[Λ] confirmation email and use one of its response buttons.";
+    status.classList.add("show");
+    return;
+  }
+
+  choice.textContent = labels[action];
+
+  button.addEventListener("click", async () => {
+    button.disabled = true;
+    button.textContent = "SAVING…";
+    status.classList.remove("show");
+    try {
+      const response = await fetch(API, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({token, action})
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data.ok) throw new Error(data.error || "save_failed");
+
+      if (action === "joining") {
+        status.innerHTML = "<strong>Confirmed for tonight.</strong><br>Your RSVP has been recorded.";
+        if (data.join_url) {
+          const link = document.createElement("a");
+          link.className = "action";
+          link.href = data.join_url;
+          link.rel = "noopener";
+          link.textContent = "OPEN GOOGLE MEET";
+          status.appendChild(link);
+        }
+      } else if (action === "reschedule") {
+        status.innerHTML = "<strong>Reschedule request recorded.</strong><br>You are marked as unable to join tonight and ready for the next masterclass invitation.";
+      } else {
+        status.innerHTML = "<strong>Previous attendance recorded.</strong><br>You are marked as having already attended a previous CLASS[Λ] masterclass.";
+      }
+      status.classList.add("show");
+      button.textContent = "RESPONSE RECORDED";
+    } catch (_) {
+      status.textContent = "Your response could not be saved. Please try again from the same email.";
+      status.classList.add("show");
+      button.disabled = false;
+      button.textContent = "TRY AGAIN";
+    }
+  });
+})();
+</script>
+</body>
+</html>

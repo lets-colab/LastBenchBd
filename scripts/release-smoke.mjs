@@ -14,6 +14,19 @@
  */
 
 import dns from "node:dns/promises";
+import { readFileSync } from "node:fs";
+
+const releaseContract = JSON.parse(
+  readFileSync(new URL("./release-contract.json", import.meta.url), "utf8"),
+);
+const corporateLandingFingerprint = releaseContract?.corporateLandingFingerprint;
+if (
+  !Array.isArray(corporateLandingFingerprint) ||
+  corporateLandingFingerprint.length === 0 ||
+  corporateLandingFingerprint.some((item) => typeof item !== "string" || item.length === 0)
+) {
+  throw new Error("Invalid corporate landing release fingerprint contract.");
+}
 
 const webOrigin = (process.env.WEB_ORIGIN ?? "https://lastbenchbd.com").replace(/\/+$/, "");
 const apiOrigin = (process.env.API_ORIGIN ?? "https://api.lastbenchbd.com").replace(/\/+$/, "");
@@ -36,28 +49,18 @@ const checks = [
     name: "Corporate landing",
     url: `${webOrigin}/`,
     expectHtml: true,
-    expectIncludes: [
-      "<title>Last Bench — Opportunity Accelerator</title>",
-      "Education, capability and business connected by community",
-      "OPPORTUNITY ACCELERATOR",
-      "EDUCATION & MOBILITY",
-      "CLASS[Λ]",
-      "co.lab",
-      "Community connects everything.",
-      "claude-design-support.js",
-      "bench-ai.js",
-    ],
+    expectIncludes: corporateLandingFingerprint,
   },
   {
     name: "Runtime blueprint alignment",
     url: `${webOrigin}/lastbench-blueprint.js`,
     expectIncludes: [
-      "Opportunity Accelerator",
+      "2026-09-29-jev-lock",
       "Education & Mobility",
       "CLASS[Λ]",
       "co.lab",
-      "Community + Platform",
-      "currentEducationMarket:'Malaysia'",
+      "businessLab:'co.lab'",
+      "educationMobilityService:'Malaysia'",
       "lb-malaysia-service",
     ],
   },
@@ -70,12 +73,52 @@ const checks = [
     expectIncludes: [
       "masterclass-entry.mp4",
       "data-intro-end-card",
-      "<h1>0.01%</h1>",
-      "ENTER EXPERIENCE",
+      "class=\"intro-number\"",
+      "<h1><span>TURN AI INTO</span>",
+      "hero-system-stack",
+      "transform-rig",
+      "ACCEPT INVITATION",
       "TURN AI INTO",
       "YOUR TEAM.",
       "Research · Build · Create · Sell · Operate",
-      "10 SEATS ONLY · RESERVE YOUR FREE SEAT",
+      "data-public-session-chip",
+      "data-public-session-meta",
+      "GOOGLE MEET · FREE REGISTRATION",
+      "FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP",
+      "FOLLOW CHANNEL →",
+      "I'VE FOLLOWED — UNLOCK MY PASS",
+    ],
+  },
+  {
+    name: "CLASS personal masterclass pass",
+    url: `${webOrigin}/class-a/pass.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "YOUR",
+      "MASTERCLASS PASS.",
+      "LIVE ATTENDANCE PROOF",
+      "pass.js",
+    ],
+  },
+  {
+    name: "CLASS RSVP confirmation",
+    url: `${webOrigin}/class-a/rsvp.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "CONFIRM MY RESPONSE",
+      "class-a-rsvp",
+      "email-link scanners",
+    ],
+  },
+  {
+    name: "CLASS instructor live control",
+    url: `${webOrigin}/class-a/live-control.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "DR.X LIVE · INSTRUCTOR CONTROL",
+      "ISSUE LIVE",
+      "ATTENDANCE CODE.",
+      "live-control.js",
     ],
   },
   {
@@ -144,7 +187,10 @@ console.log("- Returning Supabase session survives refresh");
 console.log("- Authenticated tRPC request succeeds");
 console.log("- Logout causes the next protected request to be rejected");
 console.log("- Real homepage and CLASS[Λ] submissions appear in their intended Supabase tables");
+console.log("- Online CLASS[Λ] registration creates a session enrollment without rewriting historical attendance");
+console.log("- Personal pass opens from its private code and join-click remains a signal, not attendance");
+console.log("- Live attendance becomes verified only after personal-pass + active BUILD-code evidence");
 console.log("- Supabase migration ledger remains reconciled with drizzle/MIGRATION_STATUS.md");
-console.log("- Homepage business logic matches the current Opportunity Accelerator blueprint and keeps Malaysia scoped to Education & Mobility");
+console.log("- Homepage business logic matches JEV 2026.09.29 and keeps Malaysia scoped to Education & Mobility");
 
 process.exitCode = failed ? 1 : 0;

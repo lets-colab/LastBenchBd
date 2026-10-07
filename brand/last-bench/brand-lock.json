@@ -26,5 +26,64 @@
     "tracingAllowed": false,
     "typeSubstitutionAllowed": false,
     "postGenerationCompositingRequired": true
+  },
+  "usage": {
+    "background": "transparent-only",
+    "lightBackground": {
+      "wordmark": "black-or-charcoal",
+      "taglineBase": "black-or-charcoal",
+      "benchArrow": "brand-green",
+      "benchmarkWord": "brand-green"
+    },
+    "darkBackground": {
+      "wordmark": "white",
+      "taglineBase": "white",
+      "benchArrow": "brand-green",
+      "benchmarkWord": "brand-green"
+    },
+    "logoPlateAllowed": false,
+    "bakedBackgroundAllowed": false,
+    "greenMarkMaySwitchToWhiteForContrast": false
+  },
+  "designToolReferences": {
+    "canva": {
+      "transparentLightBackgroundAssetId": "MAHWdEIgzME",
+      "transparentDarkBackgroundAssetId": "MAHWdLPnTmc"
+    }
+  },
+  "documents": {
+    "blueprint": "brand/last-bench/BRAND_BLUEPRINT.md",
+    "artDirection": "brand/last-bench/ART_DIRECTION.md",
+    "logoUsage": "brand/last-bench/LOGO_USAGE.md",
+    "styleDNA": "brand/last-bench/STYLE_DNA.md"
+  },
+  "visualReferences": [
+    "brand/last-bench/reference/logo-lockups.png",
+    "brand/last-bench/reference/brand-guide.png",
+    "brand/last-bench/reference/brand-guide-extended.png",
+    "brand/last-bench/reference/collateral-overview.png",
+    "brand/last-bench/reference/event-kit.png",
+    "brand/last-bench/reference/office-wall.png",
+    "brand/last-bench/reference/print-banners.png",
+    "brand/last-bench/reference/rollup-banner-community.png"
+  ],
+  "artDirectionLock": {
+    "approvedDate": "2026-09-28",
+    "governingComposition": "warm-white trust field + bold black editorial type + restrained green progress accents + topographic/journey texture + grounded black or photographic lower field",
+    "lightComposition": {
+      "warmWhiteSharePct": "55-75",
+      "charcoalBlackSharePct": "20-35",
+      "brandGreenSharePct": "5-12"
+    },
+    "signatureDevices": [
+      "stacked-uppercase-editorial-headlines",
+      "restrained-green-emphasis",
+      "topographic-contour-texture",
+      "organic-black-lower-wave",
+      "journey-route-language",
+      "kuala-lumpur-skyline-context",
+      "thin-line-circular-service-icons",
+      "single-dominant-cta"
+    ]
   }
 }

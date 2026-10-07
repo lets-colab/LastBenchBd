@@ -117,6 +117,18 @@
     scene.prepend(orbitSystem);
   }
 
+  if (scene && !scene.querySelector('.class-ui-stack')) {
+    const uiStack = document.createElement('div');
+    uiStack.className = 'class-ui-stack';
+    uiStack.setAttribute('aria-hidden', 'true');
+    uiStack.innerHTML = [
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.25"/><path d="M5.5 20c.5-4.2 2.7-6.3 6.5-6.3s6 2.1 6.5 6.3"/></svg><span><small>YOU</small><strong>Decide outcome</strong></span></div>',
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><path d="M9 4h6l3 3v10l-3 3H9l-3-3V7z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span><small>AI</small><strong>Think with it</strong></span></div>',
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span><small>SYSTEMS</small><strong>Make it repeatable</strong></span></div>'
+    ].join('');
+    scene.append(uiStack);
+  }
+
   if (brandIntro) {
     const removeIntro = () => brandIntro.remove();
     const handleIntroEnd = (event) => {

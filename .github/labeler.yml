@@ -16,5 +16,4 @@ deploy:
   - changed-files:
       - any-glob-to-any-file:
           - dist/**
-          - netlify.toml
           - .github/workflows/**

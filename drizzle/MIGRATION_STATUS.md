@@ -1,6 +1,17 @@
 # Last Bench database migration status
 
-Last verified against the connected production Supabase project on **27 September 2026**.
+## Public-function default privilege hardening — 28 September 2026
+
+- Production Supabase default privileges for functions created by `postgres` in `public` are now fail-closed for `PUBLIC`, `anon`, and `authenticated`.
+- Verified current default function ACL: `postgres=EXECUTE`, `service_role=EXECUTE`; no default EXECUTE for browser roles.
+- Existing CLASS[Λ] browser-callable RPC permissions were intentionally left unchanged to avoid breaking registration, pass, attendance, and staff check-in flows.
+- Current Supabase advisor warnings for those explicit `SECURITY DEFINER` capability endpoints remain visible and require endpoint-specific abuse/rate-limit review; they must not be silenced by blind grant revocation.
+- This control is durable in `20260928180500_default_deny_public_function_execute.sql`.
+- Leaked-password protection remains an Auth configuration item outside the SQL migration surface.
+- `pg_net` schema relocation remains deferred until dependency/relocatability checks prove it will not break existing database jobs or hooks.
+
+
+Last verified against the connected production Supabase project on **28 September 2026**.
 
 ## Canonical live migration path
 
@@ -53,7 +64,15 @@ The following production migration versions are present in the connected Supabas
 | `20260922102007` | `index_cmpass_foreign_keys` | Live ledger entry verified |
 | `20260922111941` | `class_a_confirm_legacy_registrations` | Live ledger entry verified |
 | `20260922112143` | `class_a_pass_delivery_evidence` | Live ledger entry verified |
-| `20260927110907` | `class_a_registration_truth_classification` | Applied and verified in this repair; exact schema SQL is committed at `drizzle/migrations/20260927110907_class_a_registration_truth_classification.sql` |
+| `20260927110907` | `class_a_registration_truth_classification` | Applied and verified; exact SQL committed at `drizzle/migrations/20260927110907_class_a_registration_truth_classification.sql` |
+| `20260927213216` | `class_a_online_masterclass_os_v1` | Live session, recurring enrollment, attendance-evidence and notification-outbox foundation; exact SQL committed at `drizzle/migrations/20260927213216_class_a_online_masterclass_os_v1.sql` |
+| `20260927213315` | `class_a_online_masterclass_hardening` | Exact email+phone identity matching plus covering FK indexes; exact SQL committed at `drizzle/migrations/20260927213315_class_a_online_masterclass_hardening.sql` |
+| `20260927213629` | `class_a_online_live_code_control` | Staff-key-gated temporary BUILD-code control for the active online session; exact SQL committed at `drizzle/migrations/20260927213629_class_a_online_live_code_control.sql` |
+| `20260927214437` | `class_a_online_recording_consent` | Requires and timestamps explicit recording/transcription acceptance for online enrollment without conflating it with marketing permission; exact SQL committed at `drizzle/migrations/20260927214437_class_a_online_recording_consent.sql` |
+| `20260928001145` | `class_a_whatsapp_follow_gated_pass` | Adds backward-compatible gated online registration + one-time unlock RPC so the pass code is not returned until the attendee self-attests the WhatsApp follow step; exact SQL committed at `drizzle/migrations/20260928001145_class_a_whatsapp_follow_gated_pass.sql` |
+| `20260928101946` | `class_a_public_session_status` | Browser-safe session-status RPC for authoritative schedule hydration without exposing the Meet URL; exact SQL committed at `drizzle/migrations/20260928101946_class_a_public_session_status.sql` |
+| `20260928103035` | `class_a_notification_worker_transport` | Enables pg_net/pg_cron invocation, worker triggers, attendance-Slack delivery evidence fields and the one-minute notification worker schedule; exact SQL committed at `drizzle/migrations/20260928103035_class_a_notification_worker_transport.sql` |
+| `20260928103519` | `class_a_schedule_oct1` | Locks the current live session to 1 Oct 2026, 20:00–21:30 Asia/Dhaka with the verified Google Calendar/Meet event; exact SQL committed at `drizzle/migrations/20260928103519_class_a_schedule_oct1.sql` |
 
 
 ## Supabase identity + storage verification
@@ -141,3 +160,57 @@ These pre-existing warnings are tracked separately from this registration-truth 
 9. Update this ledger with the exact Supabase migration version.
 
 Do not restore automated `drizzle-kit generate && drizzle-kit migrate` production behavior until `drizzle/meta` has been regenerated and compared against both the current schema and the Supabase ledger.
+
+
+## CLASS[Λ] online masterclass verification — 28 September 2026
+
+The online masterclass migrations were applied to the connected production Supabase project and then persisted under their exact live migration versions.
+
+Verified:
+- `class-0-online-next` is now `scheduled` for **1 October 2026, 20:00–21:30 Asia/Dhaka** and is linked to the verified Google Calendar event `i7nvnon6v0tdlm809r0qe99m9k` and its Google Meet room.
+- The new session/enrollment/live-code/evidence/notification tables expose no direct table privileges to `anon` or `authenticated`.
+- An invalid personal pass returns `invalid_code` and no participant data.
+- A wrong staff key returns `invalid_staff_key` and does not issue a live attendance code.
+- Online enrollment requires explicit recording/transcription acceptance; the timestamp is stored on the session enrollment and is explicitly not marketing/publicity consent.
+- `portal_open` and `join_click` are evidence signals only; verified attendance is a separate mutation requiring personal-pass plus active live BUILD-code evidence (or a future trusted Meet/staff source).
+- The hardening migration resolved the new unindexed-FK advisor findings. Remaining performance advisor output is informational unused-index data at current traffic levels.
+- Security advisor WARNs remain for browser-callable `SECURITY DEFINER` CLASS RPCs. These RPCs are intentionally capability-bounded for the public registration/pass flow, while underlying tables remain direct-access denied. Treat this as an explicit security-review item rather than silently suppressing the advisor.
+- Supabase Auth leaked-password protection remains disabled; this is a pre-existing Auth posture item unrelated to the CLASS public pass flow.
+
+Session scheduling is now LIVE: the real Google Calendar event and Meet room exist, existing genuine registrants have been invited, and the public landing page hydrates the schedule from the browser-safe session RPC. Notification orchestration is LIVE at the database/worker layer through pg_net + pg_cron. Provider delivery remains fail-closed until deployable Slack/email transport credentials are configured; pending outbox rows are not falsely marked sent.
+
+
+## WhatsApp follow-gated pass verification — 28 September 2026
+
+- Existing live `class_a_register_online` remains intact for backward compatibility until the new frontend is deployed.
+- New registrations through `class_a_register_online_gated` receive a short-lived one-time unlock token instead of a personal pass code.
+- The unlock token is stored only as a SHA-256 hash and expires after 30 minutes.
+- `class_a_unlock_online_pass` releases a fresh pass code only when the attendee explicitly submits the follow-confirmation step.
+- The resulting field is named `channel_follow_self_attested_at` because WhatsApp Channels does not expose a per-person follow callback to this site; this must not be represented as platform-verified follow evidence.
+- Direct access to the underlying enrollment table remains denied to browser roles. Supabase advisor WARNs for the two new browser-callable `SECURITY DEFINER` RPCs are intentional capability-endpoint findings and remain visible for review rather than being suppressed.
+
+
+## CLASS[Λ] notification worker verification — 28 September 2026
+
+- Supabase Edge Function `class-a-notification-worker` is deployed ACTIVE with JWT verification enabled.
+- `pg_net` and `pg_cron` are enabled; Supabase Vault already provides the secure invocation values.
+- Database triggers invoke the worker for new signup events, new session-notification rows and verified attendance updates.
+- A cron job invokes the worker every minute for due reminders/retries.
+- A direct pg_net invocation returned HTTP 200 from the worker.
+- The worker never marks Slack/email delivery as sent unless the provider request succeeds.
+- Slack provider support is implemented for either a bot token or incoming webhook; email provider support is implemented for Resend.
+- No deployable Slack bot/webhook credential or Resend credential is currently available to the worker. In that state the worker reports the transport as blocked and leaves the authoritative outbox pending rather than fabricating delivery.
+- Existing genuine masterclass registrants were separately covered by a real Google Calendar invite and a one-time Gmail confirmation from `info@lastbenchbd.com`.
+- Future registration/pass/calendar UI remains functional without the external providers; unattended provider delivery becomes active as soon as the corresponding transport secret is connected.
+
+
+## CLASS[Λ] three-state RSVP verification — 4 October 2026
+
+- Supabase migration `20261004095309_class_a_session_rsvp_tokens` is applied in production.
+- `public.class_a_session_rsvp_tokens` stores only SHA-256 token hashes plus the explicit response state: `joining`, `reschedule`, or `previous_attendee`.
+- Direct table access is denied to `anon` and `authenticated`; the service role is the only data-plane writer/reader for this capability.
+- Edge Function `class-a-rsvp` is ACTIVE, uses custom high-entropy bearer-token validation with JWT verification disabled only for that explicit public capability endpoint, and returns CORS only for `https://lastbenchbd.com`.
+- Runtime verification returned HTTP 200 for the health endpoint and HTTP 404 for a syntactically valid but unknown token, with no RSVP mutation.
+- The visible RSVP surface intentionally requires a second human confirmation click after the email button so automated link scanners cannot register attendance intent.
+
+- Follow-up migration `20261004100511_class_a_session_rsvp_session_index` adds the covering `session_id` index required by the post-DDL performance advisor.

@@ -5,7 +5,7 @@ import { createCorsMiddleware, getAllowedOrigins } from "../server/_core/cors";
 const productionEnv = {
   NODE_ENV: "production" as const,
   FRONTEND_URL: "https://www.lastbenchbd.com/app",
-  CORS_ALLOWED_ORIGINS: "https://exitbd.netlify.app, https://preview.example.com/path",
+  CORS_ALLOWED_ORIGINS: "https://preview.example.com, https://preview.example.com/path",
 };
 
 function runMiddleware(origin?: string, method = "GET") {
@@ -46,11 +46,12 @@ function runMiddleware(origin?: string, method = "GET") {
 
 describe("credentialed CORS", () => {
   it("normalizes configured URLs to exact origins", () => {
-    expect([...getAllowedOrigins(productionEnv)]).toEqual([
+    const origins = [...getAllowedOrigins(productionEnv)];
+    expect(origins).toEqual([
       "https://www.lastbenchbd.com",
-      "https://exitbd.netlify.app",
       "https://preview.example.com",
     ]);
+    expect(new Set(origins).size).toBe(origins.length);
   });
 
   it("allows an exact configured origin with credentials", () => {
@@ -80,7 +81,7 @@ describe("credentialed CORS", () => {
   });
 
   it("returns 204 for an allowed preflight", () => {
-    const result = runMiddleware("https://exitbd.netlify.app", "OPTIONS");
+    const result = runMiddleware("https://preview.example.com", "OPTIONS");
 
     expect(result.statusCode).toBe(204);
     expect(result.headers.get("Access-Control-Allow-Methods")).toBe("GET, POST, OPTIONS");
