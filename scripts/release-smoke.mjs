@@ -14,6 +14,19 @@
  */
 
 import dns from "node:dns/promises";
+import { readFileSync } from "node:fs";
+
+const releaseContract = JSON.parse(
+  readFileSync(new URL("./release-contract.json", import.meta.url), "utf8"),
+);
+const corporateLandingFingerprint = releaseContract?.corporateLandingFingerprint;
+if (
+  !Array.isArray(corporateLandingFingerprint) ||
+  corporateLandingFingerprint.length === 0 ||
+  corporateLandingFingerprint.some((item) => typeof item !== "string" || item.length === 0)
+) {
+  throw new Error("Invalid corporate landing release fingerprint contract.");
+}
 
 const webOrigin = (process.env.WEB_ORIGIN ?? "https://lastbenchbd.com").replace(/\/+$/, "");
 const apiOrigin = (process.env.API_ORIGIN ?? "https://api.lastbenchbd.com").replace(/\/+$/, "");
@@ -36,18 +49,7 @@ const checks = [
     name: "Corporate landing",
     url: `${webOrigin}/`,
     expectHtml: true,
-    expectIncludes: [
-      "<title>Last Bench — Build People. Build Business. Learn Faster.</title>",
-      "CLASS[Λ] builds builders",
-      "LAST BENCH",
-      "EDUCATION & MOBILITY",
-      "CLASS[Λ]",
-      "co.lab",
-      "Co.MPASS",
-      "Dr. X",
-      "claude-design-support.js",
-      "bench-ai.js",
-    ],
+    expectIncludes: corporateLandingFingerprint,
   },
   {
     name: "Runtime blueprint alignment",
@@ -96,6 +98,16 @@ const checks = [
       "MASTERCLASS PASS.",
       "LIVE ATTENDANCE PROOF",
       "pass.js",
+    ],
+  },
+  {
+    name: "CLASS RSVP confirmation",
+    url: `${webOrigin}/class-a/rsvp.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "CONFIRM MY RESPONSE",
+      "class-a-rsvp",
+      "email-link scanners",
     ],
   },
   {

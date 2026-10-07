@@ -109,6 +109,12 @@ export default function HomeScreen() {
   const journeyStage = leadApplication ? statusRank(leadApplication.applicationStatus) + 1 : 0;
   const journeyBarWidth: `${number}%` =
     `${Math.round((journeyStage / STATUS_ORDER.length) * 100)}%`;
+  const journeyStageLabel = leadApplication
+    ? leadApplication.applicationStatus
+        .split("_")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ")
+    : "Not started";
 
   const submittedCount = applications.filter((a) => statusRank(a.applicationStatus) >= statusRank("submitted_to_university")).length;
   const pendingVisaCount = applications.filter((a) => a.applicationStatus === "visa_application_filed").length;
@@ -132,6 +138,9 @@ export default function HomeScreen() {
       >
         {/* Header with Greeting */}
         <View className="px-6 pt-8 pb-6 gap-2">
+          <Text className="text-[10px] font-bold text-primary" style={{ letterSpacing: 3 }}>
+            STUDENT DASHBOARD
+          </Text>
           <Text className="text-sm font-semibold text-muted">Good {timeOfDay}</Text>
           <Text className="text-4xl font-bold text-foreground">
             {firstName}
@@ -247,32 +256,75 @@ export default function HomeScreen() {
           </View>
         ) : (
           <>
-            {/* Primary Action Card - Journey Progress (real, from the lead application) */}
+            {/* Primary Action Card - cinematic hierarchy from the design handoff, backed only by real data */}
             <View className="px-6 pb-6">
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => router.push("/applications")}
-                onPressIn={handlePressIn}
-                onPressOut={handlePressOut}
-                className="bg-gradient-to-br from-green-800 to-green-600 rounded-2xl p-6 gap-4"
-              >
-                <View className="gap-2">
-                  <Text className="text-white text-sm font-semibold opacity-90">Your Application Journey</Text>
-                  <Text className="text-white text-3xl font-bold">
-                    {submittedCount} of {applications.length}
-                  </Text>
-                  <Text className="text-white text-sm opacity-75">applications submitted</Text>
-                </View>
-                <View className="h-2 bg-white/30 rounded-full overflow-hidden">
-                  <View style={{ width: journeyBarWidth }} className="h-full bg-white rounded-full" />
-                </View>
-                <View className="flex-row items-center justify-between pt-2">
-                  <Text className="text-white text-xs font-semibold opacity-90">
-                    Furthest application: stage {journeyStage} of {STATUS_ORDER.length}
-                  </Text>
-                  <Text className="text-white text-lg">→</Text>
-                </View>
-              </TouchableOpacity>
+              <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+                <TouchableOpacity
+                  activeOpacity={0.88}
+                  onPress={() => router.push("/applications")}
+                  onPressIn={handlePressIn}
+                  onPressOut={handlePressOut}
+                  className="rounded-2xl p-6 gap-5"
+                  style={{
+                    backgroundColor: "#04140B",
+                    borderWidth: 1,
+                    borderColor: "rgba(0,200,83,0.32)",
+                  }}
+                >
+                  <View className="flex-row items-start justify-between gap-4">
+                    <View className="flex-1 gap-2">
+                      <Text className="text-[10px] font-bold" style={{ color: "#00E676", letterSpacing: 2.6 }}>
+                        YOUR APPLICATION JOURNEY
+                      </Text>
+                      <Text className="text-white text-2xl font-bold">
+                        {leadApplication?.universityName || "Your current application"}
+                      </Text>
+                      <Text className="text-sm" style={{ color: "rgba(242,247,243,0.68)" }}>
+                        Current stage: {journeyStageLabel}
+                      </Text>
+                    </View>
+                    <View
+                      className="rounded-full px-3 py-2"
+                      style={{
+                        backgroundColor: "rgba(0,200,83,0.12)",
+                        borderWidth: 1,
+                        borderColor: "rgba(0,230,118,0.35)",
+                      }}
+                    >
+                      <Text className="text-xs font-bold" style={{ color: "#00E676" }}>
+                        {journeyStage}/{STATUS_ORDER.length}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View
+                    className="h-2 rounded-full overflow-hidden"
+                    style={{ backgroundColor: "rgba(255,255,255,0.10)" }}
+                  >
+                    <View
+                      style={{ width: journeyBarWidth, backgroundColor: "#00E676" }}
+                      className="h-full rounded-full"
+                    />
+                  </View>
+
+                  <View className="flex-row items-end justify-between gap-4">
+                    <View>
+                      <Text className="text-white text-2xl font-bold">
+                        {submittedCount} of {applications.length}
+                      </Text>
+                      <Text className="text-xs" style={{ color: "rgba(242,247,243,0.58)" }}>
+                        applications submitted
+                      </Text>
+                    </View>
+                    <View className="flex-row items-center gap-2">
+                      <Text className="text-xs font-bold" style={{ color: "#00E676" }}>
+                        VIEW PIPELINE
+                      </Text>
+                      <Text className="text-lg" style={{ color: "#00E676" }}>→</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </Animated.View>
             </View>
 
             {/* Quick Stats — every number derived from real applications/notifications */}
@@ -317,20 +369,31 @@ export default function HomeScreen() {
 
                 {needsTranscript && (
                   <TouchableOpacity
-                    activeOpacity={0.7}
+                    activeOpacity={0.75}
                     onPress={() =>
                       leadApplication && router.push(`/application-detail?id=${leadApplication.id}`)
                     }
-                    className="bg-surface border border-border rounded-xl p-4 flex-row items-center justify-between active:opacity-80"
+                    className="rounded-xl p-4 flex-row items-center justify-between active:opacity-80"
+                    style={{
+                      backgroundColor: "rgba(255,179,0,0.08)",
+                      borderWidth: 1,
+                      borderColor: "rgba(255,179,0,0.45)",
+                    }}
                   >
-                    <View className="flex-1 gap-1">
+                    <View className="flex-1 gap-1.5">
+                      <Text className="text-[9px] font-bold" style={{ color: "#B77900", letterSpacing: 2.2 }}>
+                        NEXT ACTION
+                      </Text>
                       <Text className="text-sm font-semibold text-foreground">Review document needs</Text>
                       <Text className="text-xs text-muted">
                         Confirm the current checklist with your mentor
                       </Text>
                     </View>
-                    <View className="w-8 h-8 rounded-full bg-primary/10 items-center justify-center">
-                      <Text className="text-primary font-bold">→</Text>
+                    <View
+                      className="w-9 h-9 rounded-full items-center justify-center"
+                      style={{ backgroundColor: "rgba(255,179,0,0.18)" }}
+                    >
+                      <Text className="font-bold" style={{ color: "#B77900" }}>→</Text>
                     </View>
                   </TouchableOpacity>
                 )}
