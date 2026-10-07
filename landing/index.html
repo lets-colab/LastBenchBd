@@ -1,9 +1,90 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Last Bench — Choose Your Path</title><meta name="description" content="Last Bench is the company. Choose the path that matches where you are now."><meta name="theme-color" content="#050806"><link rel="icon" href="assets/logo-icon.png"><style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#050806;color:#f5f8f5;font-family:Inter,system-ui,-apple-system,sans-serif}body{min-height:100vh;background:radial-gradient(circle at 82% 10%,rgba(0,200,83,.12),transparent 28%),#050806}.wrap{max-width:1180px;margin:auto;padding:28px 22px 70px}.top{display:flex;align-items:center;justify-content:space-between}.logo{height:48px;width:auto}.tag{font-size:10px;letter-spacing:.14em;color:#8fa198}.hero{padding:12vh 0 7vh;max-width:850px}.eyebrow{font-size:10px;letter-spacing:.16em;color:#00c853}.hero h1{font-size:clamp(48px,8vw,96px);line-height:.92;letter-spacing:-.065em;margin:16px 0 24px}.hero h1 span{color:#00c853}.hero p{max-width:650px;color:#95a099;font-size:16px;line-height:1.65}.paths{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.path{font:inherit;text-align:left;display:flex;min-height:230px;flex-direction:column;justify-content:space-between;padding:24px;border:1px solid #263029;border-radius:18px;background:linear-gradient(145deg,#111713,#080b09);color:inherit;text-decoration:none;transition:.2s}.path:hover,.path:focus-visible{border-color:#00c853;transform:translateY(-3px);outline:none}.num{font:10px ui-monospace,monospace;color:#647068}.path h2{font-size:28px;letter-spacing:-.04em;margin:0 0 8px}.path p{font-size:12px;line-height:1.6;color:#87928b;margin:0}.go{font-size:12px;color:#00c853;margin-top:24px}.subroutes{display:none;grid-column:1/-1;border:1px solid #263029;border-radius:18px;padding:22px;background:#090d0a}.subroutes.open{display:block}.subroutes h3{margin:0 0 15px;font-size:16px}.subroute{display:flex;align-items:center;justify-content:space-between;padding:16px;border:1px solid #263029;border-radius:12px;color:inherit;text-decoration:none}.subroute:hover{border-color:#00c853}.note{margin-top:34px;color:#657169;font-size:10px}.disabled{opacity:.58;cursor:default}@media(max-width:760px){.wrap{padding:20px 16px 90px}.logo{height:40px}.tag{display:none}.hero{padding:9vh 0 6vh}.hero h1{font-size:54px}.paths{grid-template-columns:1fr}.path{min-height:170px}.subroutes{grid-column:auto}}
-</style><script src="company-routes.js" defer></script></head><body><main class="wrap"><header class="top"><img class="logo" src="assets/logo-full.png" alt="Last Bench"><span class="tag">MULTIPLE ENTRY POINTS · ONE FORWARD MOTION</span></header><section class="hero"><div class="eyebrow">START WHERE YOU ARE</div><h1>Choose your<br><span>path forward.</span></h1><p>Last Bench connects opportunity, capability and business creation. Pick the route that matches what you need now. We only show the journey after you choose it.</p></section><section class="paths">
-<button class="path" id="studentPath" type="button" aria-expanded="false" aria-controls="studentRoutes"><span class="num">01 · EDUCATION & MOBILITY</span><div><h2>I'm a student.</h2><p>Explore study, admissions, mobility and the journey beyond arrival.</p><div class="go">Choose destination →</div></div></button>
-<a class="path" href="class-a/"><span class="num">02 · CLASS[Λ] · HUMAN LAB</span><div><h2>I want to build capability.</h2><p>Learn AI through proof, build practical capability and move toward ownership.</p><div class="go">Enter CLASS[Λ] →</div></div></a>
-<a class="path" href="https://colab-growth-os.onrender.com/"><span class="num">03 · CO.LAB · BUSINESS LAB</span><div><h2>I'm building a business.</h2><p>Ventures, projects, services and community for founders and businesses.</p><div class="go">Enter co.lab →</div></div></a>
-<div class="subroutes" id="studentRoutes"><h3>Where do you want to go?</h3><a class="subroute" href="malaysia/"><span><b>Malaysia</b><br><small>Current active admissions service · Bangladesh → Malaysia</small></span><span class="go">Enter journey →</span></a></div>
-</section><p class="note"><a href="app/" style="color:#00c853">Track my student journey →</a></p><p class="note">Last Bench is the company. Malaysia Admissions is one active service inside Education & Mobility. CLASS[Λ] and co.lab are direct entry points, not mandatory steps in one funnel.</p></main><script>const b=document.getElementById('studentPath'),r=document.getElementById('studentRoutes');b.addEventListener('click',()=>{const open=!r.classList.contains('open');r.classList.toggle('open',open);b.setAttribute('aria-expanded',String(open));if(open)r.scrollIntoView({behavior:'smooth',block:'nearest'})});</script></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Last Bench — Choose Your Gate</title>
+<meta name="description" content="Last Bench is the company. Enter through Education & Mobility, CLASS[Λ], co.lab, Co.MPASS or Dr. X.">
+<meta name="theme-color" content="#050806">
+<link rel="icon" href="assets/logo-icon.png">
+<style>
+*{box-sizing:border-box}
+:root{--bg:#050806;--panel:#0b100c;--line:#263029;--ink:#f5f8f5;--muted:#93a099;--green:#00c853;--green2:#00e676}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:
+radial-gradient(circle at 78% 8%,rgba(0,200,83,.13),transparent 26%),
+radial-gradient(circle at 14% 78%,rgba(0,230,118,.055),transparent 30%),var(--bg);
+color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit}.wrap{width:min(1220px,100%);margin:auto;padding:26px 22px 72px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{height:48px;width:auto}.system{font-size:10px;letter-spacing:.15em;color:#839088;text-align:right}
+.hero{padding:11vh 0 6.5vh;max-width:920px}.eyebrow{font-size:10px;font-weight:700;letter-spacing:.19em;color:var(--green2)}
+.hero h1{font-size:clamp(52px,8.2vw,100px);line-height:.9;letter-spacing:-.07em;margin:17px 0 25px;max-width:9ch}
+.hero h1 span{color:var(--green)}.hero p{max-width:720px;color:#9aa69f;font-size:clamp(15px,1.6vw,18px);line-height:1.65;margin:0}
+.arch{margin-top:24px;display:flex;gap:9px;flex-wrap:wrap}.arch span{border:1px solid #263029;border-radius:999px;padding:8px 11px;color:#738078;font:9px ui-monospace,SFMono-Regular,monospace;letter-spacing:.08em}
+.gates{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.gate{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-height:265px;padding:25px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,rgba(17,23,19,.98),rgba(7,10,8,.99));text-decoration:none;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.gate::after{content:"";position:absolute;inset:auto -20% -55% 18%;height:70%;background:radial-gradient(circle,rgba(0,200,83,.11),transparent 66%);pointer-events:none}
+.gate:hover,.gate:focus-visible{border-color:rgba(0,230,118,.72);transform:translateY(-4px);box-shadow:0 20px 56px rgba(0,0,0,.28);outline:none}
+.gate:focus-visible{box-shadow:0 0 0 3px rgba(0,230,118,.18),0 20px 56px rgba(0,0,0,.28)}
+.gate-major{grid-column:span 4}.gate-intel{grid-column:span 6;min-height:220px}
+.num{font:10px ui-monospace,SFMono-Regular,monospace;color:#647168;letter-spacing:.06em}.type{font:9px ui-monospace,SFMono-Regular,monospace;color:var(--green2);letter-spacing:.12em;text-transform:uppercase;margin-top:8px}
+.gate h2{font-size:clamp(28px,3vw,39px);line-height:1;letter-spacing:-.055em;margin:0 0 10px}.gate p{font-size:12px;line-height:1.62;color:#87938b;margin:0;max-width:42ch}
+.go{position:relative;z-index:1;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--green2);margin-top:26px;text-transform:uppercase}
+.status{display:inline-flex;align-items:center;gap:7px;margin-top:10px;color:#78857d;font:9px ui-monospace,SFMono-Regular,monospace;letter-spacing:.07em}
+.status i{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(0,200,83,.6)}
+.loop{margin:34px 0 0;padding:18px 0;border-top:1px solid #1a211c;color:#68746c;font:10px ui-monospace,SFMono-Regular,monospace;line-height:1.7;letter-spacing:.04em}
+.loop strong{color:#aab4ae;font-weight:500}.foot{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-top:22px;color:#657169;font-size:10px;line-height:1.6}.foot a{color:var(--green2);text-decoration:none}
+@media(max-width:900px){.gate-major{grid-column:span 6}.gate-intel{grid-column:span 6}}
+@media(max-width:680px){.wrap{padding:20px 16px 84px}.logo{height:40px}.system{display:none}.hero{padding:9vh 0 5.5vh}.hero h1{font-size:58px}.arch{gap:7px}.gates{grid-template-columns:1fr}.gate-major,.gate-intel{grid-column:auto;min-height:176px}.gate{padding:21px}.gate h2{font-size:31px}.foot{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.gate{transition:none}.gate:hover,.gate:focus-visible{transform:none}}
+</style>
+<script src="company-routes.js" defer></script>
+</head>
+<body>
+<main class="wrap">
+<header class="top">
+<img class="logo" src="assets/logo-full.png" alt="Last Bench">
+<span class="system">LAST BENCH · COMPANY<br>JEV ARCHITECTURE · 2026.09.29</span>
+</header>
+
+<section class="hero">
+<div class="eyebrow">START WHERE YOU ARE</div>
+<h1>Choose your<br><span>gate.</span></h1>
+<p>Last Bench is one company with multiple entry points. Enter through the problem you actually have; each gate opens its own experience instead of forcing everyone through the same funnel.</p>
+<div class="arch" aria-label="Current Last Bench architecture">
+<span>EDUCATION & MOBILITY</span><span>CLASS[Λ] · HUMAN LAB</span><span>co.lab · BUSINESS LAB</span><span>Co.MPASS · DASHBOARD</span><span>DR. X · FOUNDER INTELLIGENCE</span>
+</div>
+</section>
+
+<section class="gates" aria-label="Last Bench entry gates">
+<a class="gate gate-major" href="malaysia/">
+<div><span class="num">01</span><div class="type">Education & Mobility · Current market</div></div>
+<div><h2>Malaysia.</h2><p>For students and families navigating realistic study options, applications, visa-process guidance, preparation and continuity after arrival.</p><div class="go">Travel the Malaysia journey →</div></div>
+</a>
+
+<a class="gate gate-major" href="class-a/">
+<div><span class="num">02</span><div class="type">CLASS[Λ] · Human Lab</div></div>
+<div><h2>Build capability.</h2><p>AI Driver → Builder → Creator → Operator → Founder. Practical learning ends in visible proof, not attendance alone.</p><div class="go">Enter CLASS[Λ] →</div></div>
+</a>
+
+<a class="gate gate-major" href="colab/">
+<div><span class="num">03</span><div class="type">co.lab · Business Lab</div></div>
+<div><h2>Build the business.</h2><p>Growth architecture across Ventures, Projects, Services and Community — expressed through the co.lab White Gallery / Glass Lab world.</p><div class="go">Enter co.lab →</div></div>
+</a>
+
+<a class="gate gate-intel" href="compass/">
+<div><span class="num">04</span><div class="type">Co.MPASS · Business Dashboard</div></div>
+<div><h2>Converge the evidence.</h2><p>Company context, evidence, clarity and direction. This gate explains the governed dashboard layer without pretending an unpublished public dashboard is already live.</p><div class="go">Enter Co.MPASS gate →</div></div>
+</a>
+
+<a class="gate gate-intel" href="https://drx.lastbenchbd.com/">
+<div><span class="num">05</span><div class="type">Dr. X · Founder Second Brain / Twin</div></div>
+<div><h2>Reason from context.</h2><p>Governed founder intelligence for memory, judgment and decision support. Public Last Bench access remains project-scoped and evidence-aware.</p><div class="status"><i></i> LIVE DR.X DOMAIN</div><div class="go">Enter Dr. X →</div></div>
+</a>
+</section>
+
+<div class="loop"><strong>OPERATING LOOP</strong><br>CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved labs → new evidence.</div>
+<footer class="foot"><span>Malaysia is an active Education & Mobility service, not the definition of Last Bench. CLASS[Λ] and co.lab remain independent entry points.</span><a href="app/">Track my student journey →</a></footer>
+</main>
+</body>
+</html>
