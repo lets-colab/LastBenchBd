@@ -131,7 +131,8 @@ async function sendReceipt(row:any, reg:any){
   });
   const body=await r.json().catch(()=>({}));
   if(!r.ok) throw new Error(`email_failed:${body.message||r.status}`);
-  return String(body.id||"resend");
+  if(!body.id) throw new Error("provider_receipt_id_missing_delivery_uncertain");
+  return String(body.id);
 }
 
 Deno.serve(async(req)=>{
@@ -165,18 +166,20 @@ Deno.serve(async(req)=>{
       if(!reg||reg.record_kind!=="genuine"||reg.program!=="course") throw new Error("ineligible_course_registration");
       const ref=await sendReceipt(row,reg);
       const now=new Date().toISOString();
-      await c.from("class_a_payments").update({
+      const {data:recorded,error:recordError}=await c.from("class_a_payments").update({
         receipt_status:"sent",receipt_sent_at:now,receipt_external_ref:ref,receipt_last_error:null,updated_at:now
-      }).eq("id",row.id);
+      }).eq("id",row.id).eq("receipt_status","processing").select("id").maybeSingle();
+      if(recordError||!recorded) throw new Error("delivery_uncertain_provider_accepted:"+ref);
       await c.from("class_a_payment_events").insert({
         payment_id:row.id,event_type:"receipt_sent",actor_ref:"class-a-payment-receipt-worker",
         evidence:{external_ref:ref,channel:"email"}
       });
       out.sent++;
     }catch(err){
+      const uncertain=String(err).includes("delivery_uncertain");
       await c.from("class_a_payments").update({
-        receipt_status:"failed",receipt_last_error:String(err).slice(0,500),updated_at:new Date().toISOString()
-      }).eq("id",row.id);
+        receipt_status:uncertain?"processing":"failed",receipt_last_error:String(err).slice(0,500),updated_at:new Date().toISOString()
+      }).eq("id",row.id).eq("receipt_status","processing");
       await c.from("class_a_payment_events").insert({
         payment_id:row.id,event_type:"receipt_failed",actor_ref:"class-a-payment-receipt-worker",
         evidence:{error:String(err).slice(0,500)}
