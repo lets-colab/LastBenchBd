@@ -57,6 +57,15 @@ describe("CLASS[Λ] notification fail-closed worker", () => {
     expect(source).toContain("'\"':\"&quot;\"");
     expect(source).toContain("unsupported_notification_type");
   });
+  it("routes only to private owner / private Slack destinations and never an opaque webhook", () => {
+    expect(source).toContain('U0BRY5WMLLW');
+    expect(source).toContain('function privateSlackReady()');
+    expect(source).toContain('/^[UDG][A-Z0-9]+$/');
+    expect(source).toContain('private_slack_destination_not_authorized');
+    expect(source).not.toContain('C0BRY6AR0DC');
+    expect(source).not.toContain('SLACK_WEBHOOK_URL');
+  });
+
   it("does not disclose learner names in public channel notifications", () => {
     expect(signup).not.toContain('${reg.full_name} ·');
     expect(source).not.toContain('sendSlack(`*CLASS[Λ] attendance verified*\\n${reg.full_name}');
