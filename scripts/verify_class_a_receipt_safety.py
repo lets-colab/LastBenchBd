@@ -15,6 +15,9 @@ checks = {
     "requires genuine course registration": 'ineligible_course_registration',
     "email includes PDF attachment": 'attachments:[{filename:',
     "provider receipt persisted": 'receipt_external_ref:ref',
+    "provider ID required": 'provider_receipt_id_missing_delivery_uncertain',
+    "ambiguous delivery never retried": 'receipt_status:uncertain?"processing":"failed"',
+    "sent record checked": 'if(recordError||!recorded)',
     "failures recorded": 'event_type:"receipt_failed"',
 }
 for label, needle in checks.items():
