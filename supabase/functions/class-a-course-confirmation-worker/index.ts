@@ -9,22 +9,22 @@ function esc(input:string){return String(input??"").replace(/[&<>"']/g,c=>({"&":
 function registrationHtml(name:string,registrationId:number){
   const person=esc(name||"there");
   const reference=esc(String(registrationId));
-  return \`<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"></head>
+  return `<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#F2F3F1;color:#111111;font-family:Arial,Helvetica,sans-serif">
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#F2F3F1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px">
 <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;background:#FAFAF8;border-collapse:collapse;border:1px solid #DBE4DD">
 <tr><td style="height:6px;background:#00C853;font-size:1px;line-height:1px">&nbsp;</td></tr>
-<tr><td style="padding:28px 28px 0"><img src="\${BRAND_LOGO}" alt="Last Bench — Creating a Lasting Benchmark" width="170" style="display:block;width:170px;max-width:70%;height:auto;border:0"></td></tr>
+<tr><td style="padding:28px 28px 0"><img src="${BRAND_LOGO}" alt="Last Bench — Creating a Lasting Benchmark" width="170" style="display:block;width:170px;max-width:70%;height:auto;border:0"></td></tr>
 <tr><td style="padding:22px 28px 12px"><p style="margin:0 0 10px;color:#44624C;font-size:12px;line-height:18px;font-weight:700;letter-spacing:1.5px">CLASS[Λ] · HUMAN LAB</p>
 <h1 style="margin:0;color:#111111;font-size:30px;line-height:1.12;letter-spacing:-.5px;font-weight:800">APPLICATION<br>RECEIVED<span style="color:#00C853">.</span></h1>
-<p style="margin:22px 0 12px;font-size:15px;line-height:1.65">Hello \${person},</p>
+<p style="margin:22px 0 12px;font-size:15px;line-height:1.65">Hello ${person},</p>
 <p style="margin:0 0 20px;font-size:15px;line-height:1.65">Your CLASS[Λ] 20-class venture builder application has been recorded in the Last Bench registration system.</p>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#E6F2E9;border-left:4px solid #00C853;border-collapse:collapse"><tr><td style="padding:16px 18px;font-size:14px;line-height:1.8">
-<strong>Application reference:</strong> #\${reference}<br><strong>Application:</strong> Received<br><strong>Seat acceptance:</strong> Not confirmed by this email<br><strong>Payment:</strong> Handled and verified separately</td></tr></table>
+<strong>Application reference:</strong> #${reference}<br><strong>Application:</strong> Received<br><strong>Seat acceptance:</strong> Not confirmed by this email<br><strong>Payment:</strong> Handled and verified separately</td></tr></table>
 <p style="margin:20px 0;font-size:14px;line-height:1.65">Please do not submit a second application. Admission and payment confirmation require separate verified evidence.</p>
-<table role="presentation" cellspacing="0" cellpadding="0"><tr><td bgcolor="#00C853" style="border-radius:6px"><a href="\${SITE}" style="display:inline-block;padding:14px 20px;background:#00C853;border-radius:6px;color:#092715;text-decoration:none;font-size:14px;font-weight:700">VIEW COURSE DETAILS →</a></td></tr></table>
+<table role="presentation" cellspacing="0" cellpadding="0"><tr><td bgcolor="#00C853" style="border-radius:6px"><a href="${SITE}" style="display:inline-block;padding:14px 20px;background:#00C853;border-radius:6px;color:#092715;text-decoration:none;font-size:14px;font-weight:700">VIEW COURSE DETAILS →</a></td></tr></table>
 </td></tr><tr><td style="padding:22px 28px 26px"><p style="margin:0;padding-top:17px;border-top:1px solid #CBD7CF;color:#55635B;font-size:12px;line-height:1.65">CLASS[Λ] · Last Bench<br><a href="mailto:info@lastbenchbd.com" style="color:#154E2E">info@lastbenchbd.com</a></p></td></tr>
-</table></td></tr></table></body></html>\`;
+</table></td></tr></table></body></html>`;
 }
 
 
