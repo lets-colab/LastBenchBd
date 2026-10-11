@@ -115,7 +115,8 @@ function emailCopy(kind:string,name:string,session:Row) {
       html:`<p>Hi ${name},</p><p>Thank you for completing the CLASS[Λ] live session.</p><p>Your approved after-class materials are below.</p>${button("OPEN AFTER-CLASS PACK",packUrl)}${button("WATCH CLASS RECORDING",recordingUrl)}${button("OPEN NOTES / TRANSCRIPT",transcriptUrl)}${button("EXPLORE THE 20-CLASS PROGRAM",SITE+"/course.html")}<p>Participant-specific personal or company materials remain private unless explicitly approved for sharing.</p>`
     }
   };
-  const copy=map[kind]||map.registration_confirmation;
+  const copy=map[kind];
+  if(!copy) throw new Error(`unsupported_notification_type:${kind}`);
   return {...copy,html:brandedEmail(copy.html)};
 }
 
@@ -267,7 +268,13 @@ Deno.serve(async (req:Request)=>{
     const isPresession=["registration_confirmation","calendar_invite","reminder_24h","reminder_6h","room_open"].includes(item.notification_type);
     const startTime=session?.starts_at?new Date(session.starts_at).getTime():NaN;
     const isClosed=(!session || ["completed","cancelled","canceled"].includes(String(session.status||"").toLowerCase()));
-    if(isPresession && (isClosed || !Number.isFinite(startTime) || startTime<=Date.now())){
+    const minutesUntilStart=(startTime-Date.now())/60000;
+    const misleadingTiming=(
+      (item.notification_type==="reminder_24h" && (minutesUntilStart<20*60 || minutesUntilStart>30*60)) ||
+      (item.notification_type==="reminder_6h" && (minutesUntilStart<4*60 || minutesUntilStart>8*60)) ||
+      (item.notification_type==="room_open" && (minutesUntilStart<0 || minutesUntilStart>30))
+    );
+    if(isPresession && (isClosed || !Number.isFinite(startTime) || startTime<=Date.now() || misleadingTiming)){
       await db.from("class_a_session_notifications").update({status:"skipped",last_error:"expired_or_closed_session"}).eq("id",item.id);
       report.email.skipped++;
       continue;
