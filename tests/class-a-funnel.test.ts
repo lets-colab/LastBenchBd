@@ -59,6 +59,18 @@ describe("CLASS A signup funnel", () => {
     expect(script).not.toContain("SUPABASE_ANON_KEY");
   });
 
+  it("separates duplicate course registration from a connection failure", () => {
+    expect(script).toContain("response.status === 409");
+    expect(script).toContain("APPLICATION MAY ALREADY EXIST.");
+    expect(script).toContain("Do not register again.");
+    expect(script).toContain("setStatus(errorBox)");
+    expect(course).toContain("data-error-title");
+    expect(course).toContain("data-error-message");
+    expect(course).toContain("APPLICATION NOT CONFIRMED.");
+    // Duplicate detection must never disclose an existing learner's identity.
+    expect(script).not.toContain("select=id,full_name,email");
+  });
+
   it("preserves cinematic art direction and reduced-motion support", () => {
     for (const page of [hub, masterclass, course]) {
       expect(page).toContain("./assets/class-a-20-orbit.jpg");
