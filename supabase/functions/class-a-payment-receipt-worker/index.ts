@@ -6,6 +6,32 @@ const SITE="https://lastbenchbd.com/class-a/course.html";
 const FROM=Deno.env.get("CLASS_A_EMAIL_FROM")||"CLASS[Λ] <info@lastbenchbd.com>";
 const RESEND_KEY=Deno.env.get("RESEND_API_KEY")||"";
 
+const BRAND_LOGO="https://lastbenchbd.com/assets/logo-full.png"; // Exact transparent production asset from brand lock.
+function paymentHtml(row:any,reg:any){
+  const name=esc(reg.full_name||"there");
+  const receipt=esc(row.receipt_number||"");
+  const txn=esc(row.transaction_id||"Not specified");
+  const method=esc(row.payment_method||"Not specified");
+  const amount=Number(row.amount_received).toLocaleString("en-BD",{minimumFractionDigits:2,maximumFractionDigits:2});
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#F2F3F1;color:#111111;font-family:Arial,Helvetica,sans-serif">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F2F3F1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background:#FAFAF8;border-collapse:collapse;border:1px solid #DBE4DD">
+<tr><td style="height:6px;background:#00C853;font-size:1px;line-height:1px">&nbsp;</td></tr>
+<tr><td style="padding:28px 28px 0"><img src="${BRAND_LOGO}" alt="Last Bench — Creating a Lasting Benchmark" width="170" style="display:block;width:170px;max-width:70%;height:auto;border:0"></td></tr>
+<tr><td style="padding:22px 28px 12px">
+<p style="margin:0 0 10px;color:#44624C;font-size:12px;line-height:18px;font-weight:700;letter-spacing:1.5px">CLASS[Λ] · HUMAN LAB</p>
+<h1 style="margin:0;color:#111111;font-size:30px;line-height:1.12;font-weight:800">PAYMENT RECORD<br>VERIFIED<span style="color:#00C853">.</span></h1>
+<p style="margin:22px 0 12px;font-size:15px;line-height:1.65">Hello ${name},</p>
+<p style="margin:0 0 20px;font-size:15px;line-height:1.65">Last Bench has verified the payment record for your CLASS[Λ] course against the evidence available to the team. Your official PDF receipt is attached.</p>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#E6F2E9;border-left:4px solid #00C853;border-collapse:collapse"><tr><td style="padding:16px 18px;font-size:14px;line-height:1.8">
+<strong>Receipt:</strong> ${receipt}<br><strong>Amount received:</strong> BDT ${amount}<br><strong>Method:</strong> ${method}<br><strong>Transaction reference:</strong> ${txn}<br><strong>Payment record:</strong> Verified by Last Bench</td></tr></table>
+<p style="margin:20px 0;font-size:14px;line-height:1.65">Payment verification is separate from final seat acceptance. Class timing and onboarding are communicated through the verified admission route.</p>
+<table role="presentation" cellspacing="0" cellpadding="0"><tr><td bgcolor="#00C853" style="border-radius:6px"><a href="${SITE}" style="display:inline-block;padding:14px 20px;background:#00C853;border-radius:6px;color:#092715;text-decoration:none;font-size:14px;font-weight:700">VIEW COURSE DETAILS →</a></td></tr></table>
+</td></tr><tr><td style="padding:22px 28px 26px"><p style="margin:0;padding-top:17px;border-top:1px solid #CBD7CF;color:#55635B;font-size:12px;line-height:1.65">CLASS[Λ] · Last Bench<br><a href="mailto:info@lastbenchbd.com" style="color:#154E2E">info@lastbenchbd.com</a></p></td></tr></table></td></tr></table></body></html>`;
+}
+
+
 function admin(){
   const url=Deno.env.get("SUPABASE_URL")||"";
   const mapRaw=Deno.env.get("SUPABASE_SECRET_KEYS")||"";
@@ -31,7 +57,7 @@ function base64(bytes:Uint8Array){
 
 async function receiptPdf(input:{
   receiptNumber:string; learner:string; registrationId:number; amount:string;
-  transactionId:string; verifiedAt:string; verifiedBy:string;
+  transactionId:string; verifiedAt:string; verifiedBy:string; paymentMethod:string;
 }){
   const pdf=await PDFDocument.create();
   const page=pdf.addPage([595.28,841.89]);
@@ -40,34 +66,40 @@ async function receiptPdf(input:{
   const green=rgb(0,0.65,0.27);
   const dark=rgb(0.05,0.07,0.06);
   page.drawRectangle({x:0,y:829,width:595.28,height:12,color:green});
-  page.drawText("LAST BENCH / CLASS A",{x:44,y:780,size:12,font:bold,color:dark});
-  page.drawText("OFFICIAL PAYMENT RECEIPT",{x:44,y:735,size:25,font:bold,color:dark});
-  page.drawText("Verified learner payment evidence",{x:44,y:712,size:11,font:regular,color:rgb(.35,.38,.36)});
+  const logoResponse=await fetch(BRAND_LOGO);
+  if(!logoResponse.ok) throw new Error("canonical_brand_logo_unavailable");
+  const logo=await pdf.embedPng(new Uint8Array(await logoResponse.arrayBuffer()));
+  const fit=logo.scaleToFit(170,66);
+  page.drawImage(logo,{x:44,y:771,width:fit.width,height:fit.height});
+  page.drawText("OFFICIAL PAYMENT RECEIPT",{x:44,y:719,size:23,font:bold,color:dark});
+  page.drawText("CLASS VENTURE BUILDER - PAYMENT RECORD",{x:44,y:697,size:10,font:regular,color:rgb(.35,.38,.36)});
   const rows=[
     ["Receipt",input.receiptNumber],
     ["Learner",input.learner],
     ["Registration ID",String(input.registrationId)],
     ["Amount","BDT "+input.amount],
-    ["Payment method","bKash"],
+    ["Payment method",input.paymentMethod],
     ["Transaction ID",input.transactionId],
     ["Verified at",input.verifiedAt],
     ["Verified by",input.verifiedBy],
-    ["Status","PAID / VERIFIED"]
+    ["Status","VERIFIED BY LAST BENCH"]
   ];
-  let y=655;
+  let y=648;
   for(const [k,v] of rows){
     page.drawText(k.toUpperCase(),{x:44,y,size:9,font:bold,color:rgb(.35,.38,.36)});
-    page.drawText(v,{x:190,y,size:11,font:regular,color:dark});
+    let value=String(v??"");
+    let size=11;
+    while(size>8 && regular.widthOfTextAtSize(value,size)>355) size-=0.5;
+    while(value.length>4 && regular.widthOfTextAtSize(value,size)>355) value=value.slice(0,-2)+"…";
+    page.drawText(value,{x:190,y,size,font:regular,color:dark});
     page.drawLine({start:{x:44,y:y-10},end:{x:551,y:y-10},thickness:.5,color:rgb(.85,.88,.86)});
     y-=45;
   }
   page.drawRectangle({x:44,y:160,width:507,height:78,color:rgb(.94,.98,.95)});
   page.drawText("PAYMENT VERIFIED",{x:62,y:204,size:12,font:bold,color:green});
-  page.drawText("This receipt confirms the payment recorded in the CLASS A payment ledger.",{x:62,y:183,size:10,font:regular,color:dark});
-  page.drawText("If any detail is incorrect, contact Last Bench before relying on this receipt.",{x:62,y:166,size:9,font:regular,color:rgb(.35,.38,.36)});
-  page.drawText("Sayem Ahmed · Co-Founder & CEO",{x:44,y:104,size:9,font:regular,color:dark});
-  page.drawText("Erfan Uddin · Co-Founder & CBIO",{x:44,y:88,size:9,font:regular,color:dark});
-  page.drawText("Fahim Shahbaz Mahmud · Co-Founder & COO",{x:44,y:72,size:9,font:regular,color:dark});
+  page.drawText("Payment verified in Last Bench records against available evidence.",{x:62,y:183,size:9,font:regular,color:dark});
+  page.drawText("Final admission is verified separately; contact Last Bench for corrections.",{x:62,y:166,size:9,font:regular,color:rgb(.35,.38,.36)});
+  page.drawText("LAST BENCH  |  info@lastbenchbd.com",{x:44,y:91,size:10,font:bold,color:dark});
   return new Uint8Array(await pdf.save());
 }
 
@@ -81,34 +113,19 @@ async function sendReceipt(row:any, reg:any){
     amount:Number(row.amount_received).toFixed(2),
     transactionId:row.transaction_id||"",
     verifiedAt:new Date(row.verified_at).toISOString(),
-    verifiedBy:row.verified_by||"Last Bench"
+    verifiedBy:row.verified_by||"Last Bench",
+    paymentMethod:row.payment_method||"Not specified"
   });
-  const html=`<div style="font-family:Arial,Helvetica,sans-serif;color:#111312;max-width:680px;margin:auto">
-  <div style="height:7px;background:#00C853"></div>
-  <div style="padding:28px 30px">
-    <div style="font-size:13px;font-weight:900;letter-spacing:1px">CLASS[Λ] × LAST BENCH</div>
-    <h1 style="font-size:32px;line-height:1.05;margin:18px 0 12px">PAYMENT VERIFIED.<br>YOUR SEAT IS SECURED.</h1>
-    <p>Hi ${esc(reg.full_name||"there")},</p>
-    <p>Your CLASS[Λ] course payment has been verified against the submitted evidence.</p>
-    <div style="background:#F1FAF4;border:1px solid #BCECCB;border-radius:14px;padding:18px;margin:18px 0">
-      <strong>Receipt:</strong> ${esc(row.receipt_number)}<br>
-      <strong>Amount:</strong> BDT ${Number(row.amount_received).toFixed(2)}<br>
-      <strong>Transaction ID:</strong> ${esc(row.transaction_id)}<br>
-      <strong>Status:</strong> PAID / VERIFIED
-    </div>
-    <p>Your official PDF receipt is attached. The current batch starts on <strong>10 October 2026</strong>; exact class timing and onboarding instructions are communicated separately.</p>
-    <p><a href="${SITE}" style="display:inline-block;background:#00C853;color:#001B0B;text-decoration:none;font-weight:900;padding:11px 16px;border-radius:999px">VIEW CLASS[Λ] COURSE →</a></p>
-    <p style="font-size:12px;color:#68716c;margin-top:24px">Sayem Ahmed · Co-Founder & CEO<br>Erfan Uddin · Co-Founder & CBIO<br>Fahim Shahbaz Mahmud · Co-Founder & COO</p>
-  </div></div>`;
+  const html=paymentHtml(row,reg);
+  const text=`Hello ${reg.full_name||"there"},\n\nThe CLASS[Λ] payment record is verified by Last Bench. Receipt: ${row.receipt_number}. Amount: BDT ${Number(row.amount_received).toFixed(2)}. See attached receipt. Final seat acceptance is separate.\n\n${SITE}`;
   const r=await fetch("https://api.resend.com/emails",{
     method:"POST",
     headers:{Authorization:`Bearer ${RESEND_KEY}`,"Content-Type":"application/json"},
     body:JSON.stringify({
       from:FROM,
       to:[reg.email],
-      cc:["sayemahmed1891@gmail.com","fahimshahbaz95@gmail.com"],
       subject:`CLASS[Λ] — Payment Confirmed | ${row.receipt_number}`,
-      html,
+      html,text,
       attachments:[{filename:`${row.receipt_number}.pdf`,content:base64(pdf)}]
     })
   });
@@ -119,9 +136,10 @@ async function sendReceipt(row:any, reg:any){
 
 Deno.serve(async(req)=>{
   if(req.method!=="POST") return new Response("method_not_allowed",{status:405});
+  if(!RESEND_KEY) return new Response(JSON.stringify({ok:false,blocked:"missing_email_transport",sent:0,failed:0,skipped:0}),{status:503,headers:{"Content-Type":"application/json"}});
   const c=admin();
   const {data:rows,error}=await c.from("class_a_payments")
-    .select("id,registration_id,amount_received,transaction_id,verified_at,verified_by,receipt_number,receipt_status,receipt_attempts")
+    .select("id,registration_id,amount_received,payment_method,transaction_id,verified_at,verified_by,receipt_number,receipt_status,receipt_attempts")
     .eq("status","verified")
     .in("receipt_status",["pending","failed"])
     .lt("receipt_attempts",5)
