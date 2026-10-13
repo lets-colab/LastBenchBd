@@ -4,273 +4,234 @@
 
 <h1 align="center">Last Bench</h1>
 
-<p align="center"><strong>We help Bangladeshi students study, settle and succeed in Malaysia.</strong></p>
+<p align="center"><strong>The Company · Two Labs · One Intelligence Loop</strong></p>
 
-<p align="center">
-  A student-first digital journey platform for clearer decisions, transparent progress, verified guidance and community support.
-</p>
+<p align="center"><strong>CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X</strong></p>
+
+<p align="center">From where you are. To what you can build.</p>
+
+<p align="center">Last Bench is the company. CLASS[Λ] builds builders. co.lab incubates, accelerates and grows businesses through Ventures, Projects, Services and Community. Co.MPASS converges governed evidence. Dr. X is the Founder Second Brain / Twin.</p>
 
 <p align="center">
   <a href="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml"><img src="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/lets-colab/LastBenchBd/actions/workflows/production-smoke.yml"><img src="https://github.com/lets-colab/LastBenchBd/actions/workflows/production-smoke.yml/badge.svg" alt="Production Smoke" /></a>
 </p>
 
 ---
 
-## At a glance
+## Business architecture
 
-| | |
-| --- | --- |
-| **Product** | Bangladesh → Malaysia student journey platform |
-| **Experience** | Marketing site at `/` + student application at `/app` |
-| **Frontend** | Expo Router · React Native · React · TypeScript |
-| **API** | Express · tRPC |
-| **Data** | Drizzle ORM · Supabase Postgres |
-| **Web deployment** | Netlify |
-| **API deployment** | Render |
-| **Repository** | `lets-colab/LastBenchBd` |
-| **Release posture** | Active development; production must pass the release gate below |
+- **CLASS[Λ] — Human Lab:** builds builders through capability, execution and proof.
+- **co.lab — Business Lab:** Ventures · Projects · Services · Community. ProjectX = Website Projects.
+- **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction.
+- **Dr. X — Founder Second Brain / Twin:** governed memory, founder context, JEV judgment and reasoning for decisions.
+- **Education & Mobility:** an operating/service domain inside Last Bench; Malaysia Admissions is one current service.
 
-> **Product truth is a feature.** Last Bench must never present fabricated admissions data, fake progress, placeholder metrics or AI guesses as real student guidance.
+Flywheel: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved labs → new evidence.**
+
+For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experience rules, read [`design.md`](./design.md).
 
 ---
 
-## Why Last Bench exists
+## Production architecture
 
-Studying abroad is not one decision. It is a chain of decisions: university discovery, eligibility, documents, applications, visas, communication, arrival and what happens after admission.
-
-Last Bench is being built to make that journey understandable.
-
-The product is not designed as a traditional education-consultancy website. It is a student-first system that should always answer three questions:
-
-1. **Where am I now?**
-2. **What happens next?**
-3. **Who can help when the answer needs a human?**
-
-### Product principles
-
-- **Clarity first** — the next action should be obvious.
-- **Trust through transparency** — distinguish verified facts, system state, AI guidance and human updates.
-- **Mentor-like guidance** — direct, supportive and human; never corporate or patronizing.
-- **Mobile first** — designed for real student devices and imperfect connections.
-- **Community over transaction** — the relationship should continue beyond admission.
-
-For deeper product and brand context, read [`PRODUCT.md`](./PRODUCT.md), [`design.md`](./design.md) and [`AGENT.md`](./AGENT.md).
-
----
-
-## The product system
-
-This repository contains one connected platform rather than separate disconnected projects.
-
-| Surface | Role | Location |
+| Layer | Platform | Contract |
 | --- | --- | --- |
-| **Marketing experience** | Story, trust, lead capture and entry into the student journey | `landing/` |
-| **Student app** | Dashboard, applications, universities, messages, community, AI Guides and profile | `app/` |
-| **API** | Authenticated product and business logic | `server/` |
-| **Database** | Product schema and reviewed migrations | `drizzle/` |
-| **Shared logic** | Cross-surface types and business logic | `shared/` |
-| **Design system** | Product visual and interaction standards | `design-system/`, `design.md` |
-| **Tests** | Auth, privacy, matching, CORS, AI and product verification | `tests/` |
+| Marketing + web app | **GitHub Pages** | Sole canonical production web host; `main` builds and deploys the exact production artifact |
+| API | **Render** | Express + tRPC |
+| Identity | **Supabase Auth** | Email/password sessions; HTTP-only cookies on web, bearer/refresh tokens on native |
+| Database | **Supabase Postgres** | Drizzle schema + reviewed SQL migration ledger |
+| Private files | **Supabase Storage** | `student-documents`, private, per-user RLS |
+| Public intelligence | **Dr. X** | Human-facing Last Bench intelligence identity; founder profiles remain real-person profiles powered by Dr. X |
+| AI execution provider | **OpenAI Responses API** | Current server-side provider when configured; replaceable implementation detail |
+| Canonical web | `https://lastbenchbd.com` | DNS cutover to GitHub Pages complete; current release fingerprint/render verification remains a release gate |
+| Canonical API | `https://api.lastbenchbd.com` | Render custom domain |
 
-The web build is intentionally unified:
+**Manus and Forge are not part of the supported production architecture.** Legacy integration modules and environment contracts have been removed.
 
-```text
-www.lastbenchbd.com/
-├── /          → marketing experience
-└── /app       → student application
-```
+> Product truth is a feature. Last Bench must never present fabricated admissions data, fake progress, placeholder metrics, invented business results or AI guesses as real guidance.
 
 ---
 
-## What is already built
-
-### Student journey
-
-- Profile and onboarding
-- Journey dashboard connected to backend data
-- Multi-stage application tracking
-- Application detail, timeline, mentor notes and document metadata
-- University discovery and comparison
-- Malaysia university dataset used by product logic
-- Notifications and notification settings
-
-### Guidance and community
-
-- Three AI Guides representing **Sayem, Fahim and Erfan**
-- Guide-specific persistent chat history
-- Shared student memory for AI guidance
-- Two-way messaging and conversation threads
-- Community and cohort experiences
-
-### Operations
-
-- Tutor referral flows
-- Commission and payout flows
-- Admin views for students, applications, tutors, payouts and analytics
-- Lead form with explicit WhatsApp consent and Bangladesh phone validation
-
-### Trust and resilience
-
-- Real loading, empty, error and service-unavailable states
-- Privacy-bounded diagnostics / self-healing support
-- Automated TypeScript, lint, test, production-build and critical dependency-audit checks in CI
-- Grounding rules for AI-generated university guidance
-
-### AI guidance rule
-
-AI guidance must remain grounded in verified project data. Do not invent or imply certainty around acceptance rates, current fees, rankings, visa probability, scholarships, eligibility or other high-stakes facts. When current verification or professional judgment is required, escalate to a human mentor.
-
----
-
-## Architecture
+## Product system
 
 ```text
-landing/                 Static marketing experience
-app/                     Expo Router student, tutor and admin UI
-components/              Shared UI components
-hooks/                   React hooks
-lib/                     Client/shared libraries
-server/                  Express + tRPC API
-server/db.ts             Database access layer
-server/routers.ts        Product/API procedures
-server/self-healing.ts   Redacted diagnostics + safe retry/advisory logic
-drizzle/                 Postgres schema + migrations
-shared/                  Shared business logic and types
-design-system/           Design-system resources
-scripts/                 Build, validation and utility scripts
-tests/                   Vitest test suite
+lastbenchbd.com/
+├── /          → current cinematic marketing experience
+├── /app       → student/Journey OS application
+└── /class-a/* → CLASS[Λ] conversion + program surfaces
+
+api.lastbenchbd.com/
+└── /api       → Express + tRPC runtime
 ```
+
+The current `/` marketing implementation has historical Malaysia-service-led sections. They must remain correctly scoped as service content while the corporate framing follows JEV Architecture `2026.09.29`. Any migration must be tested and visually verified so the active Malaysia conversion journey is not broken.
+
+Repository surfaces:
+
+| Surface | Location |
+| --- | --- |
+| Marketing experience | `landing/` |
+| Student/tutor/admin app | `app/` |
+| CLASS[Λ] | `landing/class-a/` |
+| API | `server/` |
+| Database schema + migrations | `drizzle/` |
+| Shared logic | `shared/` |
+| Design system | `design-system/`, `design.md` |
+| Verification | `tests/`, `.github/workflows/` |
 
 ### Core stack
 
-`Expo 54` · `React Native 0.81` · `React 19` · `Expo Router 6` · `TypeScript 5.9` · `NativeWind` · `TanStack Query` · `tRPC 11` · `Express` · `Drizzle ORM` · `PostgreSQL / Supabase` · `Vitest` · `pnpm 9.12`
+`Expo 54` · `React Native 0.81` · `React 19` · `Expo Router 6` · `TypeScript 5.9` · `NativeWind` · `TanStack Query` · `tRPC 11` · `Express` · `Drizzle ORM` · `Supabase` · `Vitest` · `pnpm 9.12`
+
+---
+
+## Authentication
+
+Supabase Auth is the identity authority.
+
+- Web: Last Bench API stores Supabase access and refresh tokens in HTTP-only cookies.
+- Native: access and refresh tokens are stored with Expo SecureStore and sent as bearer credentials.
+- `public.users.openId` is retained only as a compatibility column and stores the Supabase Auth UUID (`auth.users.id`). It is no longer a Manus/OpenID identifier.
+- Logout revokes the Supabase session where possible and prevents refresh-cookie session resurrection.
+- No Supabase service-role/secret key belongs in the client bundle.
+
+Public client configuration uses only the Supabase project URL and **publishable** key.
+
+---
+
+## Student documents
+
+`drizzle/0004_supabase_identity_storage.sql` establishes the storage contract:
+
+- private bucket: `student-documents`
+- maximum file size: 10 MB
+- allowed types: PDF, JPEG, PNG
+- authenticated users can only select/insert/update/delete objects inside a top-level folder matching their own Supabase Auth UUID
+
+The bucket/policies are infrastructure foundation. The complete document-picker/upload UX must still be verified end to end before calling student uploads released.
+
+---
+
+## Dr. X public intelligence
+
+The public Last Bench intelligence identity is **Dr. X**. The previous visible **Bench AI** name is retired. The legacy `landing/bench-ai.js` filename remains temporarily for compatibility with the verified landing export and must not be treated as a separate product or brain.
+
+The founder experience is human-first:
+
+- **Sayem Ahmed** — Co-founder & CEO — interactive profile **Powered by Dr. X**;
+- **Fahim Shahbaz Mahmud** — Co-founder & COO — interactive profile **Powered by Dr. X**;
+- **Erfan Uddin** — Co-founder & Chief Business & Innovation Officer — **Also known as Dr. X**.
+
+Portraits must come from approved identity sources. Exact external founder-profile links are published only after URL verification. Generated founder-profile replies are not direct statements from the founder unless explicitly source-verified.
+
+Current runtime truth: AI guidance still calls the OpenAI Responses API from the Render server when `OPENAI_API_KEY` is configured. A future DR.X Gateway/provider route may replace or govern that provider, but repository identity changes do not prove that Gateway routing is live in production.
+
+The core API, auth, applications and other product functions must remain available when no AI provider key is configured. `/api/health` reports `aiConfigured` and the overall degraded state.
+
+Dr. X guidance must remain grounded in verified project data. Never invent or imply certainty around current fees, rankings, visa probability, scholarships, eligibility, admission probability, partner status, revenue, traction or other high-stakes facts. Escalate to a human owner when current verification or professional judgment is required. Public Dr. X/founder-profile requests are Last Bench-scoped and must not receive private Founder DR.X, unrelated-project or unrestricted Second Brain context.
 
 ---
 
 ## Quick start
 
-### Prerequisites
-
-- Node.js 20 is the CI baseline
-- `pnpm` 9.12.x
-- Required environment configuration from `.env.example`
-
-### Install
+Prerequisites: Node.js 20, pnpm 9.12.x, and your own local environment values.
 
 ```bash
 git clone https://github.com/lets-colab/LastBenchBd.git
 cd LastBenchBd
 pnpm install
 cp .env.example .env
-```
-
-Supply your own local environment values. **Never commit real credentials.**
-
-### Run the application and API
-
-```bash
 pnpm dev
 ```
 
-Or run surfaces separately:
+Never commit real credentials.
 
-```bash
-pnpm dev:server
-pnpm dev:metro
-pnpm android
-pnpm ios
-```
-
----
-
-## Commands
+Useful commands:
 
 | Command | Purpose |
 | --- | --- |
-| `pnpm dev` | Run API + Expo development processes |
+| `pnpm dev` | API + Expo development |
 | `pnpm check` | TypeScript verification |
 | `pnpm lint` | ESLint verification |
 | `pnpm test` | Vitest suite |
-| `pnpm build` | Build production API bundle to `server-dist/` |
-| `pnpm build:web` | Assemble the combined local web artifact in `dist/` |
-| `pnpm build:web:production` | Validate public environment configuration + build production web artifact |
-| `pnpm audit --prod --audit-level critical` | Block critical production dependency findings |
-| `pnpm db:push` | Generate + migrate DB changes — **never point blindly at production** |
-| `pnpm qr` | Generate a project QR code |
+| `pnpm build` | Build API to `server-dist/` |
+| `pnpm build:web` | Build combined local web artifact |
+| `pnpm build:web:production` | Validate public env + production web build |
+| `pnpm release:smoke` | Verify canonical public routes and API health |
+| `pnpm audit --prod --audit-level critical` | Critical production dependency audit |
+| `pnpm db:push` | Intentionally blocked until Drizzle snapshots are rebuilt from the reconciled baseline |
+
+Production DDL follows: **reviewed GitHub SQL → CI/CodeQL → merge → Supabase migration → advisor verification**. See [`drizzle/MIGRATION_STATUS.md`](./drizzle/MIGRATION_STATUS.md).
 
 ---
 
-## Verification contract
+## Environment contract
 
-A change is not complete because it compiles. Before merging or releasing, verify it.
+### Render
 
-```bash
-pnpm install --frozen-lockfile
-pnpm check
-pnpm lint
-pnpm test
-pnpm audit --prod --audit-level critical
-pnpm build
-pnpm build:web
-```
+Required core runtime values:
 
-For the production web build path:
+- `DATABASE_URL`
+- `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY`
+- `FRONTEND_URL`
+- `CORS_ALLOWED_ORIGINS`
 
-```bash
-pnpm build:web:production
-```
+Optional integrations:
 
-The production build intentionally rejects missing, insecure or placeholder public configuration.
+- `ADMIN_AUTH_USER_ID`
+- `OPENAI_API_KEY`
+- `OPENAI_API_BASE_URL`
+- `AI_GUIDANCE_MODEL`
+- `AUTO_DIAGNOSE_ERRORS`
 
----
+### Static web / Expo public bundle
 
-## Production topology
+- `EXPO_PUBLIC_API_BASE_URL`
+- `EXPO_PUBLIC_SUPABASE_URL`
+- `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
-| Layer | Platform | Contract |
-| --- | --- | --- |
-| Marketing + web app | **Netlify** | `/` = landing · `/app` = student app |
-| API | **Render** | Express/tRPC runtime |
-| Database | **Supabase Postgres** | Product data |
-| Canonical web host | `www.lastbenchbd.com` | Netlify custom domain |
-| Canonical API host | `api.lastbenchbd.com` | Render custom domain |
-
-Netlify is the supported web deployment for this repository. Render is the supported API runtime.
-
-### Release gate
-
-Repository configuration or a green CI badge alone does **not** prove production is live.
-
-Before calling a release complete, verify:
-
-- [ ] Required `EXPO_PUBLIC_*` values are configured in Netlify
-- [ ] Required server values are configured in Render
-- [ ] Reviewed production database migrations are applied
-- [ ] `www.lastbenchbd.com` resolves to the intended Netlify site
-- [ ] `api.lastbenchbd.com` resolves to the intended Render service
-- [ ] API health check succeeds
-- [ ] `/` succeeds
-- [ ] `/app/` succeeds
-- [ ] Fresh-browser login and logout succeed
-- [ ] Returning-session authentication succeeds
-- [ ] A real authenticated API request succeeds
-- [ ] A real lead submission is received and follow-up is verified
-- [ ] Document/storage authorization is verified before opening full upload flows
-
-Detailed release instructions live in [`AGENT.md`](./AGENT.md).
+The production build rejects a Supabase `sb_secret_*` value if it is accidentally placed in the public publishable-key variable.
 
 ---
 
-## Brand system
+## Release truth
 
-Canonical brand resources live under [`assets/branding/`](./assets/branding/) and production logo assets under [`landing/assets/`](./landing/assets/).
+A green build is not proof of a working product. Before calling the authenticated product fully released, verify:
 
-Approved brand assets are source assets:
+- [x] Supabase database migrations through homepage intake `0005` are applied
+- [x] relational foreign keys/uniqueness/indexes are verified
+- [ ] production DB security advisor is fully reconciled — current live advisor still reports WARN findings: public `SECURITY DEFINER` CLASS RPC exposure, `pg_net` installed in `public`, and Auth leaked-password protection disabled. RLS-enabled/no-policy notices remain informational/default-deny candidates and must not be blanket-fixed without an access model.
+- [x] production smoke workflow exists
+- [x] migration `0004` storage/auth-identity contract is merged and applied
+- [x] canonical Render service reports Supabase auth/storage configured
+- [x] `api.lastbenchbd.com/api/health` returns semantic JSON health
+- [x] homepage Supabase REST intake accepts an anonymous insert without exposing lead reads
+- [x] GitHub Pages builds and deploys the verified production artifact from current `main`
+- [x] `lastbenchbd.com` DNS points to the GitHub Pages custom-domain configuration
+- [ ] fresh sign-in succeeds with a real user
+- [ ] returning session succeeds
+- [ ] authenticated API request succeeds
+- [ ] logout prevents session resurrection
+- [ ] student document upload/download authorization is verified
+- [ ] homepage, CLASS[Λ] masterclass and CLASS[Λ] course receipt is verified with real production Supabase rows
+- [ ] corporate runtime architecture passes the JEV `2026.09.29` architecture-release gate on the canonical domain
+- [ ] visually verify the canonical-domain render and current release fingerprint
 
-- Do not redraw or approximate the logo
-- Do not regenerate approved marks with AI
-- Do not distort proportions
-- Do not recolor outside approved variants
-- Preserve clear space and visual hierarchy
+No production user, credential, admissions result, business outcome or verification evidence should ever be fabricated to satisfy this checklist.
+
+---
+
+## Brand guardrails
+
+Canonical logo assets live under `assets/branding/` and `landing/assets/`.
+
+- Do not redraw or approximate approved logos.
+- Do not regenerate approved marks with AI.
+- Do not distort proportions or recolor outside approved variants.
+- Preserve the established Last Bench green/white/charcoal visual system.
+- Keep CLASS[Λ] and co.lab in their own approved visual namespaces.
 
 Current documented palette:
 
@@ -282,66 +243,35 @@ Current documented palette:
 | Sage | `#E6F2E9` |
 | Gray | `#6B6F76` |
 
-The intended direction is cinematic, sincere and forward-moving — never generic education-agency design and never charity/pity framing.
-
 ---
 
 ## Engineering guardrails
 
-- Use conventional commits: `feat:`, `fix:`, `docs:`, `build:`, etc.
-- Never ship hardcoded demo values disguised as real data
-- Verify behavior empirically; do not infer production health from source alone
-- Keep database changes deliberate and reviewed
-- Never auto-create or auto-alter production tables during normal server startup
-- New data-backed features should follow: **schema → DB helper → tRPC procedure → UI → tests**
-- Surface known gaps rather than hiding them
-- Treat authentication, documents, commissions, student records and AI guidance as high-trust surfaces
-
----
-
-## Documentation map
-
-| Document | Purpose |
-| --- | --- |
-| [`README.md`](./README.md) | Repository front door, architecture and release posture |
-| [`AGENT.md`](./AGENT.md) | Detailed engineering/AI-agent operating manual |
-| [`AGENTS.md`](./AGENTS.md) | Additional agent instructions |
-| [`PRODUCT.md`](./PRODUCT.md) | Product and brand definition |
-| [`design.md`](./design.md) | Product design system and interaction rules |
-| [`DESIGN_AUDIT_AND_REBUILD.md`](./DESIGN_AUDIT_AND_REBUILD.md) | Design audit and rebuild record |
-| [`MESSAGING_FEATURES.md`](./MESSAGING_FEATURES.md) | Messaging implementation documentation |
-| [`todo.md`](./todo.md) | Working backlog; not proof of completion |
+- Never ship hardcoded demo values disguised as real data.
+- Verify runtime behavior empirically rather than inferring production health from source.
+- Keep database changes deliberate and reviewed.
+- Never auto-alter production tables during normal startup.
+- New data-backed features should follow: **schema → DB helper → tRPC procedure → UI → tests**.
+- Treat authentication, documents, commissions, student records, partner claims and AI guidance as high-trust surfaces.
+- Surface known gaps rather than hiding them.
 
 ### Source-of-truth order
 
 When documentation disagrees:
 
-1. **Current code + verified runtime behavior**
-2. **README**
-3. **AGENT.md**
-4. **PRODUCT.md / design.md**
-5. Feature-specific documentation
-6. `todo.md`
+1. Current explicit user direction recorded in canonical business/product documents.
+2. Current code + verified runtime/infrastructure behavior for implementation claims.
+3. `architecture/JEV_VERSION.json` + `PRODUCT.md` for current business/product architecture.
+4. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
+5. `README.md` / `AGENT.md` / `design.md`.
+6. Feature-specific documentation.
+7. Historical design handoffs and archived notes.
 
-> Some older internal documentation still references an earlier repository name. The active repository is **`lets-colab/LastBenchBd`**. Treat older names as documentation drift, not canonical identity.
-
----
-
-## Current priority
-
-Before adding more surface area, prioritize production trust:
-
-1. Complete and verify Netlify + Render production configuration
-2. Apply and verify required database migrations
-3. Verify same-site authentication end to end
-4. Verify real lead capture and follow-up
-5. Verify document/storage authorization
-6. Triage remaining non-critical dependency advisories
-7. Keep university and admissions data current, attributable and reviewable
+The active repository is **`lets-colab/LastBenchBd`**.
 
 ---
 
 <p align="center">
   <strong>Last Bench</strong><br />
-  From uncertainty to a clear next step.
+  From where you are. To what you can build.
 </p>

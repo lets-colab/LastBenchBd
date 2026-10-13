@@ -18,19 +18,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 9.12.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22.14.0
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Design system contract
+        run: pnpm design:check
 
       - name: Typecheck
         run: pnpm check
@@ -48,16 +51,58 @@ jobs:
         run: |
           pnpm build
           test -s server-dist/index.js
+          test -s server-dist/data/malaysia-universities.json
 
-      - name: Build complete Netlify site
+      - name: Start built API with Supabase auth and AI intentionally disabled
+        env:
+          NODE_ENV: production
+          PORT: "3000"
+          DATABASE_URL: postgres://ci:ci@db.example.invalid:5432/postgres
+          SUPABASE_URL: https://ci-project.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: ci-publishable-key
+          FRONTEND_URL: https://web.example.invalid
+          CORS_ALLOWED_ORIGINS: https://web.example.invalid
+        run: |
+          set -euo pipefail
+          pnpm start > /tmp/lastbench-api.log 2>&1 &
+          pid=$!
+          cleanup() {
+            kill "$pid" 2>/dev/null || true
+            cat /tmp/lastbench-api.log
+          }
+          trap cleanup EXIT
+
+          for attempt in {1..30}; do
+            if health="$(curl --fail --silent http://127.0.0.1:3000/api/health)"; then
+              echo "$health" | grep -q '"ok":true'
+              echo "$health" | grep -q '"degraded":true'
+              echo "$health" | grep -q '"authConfigured":true'
+              echo "$health" | grep -q '"storageConfigured":true'
+              echo "$health" | grep -q '"aiConfigured":false'
+
+              auth_status="$(curl --silent --output /tmp/auth-me.json --write-out '%{http_code}' http://127.0.0.1:3000/api/auth/me)"
+              test "$auth_status" = "401"
+              grep -q 'Not authenticated' /tmp/auth-me.json
+
+              echo "Built API Supabase startup smoke passed"
+              exit 0
+            fi
+            if ! kill -0 "$pid" 2>/dev/null; then
+              echo "Built API exited before health became ready"
+              exit 1
+            fi
+            sleep 1
+          done
+
+          echo "Built API did not become healthy in time"
+          exit 1
+
+      - name: Build complete production site
         run: pnpm build:web:production
         env:
           EXPO_PUBLIC_API_BASE_URL: https://api.example.invalid
-          EXPO_PUBLIC_OAUTH_PORTAL_URL: https://portal.example.invalid
-          EXPO_PUBLIC_OAUTH_SERVER_URL: https://oauth.example.invalid
-          EXPO_PUBLIC_APP_ID: ci-app-id
-          EXPO_PUBLIC_OWNER_OPEN_ID: ci-owner-id
-          EXPO_PUBLIC_OWNER_NAME: Last Bench
+          EXPO_PUBLIC_SUPABASE_URL: https://ci-project.supabase.co
+          EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ci-publishable-key
 
       - name: Check patch integrity
         run: git diff --check

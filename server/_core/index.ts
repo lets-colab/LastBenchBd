@@ -1,15 +1,31 @@
 import "dotenv/config";
 import express from "express";
+import { rateLimit } from "express-rate-limit";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { registerOAuthRoutes } from "./oauth";
-import { registerStorageProxy } from "./storageProxy";
+import { registerAuthRoutes } from "./authRoutes";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { logError } from "../self-healing";
 import { createCorsMiddleware } from "./cors";
-import { assertProductionConfiguration } from "./env";
+import { assertProductionConfiguration, getProductionIntegrationStatus } from "./env";
+
+const trpcLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 180,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many API requests. Please wait and try again." },
+});
+
+const aiGuidanceLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 12,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+  message: { error: "Too many AI guidance requests. Please wait a moment and try again." },
+});
 
 function exitAfterFatalError(source: string, error: unknown) {
   console.error(`[api] fatal ${source}; shutting down for a clean restart`);
@@ -51,8 +67,6 @@ async function startServer() {
   const app = express();
   const server = createServer(app);
 
-  // Render forwards through one proxy hop by default. Make this explicit so
-  // rate limiting uses the real client IP without trusting arbitrary headers.
   const proxyHops =
     process.env.TRUST_PROXY_HOPS !== undefined
       ? Number.parseInt(process.env.TRUST_PROXY_HOPS, 10)
@@ -62,28 +76,32 @@ async function startServer() {
   app.set("trust proxy", Number.isFinite(proxyHops) && proxyHops > 0 ? proxyHops : false);
 
   app.use(createCorsMiddleware());
-
-  // Files use the presigned storage flow; API JSON should stay small enough
-  // that one request cannot consume excessive memory.
   app.use(express.json({ limit: "1mb" }));
   app.use(express.urlencoded({ limit: "1mb", extended: true }));
 
-  registerStorageProxy(app);
-  registerOAuthRoutes(app);
+  registerAuthRoutes(app);
 
   app.get("/api/health", (_req, res) => {
-    res.json({ ok: true, timestamp: Date.now() });
+    const integrations = getProductionIntegrationStatus();
+    res.json({
+      ok: true,
+      timestamp: Date.now(),
+      integrations,
+      degraded: !integrations.authConfigured || !integrations.storageConfigured || !integrations.aiConfigured,
+    });
   });
+
+  app.use("/api/trpc/aiGuidance.chat", aiGuidanceLimiter);
 
   app.use(
     "/api/trpc",
+    trpcLimiter,
     createExpressMiddleware({
       router: appRouter,
       createContext,
     }),
   );
 
-  // Last-resort Express error handler: log to the healer, answer gracefully.
   app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
     void logError("express", err).catch(() => {});
     if (!res.headersSent) {
@@ -95,8 +113,6 @@ async function startServer() {
   if (!Number.isInteger(preferredPort) || preferredPort < 1 || preferredPort > 65535) {
     throw new Error("PORT must be an integer between 1 and 65535");
   }
-  // Managed hosts route traffic to the exact assigned PORT. Silently moving
-  // to another port would create a misleading "started" log and a dead API.
   const port =
     process.env.NODE_ENV === "production"
       ? preferredPort

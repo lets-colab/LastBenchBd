@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "claude_design": {
+      "type": "http",
+      "url": "https://api.anthropic.com/v1/design/mcp"
+    },
+    "graft": {
+      "command": "npx",
+      "args": ["-y", "@nanonets/graft", "mcp"]
+    }
+  }
+}

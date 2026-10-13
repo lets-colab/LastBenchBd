@@ -3,9 +3,19 @@ import * as Auth from "@/lib/_core/auth";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Platform } from "react-native";
 
-type UseAuthOptions = {
-  autoFetch?: boolean;
-};
+type UseAuthOptions = { autoFetch?: boolean };
+
+function mapUser(apiUser: NonNullable<Awaited<ReturnType<typeof Api.getMe>>>): Auth.User {
+  return {
+    id: apiUser.id,
+    openId: apiUser.openId,
+    name: apiUser.name,
+    email: apiUser.email,
+    loginMethod: apiUser.loginMethod,
+    role: apiUser.role,
+    lastSignedIn: new Date(apiUser.lastSignedIn),
+  };
+}
 
 export function useAuth(options?: UseAuthOptions) {
   const { autoFetch = true } = options ?? {};
@@ -17,42 +27,15 @@ export function useAuth(options?: UseAuthOptions) {
     try {
       setLoading(true);
       setError(null);
-
-      if (Platform.OS === "web") {
-        const apiUser = await Api.getMe();
-
-        if (apiUser) {
-          const userInfo: Auth.User = {
-            id: apiUser.id,
-            openId: apiUser.openId,
-            name: apiUser.name,
-            email: apiUser.email,
-            loginMethod: apiUser.loginMethod,
-            lastSignedIn: new Date(apiUser.lastSignedIn),
-          };
-          setUser(userInfo);
-        } else {
-          setUser(null);
-        }
-        return;
-      }
-
-      const sessionToken = await Auth.getSessionToken();
-      if (!sessionToken) {
-        setUser(null);
-        return;
-      }
-
-      const cachedUser = await Auth.getUserInfo();
-      if (cachedUser) {
-        setUser(cachedUser);
-      } else {
-        setUser(null);
-      }
+      const apiUser = await Api.getMe();
+      const userInfo = apiUser ? mapUser(apiUser) : null;
+      setUser(userInfo);
+      if (userInfo && Platform.OS !== "web") await Auth.setUserInfo(userInfo);
+      if (!userInfo && Platform.OS !== "web") await Auth.clearUserInfo();
     } catch (err) {
-      const error = err instanceof Error ? err : new Error("Failed to fetch user");
-      if (__DEV__) console.warn("[useAuth] fetchUser error:", error.message);
-      setError(error);
+      const resolved = err instanceof Error ? err : new Error("Failed to fetch user");
+      if (__DEV__) console.warn("[useAuth] fetchUser error:", resolved.message);
+      setError(resolved);
       setUser(null);
     } finally {
       setLoading(false);
@@ -60,43 +43,28 @@ export function useAuth(options?: UseAuthOptions) {
   }, []);
 
   const logout = useCallback(async () => {
-    try {
-      await Api.logout();
-    } catch (err) {
-      if (__DEV__) {
-        console.warn(
-          "[Auth] Logout API call failed:",
-          err instanceof Error ? err.message : "Unknown error",
-        );
-      }
-      // Continue with logout even if API call fails
-    } finally {
-      await Auth.removeSessionToken();
-      await Auth.clearUserInfo();
-      setUser(null);
-      setError(null);
-    }
+    await Api.logout();
+    setUser(null);
+    setError(null);
   }, []);
 
   const isAuthenticated = useMemo(() => Boolean(user), [user]);
 
   useEffect(() => {
-    if (autoFetch) {
-      if (Platform.OS === "web") {
-        void fetchUser();
-      } else {
-        Auth.getUserInfo().then((cachedUser) => {
-          if (cachedUser) {
-            setUser(cachedUser);
-            setLoading(false);
-          } else {
-            void fetchUser();
-          }
-        });
-      }
-    } else {
+    if (!autoFetch) {
       setLoading(false);
+      return;
     }
+
+    if (Platform.OS !== "web") {
+      void Auth.getUserInfo().then((cached) => {
+        if (cached) setUser(cached);
+        void fetchUser();
+      });
+      return;
+    }
+
+    void fetchUser();
   }, [autoFetch, fetchUser]);
 
   return {

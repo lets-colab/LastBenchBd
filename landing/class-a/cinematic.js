@@ -1,0 +1,356 @@
+(() => {
+  const root = document.documentElement;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = window.matchMedia('(pointer: fine)');
+  const scene = document.querySelector('[data-scene]');
+  const hero = document.querySelector('.hero, .hub-hero');
+  const curriculum = document.querySelector('.phase-list');
+  const phases = Array.from(document.querySelectorAll('.phase'));
+  const stickyAction = document.querySelector('.mobile-stick');
+  const registerSection = document.querySelector('#register');
+  const brandIntro = document.querySelector('[data-brand-intro]');
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+  const reelEntry = document.querySelector('[data-reel-entry]');
+  const reelVideo = document.querySelector('[data-masterclass-reel]');
+  const reelEnter = document.querySelector('[data-reel-enter]');
+  const reelSkip = document.querySelector('[data-reel-skip]');
+  const reelCta = document.querySelector('[data-reel-cta]');
+  const reelProgress = document.querySelector('[data-reel-progress]');
+
+  if (reelEntry) {
+    const handoffAt = 23.6;
+    let handoffStarted = false;
+    let removalTimer = 0;
+
+    const removeReel = () => {
+      if (!reelEntry.isConnected) return;
+      document.body.classList.remove('reel-locked');
+      reelEntry.remove();
+    };
+
+    const finishReel = ({ scrollToRegister = false } = {}) => {
+      if (handoffStarted) return;
+      handoffStarted = true;
+      if (reelVideo) reelVideo.pause();
+      reelEntry.classList.add('is-morphing');
+      window.setTimeout(() => {
+        reelEntry.classList.add('is-leaving');
+        removalTimer = window.setTimeout(() => {
+          removeReel();
+          if (scrollToRegister) {
+            document.querySelector('#register')?.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
+          } else {
+            document.querySelector('.hero .primary, .hero a, #main')?.focus?.({ preventScroll: true });
+          }
+        }, reduceMotion.matches ? 0 : 430);
+      }, reduceMotion.matches ? 0 : 420);
+    };
+
+    if (reduceMotion.matches || !reelVideo) {
+      removeReel();
+    } else {
+      reelEntry.classList.add('is-ready');
+      document.body.classList.add('reel-locked');
+      window.setTimeout(() => reelEnter?.focus({ preventScroll: true }), 0);
+
+      const playReel = async () => {
+        if (!reelVideo || handoffStarted) return;
+        reelVideo.currentTime = 0;
+        reelVideo.muted = false;
+        reelVideo.volume = 1;
+        try {
+          await reelVideo.play();
+        } catch (_) {
+          reelVideo.muted = true;
+          try { await reelVideo.play(); } catch (error) {
+            console.warn('CLASS[Λ] reel playback unavailable; continuing to the experience.', error);
+            finishReel();
+            return;
+          }
+        }
+        reelEntry.classList.add('is-playing');
+      };
+
+      const updateReel = () => {
+        if (!reelVideo || handoffStarted) return;
+        const p = clamp(reelVideo.currentTime / handoffAt);
+        if (reelProgress) reelProgress.style.transform = `scaleX(${p.toFixed(4)})`;
+        if (reelVideo.currentTime >= handoffAt - 0.06) finishReel();
+      };
+
+      reelEnter?.addEventListener('click', playReel);
+      reelSkip?.addEventListener('click', () => finishReel());
+      reelCta?.addEventListener('click', (event) => {
+        event.preventDefault();
+        finishReel({ scrollToRegister: true });
+      });
+      reelVideo.addEventListener('timeupdate', updateReel);
+      reelVideo.addEventListener('ended', () => finishReel());
+      reelVideo.addEventListener('error', () => {
+        console.warn('CLASS[Λ] reel asset could not be played; continuing to the experience.');
+        finishReel();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && reelEntry.isConnected) finishReel();
+      });
+      reduceMotion.addEventListener('change', () => {
+        if (reduceMotion.matches && reelEntry.isConnected) {
+          window.clearTimeout(removalTimer);
+          finishReel();
+        }
+      });
+    }
+  }
+
+  if (scene && !scene.querySelector('.scene-orbit-system')) {
+    const orbitSystem = document.createElement('div');
+    orbitSystem.className = 'scene-orbit-system';
+    orbitSystem.setAttribute('aria-hidden', 'true');
+    orbitSystem.innerHTML = [
+      '<span class="scene-orbit scene-orbit-1"></span>',
+      '<span class="scene-orbit scene-orbit-2"></span>',
+      '<span class="scene-orbit scene-orbit-3"></span>',
+      '<span class="scene-axis scene-axis-x"></span>',
+      '<span class="scene-axis scene-axis-y"></span>'
+    ].join('');
+    scene.prepend(orbitSystem);
+  }
+
+  if (scene && !scene.querySelector('.class-ui-stack')) {
+    const uiStack = document.createElement('div');
+    uiStack.className = 'class-ui-stack';
+    uiStack.setAttribute('aria-hidden', 'true');
+    uiStack.innerHTML = [
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.25"/><path d="M5.5 20c.5-4.2 2.7-6.3 6.5-6.3s6 2.1 6.5 6.3"/></svg><span><small>YOU</small><strong>Decide outcome</strong></span></div>',
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><path d="M9 4h6l3 3v10l-3 3H9l-3-3V7z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span><small>AI</small><strong>Think with it</strong></span></div>',
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span><small>SYSTEMS</small><strong>Make it repeatable</strong></span></div>'
+    ].join('');
+    scene.append(uiStack);
+  }
+
+  if (brandIntro) {
+    const removeIntro = () => brandIntro.remove();
+    const handleIntroEnd = (event) => {
+      if (event.target !== brandIntro) return;
+      brandIntro.removeEventListener('animationend', handleIntroEnd);
+      removeIntro();
+    };
+    brandIntro.addEventListener('animationend', handleIntroEnd);
+    window.setTimeout(removeIntro, reduceMotion.matches ? 0 : 2400);
+  }
+
+  const progress = document.createElement('div');
+  progress.className = 'journey-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  progress.innerHTML = '<span></span>';
+  document.body.prepend(progress);
+
+  const motionRows = Array.from(document.querySelectorAll('.module-list li, .signal, .stage, .path-card'));
+  motionRows.forEach((item, index) => {
+    item.classList.add('motion-row');
+    item.style.setProperty('--row-delay', `${Math.min(index % 5, 4) * 70}ms`);
+  });
+
+  const reveals = Array.from(document.querySelectorAll('.reveal'));
+  let revealObserver;
+  if (!reduceMotion.matches && 'IntersectionObserver' in window) {
+    document.body.classList.add('motion-ready');
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -7% 0px' });
+
+    [...reveals, ...motionRows].forEach((item, index) => {
+      if (item.classList.contains('reveal')) {
+        item.style.setProperty('--reveal-delay', `${Math.min(index % 5, 4) * 70}ms`);
+      }
+      revealObserver.observe(item);
+    });
+  } else {
+    [...reveals, ...motionRows].forEach((item) => item.classList.add('is-visible'));
+  }
+
+  let sceneInView = Boolean(scene);
+  if (scene && 'IntersectionObserver' in window) {
+    const sceneObserver = new IntersectionObserver(([entry]) => {
+      sceneInView = entry.isIntersecting;
+      root.style.setProperty('--scene-play-state', sceneInView && !document.hidden && !reduceMotion.matches ? 'running' : 'paused');
+    }, { rootMargin: '12% 0px 12% 0px' });
+    sceneObserver.observe(scene);
+  }
+
+  if (phases.length && 'IntersectionObserver' in window) {
+    const phaseObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => entry.target.classList.toggle('is-current', entry.isIntersecting));
+    }, { threshold: 0.18, rootMargin: '-20% 0px -52% 0px' });
+    phases.forEach((phase) => phaseObserver.observe(phase));
+  }
+
+  let scrollFrame = 0;
+  const updateScroll = () => {
+    scrollFrame = 0;
+    const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    const pageProgress = clamp(window.scrollY / maxScroll);
+    root.style.setProperty('--journey-progress', pageProgress.toFixed(4));
+
+    if (!reduceMotion.matches && hero) {
+      const rect = hero.getBoundingClientRect();
+      const heroProgress = clamp(-rect.top / Math.max(1, rect.height * .82));
+      root.style.setProperty('--hero-scroll-y', `${heroProgress * -34}px`);
+      root.style.setProperty('--scene-scroll-y', `${heroProgress * 72}px`);
+      root.style.setProperty('--scene-scroll-scale', `${1 - heroProgress * .075}`);
+      root.style.setProperty('--scene-scroll-rotate', `${heroProgress * 1.4}deg`);
+    }
+
+    if (curriculum) {
+      const rect = curriculum.getBoundingClientRect();
+      const curriculumProgress = clamp((window.innerHeight * .68 - rect.top) / Math.max(1, rect.height));
+      curriculum.style.setProperty('--curriculum-progress', curriculumProgress.toFixed(4));
+    }
+
+    if (stickyAction && hero && registerSection) {
+      const pastHeroAction = hero.getBoundingClientRect().bottom < window.innerHeight * .58;
+      const approachingForm = registerSection.getBoundingClientRect().top < window.innerHeight * .55;
+      stickyAction.classList.toggle('is-active', pastHeroAction && !approachingForm);
+    }
+  };
+
+  const requestScrollUpdate = () => {
+    if (scrollFrame) return;
+    scrollFrame = window.requestAnimationFrame(updateScroll);
+  };
+
+  window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+  window.addEventListener('resize', requestScrollUpdate, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    root.style.setProperty('--scene-play-state', sceneInView && !document.hidden && !reduceMotion.matches ? 'running' : 'paused');
+  });
+  reduceMotion.addEventListener('change', () => {
+    document.body.classList.toggle('motion-ready', !reduceMotion.matches && Boolean(revealObserver));
+    [...reveals, ...motionRows].forEach((item) => item.classList.add('is-visible'));
+    root.style.setProperty('--scene-play-state', sceneInView && !document.hidden && !reduceMotion.matches ? 'running' : 'paused');
+    if (reduceMotion.matches) {
+      root.style.setProperty('--hero-scroll-y', '0px');
+      root.style.setProperty('--scene-scroll-y', '0px');
+      root.style.setProperty('--scene-scroll-scale', '1');
+      root.style.setProperty('--scene-scroll-rotate', '0deg');
+    }
+    requestScrollUpdate();
+  });
+  updateScroll();
+
+  if (scene && !reduceMotion.matches && finePointer.matches) {
+    let frame = 0;
+    const updateScene = (event) => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        const x = event.clientX / window.innerWidth - 0.5;
+        const y = event.clientY / window.innerHeight - 0.5;
+        root.style.setProperty('--scene-x', `${x * 10}px`);
+        root.style.setProperty('--scene-y', `${y * 7}px`);
+        root.style.setProperty('--scene-rotate-x', `${-y * 2.4}deg`);
+        root.style.setProperty('--scene-rotate-y', `${x * 3.8}deg`);
+        frame = 0;
+      });
+    };
+    window.addEventListener('pointermove', updateScene, { passive: true });
+  }
+
+  const form = document.querySelector('[data-signup-form]');
+  if (!form) return;
+
+  const success = form.querySelector('[data-success]');
+  const errorBox = form.querySelector('[data-error]');
+  const submit = form.querySelector('button[type="submit"]');
+  const honeypot = form.querySelector('[name="company"]');
+  const program = form.dataset.program;
+  const source = program === 'course' ? 'class-a-cinematic-course' : 'class-a-cinematic-masterclass';
+  const supabaseUrl = 'https://tocxdyqlrvzthpexnmxe.supabase.co';
+  const publishableKey = 'sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_';
+
+  const setStatus = (target) => {
+    [success, errorBox].forEach((box) => {
+      if (!box) return;
+      const active = box === target;
+      box.hidden = !active;
+      box.classList.toggle('show', active);
+    });
+    if (target) {
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: false });
+    }
+  };
+
+  const showFailure = (title, message) => {
+    const heading = errorBox?.querySelector('[data-error-title]');
+    const detail = errorBox?.querySelector('[data-error-message]');
+    if (heading) heading.textContent = title;
+    if (detail) detail.textContent = message;
+    setStatus(errorBox);
+  };
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    if (honeypot && honeypot.value) return;
+
+    setStatus(null);
+    const originalLabel = submit ? submit.textContent : '';
+    if (submit) {
+      submit.disabled = true;
+      submit.setAttribute('aria-busy', 'true');
+      submit.textContent = form.dataset.loadingLabel || 'SAVING…';
+    }
+
+    const data = new FormData(form);
+    const payload = {
+      program,
+      full_name: String(data.get('name') || '').trim(),
+      phone: String(data.get('phone') || '').trim(),
+      email: String(data.get('email') || '').trim(),
+      skill_level: String(data.get('skill') || '').trim() || null,
+      source,
+    };
+
+    try {
+      const response = await fetch(`${supabaseUrl}/rest/v1/class_a_registrations`, {
+        method: 'POST',
+        headers: {
+          apikey: publishableKey,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.status === 409) {
+        // Supabase enforces one course registration per email and phone.
+        // Do not read or disclose existing records from the public client.
+        showFailure(
+          'APPLICATION MAY ALREADY EXIST.',
+          'An application may already exist for this email or phone. Do not register again. Contact info@lastbenchbd.com to check your application status.'
+        );
+        return;
+      }
+      if (!response.ok) throw new Error(`Registration failed with ${response.status}`);
+      form.reset();
+      setStatus(success);
+    } catch (error) {
+      console.error('CLASS A registration failed', error);
+      showFailure(
+        'APPLICATION NOT CONFIRMED.',
+        'We could not save your application right now. Please try again later or contact info@lastbenchbd.com.'
+      );
+    } finally {
+      if (submit) {
+        submit.disabled = false;
+        submit.removeAttribute('aria-busy');
+        submit.textContent = originalLabel;
+      }
+    }
+  });
+})();

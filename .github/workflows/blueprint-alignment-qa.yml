@@ -1,0 +1,50 @@
+name: JEV architecture release gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - architecture/JEV_VERSION.json
+      - PRODUCT.md
+      - design.md
+      - AGENT.md
+      - AGENTS.md
+      - README.md
+      - SITE_BLUEPRINT.md
+      - CHATGPT_SITE_PUBLISH.md
+      - content/**
+      - brand/**
+      - landing/**
+      - design-system/**
+      - scripts/validate-jev-architecture.mjs
+      - scripts/validate-design-system.mjs
+      - scripts/validate-boundary-integrity.mjs
+      - .github/workflows/blueprint-alignment-qa.yml
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  jev-release-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enforce JEV minimum architecture version
+        run: node scripts/validate-jev-architecture.mjs
+
+      - name: Verify canonical design system
+        run: node scripts/validate-design-system.mjs
+
+      - name: Verify audience and product boundaries
+        run: node scripts/validate-boundary-integrity.mjs
+
+      - name: Release rule
+        run: |
+          echo "JEV 2026.09.29 is the minimum admissible current architecture."
+          echo "Older current-state architecture is rejected."
+          echo "Legacy material must be evolved to current or kept explicitly as history/archive."

@@ -1,4 +1,4 @@
-export const DEFAULT_AI_GUIDANCE_MODEL = "claude-sonnet-4-6";
+export const DEFAULT_AI_GUIDANCE_MODEL = "gpt-5.6-terra";
 
 export function resolveAiGuidanceModel(value = process.env.AI_GUIDANCE_MODEL) {
   const configuredModel = value?.trim();
@@ -7,16 +7,30 @@ export function resolveAiGuidanceModel(value = process.env.AI_GUIDANCE_MODEL) {
 
 const REQUIRED_PRODUCTION_ENV = [
   "DATABASE_URL",
-  "JWT_SECRET",
-  "OAUTH_SERVER_URL",
-  "VITE_APP_ID",
-  "OWNER_OPEN_ID",
+  "SUPABASE_URL",
+  "SUPABASE_PUBLISHABLE_KEY",
   "FRONTEND_URL",
   "CORS_ALLOWED_ORIGINS",
-  "BUILT_IN_FORGE_API_URL",
-  "BUILT_IN_FORGE_API_KEY",
-  "AI_GUIDANCE_MODEL",
 ] as const;
+
+export type ProductionIntegrationStatus = {
+  authConfigured: boolean;
+  storageConfigured: boolean;
+  aiConfigured: boolean;
+};
+
+export function getProductionIntegrationStatus(
+  env: NodeJS.ProcessEnv = process.env,
+): ProductionIntegrationStatus {
+  const supabaseConfigured = Boolean(
+    env.SUPABASE_URL?.trim() && env.SUPABASE_PUBLISHABLE_KEY?.trim(),
+  );
+  return {
+    authConfigured: supabaseConfigured,
+    storageConfigured: supabaseConfigured,
+    aiConfigured: Boolean(env.OPENAI_API_KEY?.trim()),
+  };
+}
 
 export function getMissingProductionEnv(
   env: NodeJS.ProcessEnv = process.env,
@@ -35,14 +49,17 @@ export function assertProductionConfiguration(
 
   if (env.NODE_ENV !== "production") return;
 
-  if ((env.JWT_SECRET?.trim().length ?? 0) < 32) {
-    throw new Error("JWT_SECRET must contain at least 32 characters in production");
-  }
-
-  for (const name of ["OAUTH_SERVER_URL", "FRONTEND_URL", "BUILT_IN_FORGE_API_URL"] as const) {
+  for (const name of ["SUPABASE_URL", "FRONTEND_URL"] as const) {
     const url = new URL(env[name]!);
     if (url.protocol !== "https:") {
       throw new Error(`${name} must use HTTPS in production`);
+    }
+  }
+
+  if (env.OPENAI_API_BASE_URL?.trim()) {
+    const url = new URL(env.OPENAI_API_BASE_URL);
+    if (url.protocol !== "https:") {
+      throw new Error("OPENAI_API_BASE_URL must use HTTPS in production");
     }
   }
 
@@ -52,13 +69,15 @@ export function assertProductionConfiguration(
 }
 
 export const ENV = {
-  appId: process.env.VITE_APP_ID ?? "",
-  cookieSecret: process.env.JWT_SECRET ?? "",
   databaseUrl: process.env.DATABASE_URL ?? "",
-  oAuthServerUrl: process.env.OAUTH_SERVER_URL ?? "",
-  ownerOpenId: process.env.OWNER_OPEN_ID ?? "",
+  supabaseUrl: process.env.SUPABASE_URL ?? "",
+  supabasePublishableKey: process.env.SUPABASE_PUBLISHABLE_KEY ?? "",
+  // Compatibility property used by the existing DB upsert path. It now means
+  // the explicitly configured Supabase Auth user UUID that should receive the
+  // platform-admin role; it is no longer a Manus/OpenID identity.
+  ownerOpenId: process.env.ADMIN_AUTH_USER_ID ?? "",
   isProduction: process.env.NODE_ENV === "production",
-  forgeApiUrl: process.env.BUILT_IN_FORGE_API_URL ?? "",
-  forgeApiKey: process.env.BUILT_IN_FORGE_API_KEY ?? "",
+  openAiApiUrl: (process.env.OPENAI_API_BASE_URL ?? "https://api.openai.com/v1").replace(/\/+$/, ""),
+  openAiApiKey: process.env.OPENAI_API_KEY ?? "",
   aiGuidanceModel: resolveAiGuidanceModel(),
 };

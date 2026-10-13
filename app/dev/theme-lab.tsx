@@ -1,3 +1,4 @@
+import { Redirect } from "expo-router";
 import { useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -24,7 +25,7 @@ function ColorSwatch({ name, value }: { name: PaletteName; value: string }) {
   );
 }
 
-export default function ThemeLabScreen() {
+function ThemeLabContent() {
   const [pressCount, setPressCount] = useState(0);
   const [lastAction, setLastAction] = useState<string>("None yet");
   const { colorScheme, setColorScheme } = useThemeContext();
@@ -220,6 +221,14 @@ export default function ThemeLabScreen() {
       </ScrollView>
     </ScreenContainer>
   );
+}
+
+export default function ThemeLabScreen() {
+  if (!__DEV__) {
+    return <Redirect href="/" />;
+  }
+
+  return <ThemeLabContent />;
 }
 
 const styles = StyleSheet.create({

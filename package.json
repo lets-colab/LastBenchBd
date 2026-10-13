@@ -1,5 +1,5 @@
 {
-  "name": "app-template",
+  "name": "lastbench-platform",
   "version": "1.0.0",
   "private": true,
   "main": "expo-router/entry",
@@ -7,18 +7,22 @@
     "dev": "concurrently -k \"pnpm dev:server\" \"pnpm dev:metro\"",
     "dev:server": "cross-env NODE_ENV=development tsx watch server/_core/index.ts",
     "dev:metro": "cross-env EXPO_USE_METRO_WORKSPACE_ROOT=1 npx expo start --web --port ${EXPO_PORT:-8081}",
-    "build": "esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=server-dist",
+    "build": "esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=server-dist && node -e \"require('fs').cpSync('server/data','server-dist/data',{recursive:true})\"",
     "build:web": "node scripts/build-site.mjs",
     "build:web:production": "node scripts/validate-public-env.mjs && node scripts/build-site.mjs",
     "start": "NODE_ENV=production node server-dist/index.js",
     "check": "tsc --noEmit",
+    "brand:check": "node scripts/validate-brand-lock.mjs",
+    "design:check": "node scripts/validate-design-system.mjs && node scripts/validate-brand-lock.mjs",
     "lint": "eslint app components constants hooks lib server shared tests scripts --ext .ts,.tsx,.mjs",
     "format": "prettier --write .",
     "test": "vitest run",
-    "db:push": "drizzle-kit generate && drizzle-kit migrate",
+    "release:smoke": "node scripts/release-smoke.mjs",
+    "db:push": "node scripts/db-push-blocked.mjs",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "qr": "node scripts/generate_qr.mjs"
+    "qr": "node scripts/generate_qr.mjs",
+    "boundary:check": "node scripts/validate-boundary-integrity.mjs"
   },
   "dependencies": {
     "@expo-google-fonts/anton": "^0.4.2",
@@ -64,7 +68,7 @@
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "react-native-css-interop": "0.2.5",
-    "react-native-gesture-handler": "~2.28.0",
+    "react-native-gesture-handler": "~3.2.1",
     "react-native-reanimated": "~4.1.6",
     "react-native-safe-area-context": "~5.6.2",
     "react-native-screens": "~4.16.0",
@@ -93,7 +97,7 @@
     "tailwindcss": "^3.4.17",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
-    "vitest": "^3.2.6"
+    "vitest": "^5.0.0"
   },
   "pnpm": {
     "overrides": {
@@ -106,8 +110,9 @@
       "js-yaml@4.2.0": "4.3.0",
       "postcss@8.4.49": "8.5.23",
       "postcss@8.5.15": "8.5.23",
-      "shell-quote@1.8.4": "1.10.0",
-      "tar@7.5.16": "7.5.22"
+      "shell-quote": "1.12.0",
+      "tar@7.5.16": "7.5.22",
+      "proxy-addr@2.0.7": "2.0.8"
     }
   },
   "packageManager": "pnpm@9.12.0"

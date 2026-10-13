@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "architecture": "JEV",
+  "currentVersion": "2026.09.29",
+  "minimumReleaseVersion": "2026.09.29",
+  "status": "LOCKED",
+  "company": "Last Bench",
+  "humanLab": "CLASS[Λ]",
+  "businessLab": "co.lab",
+  "businessLabDoors": ["Ventures", "Projects", "Services", "Community"],
+  "projectX": "Website Projects",
+  "communityTypes": ["Influencers", "Ambassadors", "Creators", "Advisors"],
+  "dashboard": "Co.MPASS",
+  "founderIntelligence": "Dr. X",
+  "operatingLoop": "CLASS[Λ] + co.lab activity -> governed evidence -> Co.MPASS -> Dr. X -> decision -> improved labs -> new evidence",
+  "releaseRule": {
+    "olderThanMinimum": "REJECT",
+    "legacyContent": "EVOLVE_OR_ARCHIVE",
+    "historyException": "Allowed only in explicit history/archive/Time Machine context and must not be imported as current truth",
+    "currentChanges": "Must preserve or explicitly supersede this contract"
+  },
+  "retiredCurrentClaims": [
+    "Last Bench is an Opportunity Accelerator",
+    "Three operating engines",
+    "Community + Platform",
+    "CLASS[Λ] is the capability engine",
+    "co.lab is the business & growth engine"
+  ]
+}

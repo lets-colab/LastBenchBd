@@ -1,0 +1,22 @@
+# SPA entry-route contract.
+# Cloudflare-compatible tooling can consume these rewrites directly. GitHub Pages does not
+# support rewrite rules, so scripts/build-site.mjs materializes every exact
+# /app route below as an index.html and uses a custom 404 fallback for dynamic
+# /app/admin/*, /app/cohort/* and /app/tutor/* routes.
+# Keep the rules specific so application assets under /app/_expo and /app/assets
+# are never rewritten as SPA HTML.
+/app/ai-guidance /app/index.html 200
+/app/applications /app/index.html 200
+/app/application-detail /app/index.html 200
+/app/auth /app/index.html 200
+/app/community /app/index.html 200
+/app/compare /app/index.html 200
+/app/discover /app/index.html 200
+/app/messages /app/index.html 200
+/app/notifications /app/index.html 200
+/app/onboarding /app/index.html 200
+/app/profile /app/index.html 200
+/app/universities /app/index.html 200
+/app/admin/* /app/index.html 200
+/app/cohort/* /app/index.html 200
+/app/tutor/* /app/index.html 200

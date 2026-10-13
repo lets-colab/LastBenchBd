@@ -1,0 +1,16 @@
+/* Generated from design-system/tokens.json — the brand kit is the source of truth.
+   Do not hand-edit: change tokens.json, and mirror colour changes into
+   theme.config.js (which feeds Tailwind/NativeWind and lib/_core/theme.ts). */
+:root {
+  --lb-color-brand-green: #00C853;
+  --lb-color-brand-green-dark: #00E676;
+  --lb-color-charcoal: #111111;
+  --lb-color-warm-white: #FAFAF8;
+  --lb-color-sage-green: #E6F2E9;
+  --lb-color-gray: #6B6F76;
+  --lb-color-soft-gray: #A1A1AA;
+
+  --lb-font-display: "General Sans", "Sora", system-ui, sans-serif;
+  --lb-font-body: "Sora", "Hind Siliguri", system-ui, sans-serif;
+  --lb-font-bengali: "Hind Siliguri", system-ui, sans-serif;
+}

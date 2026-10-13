@@ -1,1402 +1,257 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Last Bench — From Last Bench. To The World.</title>
-<meta name="description" content="A cinematic journey from Bangladesh to Malaysia. Last Bench helps Bangladeshi students explore study options, prepare their next step, and move forward with human guidance.">
-<link rel="icon" type="image/png" href="./assets/logo-icon.png">
-<meta property="og:title" content="The Last Bench — From Last Bench. To The World.">
-<meta property="og:description" content="A cinematic journey from Bangladesh to Malaysia — built to help students understand their next practical step.">
-<meta property="og:image" content="./assets/logo-full.png">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#070b16">
-<script src="./vendor/react.min.js"></script>
-<script src="./vendor/react-dom.min.js"></script>
-<script src="./vendor/three.min.js"></script>
-<script src="./support.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Last Bench — Choose Your Path</title>
+<meta name="description" content="Last Bench is the company. Enter through Student Mobility, CLASS[Λ] or co.lab. Co.MPASS and Dr. X power the founder intelligence layer underneath.">
+<meta name="theme-color" content="#050806">
+<link rel="icon" href="assets/logo-icon.png">
+<style>
+:root{
+  --green:#00c853;
+  --green-bright:#00e676;
+  --ink:#050806;
+  --ink-2:#0a0f0c;
+  --text:#f5f8f5;
+  --muted:#93a098;
+  --line:rgba(255,255,255,.11);
+  --panel:rgba(255,255,255,.035);
+  --shadow:0 28px 80px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{background:var(--ink);scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 84% 5%,rgba(0,200,83,.12),transparent 28%),
+    radial-gradient(circle at 10% 82%,rgba(0,230,118,.06),transparent 26%),
+    #050806;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+button,summary,a{-webkit-tap-highlight-color:transparent}
+.shell{width:min(1220px,100%);margin:0 auto;padding:24px 22px 72px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{width:auto;height:48px;display:block}
+.system-line{font-size:10px;letter-spacing:.16em;color:#8fa198;white-space:nowrap}
+.hero{padding:clamp(64px,10vh,122px) 0 44px;max-width:930px}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:.22em;color:var(--green-bright);text-transform:uppercase}
+.hero h1{margin:16px 0 22px;font-size:clamp(52px,8vw,104px);line-height:.9;letter-spacing:-.07em;font-weight:760;max-width:10.5ch}
+.hero h1 span{color:var(--green)}
+.hero p{max-width:700px;margin:0;color:#a2ada6;font-size:clamp(15px,1.6vw,18px);line-height:1.72}
+.hero .thesis{display:inline-flex;margin-top:24px;padding:9px 12px;border:1px solid rgba(0,200,83,.22);border-radius:999px;color:#dff7e7;background:rgba(0,200,83,.055);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.section-kicker{display:flex;align-items:center;gap:10px;margin:10px 0 14px;color:#7f8c84;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.section-kicker:before{content:"";width:30px;height:1px;background:var(--green)}
+.gates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.gate{
+  position:relative;
+  min-height:300px;
+  padding:24px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:24px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  text-decoration:none;
+  box-shadow:var(--shadow);
+  transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease;
+  isolation:isolate;
+}
+.gate:focus-visible,.gate:hover{outline:none;transform:translateY(-5px);border-color:rgba(0,230,118,.58);box-shadow:0 34px 100px rgba(0,0,0,.34)}
+.gate:after{content:"";position:absolute;inset:auto -20% -28% 20%;height:52%;border-radius:50%;filter:blur(44px);opacity:.55;z-index:-1}
+.gate-malaysia{background:linear-gradient(155deg,#0b1b11 0%,#061009 65%,#030704 100%)}
+.gate-malaysia:after{background:rgba(0,200,83,.24)}
+.gate-class{background:
+  radial-gradient(circle at 78% 18%,rgba(214,218,222,.10),transparent 26%),
+  linear-gradient(150deg,#111214,#070809 62%,#050506)}
+.gate-class:after{background:rgba(205,210,215,.12)}
+.gate-colab{
+  color:#111820;
+  background:
+    radial-gradient(circle at 80% 14%,rgba(45,124,255,.11),transparent 26%),
+    linear-gradient(145deg,#ffffff 0%,#f6f8fb 55%,#eef3f8 100%);
+  border-color:rgba(255,255,255,.78);
+  box-shadow:0 28px 70px rgba(13,28,48,.16),inset 0 1px 0 rgba(255,255,255,.95)
+}
+.gate-colab:after{background:rgba(45,124,255,.10)}
+.gate-colab:focus-visible,.gate-colab:hover{border-color:rgba(45,124,255,.48);box-shadow:0 34px 90px rgba(13,28,48,.20),0 0 0 1px rgba(45,124,255,.06)}
+.gate-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.gate-num{font:700 10px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;color:#66736b}
+.gate-colab .gate-num{color:#637185}
+.live-dot{display:inline-flex;align-items:center;gap:7px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7f8c84}
+.live-dot:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 16px rgba(0,230,118,.55)}
+.gate-colab .live-dot{color:#64748b}
+.gate-colab .live-dot:before{background:#2d7cff;box-shadow:0 0 14px rgba(45,124,255,.34)}
+.gate-label{margin:0 0 7px;font-size:10px;font-weight:750;letter-spacing:.18em;text-transform:uppercase;color:var(--green-bright)}
+.gate-class .gate-label{color:#dce1e5}
+.gate-colab .gate-label{color:#2d7cff}
+.gate h2{margin:0;font-size:clamp(29px,3vw,40px);line-height:.96;letter-spacing:-.055em;max-width:9ch}
+.gate p{margin:14px 0 0;font-size:12px;line-height:1.62;color:#8e9a92;max-width:34ch}
+.gate-class p{color:#8f959a}
+.gate-colab p{color:#697586}
+.route{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.09);display:flex;justify-content:space-between;gap:12px;align-items:flex-end}
+.gate-colab .route{border-top-color:rgba(25,50,75,.10)}
+.stages{font:600 9px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;color:#6f7d74;text-transform:uppercase}
+.gate-colab .stages{color:#7a8797}
+.enter{font-size:11px;font-weight:760;letter-spacing:.08em;color:var(--green-bright);white-space:nowrap}
+.gate-class .enter{color:#edf1f3}
+.gate-colab .enter{color:#2d7cff}
+.intelligence-wrap{margin-top:44px;padding-top:26px;border-top:1px solid rgba(255,255,255,.085)}
+.intelligence-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:14px}
+.intelligence-head h3{margin:0;font-size:clamp(22px,2.2vw,30px);letter-spacing:-.04em}
+.intelligence-head p{margin:0;max-width:560px;color:#76837b;font-size:11px;line-height:1.6;text-align:right}
+.intelligence{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.intel{
+  position:relative;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));
+  overflow:hidden;
+}
+.intel summary{list-style:none;cursor:pointer;padding:20px 22px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center}
+.intel summary::-webkit-details-marker{display:none}
+.intel-mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.10);font:800 11px ui-monospace,monospace;color:#dbe2dd}
+.intel-copy b{display:block;font-size:16px;letter-spacing:-.025em}
+.intel-copy span{display:block;margin-top:4px;color:#748078;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.lock{color:#67736b;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.intel[open]{border-color:rgba(0,200,83,.26)}
+.intel-body{padding:0 22px 20px 78px;color:#8e9992;font-size:11px;line-height:1.65;max-width:62ch}
+.intel-body strong{color:#dce5df}
+.partner{margin-top:20px;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:14px 0;color:#707c74;font-size:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+.partner a{color:#b8c3bc;text-decoration:none}
+.partner a:hover{color:var(--green-bright)}
+.footer{margin-top:34px;display:flex;justify-content:space-between;gap:24px;color:#5f6c64;font-size:9px;line-height:1.7;letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:860px){
+  .shell{padding:20px 16px 64px}
+  .logo{height:42px}
+  .system-line{display:none}
+  .hero{padding:72px 0 38px}
+  .hero h1{font-size:clamp(50px,14vw,76px)}
+  .gates{grid-template-columns:1fr}
+  .gate{min-height:245px}
+  .intelligence{grid-template-columns:1fr}
+  .intelligence-head{display:block}
+  .intelligence-head p{margin-top:8px;text-align:left}
+  .footer{display:block}
+  .footer span{display:block;margin-top:7px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .gate{transition:none}
+  .gate:hover{transform:none}
+}
+</style>
+<script src="company-routes.js" defer></script>
 </head>
 <body>
-<x-dc>
-<helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-html,body{margin:0;padding:0;background:#070b16;}
-html,body{overflow-x:hidden;overflow-x:clip;}
-*,*::before,*::after{box-sizing:border-box;}
-a,a:hover{color:inherit;}
-@keyframes lbBob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
-@keyframes lbFlicker{0%,92%,100%{opacity:1}93%{opacity:.4}96%{opacity:.9}}
-@keyframes lbGrain{0%{transform:translate(0,0)}25%{transform:translate(-2%,1%)}50%{transform:translate(1%,-2%)}75%{transform:translate(-1%,2%)}100%{transform:translate(2%,-1%)}}
-@keyframes sonarRing{from{transform:translate(-50%,-50%) scale(.3);opacity:.9}to{transform:translate(-50%,-50%) scale(5);opacity:0}}
-@keyframes heroRise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
-@keyframes lbWordCycle{
-  0%,16%{opacity:1;transform:translateY(0)}
-  20%,96%{opacity:0;transform:translateY(-.7em)}
-  97%,100%{opacity:0;transform:translateY(.7em)}
-}
-@keyframes lbResolve{from{opacity:0;letter-spacing:.12em}to{opacity:1;letter-spacing:.18em}}
-.lb-hero-seq{opacity:0;animation:heroRise 1.1s cubic-bezier(.16,1,.3,1) forwards;}
-.lb-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
-.lb-brand-lockup{width:min(760px,100%);margin:0 auto 24px;}
-.lb-brand-beyond{display:flex;align-items:baseline;justify-content:center;gap:.2em;font-family:'Anton',sans-serif;font-size:clamp(48px,8vw,112px);line-height:.9;color:#fff;text-shadow:0 8px 56px rgba(0,0,0,.72);}
-.lb-brand-window{position:relative;display:inline-block;width:4.8em;height:.92em;overflow:hidden;text-align:left;color:#00C853;}
-.lb-brand-word{position:absolute;inset:0 auto auto 0;opacity:0;}
-.lb-brand-word:last-child{opacity:1;}
-.lb-brand-active .lb-brand-word{opacity:0;animation:lbWordCycle 6.5s cubic-bezier(.2,.7,.2,1) 1;}
-.lb-brand-active .lb-brand-word:nth-child(1){animation-delay:0s;}
-.lb-brand-active .lb-brand-word:nth-child(2){animation-delay:1.3s;}
-.lb-brand-active .lb-brand-word:nth-child(3){animation-delay:2.6s;}
-.lb-brand-active .lb-brand-word:nth-child(4){animation-delay:3.9s;}
-.lb-brand-active .lb-brand-word:nth-child(5){animation-delay:5.2s;}
-.lb-brand-active .lb-brand-word:last-child{opacity:0;}
-.lb-brand-resolve{margin-top:18px;font-size:clamp(10px,1.4vw,14px);font-weight:700;letter-spacing:.18em;color:rgba(234,244,236,.82);}
-.lb-brand-active .lb-brand-resolve{animation:lbResolve .9s ease-out 6.1s both;}
-.lb-brand-resolve strong{color:#FFF4BD;font-weight:700;}
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #fff;outline-offset:3px;}
-@media (max-width:600px){
-  .lb-hud{padding:12px 16px !important;}
-  .lb-wordmark{gap:8px !important;}
-  .lb-wordmark img{height:24px !important;}
-  .lb-wordmark-label{max-width:58px;font-size:14px !important;line-height:.95;letter-spacing:.08em !important;}
-  .lb-hud-meta{gap:8px !important;}
-  .lb-chapter{display:none !important;}
-  .lb-season{font-size:8px !important;letter-spacing:.12em !important;}
-  .lb-login{font-size:8px !important;letter-spacing:.16em !important;padding:10px !important;}
-  .lb-hero{padding:96px 20px 72px !important;}
-  .lb-hero-kicker{font-size:10px !important;line-height:1.5;letter-spacing:.2em !important;margin-bottom:18px !important;}
-  .lb-hero h1{font-size:clamp(48px,15vw,64px) !important;letter-spacing:-.02em;}
-  .lb-hero-copy{font-size:15px !important;line-height:1.55 !important;margin:24px 0 28px !important;}
-  .lb-hero-actions{width:100%;gap:12px !important;}
-  .lb-hero-actions a{min-width:210px;text-align:center;padding:14px 26px !important;}
-  .lb-cta{padding:92px 16px 76px !important;overflow:hidden;}
-  .lb-cta-inner{width:100%;min-width:0;}
-  .lb-brand-beyond{align-items:flex-start;flex-direction:column;gap:3px;font-size:clamp(44px,14vw,62px);text-align:left;}
-  .lb-brand-window{width:100%;height:1em;}
-  .lb-brand-resolve{text-align:left;line-height:1.6;}
-  .lb-cta-copy{font-size:15px !important;line-height:1.6 !important;padding:0 4px;}
-  .lb-signup-form{width:100% !important;max-width:100%;padding:18px !important;border-radius:16px !important;}
-  .lb-signup-actions{align-items:stretch !important;}
-  .lb-signup-actions>*{width:100%;text-align:center;}
-  .lb-chat-launcher{right:12px !important;bottom:12px !important;width:50px !important;height:50px !important;}
-  .lb-chat-panel{right:10px !important;bottom:72px !important;width:calc(100vw - 20px) !important;max-height:calc(100vh - 96px) !important;}
-}
-@media (max-height:860px), (max-width:600px){
-  .lb-scroll-hint{display:none !important;}
-}
-@media (prefers-reduced-motion: reduce){
-  .lb-hero-seq{animation:none;opacity:1;transform:none;}
-  [style*="lbGrain"],[style*="lbBob"],[style*="lbFlicker"]{animation:none !important;}
-  .lb-brand-word{animation:none!important;opacity:0!important;transform:none;}
-  .lb-brand-word:last-child{opacity:1!important;}
-  .lb-brand-resolve{animation:none;opacity:1;}
-}
-::selection{background:#00C853;color:#04140b;}
-</style>
-</helmet>
+<main class="shell">
+  <header class="topbar">
+    <img class="logo" src="assets/logo-full.png" alt="Last Bench">
+    <span class="system-line">MULTIPLE ENTRY POINTS · ONE FORWARD MOTION</span>
+  </header>
 
-<div style="position:relative;background:#070b16;color:#EAF4EC;font-family:'Space Grotesk',system-ui,sans-serif;">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="eyebrow">START WHERE YOU ARE</div>
+    <h1 id="hero-title">Choose your<br><span>path forward.</span></h1>
+    <p><strong style="color:#dce5df">Choose the gate. Enter the journey.</strong> Start with the route that matches what you need now. Student mobility becomes a destination journey, CLASS[Λ] becomes a capability journey, and co.lab becomes a business-building environment.</p>
+    <span class="thesis">Opportunity should compound, not reset.</span>
+  </section>
 
-  <!-- WebGL canvas mount (the continuous 3D journey) -->
-  <div ref="{{ mountRef }}" style="position:fixed;inset:0;z-index:0;"></div>
-
-  <!-- monsoon lightning — flashes the whole sky for a beat, then double-taps -->
-  <div ref="{{ lightningRef }}" style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(ellipse 120% 80% at 50% 0%,rgba(210,230,255,.9),rgba(140,180,230,.35) 45%,transparent 75%);mix-blend-mode:screen;"></div>
-
-  <!-- REAL FOOTAGE LAYER — dissolves in when you arrive at each real location -->
-  <div ref="{{ vidLayerRef }}" style="position:fixed;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:0;will-change:opacity;background:#000;">
-    <div ref="{{ vidContainerRef }}" style="position:absolute;top:50%;left:50%;width:177.78vh;min-width:100vw;height:100vh;min-height:56.25vw;transform:translate(-50%,-50%) scale(1.18);will-change:transform,filter;">
-      <div ref="{{ vidPanRef }}" style="position:absolute;inset:0;will-change:transform;">
-        <div id="lb-yt-main" style="width:100%;height:100%;pointer-events:none;"></div>
+  <div class="section-kicker">Public entry gates</div>
+  <section class="gates" aria-label="Last Bench public entry gates">
+    <a class="gate gate-malaysia" id="studentPath" href="malaysia/">
+      <div class="gate-top">
+        <span class="gate-num">01 · EDUCATION & MOBILITY</span>
+        <span class="live-dot">Current market</span>
       </div>
-    </div>
-    <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 88% 68% at 50% 46%,transparent 40%,rgba(0,0,0,.72));"></div>
-    <div style="position:absolute;bottom:0;left:0;right:0;height:44%;pointer-events:none;background:linear-gradient(transparent,rgba(0,0,0,.78));"></div>
-  </div>
-
-  <!-- film grain -->
-  <div style="position:fixed;inset:-10%;z-index:3;pointer-events:none;opacity:.09;animation:lbGrain .45s steps(4) infinite;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22256%22 height=%22256%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%22.82%22 numOctaves=%223%22 stitchTiles=%22stitch%22/><feColorMatrix type=%22saturate%22 values=%220%22/></filter><rect width=%22256%22 height=%22256%22 filter=%22url(%23n)%22/></svg>');"></div>
-
-  <!-- cinematic letterbox bars -->
-  <sc-if value="{{ letterbox }}" hint-placeholder-val="{{ true }}">
-    <div style="position:fixed;top:0;left:0;right:0;height:42px;background:linear-gradient(#000 55%,transparent);z-index:4;pointer-events:none;"></div>
-    <div style="position:fixed;bottom:0;left:0;right:0;height:42px;background:linear-gradient(transparent,#000 55%);z-index:4;pointer-events:none;"></div>
-  </sc-if>
-
-  <!-- FAST-TRAVEL OVERLAY -->
-  <sc-if value="{{ travelActive }}" hint-placeholder-val="{{ false }}">
-    <div style="position:fixed;inset:0;z-index:50;background:#000;overflow:hidden;">
-      <div style="position:absolute;top:50%;left:50%;z-index:1;pointer-events:none;">
-        <div style="position:absolute;width:80px;height:80px;border:1px solid rgba(0,230,118,.7);border-radius:50%;animation:sonarRing 1.4s ease-out .0s 3 forwards;"></div>
-        <div style="position:absolute;width:80px;height:80px;border:1px solid rgba(0,230,118,.5);border-radius:50%;animation:sonarRing 1.4s ease-out .35s 3 forwards;"></div>
-        <div style="position:absolute;width:80px;height:80px;border:1px solid rgba(0,230,118,.3);border-radius:50%;animation:sonarRing 1.4s ease-out .7s 3 forwards;"></div>
+      <div>
+        <p class="gate-label">Malaysia · Student Mobility</p>
+        <h2>Study. Move. Arrive.</h2>
+        <p>A focused Bangladesh → Malaysia journey for education decisions, applications, preparation, arrival and continuity after the flight lands.</p>
       </div>
-      <div ref="{{ warpRef }}" style="position:absolute;inset:0;z-index:2;">
-        <sc-for list="{{ warpLines }}" as="wl" hint-placeholder-count="28">
-          <div style="position:absolute;top:50%;left:50%;height:2px;background:linear-gradient(90deg,transparent,{{ wl.color }},transparent);width:{{ wl.len }}px;will-change:transform,opacity;transform:translate(-50%,-50%) rotate({{ wl.deg }}deg);"></div>
-        </sc-for>
+      <div class="route">
+        <span class="stages">Discover → Match → Apply → Secure → Prepare → Arrive</span>
+        <span class="enter">ENTER JOURNEY →</span>
       </div>
-      <div ref="{{ destImgRef }}" style="position:absolute;inset:0;z-index:3;opacity:0;background-color:#0B2E20;background-size:cover;background-position:center;will-change:opacity,transform;transform:scale(1.14);"></div>
-      <div style="position:absolute;inset:0;z-index:4;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.48) 0%,transparent 28%,transparent 52%,rgba(0,0,0,.92) 100%);"></div>
-      <div ref="{{ destTextRef }}" style="position:absolute;bottom:0;left:0;right:0;z-index:5;padding:0 clamp(24px,5vw,60px) clamp(36px,6vh,60px);opacity:0;will-change:opacity,transform;transform:translateY(30px);">
-        <div style="font-size:9px;font-weight:700;letter-spacing:.34em;color:#00E676;margin-bottom:16px;">EXPLORE THE CAMPUS ATMOSPHERE</div>
-        <h2 ref="{{ destNameRef }}" style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(28px,5vw,76px);line-height:1;margin:0 0 8px;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.9);"></h2>
-        <p ref="{{ destLocRef }}" style="font-size:13px;letter-spacing:.16em;color:rgba(234,244,236,.65);margin:0 0 20px;"></p>
-        <div ref="{{ destStatsRef }}" style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:20px;"></div>
-        <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
-          <button onClick="{{ closeTravelTo }}" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.32);color:#fff;font-weight:600;font-size:13px;letter-spacing:.1em;padding:13px 32px;border-radius:999px;cursor:pointer;backdrop-filter:blur(10px);font-family:'Space Grotesk',sans-serif;" style-hover="border-color:#00C853;color:#00E676;">← Return to the journey</button>
-        </div>
+    </a>
+
+    <a class="gate gate-class" href="class-a/">
+      <div class="gate-top">
+        <span class="gate-num">02 · CLASS[Λ] · HUMAN LAB</span>
+        <span class="live-dot">Proof-led</span>
       </div>
-      <div style="position:absolute;top:0;left:0;right:0;z-index:5;padding:18px 28px;font-size:9px;font-weight:700;letter-spacing:.28em;color:rgba(255,255,255,.65);">ILLUSTRATIVE CAMPUS ATMOSPHERE · VERIFY DETAILS WITH THE UNIVERSITY</div>
-    </div>
-  </sc-if>
+      <div>
+        <p class="gate-label">Build capability</p>
+        <h2>Turn learning into proof.</h2>
+        <p>Enter the CLASS[Λ] world: AI Driver → Builder → Creator → Operator → Founder, with visible outputs instead of passive attendance.</p>
+      </div>
+      <div class="route">
+        <span class="stages">Command → Build → Create → Sell → Launch</span>
+        <span class="enter">ENTER CLASS[Λ] →</span>
+      </div>
+    </a>
 
-  <!-- HUD: top bar -->
-  <div class="lb-hud" style="position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;padding:12px 28px;pointer-events:none;">
-    <div class="lb-wordmark" style="display:flex;align-items:center;gap:12px;">
-      <img src="assets/logo-icon.png" alt="Last Bench" style="height:26px;width:auto;filter:drop-shadow(0 0 8px rgba(0,200,83,.6));">
-      <span class="lb-wordmark-label" style="font-family:'Anton',sans-serif;font-size:16px;letter-spacing:.14em;color:#fff;">LAST BENCH</span>
-    </div>
-    <div class="lb-hud-meta" style="display:flex;align-items:center;gap:14px;font-size:11px;font-weight:600;letter-spacing:.22em;color:rgba(234,244,236,.65);">
-      <span ref="{{ liveRef }}" style="display:none;align-items:center;gap:7px;color:#00E676;"><span style="width:6px;height:6px;border-radius:50%;background:#00E676;box-shadow:0 0 8px #00E676;display:inline-block;"></span>REAL FOOTAGE</span>
-      <button ref="{{ tiltBtnRef }}" onClick="{{ toggleTilt }}" aria-label="Steer the view by tilting your phone" style="display:none;pointer-events:auto;background:rgba(0,0,0,.35);border:1px solid rgba(0,230,118,.4);color:#00E676;font-family:'Space Grotesk',sans-serif;font-size:9px;font-weight:700;letter-spacing:.22em;padding:7px 12px;border-radius:999px;cursor:pointer;backdrop-filter:blur(8px);">TILT: OFF</button>
-      <span class="lb-season" ref="{{ seasonRef }}" aria-live="polite" style="font-size:9px;font-weight:700;letter-spacing:.2em;color:#9fd8f0;text-shadow:0 2px 10px rgba(0,0,0,.8);">MONSOON · RAIN</span>
-      <span class="lb-chapter" ref="{{ chapterRef }}">01 — KUALA LUMPUR</span>
-      <a class="lb-login" href="/app" style="pointer-events:auto;background:rgba(0,200,83,.14);border:1px solid rgba(0,230,118,.5);color:#00E676;font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;padding:8px 16px;border-radius:999px;text-decoration:none;backdrop-filter:blur(8px);" style-hover="background:rgba(0,200,83,.3);color:#fff;">STUDENT LOGIN →</a>
-    </div>
-  </div>
-  <!-- HUD: progress line -->
-  <div style="position:fixed;top:0;left:0;right:0;height:2px;z-index:7;background:rgba(255,255,255,.08);">
-    <div ref="{{ progressRef }}" style="height:100%;width:100%;background:#00C853;transform:scaleX(0);transform-origin:left;box-shadow:0 0 12px #00C853;"></div>
-  </div>
+    <a class="gate gate-colab" href="https://colab-growth-os.onrender.com/" target="_blank" rel="noopener" aria-label="co.lab · BUSINESS LAB — enter the white gallery journey">
+      <div class="gate-top">
+        <span class="gate-num">03 · CO.LAB · BUSINESS LAB</span>
+        <span class="live-dot">White gallery</span>
+      </div>
+      <div>
+        <p class="gate-label">Build the business</p>
+        <h2>Move from clarity to growth.</h2>
+        <p>The Business Lab for Ventures, Projects, Services and Community — expressed through the current white-glass Growth OS experience.</p>
+      </div>
+      <div class="route">
+        <span class="stages">Collaboration → Connection → Community</span>
+        <span class="enter">ENTER co.lab →</span>
+      </div>
+    </a>
+  </section>
 
-  <!-- ============ ACT 1 · HERO ============ -->
-  <section class="lb-hero" data-screen-label="Hero — KL Skyline" style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 24px 64px;">
-    <div class="lb-hero-seq lb-hero-kicker" style="animation-delay:.15s;font-size:12px;font-weight:700;letter-spacing:.34em;color:#00E676;margin-bottom:22px;">A STUDENT'S JOURNEY · DHAKA → KUALA LUMPUR</div>
-    <h1 class="lb-hero-seq" style="animation-delay:.32s;font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(52px,9vw,124px);line-height:.98;margin:0;color:#fff;text-shadow:0 8px 60px rgba(0,0,0,.8);">FROM THE<br>LAST BENCH<br><span style="color:#00C853;">TO MALAYSIA.</span></h1>
-    <p class="lb-hero-seq lb-hero-copy" style="animation-delay:.58s;max-width:580px;font-size:clamp(15px,1.6vw,19px);line-height:1.6;color:rgba(234,244,236,.85);margin:28px 0 36px;text-wrap:pretty;text-shadow:0 2px 18px rgba(0,0,0,.85);">Built for students who refuse to be defined by where they started. Scroll through a cinematic route inspired by real Malaysian places — then verify every decision with current sources and human guidance.</p>
-    <div class="lb-hero-seq lb-hero-actions" style="animation-delay:.78s;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
-      <a href="#cta" style="display:inline-block;background:#00C853;color:#04140b;font-weight:700;font-size:15px;letter-spacing:.04em;padding:16px 32px;border-radius:999px;text-decoration:none;box-shadow:0 0 34px rgba(0,200,83,.5);" style-hover="background:#00E676;box-shadow:0 0 50px rgba(0,230,118,.7);">Sign up now</a>
-      <a href="#cta" style="display:inline-block;border:1px solid rgba(255,255,255,.35);color:#fff;font-weight:600;font-size:15px;padding:16px 32px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px);background:rgba(0,0,0,.28);" style-hover="border-color:#00C853;color:#00E676;">Join the community</a>
+  <section class="intelligence-wrap" aria-labelledby="intelligence-title">
+    <div class="intelligence-head">
+      <div>
+        <div class="section-kicker">Founder intelligence layer</div>
+        <h3 id="intelligence-title">The intelligence sits underneath the journeys.</h3>
+      </div>
+      <p>Co.MPASS and Dr. X are not public service routes. They govern company evidence, context and founder decisions behind the operating system.</p>
     </div>
-    <div class="lb-scroll-hint" style="position:absolute;bottom:64px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:lbBob 2.4s ease-in-out infinite;">
-      <span style="font-size:10px;font-weight:700;letter-spacing:.3em;color:rgba(234,244,236,.6);">FLY IN</span>
-      <svg width="14" height="22" viewBox="0 0 14 22"><path d="M7 2 V18 M2 13 L7 19 L12 13" stroke="#00C853" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+    <div class="intelligence">
+      <details class="intel">
+        <summary>
+          <span class="intel-mark">CM</span>
+          <span class="intel-copy"><b>Co.MPASS</b><span>Business Dashboard · evidence → clarity → direction</span></span>
+          <span class="lock">Founder access</span>
+        </summary>
+        <div class="intel-body"><strong>Co.MPASS converges governed company evidence.</strong> The founder surface remains permissioned; public investor evidence, where used, must stay sanitized, verified and read-only.</div>
+      </details>
+
+      <details class="intel">
+        <summary>
+          <span class="intel-mark">DX</span>
+          <span class="intel-copy"><b>Dr. X</b><span>Founder Second Brain / Twin · governed decision intelligence</span></span>
+          <span class="lock">Founder access</span>
+        </summary>
+        <div class="intel-body"><strong>Dr. X supports reasoning and founder decisions.</strong> Public Last Bench interactions stay project-scoped; private Founder Twin context and unrestricted Second Brain memory are never exposed through this gateway.</div>
+      </details>
     </div>
   </section>
 
-  <div style="height:90vh;"></div>
-
-  <!-- ============ ACT 2 · JALAN ALOR / STUDENT JOURNEY ============ -->
-  <section data-screen-label="Jalan Alor — Your Journey" style="position:relative;z-index:2;min-height:120vh;display:flex;align-items:center;padding:80px 24px;">
-    <div style="max-width:1080px;margin:0 auto;width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:56px;align-items:center;">
-      <div data-reveal>
-        <div style="font-size:12px;font-weight:700;letter-spacing:.34em;color:#FFB300;margin-bottom:16px;animation:lbFlicker 5s linear infinite;">02 — JALAN ALOR · CITY AT NIGHT</div>
-        <h2 style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(38px,5.5vw,76px);line-height:1.02;margin:0 0 20px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);">THE CITY IS AWAKE.<br><span style="color:#FFB300;">SO IS YOUR JOURNEY.</span></h2>
-        <p style="font-size:16px;line-height:1.65;color:rgba(234,244,236,.85);max-width:440px;text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.85);">Your application should never feel like a black box. Last Bench gives each stage a clear name, shows what has changed, and keeps the next practical step in view.</p>
-      </div>
-      <div data-reveal style="display:flex;flex-direction:column;gap:0;background:rgba(8,6,10,.72);border:1px solid rgba(255,179,0,.22);border-radius:18px;padding:30px 34px;backdrop-filter:blur(12px);">
-        <sc-for list="{{ stages }}" as="st" hint-placeholder-count="5">
-          <div style="display:flex;gap:18px;">
-            <div style="display:flex;flex-direction:column;align-items:center;">
-              <div style="width:12px;height:12px;border-radius:50%;background:{{ st.dot }};box-shadow:0 0 12px {{ st.dot }};margin-top:4px;flex:none;"></div>
-              <div style="width:2px;flex:1;background:linear-gradient(rgba(0,200,83,.5),rgba(0,200,83,.12));min-height:26px;"></div>
-            </div>
-            <div style="padding-bottom:22px;">
-              <div style="font-weight:700;font-size:15px;color:{{ st.titleColor }};letter-spacing:.02em;">{{ st.title }}</div>
-              <div style="font-size:12.5px;color:rgba(234,244,236,.55);margin-top:3px;">{{ st.meta }}</div>
-            </div>
-          </div>
-        </sc-for>
-      </div>
-    </div>
-  </section>
-
-  <div style="height:60vh;"></div>
-
-  <!-- ============ ACT 3 · ABOVE THE TOWERS / UNIVERSITIES ============ -->
-  <section data-screen-label="Above the Towers — Universities" style="position:relative;z-index:2;min-height:120vh;display:flex;align-items:center;padding:80px 24px;">
-    <div style="max-width:1120px;margin:0 auto;width:100%;">
-      <div data-reveal style="max-width:640px;margin-bottom:40px;">
-        <div style="font-size:12px;font-weight:700;letter-spacing:.34em;color:#00E676;margin-bottom:16px;">03 — ABOVE THE TOWERS, 452 M</div>
-        <h2 style="font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(38px,5.5vw,76px);line-height:1.02;margin:0 0 20px;color:#fff;text-shadow:0 6px 44px rgba(0,0,0,.9);">RISE ABOVE<br><span style="color:#00C853;">THE SKYLINE.</span></h2>
-        <p style="font-size:16px;line-height:1.65;color:rgba(234,244,236,.85);text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.85);">Below you are Malaysian universities worth exploring. Visit a campus, understand the setting, then verify the current programme, fees, entry rules, and visa steps before you decide.</p>
-      </div>
-      <div data-reveal style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;">
-        <sc-for list="{{ unis }}" as="u" hint-placeholder-count="5">
-          <div onClick="{{ travelTo }}" onKeyDown="{{ travelToKey }}" onMouseEnter="{{ preloadCampus }}" data-uni="{{ u.shortName }}" role="button" tabIndex="0" aria-label="Fast-travel to {{ u.name }}" style="cursor:pointer;background:rgba(5,16,10,.68);border:1px solid rgba(0,200,83,.22);border-radius:16px;padding:22px;backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:12px;transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s ease,box-shadow .3s ease;" style-hover="border-color:rgba(0,230,118,.65);transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.5);">
-            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;">
-              <span style="font-family:'Anton',sans-serif;font-size:26px;color:#00E676;letter-spacing:.03em;">{{ u.shortName }}</span>
-              <span style="font-size:10px;font-weight:700;letter-spacing:.16em;color:rgba(234,244,236,.5);">{{ u.type }}</span>
-            </div>
-            <div>
-              <div style="font-weight:600;font-size:14px;color:#fff;line-height:1.35;">{{ u.name }}</div>
-              <div style="font-size:12px;color:rgba(234,244,236,.55);margin-top:2px;">{{ u.location }}</div>
-            </div>
-            <div style="border-top:1px solid rgba(255,255,255,.1);padding-top:12px;margin-top:auto;font-size:11.5px;line-height:1.5;color:rgba(234,244,236,.66);">Explore the setting. Verify current programme and entry details before applying.</div>
-            <div style="font-size:9px;font-weight:700;letter-spacing:.22em;color:#00E676;display:flex;align-items:center;gap:7px;">VISIT CAMPUS <svg width="10" height="9" viewBox="0 0 10 9"><path d="M1 4.5h7M5 1l3.5 3.5L5 8" stroke="#00E676" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
-          </div>
-        </sc-for>
-      </div>
-    </div>
-  </section>
-
-  <div style="height:70vh;"></div>
-
-  <!-- ============ ACT 4 · KLCC PARK / THE BENCH ============ -->
-  <section class="lb-cta" id="cta" data-screen-label="KLCC Park — The Bench" style="position:relative;z-index:2;min-height:140vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 60px;">
-    <div class="lb-cta-inner" data-reveal style="display:flex;flex-direction:column;align-items:center;max-width:760px;">
-      <div style="font-size:9px;font-weight:700;letter-spacing:.24em;color:#fff;background:rgba(4,20,12,.55);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:9px 14px;margin-bottom:20px;backdrop-filter:blur(8px);">DAYLIGHT REACHED · MOVE OR TILT TO LOOK AROUND</div>
-      <img src="assets/logo-full.png" alt="Last Bench — Creating a Lasting Benchmark" style="width:min(320px,70vw);height:auto;margin-bottom:26px;filter:drop-shadow(0 0 30px rgba(0,200,83,.35));">
-      <div style="font-size:12px;font-weight:700;letter-spacing:.34em;color:#FFB300;margin-bottom:18px;">04 — KLCC PARK, SUNLIGHT</div>
-      <div class="lb-brand-lockup">
-        <p class="lb-sr-only">Beyond marks, grades, limits, borders, and yourself.</p>
-        <div class="lb-brand-beyond" aria-hidden="true">
-          <span>BEYOND</span>
-          <span class="lb-brand-window">
-            <span class="lb-brand-word">MARKS</span>
-            <span class="lb-brand-word">GRADES</span>
-            <span class="lb-brand-word">LIMITS</span>
-            <span class="lb-brand-word">BORDERS</span>
-            <span class="lb-brand-word">YOURSELF</span>
-          </span>
-        </div>
-        <h2 class="lb-brand-resolve">CREATE A <strong>LASTING BENCHMARK.</strong></h2>
-      </div>
-      <p class="lb-cta-copy" style="max-width:560px;font-size:16px;line-height:1.65;color:rgba(234,244,236,.85);margin:0 0 30px;text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.85);">Your starting point does not decide your destination. Tell us where you are now, and a Last Bench mentor can help you understand the next practical step toward studying in Malaysia.</p>
-      <form class="lb-signup-form" name="signup" method="POST" action="/thanks.html" data-netlify="true" data-netlify-honeypot="bot-field" style="width:min(560px,92vw);background:rgba(5,16,10,.78);border:1px solid rgba(0,200,83,.3);border-radius:20px;padding:26px;backdrop-filter:blur(12px);text-align:left;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22><g fill=%22none%22 stroke=%22%2300C853%22 stroke-opacity=%22.07%22 stroke-width=%221.4%22><path d=%22M-20 60 Q 90 20 180 70 T 420 50%22/><path d=%22M-20 100 Q 90 60 180 110 T 420 90%22/><path d=%22M-20 140 Q 90 100 180 150 T 420 130%22/><path d=%22M-20 330 Q 110 290 200 340 T 430 320%22/><path d=%22M-20 370 Q 110 330 200 380 T 430 360%22/></g></svg>');">
-        <input type="hidden" name="form-name" value="signup">
-        <p style="display:none;"><label>Leave this empty: <input name="bot-field"></label></p>
-        <div style="font-size:11px;font-weight:700;letter-spacing:.3em;color:#00E676;margin-bottom:6px;">CLAIM YOUR SEAT</div>
-        <div style="font-size:13px;color:rgba(234,244,236,.6);margin-bottom:18px;">A mentor reviews your profile and follows up with you on WhatsApp.</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
-          <label style="display:block;"><span style="display:block;font-size:10px;font-weight:700;letter-spacing:.2em;color:rgba(234,244,236,.55);margin-bottom:6px;">FULL NAME</span><input required name="name" autocomplete="name" maxlength="100" placeholder="Your name" style="width:100%;box-sizing:border-box;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.18);border-radius:10px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;padding:13px 14px;outline:none;"></label>
-          <label style="display:block;"><span style="display:block;font-size:10px;font-weight:700;letter-spacing:.2em;color:rgba(234,244,236,.55);margin-bottom:6px;">WHATSAPP NUMBER</span><input required name="whatsapp" type="tel" inputMode="tel" autocomplete="tel" maxlength="14" pattern="(?:\+?8801|01)[3-9][0-9]{8}" title="Enter a Bangladesh mobile number such as 01712345678" placeholder="01XXXXXXXXX" style="width:100%;box-sizing:border-box;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.18);border-radius:10px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;padding:13px 14px;outline:none;"></label>
-          <label style="display:block;"><span style="display:block;font-size:10px;font-weight:700;letter-spacing:.2em;color:rgba(234,244,236,.55);margin-bottom:6px;">CLASS / STAGE</span><select name="stage" style="width:100%;box-sizing:border-box;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.18);border-radius:10px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;padding:13px 14px;outline:none;"><option value="SSC">SSC / O-Level</option><option value="HSC" selected>HSC / A-Level</option><option value="HSC-done">HSC done — applying now</option><option value="diploma">Diploma</option><option value="parent">I'm a parent</option></select></label>
-          <label style="display:block;"><span style="display:block;font-size:10px;font-weight:700;letter-spacing:.2em;color:rgba(234,244,236,.55);margin-bottom:6px;">DREAM FIELD (OPTIONAL)</span><input name="field" maxlength="100" placeholder="CS, Business, Medicine…" style="width:100%;box-sizing:border-box;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.18);border-radius:10px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;padding:13px 14px;outline:none;"></label>
-        </div>
-        <input type="hidden" name="contact_consent" value="Submission confirms WhatsApp contact consent">
-        <div style="margin-top:16px;color:rgba(234,244,236,.68);font-size:11px;line-height:1.5;">
-          <strong style="color:rgba(234,244,236,.9);">CONTACT CONSENT.</strong> By submitting, you agree that Last Bench may contact you on WhatsApp about study guidance. Do not send documents or sensitive personal information through this form.
-        </div>
-        <div class="lb-signup-actions" style="display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap;">
-          <button type="submit" style="background:#00C853;color:#04140b;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;letter-spacing:.04em;padding:16px 36px;border-radius:999px;border:0;cursor:pointer;box-shadow:0 0 44px rgba(0,200,83,.55);" style-hover="background:#00E676;box-shadow:0 0 64px rgba(0,230,118,.75);">Claim my seat →</button>
-          <a href="https://instagram.com/lastbench.community" target="_blank" rel="noopener" style="color:rgba(234,244,236,.75);font-size:13px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.25);padding:14px 22px;border-radius:999px;" style-hover="border-color:#00C853;color:#00E676;">Join the community ↗</a>
-        </div>
-      </form>
-    </div>
-    <footer style="margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:14px;">
-      <div style="display:flex;justify-content:center;gap:22px;font-size:12px;letter-spacing:.14em;color:rgba(234,244,236,.7);font-weight:600;flex-wrap:wrap;">
-        <a href="tel:+8801300801785" style="color:#00E676;text-decoration:none;">01300 801785</a>
-        <a href="tel:+8801726494917" style="color:#00E676;text-decoration:none;">01726 494917</a>
-        <a href="https://instagram.com/lastbench.community" target="_blank" rel="noopener" style="color:rgba(234,244,236,.7);text-decoration:none;">@LASTBENCH.COMMUNITY</a>
-      </div>
-      <div style="display:flex;justify-content:center;gap:24px;font-size:11px;letter-spacing:.18em;color:rgba(234,244,236,.45);font-weight:600;flex-wrap:wrap;">
-        <span>LAST BENCH © 2026</span>
-        <span>FROM WHERE YOU ARE, TO MALAYSIA.</span>
-        <span>DHAKA · KUALA LUMPUR</span>
-      </div>
-    </footer>
-  </section>
-
-  <!-- BENCH AI — concierge chat -->
-  <button class="lb-chat-launcher" ref="{{ chatBtnRef }}" onClick="{{ toggleChat }}" aria-label="Chat with Bench AI" style="position:fixed;bottom:20px;right:20px;z-index:9;width:58px;height:58px;border-radius:50%;background:#00C853;border:0;cursor:pointer;box-shadow:0 8px 34px rgba(0,200,83,.5);display:flex;align-items:center;justify-content:center;transition:opacity .25s ease,transform .25s ease;">
-    <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M4 19V8a3 3 0 013-3h12a3 3 0 013 3v7a3 3 0 01-3 3H9l-5 4z" fill="#04140b"/><circle cx="10" cy="11.5" r="1.5" fill="#00E676"/><circle cx="15.5" cy="11.5" r="1.5" fill="#00E676"/></svg>
-  </button>
-  <div class="lb-chat-panel" ref="{{ chatPanelRef }}" role="dialog" aria-label="Bench AI chat" style="display:none;position:fixed;bottom:88px;right:16px;z-index:9;width:min(370px,calc(100vw - 32px));max-height:min(540px,calc(100vh - 120px));background:rgba(4,12,8,.96);border:1px solid rgba(0,200,83,.35);border-radius:18px;backdrop-filter:blur(16px);flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6);">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.1);">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span style="width:8px;height:8px;border-radius:50%;background:#00E676;box-shadow:0 0 8px #00E676;"></span>
-        <span style="font-family:'Anton',sans-serif;font-size:14px;letter-spacing:.1em;color:#fff;">BENCH AI</span>
-        <span style="font-size:9px;font-weight:700;letter-spacing:.14em;color:rgba(234,244,236,.5);">GUIDANCE · VERIFY BEFORE APPLYING</span>
-      </div>
-      <button onClick="{{ toggleChat }}" aria-label="Close chat" style="background:none;border:0;color:rgba(255,255,255,.6);font-size:18px;cursor:pointer;line-height:1;">×</button>
-    </div>
-    <div ref="{{ chatLogRef }}" style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:180px;"></div>
-    <div ref="{{ chatChipsRef }}" style="display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px;"></div>
-    <form ref="{{ chatFormRef }}" onSubmit="{{ chatSubmit }}" style="display:flex;gap:8px;padding:12px 16px;border-top:1px solid rgba(255,255,255,.1);">
-      <input ref="{{ chatInputRef }}" placeholder="Ask what to verify before you apply…" aria-label="Message Bench AI" style="flex:1;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);border-radius:10px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;padding:11px 12px;outline:none;min-width:0;">
-      <button type="submit" aria-label="Send" style="background:#00C853;border:0;border-radius:10px;color:#04140b;font-weight:700;font-family:'Space Grotesk',sans-serif;font-size:14px;padding:0 16px;cursor:pointer;">→</button>
-    </form>
+  <div class="partner">
+    <a href="app/">Track my student journey →</a>
+    <a href="mailto:info@lastbenchbd.com?subject=Last%20Bench%20Partnership">Partner / institution? Start a conversation →</a>
   </div>
 
-</div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;realFootage&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Real Footage&quot;},&quot;footageOpacity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Real Footage&quot;},&quot;rainIntensity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0,&quot;max&quot;:2,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Atmosphere&quot;},&quot;lanternColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#00C853&quot;,&quot;options&quot;:[&quot;#FF4D2E&quot;,&quot;#FFB300&quot;,&quot;#00C853&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Atmosphere&quot;},&quot;letterbox&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Cinematic&quot;}}">
-class Component extends DCLogic {
-  constructor(props) {
-    super(props);
-    this.mount = null;
-    this.p = 0;
-    this.mouse = { x: 0, y: 0 };
-    this.disposed = false;
-    this.zoneIdx = -1;
-
-    // Real-footage zones: p-range where the 3D flight dissolves into real KL video
-    this.zones = [
-      { id: 'XVzuVXgbnwY', start: 30,  a: 0.00, b: 0.14,  filter: 'saturate(.9) contrast(1.1) brightness(.85)' },
-      { id: 'otukTTf4C4k', start: 120, a: 0.21, b: 0.44,  filter: 'saturate(1.3) hue-rotate(-8deg) contrast(1.05) brightness(.88)' },
-      { id: 'b2jE8rPOn9o', start: 45,  a: 0.51, b: 0.74,  filter: 'saturate(.75) hue-rotate(10deg) contrast(1.18) brightness(.85)' },
-      { id: 'K7MCrSiwdyQ', start: 60,  a: 0.84, b: 1.02,  filter: 'saturate(1.08) hue-rotate(-10deg) contrast(1.0) brightness(.98)' },
-    ];
-
-    this.campuses = {
-      UM:      { name: 'Universiti Malaya',             location: 'Kuala Lumpur',                    img: 'https://images.unsplash.com/photo-1596496181861-5fc9f0d1a75e?w=1920&q=85&auto=format&fit=crop', program: 'Explore current programmes' },
-      UTM:     { name: 'Universiti Teknologi Malaysia', location: 'Johor Bahru',                     img: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1920&q=85&auto=format&fit=crop', program: 'Explore current programmes' },
-      APU:     { name: 'Asia Pacific University',       location: 'Kuala Lumpur · Technology Park', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1920&q=85&auto=format&fit=crop', program: 'Explore current programmes' },
-      "Taylor\u2019s": { name: "Taylor's University",   location: 'Subang Jaya · Lakeside Campus',  img: 'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=1920&q=85&auto=format&fit=crop', program: 'Explore current programmes' },
-      UCSI:    { name: 'UCSI University',               location: 'Cheras, Kuala Lumpur',           img: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1920&q=85&auto=format&fit=crop', program: 'Explore current programmes' },
-    };
-
-    this.state = { travelActive: false, warpLines: [] };
-    this.motionQuery = typeof matchMedia !== 'undefined' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-    this.reduceMotion = Boolean(this.motionQuery && this.motionQuery.matches);
-    this.isSmall = typeof window !== 'undefined' && window.innerWidth < 720;
-    // unified view control: mouse and device tilt both steer this target;
-    // the camera chases it with smoothing so the view feels weighted, not jittery
-    this.viewT = { x: 0, y: 0 };
-    this.view = { x: 0, y: 0 };
-    this.tiltOn = false;
-    this.tiltBase = null;
-    this.chatOpen = false;
-    this.chatHistory = [];
-  }
-
-  renderVals() {
-    const g = '#00E676', dim = 'rgba(234,244,236,.85)';
-    return {
-      letterbox: this.props.letterbox ?? true,
-      travelActive: this.state.travelActive,
-      warpLines: this.state.warpLines,
-      travelTo: (e) => this.travelTo(e),
-      travelToKey: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.travelTo(e); } },
-      preloadCampus: (e) => this.preloadCampus(e),
-      closeTravelTo: () => this.closeTravelTo(),
-      mountRef: (el) => { this.mount = el; },
-      lightningRef: (el) => { this.lightningEl = el; },
-      tiltBtnRef: (el) => { this.tiltBtnEl = el; this.setupTiltButton(); },
-      toggleTilt: () => this.toggleTilt(),
-      chatBtnRef: (el) => { this.chatBtnEl = el; },
-      chatPanelRef: (el) => { this.chatPanelEl = el; },
-      chatLogRef: (el) => { this.chatLogEl = el; },
-      chatChipsRef: (el) => { this.chatChipsEl = el; },
-      chatFormRef: (el) => { this.chatFormEl = el; },
-      chatInputRef: (el) => { this.chatInputEl = el; },
-      toggleChat: () => this.toggleChat(),
-      chatSubmit: (e) => { e.preventDefault(); this.chatSend(this.chatInputEl ? this.chatInputEl.value : ''); },
-      chapterRef: (el) => { this.chapterEl = el; },
-      seasonRef: (el) => { this.seasonEl = el; },
-      progressRef: (el) => { this.progressEl = el; },
-      liveRef: (el) => { this.liveEl = el; },
-      vidLayerRef: (el) => { this.vidLayerEl = el; },
-      vidContainerRef: (el) => { this.vidContainerEl = el; },
-      vidPanRef: (el) => { this.vidPanEl = el; },
-      warpRef: (el) => { this.warpEl = el; },
-      destImgRef: (el) => { this.destImgEl = el; },
-      destTextRef: (el) => { this.destTextEl = el; },
-      destNameRef: (el) => { this.destNameEl = el; },
-      destLocRef: (el) => { this.destLocEl = el; },
-      destStatsRef: (el) => { this.destStatsEl = el; },
-      stages: [
-        { title: 'Documents Received', meta: 'Example milestone · documents checked', dot: g, titleColor: '#fff' },
-        { title: 'Profile Reviewed', meta: 'Example milestone · goals and results understood', dot: g, titleColor: '#fff' },
-        { title: 'University Shortlist', meta: 'Options compared against your priorities', dot: g, titleColor: '#fff' },
-        { title: 'Application Submitted', meta: 'Timeline varies by university and intake', dot: '#FFB300', titleColor: '#FFB300' },
-        { title: 'Visa Decision', meta: 'Outcome depends on EMGS and relevant authorities', dot: 'rgba(255,255,255,.28)', titleColor: dim },
-      ],
-      unis: [
-        { shortName: 'UM', name: 'Universiti Malaya', location: 'Kuala Lumpur', type: 'PUBLIC' },
-        { shortName: 'UTM', name: 'Universiti Teknologi Malaysia', location: 'Johor Bahru', type: 'PUBLIC' },
-        { shortName: 'APU', name: 'Asia Pacific University', location: 'Kuala Lumpur', type: 'PRIVATE' },
-        { shortName: 'Taylor\u2019s', name: 'Taylor\u2019s University', location: 'Subang Jaya', type: 'PRIVATE' },
-        { shortName: 'UCSI', name: 'UCSI University', location: 'Cheras, KL', type: 'PRIVATE' },
-      ],
-    };
-  }
-
-  componentDidMount() {
-    let tries = 0;
-    const wait = () => {
-      if (this.disposed) return;
-      if (window.THREE && this.mount) { this.init(); }
-      else if (tries++ < 150) { setTimeout(wait, 100); }
-    };
-    wait();
-    this.setupReveals();
-    if ((this.props.realFootage ?? false) && !this.reduceMotion) this.initYT();
-    const cta = document.getElementById('cta');
-    const brandLockup = document.querySelector('.lb-brand-lockup');
-    if (cta && typeof IntersectionObserver !== 'undefined') {
-      this.ctaObserver = new IntersectionObserver((entries) => {
-        this.ctaVisible = Boolean(entries[0] && entries[0].isIntersecting);
-        this.updateChatLauncher();
-      }, { threshold: 0.12 });
-      this.ctaObserver.observe(cta);
-    }
-    if (brandLockup && typeof IntersectionObserver !== 'undefined') {
-      this.brandObserver = new IntersectionObserver((entries) => {
-        if (entries[0] && entries[0].isIntersecting && !this.brandPlayed) {
-          brandLockup.classList.add('lb-brand-active');
-          this.brandPlayed = true;
-          this.brandObserver.disconnect();
-        }
-      }, { threshold: 0.45 });
-      this.brandObserver.observe(brandLockup);
-    }
-    this.onMotionChange = (event) => { this.reduceMotion = event.matches; };
-    if (this.motionQuery && this.motionQuery.addEventListener) {
-      this.motionQuery.addEventListener('change', this.onMotionChange);
-    }
-    this.onKeyDown = (e) => {
-      if (e.key !== 'Escape') return;
-      if (this.state.travelActive) this.closeTravelTo();
-      else if (this.chatOpen) this.toggleChat();
-    };
-    window.addEventListener('keydown', this.onKeyDown);
-  }
-
-  componentWillUnmount() {
-    this.disposed = true;
-    if (this._travelTimer) clearTimeout(this._travelTimer);
-    if (this.raf) cancelAnimationFrame(this.raf);
-    if (this.renderer) { this.renderer.dispose(); }
-    if (this.player && this.player.destroy) try { this.player.destroy(); } catch (_) {}
-    if (this.ctaObserver) this.ctaObserver.disconnect();
-    if (this.brandObserver) this.brandObserver.disconnect();
-    window.removeEventListener('resize', this.onResize);
-    window.removeEventListener('mousemove', this.onMouse);
-    window.removeEventListener('touchmove', this.onTouchMove);
-    window.removeEventListener('keydown', this.onKeyDown);
-    if (this.onTilt) window.removeEventListener('deviceorientation', this.onTilt);
-    if (this.motionQuery && this.motionQuery.removeEventListener) {
-      this.motionQuery.removeEventListener('change', this.onMotionChange);
-    }
-  }
-
-  // ─── REAL FOOTAGE (YouTube) ─────────────────────────────────────────────
-
-  initYT() {
-    if (!document.querySelector('script[data-lb-youtube-api]')) {
-      const api = document.createElement('script');
-      api.src = 'https://www.youtube.com/iframe_api';
-      api.async = true;
-      api.dataset.lbYoutubeApi = 'true';
-      document.head.appendChild(api);
-    }
-    let tries = 0;
-    const make = () => {
-      if (this.disposed) return;
-      const el = document.getElementById('lb-yt-main');
-      if (window.YT && window.YT.Player && el) {
-        const z = this.zones[0];
-        this.player = new YT.Player('lb-yt-main', {
-          videoId: z.id,
-          playerVars: { autoplay: 1, mute: 1, controls: 0, rel: 0, playsinline: 1, loop: 1, playlist: z.id, start: z.start, modestbranding: 1, iv_load_policy: 3, disablekb: 1, fs: 0, cc_load_policy: 0 },
-          events: {
-            onReady: (e) => { this.playerReady = true; try { e.target.mute(); e.target.setVolume(0); e.target.playVideo(); } catch (_) {} },
-            onStateChange: (e) => {
-              if (e.data === 0) {
-                const zz = this.zones[Math.max(0, this.zoneIdx)];
-                try { e.target.seekTo(zz.start, true); e.target.playVideo(); } catch (_) {}
-              }
-            },
-          },
-        });
-      } else if (tries++ < 200) setTimeout(make, 100);
-    };
-    make();
-  }
-
-  setZone(idx) {
-    if (idx === this.zoneIdx) return;
-    this.zoneIdx = idx;
-    if (idx < 0) return;
-    const z = this.zones[idx];
-    if (this.vidContainerEl) this.vidContainerEl.style.filter = z.filter;
-    if (this.playerReady && this.player && this.player.loadVideoById && this.loadedZone !== idx) {
-      this.loadedZone = idx;
-      try { this.player.loadVideoById({ videoId: z.id, startSeconds: z.start }); } catch (_) {}
-    }
-  }
-
-  // zone opacity from scroll position: soft ramp in/out at edges
-  zoneOpacity(p) {
-    const f = 0.055;
-    let best = -1, op = 0;
-    for (let i = 0; i < this.zones.length; i++) {
-      const z = this.zones[i];
-      if (p < z.a - f || p > z.b + f) continue;
-      const oIn = Math.min(1, Math.max(0, (p - z.a) / f + 1));
-      const oOut = Math.min(1, Math.max(0, (z.b - p) / f + 1));
-      const o = Math.max(0, Math.min(1, Math.min(oIn, oOut)));
-      if (o > op) { op = o; best = i; }
-    }
-    return { idx: best, op };
-  }
-
-  // ─── FAST TRAVEL ────────────────────────────────────────────────────────
-
-  preloadCampus(e) {
-    const key = e.currentTarget && e.currentTarget.getAttribute('data-uni');
-    const dest = this.campuses[key];
-    if (!dest || dest._pre) return;
-    dest._pre = true;
-    const img = new Image(); img.src = dest.img;
-  }
-
-  makeWarpLines() {
-    return Array.from({ length: 28 }, (_, i) => {
-      const deg = (i / 28) * 360 + (Math.random() - .5) * 12;
-      const green = Math.random() > .4;
-      return { key: i, deg, len: 52 + Math.random() * 90, color: green ? 'rgba(0,230,118,.7)' : 'rgba(255,255,255,.4)' };
-    });
-  }
-
-  travelTo(e) {
-    const card = e.currentTarget || (e.target && e.target.closest('[data-uni]'));
-    const key = card && card.getAttribute('data-uni');
-    const dest = this.campuses[key];
-    if (!dest) return;
-    document.body.style.overflow = 'hidden';
-    if (this.destImgEl) { this.destImgEl.style.transition = 'none'; this.destImgEl.style.opacity = '0'; this.destImgEl.style.transform = 'scale(1.14)'; }
-    if (this.destTextEl) { this.destTextEl.style.opacity = '0'; this.destTextEl.style.transform = 'translateY(30px)'; }
-    this.setState({ travelActive: true, warpLines: this.makeWarpLines() });
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      if (!this.warpEl) return;
-      this.warpEl.style.opacity = '1';
-      this.warpEl.style.transition = 'none';
-      this.warpEl.querySelectorAll('div').forEach((l, i) => {
-        const m = l.style.transform.match(/rotate\(([-\d.]+)deg\)/);
-        const deg = m ? parseFloat(m[1]) : (i / 28) * 360;
-        l.style.transition = 'transform .88s cubic-bezier(.12,.55,.2,1), opacity .88s ease';
-        l.style.transform = 'translate(-50%,-50%) rotate(' + deg + 'deg) translateX(' + (820 + Math.random() * 520) + 'px)';
-        l.style.opacity = '0';
-      });
-    }));
-    this._travelTimer = setTimeout(() => {
-      if (this.destImgEl) {
-        this.destImgEl.style.backgroundImage =
-          'linear-gradient(135deg,rgba(4,38,25,.28),rgba(0,0,0,.48)),url(' + dest.img + ')';
-        this.destImgEl.style.transition = 'opacity .95s ease, transform 7s ease-out';
-        this.destImgEl.style.opacity = '1';
-        this.destImgEl.style.transform = 'scale(1)';
-      }
-      if (this.destNameEl) this.destNameEl.textContent = dest.name.toUpperCase();
-      if (this.destLocEl) this.destLocEl.textContent = dest.location;
-      if (this.destStatsEl) {
-        const stats = [{ l: 'PROGRAMMES', v: dest.program }, { l: 'ENTRY GUIDANCE', v: 'Verify for your intake' }, { l: 'FEE GUIDANCE', v: 'Request a current quote' }];
-        this.destStatsEl.innerHTML = stats.map(s => '<div style="display:flex;flex-direction:column;gap:4px;"><div style="font-size:9px;font-weight:700;letter-spacing:.22em;color:rgba(234,244,236,.42);">' + s.l + '</div><div style="font-size:14px;font-weight:700;color:#fff;line-height:1.3;">' + s.v + '</div></div>').join('');
-      }
-      if (this.destTextEl) { this.destTextEl.style.transition = 'opacity .85s ease .2s, transform .85s cubic-bezier(.2,.7,.2,1) .2s'; this.destTextEl.style.opacity = '1'; this.destTextEl.style.transform = 'translateY(0)'; }
-      if (this.warpEl) { this.warpEl.style.transition = 'opacity .4s ease'; this.warpEl.style.opacity = '0'; }
-    }, 850);
-  }
-
-  closeTravelTo() {
-    document.body.style.overflow = '';
-    if (this._travelTimer) clearTimeout(this._travelTimer);
-    this.setState({ travelActive: false });
-  }
-
-  // ─── DEVICE TILT: steer the flight by moving your phone ─────────────────
-
-  setupTiltButton() {
-    if (!this.tiltBtnEl) return;
-    const touch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    const supported = typeof DeviceOrientationEvent !== 'undefined';
-    if (touch && supported && !this.reduceMotion) this.tiltBtnEl.style.display = 'inline-block';
-  }
-
-  toggleTilt() {
-    if (this.tiltOn) { this.stopTilt(); return; }
-    const needsPermission = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
-    const start = () => this.startTilt();
-    if (needsPermission) {
-      DeviceOrientationEvent.requestPermission().then((r) => { if (r === 'granted') start(); }).catch(() => {});
-    } else start();
-  }
-
-  startTilt() {
-    this.tiltOn = true;
-    this.tiltBase = null;
-    if (this.tiltBtnEl) { this.tiltBtnEl.textContent = 'TILT: ON'; this.tiltBtnEl.style.background = 'rgba(0,200,83,.25)'; }
-    this.onTilt = (e) => {
-      if (e.gamma == null || e.beta == null) return;
-      if (this.tiltBase === null) this.tiltBase = { g: e.gamma, b: e.beta }; // neutral = how you hold it now
-      const dx = (e.gamma - this.tiltBase.g) / 24;  // roll phone left/right
-      const dy = (e.beta - this.tiltBase.b) / 24;   // pitch phone toward/away
-      this.viewT.x = Math.max(-1, Math.min(1, dx));
-      this.viewT.y = Math.max(-1, Math.min(1, dy));
-    };
-    window.addEventListener('deviceorientation', this.onTilt);
-  }
-
-  stopTilt() {
-    this.tiltOn = false;
-    this.viewT.x = 0; this.viewT.y = 0;
-    if (this.tiltBtnEl) { this.tiltBtnEl.textContent = 'TILT: OFF'; this.tiltBtnEl.style.background = 'rgba(0,0,0,.35)'; }
-    if (this.onTilt) window.removeEventListener('deviceorientation', this.onTilt);
-  }
-
-  // ─── BENCH AI: concierge chat ────────────────────────────────────────────
-  // With window.LB_AI.endpoint set (the deployed Last Bench API), messages go
-  // to the real advisor. Without it, a built-in concierge answers from the
-  // same verified numbers shown on the cards and hands off to WhatsApp.
-
-  toggleChat() {
-    this.chatOpen = !this.chatOpen;
-    if (this.chatPanelEl) this.chatPanelEl.style.display = this.chatOpen ? 'flex' : 'none';
-    this.updateChatLauncher();
-    if (this.chatOpen && !this.chatBooted) {
-      this.chatBooted = true;
-      this.chatPush('ai', "Salam! I'm Bench AI. I can help you explore Malaysian universities and prepare questions for a mentor. Fees, entry rules, scholarships, and visa requirements must be checked against current official sources before you apply.");
-      this.chatChips(['Which university should I explore?', 'How are visa decisions made?', 'How do I verify current fees?', 'Talk to a human mentor']);
-    }
-    if (this.chatOpen && this.chatInputEl) this.chatInputEl.focus();
-  }
-
-  updateChatLauncher() {
-    if (!this.chatBtnEl) return;
-    const hideForSignup = this.ctaVisible && !this.chatOpen;
-    this.chatBtnEl.style.opacity = hideForSignup ? '0' : '1';
-    this.chatBtnEl.style.transform = hideForSignup ? 'translateY(12px) scale(.92)' : 'translateY(0) scale(1)';
-    this.chatBtnEl.style.pointerEvents = hideForSignup ? 'none' : 'auto';
-    this.chatBtnEl.style.visibility = hideForSignup ? 'hidden' : 'visible';
-  }
-
-  chatPush(who, text) {
-    if (!this.chatLogEl) return;
-    const div = document.createElement('div');
-    div.style.cssText = who === 'ai'
-      ? 'align-self:flex-start;max-width:88%;background:rgba(0,200,83,.12);border:1px solid rgba(0,200,83,.25);border-radius:12px 12px 12px 4px;padding:10px 13px;font-size:13.5px;line-height:1.55;color:#EAF4EC;'
-      : 'align-self:flex-end;max-width:88%;background:rgba(255,255,255,.1);border-radius:12px 12px 4px 12px;padding:10px 13px;font-size:13.5px;line-height:1.55;color:#fff;';
-    div.textContent = text;
-    this.chatLogEl.appendChild(div);
-    this.chatLogEl.scrollTop = this.chatLogEl.scrollHeight;
-  }
-
-  chatChips(labels) {
-    if (!this.chatChipsEl) return;
-    this.chatChipsEl.innerHTML = '';
-    labels.forEach((l) => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.textContent = l;
-      b.style.cssText = 'background:rgba(0,0,0,.4);border:1px solid rgba(0,230,118,.35);color:#00E676;border-radius:999px;padding:7px 12px;font-size:12px;font-family:"Space Grotesk",sans-serif;cursor:pointer;';
-      b.onclick = () => this.chatSend(l);
-      this.chatChipsEl.appendChild(b);
-    });
-  }
-
-  chatAnswer(q) {
-    const t = q.toLowerCase();
-    const unis = this.renderVals().unis;
-    const rows = unis.map((u) => u.shortName + ' — ' + u.name + ', ' + u.location).join('  ·  ');
-    if (/budget|cheap|afford|cost|taka|bdt|price|fee/.test(t))
-      return 'Fees change by programme and intake, so I will not quote a fixed number without a current official fee schedule. Share your programme and intake with a mentor, then verify the university quote before deciding.';
-    if (/visa/.test(t))
-      return 'No advisor can promise a visa outcome or a universal success rate. Decisions are individual and depend on your documents, EMGS processing, and the relevant authorities. A mentor can help you prepare and identify missing documents.';
-    if (/ielts|english/.test(t))
-      return 'English-language requirements vary by university, programme, and intake. Check the current programme page or offer requirements, and ask a mentor to help you interpret them.';
-    if (/mentor|human|talk|call|whatsapp|contact/.test(t))
-      return 'A human mentor can review your profile. WhatsApp us at 01300 801785 or 01726 494917, or claim your seat in the form above and the team will follow up.';
-    if (/scholar/.test(t))
-      return 'Scholarships and discounts change by intake and eligibility. I will not promise a percentage; a mentor can help you find current official opportunities and check whether your results meet their published criteria.';
-    if (/(which|best|fit|match|recommend|university|uni\b)/.test(t))
-      return 'A useful shortlist starts with your intended field, results, budget, and intake. Here is the starting map: ' + rows + '. Explore a card, then ask a mentor to verify the current programme, entry, and fee details.';
-    return 'I can help you explore options and prepare better questions. I will not invent current fees, visa odds, entry requirements, or scholarship promises. What programme, intake, and budget range are you considering?';
-  }
-
-  chatSend(text) {
-    const msg = (text || '').trim();
-    if (!msg) return;
-    if (this.chatInputEl) this.chatInputEl.value = '';
-    this.chatPush('user', msg);
-    this.chatChips([]);
-    const cfg = window.LB_AI || {};
-    if (cfg.endpoint) {
-      this.chatHistory.push({ role: 'user', content: msg });
-      fetch(cfg.endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ message: msg, history: this.chatHistory.slice(-12) }) })
-        .then((r) => r.json())
-        .then((d) => { const reply = d.reply || d.message || 'Sorry \u2014 try again.'; this.chatHistory.push({ role: 'assistant', content: reply }); this.chatPush('ai', reply); })
-        .catch(() => this.chatPush('ai', 'I couldn\u2019t reach the advisor right now. You can WhatsApp the mentor team at 01300 801785.'));
-    } else {
-      setTimeout(() => this.chatPush('ai', this.chatAnswer(msg)), 350);
-    }
-  }
-
-  // ─── REVEALS ────────────────────────────────────────────────────────────
-
-  setupReveals() {
-    if (this.reduceMotion) { this.revealEls = []; return; }
-    setTimeout(() => {
-      this.revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
-      this.revealEls.forEach((el) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(34px)';
-        el.style.transition = 'opacity 1s cubic-bezier(.2,.7,.2,1), transform 1s cubic-bezier(.2,.7,.2,1)';
-      });
-    }, 400);
-  }
-
-  checkReveals() {
-    if (!this.revealEls || !this.revealEls.length) return;
-    const limit = window.innerHeight * 0.88;
-    this.revealEls = this.revealEls.filter((el) => {
-      const r = el.getBoundingClientRect();
-      if (r.top < limit && r.bottom > 0) {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-        return false;
-      }
-      return true;
-    });
-  }
-
-  // ─── 3D WORLD (identical journey to v2) ─────────────────────────────────
-
-  texCanvas(w, h, draw) {
-    const c = document.createElement('canvas'); c.width = w; c.height = h;
-    draw(c.getContext('2d'));
-    return new THREE.CanvasTexture(c);
-  }
-  windowTex(density, warmth) {
-    return this.texCanvas(128, 256, (ctx) => {
-      ctx.fillStyle = '#060a10'; ctx.fillRect(0, 0, 128, 256);
-      for (let i = 0; i < 8; i++) for (let j = 0; j < 20; j++) {
-        if (Math.random() > density) continue;
-        const warm = Math.random() < warmth;
-        ctx.fillStyle = warm ? 'rgba(255,205,120,' + (0.5 + Math.random() * 0.5) + ')' : 'rgba(150,215,255,' + (0.4 + Math.random() * 0.5) + ')';
-        ctx.fillRect(6 + i * 15, 6 + j * 12, 8, 6);
-      }
-    });
-  }
-  glowTex() {
-    return this.texCanvas(128, 128, (ctx) => {
-      const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-      g.addColorStop(0, 'rgba(255,255,255,1)');
-      g.addColorStop(0.35, 'rgba(255,255,255,.45)');
-      g.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, 128, 128);
-    });
-  }
-  streakTex() {
-    return this.texCanvas(16, 64, (ctx) => {
-      const g = ctx.createLinearGradient(0, 0, 0, 64);
-      g.addColorStop(0, 'rgba(255,255,255,0)');
-      g.addColorStop(0.5, 'rgba(255,255,255,.9)');
-      g.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = g; ctx.fillRect(6, 0, 4, 64);
-    });
-  }
-  neonTex(text, color) {
-    return this.texCanvas(512, 128, (ctx) => {
-      ctx.clearRect(0, 0, 512, 128);
-      ctx.font = '700 64px "Space Grotesk", sans-serif';
-      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.shadowColor = color; ctx.shadowBlur = 28;
-      ctx.fillStyle = color;
-      ctx.fillText(text, 256, 64);
-      ctx.shadowBlur = 8; ctx.fillStyle = '#fff';
-      ctx.globalAlpha = 0.75; ctx.fillText(text, 256, 64);
-    });
-  }
-  facadeTex(base) {
-    return this.texCanvas(128, 128, (ctx) => {
-      ctx.fillStyle = base; ctx.fillRect(0, 0, 128, 128);
-      ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.fillRect(0, 0, 128, 8);
-      for (let i = 0; i < 3; i++) {
-        const x = 14 + i * 38;
-        ctx.fillStyle = 'rgba(255,190,110,.85)';
-        ctx.beginPath(); ctx.arc(x + 10, 46, 10, Math.PI, 0); ctx.fill();
-        ctx.fillRect(x, 46, 20, 26);
-        ctx.fillStyle = 'rgba(255,190,110,.6)';
-        ctx.fillRect(x, 92, 20, 30);
-      }
-    });
-  }
-
-  init() {
-    const THREE_ = window.THREE;
-    const renderer = new THREE_.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.isSmall ? 1.5 : 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.domElement.style.cssText = 'position:absolute;inset:0;display:block;';
-    this.mount.appendChild(renderer.domElement);
-    this.renderer = renderer;
-
-    const scene = new THREE_.Scene();
-    scene.background = new THREE_.Color('#070b16');
-    scene.fog = new THREE_.Fog('#0a0e1a', 30, 520);
-    this.scene = scene;
-
-    const camera = new THREE_.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 3000);
-    this.camera = camera;
-
-    const glow = this.glowTex();
-    this.beaconSpots = [];
-
-    const road = new THREE_.Mesh(new THREE_.PlaneGeometry(46, 1150), new THREE_.MeshBasicMaterial({ color: '#0c1014' }));
-    road.rotation.x = -Math.PI / 2; road.position.set(0, 0, -515);
-    scene.add(road); this.road = road;
-    const ground = new THREE_.Mesh(new THREE_.PlaneGeometry(1600, 2200), new THREE_.MeshBasicMaterial({ color: '#080b0f' }));
-    ground.rotation.x = -Math.PI / 2; ground.position.set(0, -0.3, -800);
-    scene.add(ground); this.ground = ground;
-
-    const lawn = new THREE_.Mesh(new THREE_.PlaneGeometry(520, 360), new THREE_.MeshBasicMaterial({ color: '#0b1d11' }));
-    lawn.rotation.x = -Math.PI / 2; lawn.position.set(0, -0.1, -1330);
-    scene.add(lawn); this.lawn = lawn;
-    const path = new THREE_.Mesh(new THREE_.PlaneGeometry(9, 190), new THREE_.MeshBasicMaterial({ color: '#1c241d' }));
-    path.rotation.x = -Math.PI / 2; path.position.set(0, 0.02, -1290);
-    scene.add(path);
-
-    const winTexes = [this.windowTex(0.4, 0.55), this.windowTex(0.28, 0.35), this.windowTex(0.5, 0.7), this.windowTex(0.33, 0.45)];
-    const bMats = winTexes.map((t) => new THREE_.MeshBasicMaterial({ map: t }));
-    for (let i = 0; i < 210; i++) {
-      const side = Math.random() < 0.5 ? -1 : 1;
-      const z = -60 - Math.random() * 1080;
-      let xOff = 26 + Math.random() * 260;
-      if (z < -760) xOff = 90 + Math.random() * 220;
-      const x = side * xOff;
-      const w = 10 + Math.random() * 16;
-      const near = Math.abs(x) < 60;
-      const h = 14 + Math.pow(Math.random(), 2) * (near ? 60 : 150);
-      const m = new THREE_.Mesh(new THREE_.BoxGeometry(w, h, w), bMats[i % 4]);
-      m.position.set(x, h / 2, z);
-      scene.add(m);
-      if (h > 105) this.beaconSpots.push([x, h + 1.5, z]);
-    }
-    for (let i = 0; i < 46; i++) {
-      const x = (Math.random() - 0.5) * 1100;
-      const h = 60 + Math.random() * 180;
-      const w = 16 + Math.random() * 22;
-      const m = new THREE_.Mesh(new THREE_.BoxGeometry(w, h, w), bMats[i % 4]);
-      const bz = -1580 - Math.random() * 120;
-      m.position.set(x, h / 2, bz);
-      scene.add(m);
-      if (h > 170) this.beaconSpots.push([x, h + 2, bz]);
-    }
-
-    const towerMat = new THREE_.MeshBasicMaterial({ map: this.windowTex(0.75, 0.15) });
-    const mkTower = (x) => {
-      const gp = new THREE_.Group();
-      const tiers = [[11, 34], [9.5, 30], [8, 26], [6.5, 22], [5, 16], [3.6, 12]];
-      let y = 0;
-      tiers.forEach(([r, hh]) => {
-        const c = new THREE_.Mesh(new THREE_.CylinderGeometry(r * 0.82, r, hh, 8), towerMat);
-        c.position.y = y + hh / 2; gp.add(c); y += hh;
-      });
-      const spire = new THREE_.Mesh(new THREE_.ConeGeometry(1.4, 26, 8), new THREE_.MeshBasicMaterial({ color: '#cfe9ff' }));
-      spire.position.y = y + 13; gp.add(spire);
-      const s = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#8fd6ff', transparent: true, opacity: 0.5, depthWrite: false }));
-      s.scale.set(46, 46, 1); s.position.y = y + 8; gp.add(s);
-      gp.position.set(x, 0, -1180);
-      scene.add(gp);
-    };
-    mkTower(-34); mkTower(34);
-    const bridge = new THREE_.Mesh(new THREE_.BoxGeometry(52, 3.4, 5), new THREE_.MeshBasicMaterial({ color: '#b9dcf2' }));
-    bridge.position.set(0, 62, -1180); scene.add(bridge);
-    this.beaconSpots.push([-34, 168, -1180], [34, 168, -1180], [-210, 134, -1060]);
-
-    const klt = new THREE_.Group();
-    const shaft = new THREE_.Mesh(new THREE_.CylinderGeometry(2.2, 3.4, 120, 8), new THREE_.MeshBasicMaterial({ color: '#131a22' }));
-    shaft.position.y = 60; klt.add(shaft);
-    const pod = new THREE_.Mesh(new THREE_.SphereGeometry(8, 12, 10), new THREE_.MeshBasicMaterial({ map: winTexes[2] }));
-    pod.position.y = 122; klt.add(pod);
-    const podGlow = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#ffd27a', transparent: true, opacity: 0.5, depthWrite: false }));
-    podGlow.scale.set(34, 34, 1); podGlow.position.y = 122; klt.add(podGlow);
-    klt.position.set(-210, 0, -1060); scene.add(klt);
-
-    {
-      const n = this.isSmall ? 280 : 500, pos = new Float32Array(n * 3);
-      for (let i = 0; i < n; i++) {
-        pos[i * 3] = (Math.random() - 0.5) * 2400;
-        pos[i * 3 + 1] = 160 + Math.random() * 520;
-        pos[i * 3 + 2] = -Math.random() * 2000;
-      }
-      const gm = new THREE_.BufferGeometry();
-      gm.setAttribute('position', new THREE_.BufferAttribute(pos, 3));
-      this.stars = new THREE_.Points(gm, new THREE_.PointsMaterial({ color: '#aac6dd', size: 1.6, transparent: true, opacity: 0.75, depthWrite: false }));
-      scene.add(this.stars);
-    }
-
-    {
-      const primary = [], gold = [];
-      for (let z = -240; z > -500; z -= 20) {
-        for (let i = 0; i <= 10; i++) {
-          const t = i / 10;
-          const x = -19 + t * 38;
-          const sag = 3.4 * (1 - Math.pow(t * 2 - 1, 2));
-          ((i % 2 === 0) ? primary : gold).push(x, 13.5 - sag, z + (Math.random() - 0.5) * 2);
-        }
-      }
-      const mk = (arr, color, size) => {
-        const gm = new THREE_.BufferGeometry();
-        gm.setAttribute('position', new THREE_.BufferAttribute(new Float32Array(arr), 3));
-        const pts = new THREE_.Points(gm, new THREE_.PointsMaterial({ map: glow, color, size, transparent: true, opacity: 0.95, depthWrite: false, blending: THREE_.AdditiveBlending }));
-        scene.add(pts); return pts;
-      };
-      this.lanterns = mk(primary, this.props.lanternColor ?? '#FF4D2E', 5.2);
-      this.lanternsGold = mk(gold, '#FFB300', 4.4);
-    }
-
-    {
-      const signs = [
-        ['JALAN ALOR', '#FF4D2E', -1, -262, 11], ['MAKAN 24 JAM', '#00E5FF', 1, -300, 14],
-        ['NASI LEMAK', '#FFB300', -1, -340, 9], ['TEH TARIK', '#FF4DA6', 1, -378, 12],
-        ['RESTORAN', '#00E676', -1, -420, 13], ['KOPITIAM', '#FFD54F', 1, -458, 10],
-      ];
-      signs.forEach(([txt, col, side, z, y]) => {
-        const t = this.neonTex(txt, col);
-        const m = new THREE_.Mesh(new THREE_.PlaneGeometry(20, 5), new THREE_.MeshBasicMaterial({ map: t, transparent: true, depthWrite: false, blending: THREE_.AdditiveBlending, side: THREE_.DoubleSide }));
-        m.position.set(side * 21.5, y, z);
-        m.rotation.y = side * -Math.PI / 2 + side * 0.18;
-        scene.add(m);
-        const r = m.clone();
-        r.position.y = 0.15; r.rotation.set(-Math.PI / 2, 0, side * 0.14);
-        r.position.x = side * 14; r.material = m.material.clone(); r.material.opacity = 0.18;
-        scene.add(r);
-      });
-    }
-
-    {
-      const cols = ['#7a4a3a', '#2c6e63', '#7a3b5e', '#3e5c7a', '#907040', '#4a6b3a'];
-      let idx = 0;
-      for (let z = -520; z > -760; z -= 15) {
-        [-1, 1].forEach((side) => {
-          const h = 12 + Math.random() * 5;
-          const tex = this.facadeTex(cols[idx++ % cols.length]);
-          const m = new THREE_.Mesh(new THREE_.BoxGeometry(12, h, 14), new THREE_.MeshBasicMaterial({ map: tex }));
-          m.position.set(side * 29, h / 2, z);
-          scene.add(m);
-        });
-        if (z % 45 === 0) {
-          const lamp = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#ffbe6e', transparent: true, opacity: 0.85, depthWrite: false, blending: THREE_.AdditiveBlending }));
-          lamp.scale.set(7, 7, 1);
-          lamp.position.set((Math.random() < 0.5 ? -1 : 1) * 20, 6.5, z);
-          scene.add(lamp);
-        }
-      }
-    }
-
-    {
-      const treeMat = new THREE_.MeshBasicMaterial({ color: '#0a2013' });
-      const treeMat2 = new THREE_.MeshBasicMaterial({ color: '#0d2a19' });
-      for (let z = -780; z > -1010; z -= 12) {
-        [-1, 1].forEach((side) => {
-          const n = 2 + Math.floor(Math.random() * 3);
-          for (let k = 0; k < n; k++) {
-            const r = 5 + Math.random() * 10;
-            const h = 16 + Math.random() * 30;
-            const cone = new THREE_.Mesh(new THREE_.ConeGeometry(r, h, 7), Math.random() < 0.5 ? treeMat : treeMat2);
-            cone.position.set(side * (26 + Math.random() * 80), h / 2, z + (Math.random() - 0.5) * 8);
-            scene.add(cone);
-          }
-        });
-      }
-      const trunkMat = new THREE_.MeshBasicMaterial({ color: '#17130d' });
-      const canopyMats = [new THREE_.MeshBasicMaterial({ color: '#123522' }), new THREE_.MeshBasicMaterial({ color: '#174028' }), new THREE_.MeshBasicMaterial({ color: '#0e2c1b' })];
-      for (let i = 0; i < 42; i++) {
-        const x = (Math.random() < 0.5 ? -1 : 1) * (14 + Math.random() * 160);
-        const z = -1215 - Math.random() * 210;
-        if (Math.hypot(x, z + 1268) < 26) continue;
-        const th = 3 + Math.random() * 3;
-        const trunk = new THREE_.Mesh(new THREE_.CylinderGeometry(0.5, 0.7, th, 6), trunkMat);
-        trunk.position.set(x, th / 2, z);
-        scene.add(trunk);
-        const r = 3.5 + Math.random() * 4.5;
-        const canopy = new THREE_.Mesh(new THREE_.SphereGeometry(r, 8, 7), canopyMats[i % 3]);
-        canopy.position.set(x, th + r * 0.7, z);
-        scene.add(canopy);
-      }
-      const n = 150, pos = new Float32Array(n * 3);
-      for (let i = 0; i < n; i++) {
-        pos[i * 3] = (Math.random() - 0.5) * 140;
-        pos[i * 3 + 1] = 1.5 + Math.random() * 10;
-        pos[i * 3 + 2] = -1200 - Math.random() * 220;
-      }
-      const gm = new THREE_.BufferGeometry();
-      gm.setAttribute('position', new THREE_.BufferAttribute(pos, 3));
-      this.fireflies = new THREE_.Points(gm, new THREE_.PointsMaterial({ map: glow, color: '#7CFF9E', size: 2.4, transparent: true, opacity: 0.9, depthWrite: false, blending: THREE_.AdditiveBlending }));
-      scene.add(this.fireflies);
-    }
-
-    {
-      const bench = new THREE_.Group();
-      const benchMat = new THREE_.MeshBasicMaterial({ color: '#00b04c' });
-      const darkMat = new THREE_.MeshBasicMaterial({ color: '#046a30' });
-      for (let i = 0; i < 4; i++) {
-        const s = new THREE_.Mesh(new THREE_.BoxGeometry(7.2, 0.22, 0.6), benchMat);
-        s.position.set(0, 2.1, -0.9 + i * 0.62);
-        bench.add(s);
-      }
-      for (let i = 0; i < 4; i++) {
-        const s = new THREE_.Mesh(new THREE_.BoxGeometry(7.2, 0.55, 0.2), benchMat);
-        s.position.set(0, 2.9 + i * 0.72, 1.15 + i * 0.12);
-        s.rotation.x = -0.18;
-        bench.add(s);
-      }
-      [-3.1, 3.1].forEach((x) => {
-        const l1 = new THREE_.Mesh(new THREE_.BoxGeometry(0.35, 2.1, 0.35), darkMat);
-        l1.position.set(x, 1.05, -0.7); bench.add(l1);
-        const l2 = new THREE_.Mesh(new THREE_.BoxGeometry(0.35, 2.1, 0.35), darkMat);
-        l2.position.set(x, 1.05, 1.1); bench.add(l2);
-      });
-      bench.position.set(0, 0, -1268);
-      scene.add(bench);
-      const halo = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#00C853', transparent: true, opacity: 0.4, depthWrite: false, blending: THREE_.AdditiveBlending }));
-      halo.scale.set(26, 15, 1); halo.position.set(0, 3.4, -1269.5);
-      scene.add(halo);
-      const lamp = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#ffd9a0', transparent: true, opacity: 0.75, depthWrite: false, blending: THREE_.AdditiveBlending }));
-      lamp.scale.set(12, 12, 1); lamp.position.set(6.5, 8.5, -1272);
-      scene.add(lamp);
-      const pole = new THREE_.Mesh(new THREE_.CylinderGeometry(0.16, 0.22, 8.5, 6), new THREE_.MeshBasicMaterial({ color: '#101410' }));
-      pole.position.set(6.5, 4.25, -1272);
-      scene.add(pole);
-      this.benchHalo = halo;
-    }
-
-    // aircraft-warning beacons: slow red blink on every tall structure — the KL night signature
-    this.beacons = this.beaconSpots.map(([bx, by, bz], i) => {
-      const sp = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#ff3b30', transparent: true, opacity: 0.0, depthWrite: false, blending: THREE_.AdditiveBlending }));
-      sp.scale.set(6, 6, 1); sp.position.set(bx, by, bz); sp.userData.phase = (i * 0.83) % (Math.PI * 2);
-      scene.add(sp); return sp;
-    });
-
-    // living highway: taillights flowing away, headlights flowing toward you
-    {
-      const lanes = [[-6.5, 1], [-3.2, 1], [3.2, -1], [6.8, -1]];
-      const perLane = this.isSmall ? 22 : 34;
-      const n = lanes.length * perLane;
-      const pos = new Float32Array(n * 3);
-      this.trafficDir = new Float32Array(n);
-      this.trafficSpd = new Float32Array(n);
-      const colors = new Float32Array(n * 3);
-      let k = 0;
-      lanes.forEach(([lx, dir]) => {
-        for (let i = 0; i < perLane; i++) {
-          pos[k * 3] = lx + (Math.random() - 0.5) * 0.8;
-          pos[k * 3 + 1] = 0.7;
-          pos[k * 3 + 2] = -40 - Math.random() * 1060;
-          this.trafficDir[k] = dir;
-          this.trafficSpd[k] = 34 + Math.random() * 30;
-          const red = dir > 0; // moving away from camera = taillights
-          colors[k * 3] = red ? 1 : 0.95; colors[k * 3 + 1] = red ? 0.16 : 0.92; colors[k * 3 + 2] = red ? 0.1 : 0.75;
-          k++;
-        }
-      });
-      const gm = new THREE_.BufferGeometry();
-      gm.setAttribute('position', new THREE_.BufferAttribute(pos, 3));
-      gm.setAttribute('color', new THREE_.BufferAttribute(colors, 3));
-      this.traffic = new THREE_.Points(gm, new THREE_.PointsMaterial({ map: glow, size: 3.4, vertexColors: true, transparent: true, opacity: 0.9, depthWrite: false, blending: THREE_.AdditiveBlending }));
-      scene.add(this.traffic);
-    }
-
-    // tropical haze: soft layers drifting over the skyline, felt most at altitude
-    this.haze = [];
-    for (let i = 0; i < (this.isSmall ? 4 : 7); i++) {
-      const sp = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#16202e', transparent: true, opacity: 0.16 + Math.random() * 0.08, depthWrite: false }));
-      sp.scale.set(420 + Math.random() * 380, 90 + Math.random() * 70, 1);
-      sp.position.set((Math.random() - 0.5) * 900, 110 + Math.random() * 210, -350 - Math.random() * 1250);
-      sp.userData.drift = 1.2 + Math.random() * 2.2;
-      scene.add(sp); this.haze.push(sp);
-    }
-
-    // wind streaks: vertical velocity lines that only exist during the dive
-    {
-      const n = 90, pos = new Float32Array(n * 3);
-      for (let i = 0; i < n; i++) {
-        pos[i * 3] = (Math.random() - 0.5) * 90;
-        pos[i * 3 + 1] = Math.random() * 130;
-        pos[i * 3 + 2] = (Math.random() - 0.5) * 90;
-      }
-      const gm = new THREE_.BufferGeometry();
-      gm.setAttribute('position', new THREE_.BufferAttribute(pos, 3));
-      this.wind = new THREE_.Points(gm, new THREE_.PointsMaterial({ map: this.streakTex(), color: '#9fb8c8', size: 13, transparent: true, opacity: 0, depthWrite: false, blending: THREE_.AdditiveBlending }));
-      scene.add(this.wind);
-    }
-
-    this.dawn = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#FFB300', transparent: true, opacity: 0, depthWrite: false }));
-    this.dawn.scale.set(1000, 460, 1);
-    this.dawn.position.set(0, 40, -1720);
-    scene.add(this.dawn);
-    this.dawnGreen = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#00C853', transparent: true, opacity: 0, depthWrite: false }));
-    this.dawnGreen.scale.set(1600, 800, 1);
-    this.dawnGreen.position.set(0, 140, -1800);
-    scene.add(this.dawnGreen);
-    this.sun = new THREE_.Sprite(new THREE_.SpriteMaterial({ map: glow, color: '#FFF1B8', transparent: true, opacity: 0, depthWrite: false }));
-    this.sun.scale.set(260, 260, 1);
-    this.sun.position.set(-330, 250, -1760);
-    scene.add(this.sun);
-
-    {
-      const n = this.isSmall ? 850 : 1600;
-      const pos = new Float32Array(n * 3);
-      this.rainVel = new Float32Array(n);
-      for (let i = 0; i < n; i++) {
-        pos[i * 3] = (Math.random() - 0.5) * 240;
-        pos[i * 3 + 1] = Math.random() * 160;
-        pos[i * 3 + 2] = (Math.random() - 0.5) * 240;
-        this.rainVel[i] = 90 + Math.random() * 80;
-      }
-      const gm = new THREE_.BufferGeometry();
-      gm.setAttribute('position', new THREE_.BufferAttribute(pos, 3));
-      this.rain = new THREE_.Points(gm, new THREE_.PointsMaterial({ map: this.streakTex(), color: '#bcd8e8', size: 5, transparent: true, opacity: 0.28, depthWrite: false, blending: THREE_.AdditiveBlending }));
-      scene.add(this.rain);
-    }
-
-    this.keys = [
-      { p: 0.00, pos: [0, 175, 130], look: [0, 95, -1180] },
-      { p: 0.10, pos: [0, 105, -50], look: [0, 62, -1180] },
-      { p: 0.22, pos: [0, 9, -235], look: [0, 9, -470] },
-      { p: 0.38, pos: [0, 8, -460], look: [0, 8, -690] },
-      { p: 0.50, pos: [0, 14, -680], look: [0, 45, -1000] },
-      { p: 0.62, pos: [0, 48, -900], look: [0, 85, -1180] },
-      { p: 0.72, pos: [0, 82, -1100], look: [0, 76, -1300] },
-      { p: 0.80, pos: [0, 66, -1215], look: [0, 12, -1272] },
-      { p: 0.90, pos: [0, 22, -1290], look: [0, 6, -1266] },
-      { p: 1.00, pos: [-4, 5.5, -1308], look: [0, 4.5, -1265] },
-    ];
-    this.skyKeys = [
-      { p: 0.00, sky: '#06101b', fog: '#0b1722', far: 480 },
-      { p: 0.24, sky: '#100b18', fog: '#18111c', far: 420 },
-      { p: 0.52, sky: '#070b16', fog: '#101522', far: 520 },
-      { p: 0.70, sky: '#152641', fog: '#253750', far: 820 },
-      { p: 0.84, sky: '#b66b57', fog: '#d19a7a', far: 1050 },
-      { p: 1.00, sky: '#78bfe8', fog: '#c3e0e7', far: 1450 },
-    ];
-
-    this.onResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
-    this.onMouse = (e) => {
-      if (this.tiltOn) return; // tilt owns the view while active
-      this.viewT.x = (e.clientX / window.innerWidth) * 2 - 1;
-      this.viewT.y = (e.clientY / window.innerHeight) * 2 - 1;
-    };
-    this.onTouchMove = (e) => {
-      if (this.tiltOn || !e.touches || !e.touches[0]) return;
-      this.viewT.x = (e.touches[0].clientX / window.innerWidth) * 2 - 1;
-      this.viewT.y = (e.touches[0].clientY / window.innerHeight) * 2 - 1;
-    };
-    window.addEventListener('resize', this.onResize);
-    window.addEventListener('mousemove', this.onMouse);
-    window.addEventListener('touchmove', this.onTouchMove, { passive: true });
-
-    this.colA = new THREE_.Color(); this.colB = new THREE_.Color();
-    this.nightGround = new THREE_.Color('#080b0f'); this.dayGround = new THREE_.Color('#335c3a');
-    this.nightRoad = new THREE_.Color('#0c1014'); this.dayRoad = new THREE_.Color('#59635f');
-    this.nightLawn = new THREE_.Color('#0b1d11'); this.dayLawn = new THREE_.Color('#2f7a43');
-    this.clock = new THREE_.Clock();
-    this.chapterText = '';
-    this.seasonText = '';
-    this.loop();
-  }
-
-  lerpKeys(keys, p) {
-    let a = keys[0], b = keys[keys.length - 1];
-    for (let i = 0; i < keys.length - 1; i++) {
-      if (p >= keys[i].p && p <= keys[i + 1].p) { a = keys[i]; b = keys[i + 1]; break; }
-    }
-    const span = b.p - a.p || 1;
-    let t = (p - a.p) / span;
-    t = t * t * (3 - 2 * t);
-    return { a, b, t };
-  }
-
-  loop() {
-    if (this.disposed) return;
-    this.raf = requestAnimationFrame(() => this.loop());
-    const dt = Math.min(this.clock.getDelta(), 0.05);
-    const time = this.clock.elapsedTime;
-
-    const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const target = Math.min(1, Math.max(0, window.scrollY / max));
-    this.p += (target - this.p) * Math.min(1, dt * 4.5);
-    const p = this.p;
-
-    // weighted view: chase the steering target (mouse or device tilt)
-    const chase = Math.min(1, dt * (this.tiltOn ? 7 : 5));
-    this.view.x += (this.viewT.x - this.view.x) * chase;
-    this.view.y += (this.viewT.y - this.view.y) * chase;
-
-    const { a, b, t } = this.lerpKeys(this.keys, p);
-    const lerp = (i, j, k) => i + (j - i) * k;
-    const motionAmp = this.reduceMotion ? 0 : 1;
-    const sway = Math.sin(time * 0.55) * 0.9 * motionAmp;
-    const bob = Math.sin(time * 0.9) * 0.35 * motionAmp;
-    const swayAmp = p > 0.95 ? 0.25 : (p > 0.15 ? 1 : 3);
-    this.camera.position.set(
-      lerp(a.pos[0], b.pos[0], t) + sway * swayAmp,
-      Math.max(3.5, lerp(a.pos[1], b.pos[1], t) + bob * (p > 0.95 ? 0.3 : 1)),
-      lerp(a.pos[2], b.pos[2], t)
-    );
-    this.camera.lookAt(
-      lerp(a.look[0], b.look[0], t) + this.view.x * (this.tiltOn ? 22 : 14) * motionAmp,
-      lerp(a.look[1], b.look[1], t) - this.view.y * (this.tiltOn ? 14 : 8) * motionAmp,
-      lerp(a.look[2], b.look[2], t)
-    );
-    // bank into the sway like an aircraft: roll follows lateral velocity
-    this.camera.rotateZ(Math.cos(time * 0.55) * 0.012 * swayAmp * motionAmp);
-
-    const sk = this.lerpKeys(this.skyKeys, p);
-    this.colA.set(sk.a.sky); this.colB.set(sk.b.sky);
-    this.scene.background.copy(this.colA).lerp(this.colB, sk.t);
-    this.colA.set(sk.a.fog); this.colB.set(sk.b.fog);
-    this.scene.fog.color.copy(this.colA).lerp(this.colB, sk.t);
-    this.scene.fog.far = sk.a.far + (sk.b.far - sk.a.far) * sk.t;
-
-    const dawn = Math.max(0, Math.min(1, (p - 0.62) / 0.3));
-    const dayRaw = Math.max(0, Math.min(1, (p - 0.8) / 0.2));
-    const day = dayRaw * dayRaw * (3 - 2 * dayRaw);
-    this.dawn.material.opacity = Math.sin(dawn * Math.PI) * 0.78;
-    this.dawnGreen.material.opacity = dawn * 0.28;
-    this.sun.material.opacity = day * 0.92;
-    this.stars.material.opacity = 0.75 * (1 - dawn);
-    this.ground.material.color.copy(this.nightGround).lerp(this.dayGround, day);
-    this.road.material.color.copy(this.nightRoad).lerp(this.dayRoad, day);
-    this.lawn.material.color.copy(this.nightLawn).lerp(this.dayLawn, day);
-    if (this.benchHalo) {
-      const pulse = this.reduceMotion ? 0 : Math.sin(time * 1.6) * 0.08;
-      this.benchHalo.material.opacity = 0.25 + day * 0.48 + pulse;
-    }
-
-    const ri = this.props.rainIntensity ?? 1;
-    const rainFade = Math.max(0, Math.min(1, (0.72 - p) / 0.3));
-    this.rain.visible = !this.reduceMotion && ri * rainFade > 0.02;
-    this.rain.material.opacity = 0.3 * ri * rainFade;
-    if (this.rain.visible) {
-      this.rain.position.set(this.camera.position.x, 0, this.camera.position.z);
-      const rp = this.rain.geometry.attributes.position;
-      for (let i = 0; i < rp.count; i++) {
-        let y = rp.getY(i) - this.rainVel[i] * dt * (0.5 + ri * 0.6);
-        if (y < 0) y = 150 + Math.random() * 10;
-        rp.setY(i, y);
-      }
-      rp.needsUpdate = true;
-    }
-
-    if (this.fireflies) {
-      this.fireflies.material.opacity = this.reduceMotion ? 0.55 : 0.55 + Math.sin(time * 2.2) * 0.35;
-      this.fireflies.position.y = this.reduceMotion ? 0 : Math.sin(time * 0.5) * 1.2;
-    }
-
-    const lc = this.props.lanternColor ?? '#FF4D2E';
-    if (this.lanterns && this.lastLc !== lc) { this.lanterns.material.color.set(lc); this.lastLc = lc; }
-    if (this.lanterns) this.lanterns.material.opacity = this.reduceMotion ? 0.9 : 0.85 + Math.sin(time * 7) * 0.1;
-
-    // red beacons blink slow and out of phase, like a real skyline
-    if (this.beacons) for (let i = 0; i < this.beacons.length; i++) {
-      const bcn = this.beacons[i];
-      const tw = this.reduceMotion ? -1 : Math.sin(time * 1.5 + bcn.userData.phase);
-      bcn.material.opacity = tw > 0.55 ? 0.85 : 0.05;
-    }
-
-    // traffic flows both ways along the highway and wraps
-    if (this.traffic) {
-      const tp = this.traffic.geometry.attributes.position;
-      const speedScale = this.reduceMotion ? 0 : 1;
-      for (let i = 0; i < tp.count; i++) {
-        let z = tp.getZ(i) + this.trafficDir[i] * this.trafficSpd[i] * dt * speedScale;
-        if (z > -36) z = -1100;
-        if (z < -1104) z = -40;
-        tp.setZ(i, z);
-      }
-      tp.needsUpdate = true;
-      this.traffic.material.opacity = 0.9 * (1 - day * 0.55);
-    }
-
-    // haze drifts sideways; it thickens slightly at altitude
-    if (this.haze) for (const hz of this.haze) {
-      hz.position.x += hz.userData.drift * dt * (this.reduceMotion ? 0 : 1);
-      if (hz.position.x > 620) hz.position.x = -620;
-      hz.material.opacity = (0.13 + (this.camera.position.y > 60 ? 0.09 : 0)) * (1 - day * 0.72);
-    }
-
-    // wind streaks exist only in the dive (p 0.08-0.26) and follow the camera
-    if (this.wind) {
-      const dive = Math.max(0, 1 - Math.abs(p - 0.16) / 0.1);
-      this.wind.material.opacity = dive * 0.5 * motionAmp;
-      this.wind.position.set(this.camera.position.x, this.camera.position.y - 60, this.camera.position.z);
-      if (dive > 0.01) {
-        const wp = this.wind.geometry.attributes.position;
-        for (let i = 0; i < wp.count; i++) {
-          let y = wp.getY(i) + 220 * dt;
-          if (y > 130) y = 0;
-          wp.setY(i, y);
-        }
-        wp.needsUpdate = true;
-      }
-    }
-
-    // monsoon lightning: rare, doubled flash on the horizon
-    if (!this.reduceMotion && this.lightningEl) {
-      if (this.nextFlash === undefined) this.nextFlash = 6 + Math.random() * 9;
-      if (time > this.nextFlash) {
-        this.flashAt = time;
-        this.nextFlash = time + 11 + Math.random() * 14;
-      }
-      if (this.flashAt !== undefined) {
-        const ft = time - this.flashAt;
-        let o = 0;
-        if (ft < 0.09) o = 0.55 * (ft / 0.09);
-        else if (ft < 0.34) o = 0.55 * (1 - (ft - 0.09) / 0.25);
-        else if (ft < 0.42) o = 0.3 * ((ft - 0.34) / 0.08);
-        else if (ft < 0.75) o = 0.3 * (1 - (ft - 0.42) / 0.33);
-        this.lightningEl.style.opacity = (o * Math.max(0, (0.62 - p) / 0.22)).toFixed(3);
-      }
-    }
-
-    this.checkReveals();
-
-    // ── REAL FOOTAGE dissolve: 3D flight bridges the real locations ──
-    const realFootage = this.props.realFootage ?? false;
-    if (this.vidLayerEl && realFootage && !this.reduceMotion) {
-      const { idx, op } = this.zoneOpacity(p);
-      if (idx >= 0) this.setZone(idx);
-      const maxOp = this.props.footageOpacity ?? 1;
-      const o = op * maxOp;
-      this.vidLayerEl.style.opacity = o.toFixed(3);
-      // motion-blur at the dissolve edges — flight and footage melt into each other
-      this.vidLayerEl.style.filter = op < 0.999 ? 'blur(' + ((1 - op) * 7).toFixed(2) + 'px)' : 'none';
-      if (this.liveEl) this.liveEl.style.display = o > 0.5 ? 'flex' : 'none';
-      if (this.vidPanEl) {
-        this.vidPanEl.style.transform = 'translate(' + (this.view.x * 14) + 'px,' + (this.view.y * -9) + 'px)';
-        this.vidPanEl.style.transition = 'transform .18s linear';
-      }
-      // slow push-in within each zone for forward motion
-      if (this.vidContainerEl && idx >= 0) {
-        const z = this.zones[idx];
-        const lp = Math.max(0, Math.min(1, (p - z.a) / (z.b - z.a)));
-        // continuous push-in that keeps accelerating through the exit dissolve —
-        // you fly INTO the footage and THROUGH it back into the flight
-        const through = p > z.b ? (p - z.b) / 0.055 : 0;
-        this.vidContainerEl.style.transform = 'translate(-50%,-50%) scale(' + (1.12 + lp * 0.12 + through * 0.22).toFixed(4) + ')';
-      }
-    } else if (this.vidLayerEl) {
-      this.vidLayerEl.style.opacity = '0';
-      if (this.liveEl) this.liveEl.style.display = 'none';
-    }
-
-    if (this.progressEl) this.progressEl.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-    const ch = p < 0.16 ? '01 — KUALA LUMPUR' : p < 0.45 ? '02 — JALAN ALOR' : p < 0.78 ? '03 — ABOVE THE TOWERS' : '04 — KLCC PARK';
-    if (this.chapterEl && this.chapterText !== ch) { this.chapterEl.textContent = ch; this.chapterText = ch; }
-    const season = p < 0.22 ? 'MONSOON · RAIN' : p < 0.58 ? 'CITY · NIGHT' : p < 0.84 ? 'HORIZON · DAWN' : 'KLCC · SUNNY DAY';
-    if (this.seasonEl && this.seasonText !== season) {
-      this.seasonEl.textContent = season;
-      this.seasonEl.style.color = p < 0.22 ? '#9fd8f0' : p < 0.58 ? '#c7b8ff' : p < 0.84 ? '#ffd19a' : '#fff4bd';
-      this.seasonText = season;
-      const theme = document.querySelector('meta[name="theme-color"]');
-      if (theme) theme.setAttribute('content', p < 0.58 ? '#070b16' : p < 0.84 ? '#253750' : '#78bfe8');
-    }
-
-    this.renderer.render(this.scene, this.camera);
-  }
-}
-</script>
+  <footer class="footer">
+    <span>Last Bench is the company · Education & Mobility is an operating/service domain · CLASS[Λ] and co.lab are independent entry points.</span>
+    <span>Co.MPASS → Dr. X → decision → better operating evidence.</span>
+  </footer>
+</main>
 </body>
 </html>

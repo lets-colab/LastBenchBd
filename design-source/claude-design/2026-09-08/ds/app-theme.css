@@ -1,0 +1,16 @@
+/* Mirrored from the app's own theme.config.js (light scheme) — the repo is the
+   source of truth for APP chrome. Brand tokens in tokens/tokens.css still own
+   brand colour; these own surfaces, borders and status colours.
+     primary #00C853 · background #FAFAF8 · surface #ffffff
+     foreground #111111 · muted #6B6F76 · border #E6F2E9 */
+:root {
+  --lb-app-primary: #00C853;
+  --lb-app-background: #FAFAF8;
+  --lb-app-surface: #ffffff;
+  --lb-app-foreground: #111111;
+  --lb-app-muted: #6B6F76;
+  --lb-app-border: #E6F2E9;
+  --lb-app-success: #22C55E;
+  --lb-app-warning: #F59E0B;
+  --lb-app-error: #EF4444;
+}

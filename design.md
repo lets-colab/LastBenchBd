@@ -1,269 +1,426 @@
-# The Last Bench Mobile App — Design Document
+# Last Bench — Product & Experience Design Constitution
 
-## Brand & Vision
+> Read `PRODUCT.md`, `FOUNDATION_LOCK.md`, the canonical brand system, and this document together. If they conflict, current verified business/product truth and locked brand assets win over older mockups or historical design notes.
 
-**The Last Bench** is a platform for Bangladeshi secondary-school students seeking clarity, guidance, and community as they navigate study-abroad pathways. The app combines real-time application tracking, AI-powered guidance, and a creator/skills community, all powered by a network of trusted tutors and coaching centers.
+## 1. Corporate identity
 
-**Brand Tagline:** *For Those Who Last, To Create a Benchmark.*
+**Company:** Last Bench  
+**Architecture descriptor:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X  
+**Brand promise:** **From where you are. To what you can build.**
 
-**Core Positioning:** We are not a consultancy. We are a transparent, always-on platform that makes the study-abroad journey feel less like a black box and more like a supported, visible process.
+Last Bench is the company. Malaysia is an active service within Education & Mobility, not the corporate backbone.
 
----
+The current JEV 2026.09.29 architecture is:
 
-## Design Principles
+1. **CLASS[Λ] — Human Lab**: builds builders through skill, execution and proof.
+2. **co.lab — Business Lab**: Ventures · Projects · Services · Community. ProjectX is Website Projects; Community contains Influencers · Ambassadors · Creators · Advisors.
+3. **Co.MPASS — Business Dashboard**: converges governed company evidence into context, clarity and direction.
+4. **Dr. X — Founder Second Brain / Twin**: governed memory, founder context, JEV judgment and reasoning.
+5. **Education & Mobility — operating/service domain**: education pathways, university guidance, admissions/application support, visa/process guidance, pre-departure, settlement and student community.
 
-| Principle | Meaning | Implementation |
-|-----------|---------|-----------------|
-| **Clarity First** | Students should always know where they stand and what comes next. | Every screen should show status, next steps, and reasons for delays. No hidden processes. |
-| **Trust Through Transparency** | Honest about what we know and what we don't. Manual updates are labeled as such; AI recommendations show reasoning. | Avoid fake live integrations. Show "Last updated by [name]" for status changes. |
-| **Mentor-Like Tone** | Speak like a smart, supportive older sibling, not a corporate consultancy. | Use warm, practical language. Avoid jargon. Celebrate milestones. |
-| **Mobile-First, One-Handed** | Designed for portrait orientation on a phone held in one hand. All key actions are thumb-reachable. | Bottom-heavy navigation. Large, tappable buttons. Minimal scrolling for critical info. |
-| **Community Over Transaction** | The app should feel like joining a peer group, not just a service. | Show peer progress, cohort milestones, and opportunities to help others. |
+These are **multiple entry points**, not a mandatory funnel. A student may enter an Education & Mobility service; a learner may enter CLASS[Λ] directly; a founder or business may enter co.lab directly.
 
----
-
-## Screen List & User Flows
-
-### **Student Journey**
-
-#### 1. **Authentication & Onboarding**
-
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **Sign In / Sign Up** | First entry point. Simple email/password or social login. | Email input, password, "Sign up" link, "Forgot password?" link |
-| **Profile Setup** | Capture student's name, class/year, interests, and study-abroad goals. | Name, class dropdown, field of interest, destination preference, GPA (optional) |
-| **Transcript Upload** | Upload academic transcript or GPA document. | File picker, upload progress, confirmation message |
-| **Referral Code (Optional)** | If student came via tutor referral, enter the code here. | Referral code input, "Where did you hear about us?" optional text |
-
-**Flow:** Sign Up → Profile Setup → Transcript Upload → (Optional) Referral Code → Dashboard
+The strategic progression thesis is **Access → Capability → Creation → Ownership**, but the UI must never imply that a person is required to buy every stage.
 
 ---
 
-#### 2. **Student Dashboard (Home)**
+## 2. Experience principles
 
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **Application Status Overview** | Shows the student's current application stage at a glance. | Stage indicator (e.g., "Profile Analyzed" with progress bar), next milestone, days elapsed, quick action button |
-| **Application Tracking Pipeline** | Visual representation of the student's journey through the application process. | Stages: Documents Received → Profile Analyzed → University Shortlist → Application Drafted → Submitted to University → Under Review → Offer Received → Visa Application Filed → Visa Decision → Pre-Departure |
-| **Key Metrics** | Quick stats relevant to the student's progress. | Universities shortlisted, applications submitted, offers received, visa status |
-| **Recent Activity Feed** | Chronological log of updates, mentor messages, and community highlights. | "Status updated to [stage]", "Mentor [name] sent you a message", "Peer [name] got an offer!", timestamps |
-
-**UX Pattern:** Tap on any stage to see details (documents needed, timeline, mentor notes).
-
----
-
-#### 3. **AI Guidance Chat**
-
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **Guidance Chat Interface** | Conversational AI that helps students explore options and make decisions. | Chat bubbles, input field at bottom, typing indicator, suggested prompts ("Tell me about [university]", "What are my options with a 3.2 GPA?") |
-| **Recommendation Card** | AI suggests universities/programs based on student profile. | University name, program, acceptance rate, cost range, visa success rate, "Learn More" button, "Add to Shortlist" button |
-| **Comparison View** | Side-by-side comparison of universities or programs. | 2-3 columns, key metrics (cost, acceptance rate, visa success, living cost), "Choose" button |
-
-**AI Behavior:** The AI acts as an information engine. It explains reasoning ("This matches your GPA range and budget"), flags concerns ("Field switching may require additional documentation"), and escalates to human mentors for high-stakes decisions.
+| Principle | Meaning | Experience rule |
+|---|---|---|
+| **Clarity first** | A person should understand where they are and what comes next. | Show current stage, next milestone, accountable owner and evidence where a journey is being tracked. |
+| **Truth builds trust** | Never make an uncertain process look guaranteed. | Label what is verified, what can change and what requires current confirmation. |
+| **Opportunity before feature** | Products exist to move someone toward a meaningful opportunity. | Explain the outcome before the tool, workflow or technology. |
+| **Multiple entry points** | Last Bench is an ecosystem, not one linear funnel. | Lead with the lab/service/domain relevant to the user's actual intent. |
+| **Community compounds** | Relationships should grow in value over time. | Make referrals, alumni, mentoring and opportunity continuity visible only when real. |
+| **Technology serves humans** | AI and automation support judgment; they do not fabricate certainty. | Escalate high-stakes choices to humans and show reasoning/evidence. |
+| **Mobile first** | Key audiences often use mid-range Android phones and variable connections. | Large touch targets, progressive enhancement, restrained payloads, graceful fallback. |
+| **One truth per surface** | Corporate, service and product pages must not contradict one another. | Corporate pages explain the ecosystem; service pages focus on the service without redefining the parent brand. |
 
 ---
 
-#### 4. **Application Management**
+## 3. Corporate information architecture
 
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **My Applications** | List of all applications the student has filed or is preparing. | Application card (university, program, status, last updated date), "Add Application" button, filter by status |
-| **Application Detail** | Deep dive into a single application. | University info, program details, documents uploaded, current stage, mentor assigned, timeline, notes section |
-| **Document Upload** | Upload required documents (transcript, essay, recommendation letters, etc.). | Document type selector, file picker, upload progress, "Submitted" confirmation |
-| **Mentor Messaging** | Direct chat with assigned mentor/tutor. | Message thread, typing indicator, file sharing capability, "Schedule Call" button |
+A Last Bench corporate surface should explain the ecosystem in this order:
 
----
+1. **Brand truth** — the starting point is not the ceiling.
+2. **Company** — Last Bench is the company.
+3. **Two laboratories** — CLASS[Λ] Human Lab and co.lab Business Lab.
+4. **Intelligence loop** — Co.MPASS converges governed evidence; Dr. X is the Founder Second Brain / Twin.
+5. **Multiple entry points** — people enter through the problem they actually have.
+6. **Proof and trust** — distinguish verified current operations from roadmap or proposed capability.
+7. **Relevant CTA** — route the user to the correct lab or service route, not one universal sales funnel.
 
-#### 5. **Community & Skills**
-
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **Community Hub** | Discover peers, join cohorts, and access shared content. | Cohort list (e.g., "Class of 2026 - Malaysia Bound"), peer profiles, trending topics, "Join Cohort" button |
-| **Cohort Space** | Cohort-specific channel with peers at similar stages. | Cohort name, member count, weekly skill content, peer posts, "Ask a Question" button |
-| **Skill Lessons** | Practical micro-lessons on AI literacy, portfolio building, interview prep, etc. | Lesson card (title, duration, difficulty, preview image), "Start Lesson" button, progress indicator |
-| **Peer Profiles** | View other students' journeys and progress. | Student name, destination, status, applications, "Connect" button, shared interests |
+Corporate pages may show the whole system. They should not make Malaysia, CLASS[Λ] or co.lab appear to be the definition of Last Bench by itself.
 
 ---
 
-#### 6. **Profile & Settings**
+## 4. Education & Mobility design rule
 
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **My Profile** | Student's public and private profile info. | Name, photo, bio, study-abroad goals, applications count, "Edit" button |
-| **Settings** | App preferences, notifications, privacy. | Notification toggles, dark mode, language, privacy settings, "Log Out" button |
-| **Referral Link** | Share a unique link to refer friends. | Referral link (copyable), referral count, "Share" button |
+Education & Mobility is an operating/service domain inside Last Bench. The current active service is Malaysia Admissions.
 
----
+The Malaysia service should remain highly focused on the student and parent problem it solves.
 
-### **Tutor/Coach Journey**
+### Current service promise
 
-#### 1. **Tutor Onboarding**
+**Helping Bangladeshi students study, settle and succeed in Malaysia.**
 
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **Tutor Sign Up** | Register as a tutor or coaching center. | Name/center name, email, phone, location, expertise areas (checkboxes), "Create Account" button |
-| **Referral Link Setup** | Generate a unique referral link/code. | Referral code (auto-generated), copy button, "Share on WhatsApp" button, QR code |
+### Canonical Malaysia journey
 
----
+The Malaysia service website and Journey OS share one six-stage model:
 
-#### 2. **Tutor Dashboard**
+| Stage | Student question | Core output |
+|---|---|---|
+| **01 Discover** | What is realistic for me? | Goals, profile, budget, intake and constraints |
+| **02 Match** | Which options fit? | Realistic courses and institutions |
+| **03 Apply** | What must be submitted? | Documents, application and offer workflow |
+| **04 Secure** | What must be confirmed? | Visa/EMGS, payments and financial readiness |
+| **05 Prepare** | Am I ready to leave? | Travel, documentation and pre-departure checklist |
+| **06 Arrive** | What happens after landing? | Settlement, community and first practical steps |
 
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **Referral Overview** | Summary of referred students and commissions. | Total referred, pending commission, earned commission, "Withdraw" button |
-| **Referred Students List** | All students referred by this tutor. | Student name, status, application count, commission status (pending/earned), "View Details" button |
-| **Commission Tracker** | Track earnings from successful placements. | Commission per student, total earned, payout history, "Request Payout" button |
-| **Student Detail** | View a referred student's progress. | Student name, applications, current stage, contact info, notes section |
+**System rule:** every person has a current stage, next milestone, accountable owner and verified proof/evidence.
 
----
+Do not create a second competing mobility taxonomy without an explicit migration plan.
 
-#### 3. **Tutor Messaging**
+### Current Malaysia support systems
 
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **Tutor Messages** | Communicate with referred students. | Message thread, typing indicator, "Schedule Call" button, file sharing |
+Public service surfaces may describe:
 
----
+- Malaysia university selection based on profile, course, budget and intake.
+- Admissions/application support and required documentation.
+- Visa/EMGS process guidance and document preparation.
+- Scholarship, rebate or funding-route verification where currently available.
+- Pre-departure preparation.
+- Practical settlement and community support after arrival.
 
-### **Admin/Operations Journey**
+Use trust language such as “current options”, “subject to university eligibility and approval”, “verify the latest requirement”, and “guidance and document support”.
 
-#### 1. **Admin Dashboard**
-
-| Screen | Purpose | Key Elements |
-|--------|---------|--------------|
-| **System Overview** | High-level metrics and alerts. | Total students, total applications, pending status updates, alerts (e.g., "5 students waiting for update"), "View Details" button |
-| **Student Management** | Search and manage student records. | Search bar, student list, status, last updated, "Edit" button, "View Applications" button |
-| **Application Status Updates** | Manually update application stages for students. | Student selector, application selector, new status dropdown, notes field, "Update" button |
-| **Referral Approvals** | Review and approve tutor referrals. | Pending referrals list, tutor name, student name, "Approve" / "Reject" button |
-| **Commission Management** | Track and manage tutor commissions. | Tutor list, commission earned, payout status, "Process Payout" button |
+Avoid guaranteed visa approval, guaranteed scholarship percentages, guaranteed admission, permanent tuition/intake claims, or partnership claims inferred merely from a university appearing in an explorer.
 
 ---
 
-## User Flows (Detailed)
+## 5. CLASS[Λ] design boundary
 
-### **Flow 1: Student Signs Up and Gets Guided**
+CLASS[Λ] is the Human Lab and a distinct visual/product namespace.
 
-```
-1. Student opens app → Sign In screen
-2. Taps "Sign Up" → Profile Setup screen
-3. Enters name, class, interests, destination → Transcript Upload screen
-4. Uploads transcript → (Optional) Referral Code screen
-5. Enters referral code (if applicable) → Dashboard
-6. Sees "Profile Analyzed" stage → Taps to see next steps
-7. Sees AI Guidance prompt → Taps "Get Guidance"
-8. Chats with AI about universities → AI recommends 3 options
-9. Student taps "Add to Shortlist" → Application Management
-10. Sees "My Applications" with shortlisted universities
-11. Uploads documents for first application → Mentor assigned
-12. Receives notification: "Mentor [name] sent you a message"
-```
+Current product hierarchy:
+
+- **Class 0 / Free Masterclass** — one-person AI team demonstration and entry point.
+- **20-Class One-Person Venture Builder** — 20 hands-on classes with 20 proof outputs.
+- Progression: **AI Driver → AI Builder → AI Creator → AI Operator → AI Founder.**
+- Final venture gates: **Select → Validate → Design → Automate → Launch.**
+
+Its visual system is cinematic, near-black, editorial and proof-led. The latest approved art direction adds smoked dimensional UI panes, original Brand Green #00C853 as the active energy signal, a perspective technical coordinate floor, and cinematic mechanical reconfiguration between scroll states. The page should feel like one AI operating system assembling and transforming, not a stack of generic SaaS cards. Do not automatically inherit Last Bench green/white service-page styling into CLASS[Λ]. Likewise, CLASS[Λ]'s dark 3D language must not overwrite the parent brand or Education & Mobility surfaces.
+
+The core product principle is **proof > attendance; output > certificate**.
 
 ---
 
-### **Flow 2: Tutor Refers a Student and Tracks Commission**
+## 6. co.lab design boundary
 
-```
-1. Tutor opens app → Tutor Sign Up screen
-2. Enters center name, expertise areas → Referral Link Setup
-3. Gets unique referral code → Tutor Dashboard
-4. Shares referral link with students (WhatsApp, in-person, etc.)
-5. Student signs up using referral code
-6. Tutor sees student in "Referred Students List"
-7. As student progresses, tutor sees status updates
-8. When student gets visa approval → Commission marked as "Earned"
-9. Tutor taps "Request Payout" → Payout processed via bKash/Nagad
-```
+co.lab is the Business Lab and a distinct visual/product namespace.
 
----
+Current positioning: **The Growth Operating System for Modern Brands.**
 
-### **Flow 3: Admin Updates Application Status**
+Current strategic sequence:
 
-```
-1. Admin opens app → Admin Dashboard
-2. Sees alert: "5 students waiting for update"
-3. Taps "View Details" → Student Management
-4. Searches for student by name
-5. Taps student → Application Status Updates
-6. Selects application → Selects new status (e.g., "Submitted to University")
-7. Adds note: "University received application on June 19"
-8. Taps "Update" → Student receives notification
-9. Student sees updated status on Dashboard
-```
+- **Collaboration** — clarify identity, positioning, narrative and alignment.
+- **Connection** — turn strategy into offers, systems, workflows and repeatable execution.
+- **Community** — turn customers, creators and audiences into belonging, advocacy and compounding distribution.
+
+co.lab can serve founders and businesses directly. Its venture-gate method may support CLASS[Λ] founder progression, but the standalone co.lab business must not be visually or strategically reduced to a course module.
 
 ---
 
-## Color Palette
+## 7. co.lab Community
 
-| Token | Light | Dark | Usage |
-|-------|-------|------|-------|
-| **Primary** | `#0a7ea4` (Teal) | `#0a7ea4` | Buttons, links, highlights, progress bars |
-| **Background** | `#ffffff` | `#151718` | Screen background |
-| **Surface** | `#f5f5f5` | `#1e2022` | Cards, elevated surfaces |
-| **Foreground** | `#11181C` | `#ECEDEE` | Primary text |
-| **Muted** | `#687076` | `#9BA1A6` | Secondary text, hints |
-| **Border** | `#E5E7EB` | `#334155` | Dividers, borders |
-| **Success** | `#22C55E` | `#4ADE80` | Checkmarks, success states |
-| **Warning** | `#F59E0B` | `#FBBF24` | Alerts, cautions |
-| **Error** | `#EF4444` | `#F87171` | Errors, rejections |
+Community is one of co.lab's four doors — Influencers, Ambassadors, Creators and Advisors — not a separate Last Bench architecture layer.
+
+The experience may connect students, learners, founders, businesses, alumni, tutors, creators, institutions and partners where the relationship is relevant and permissioned.
+
+Long-term platform ideas such as shared identity, opportunity routing, proof passports, referral systems or cross-engine context must be labeled as roadmap/proposed until verified in production.
 
 ---
 
-## Typography
+## 8. Journey OS
 
-| Element | Font Size | Font Weight | Line Height | Usage |
-|---------|-----------|-------------|-------------|-------|
-| **Heading 1** | 32px | Bold (700) | 1.2 | Screen titles |
-| **Heading 2** | 24px | Semibold (600) | 1.3 | Section titles |
-| **Heading 3** | 18px | Semibold (600) | 1.4 | Subsection titles |
-| **Body** | 16px | Regular (400) | 1.5 | Main text |
-| **Caption** | 14px | Regular (400) | 1.4 | Secondary text, hints |
-| **Small** | 12px | Regular (400) | 1.3 | Timestamps, labels |
+Journey OS is currently the operational product layer for the Education & Mobility service.
 
----
+Student, family, counselor and operations should converge on the same:
 
-## Interaction Patterns
+- current journey stage
+- next milestone
+- blocking requirements
+- accountable human/team owner
+- last verified update
+- evidence/documents attached to the milestone
+- quick action to resolve the next blocker
 
-| Pattern | Behavior | Feedback |
-|---------|----------|----------|
-| **Button Tap** | Primary action (submit, confirm, navigate). | Scale to 0.97, haptic feedback (light). |
-| **Card Tap** | Navigate to detail or expand. | Opacity 0.7, no haptic. |
-| **List Scroll** | Infinite scroll or pagination for large lists. | Loading indicator at bottom. |
-| **Pull-to-Refresh** | Refresh data (e.g., status updates). | Spinner, haptic feedback on completion. |
-| **Swipe** | Dismiss notifications or navigate between tabs. | Smooth animation, haptic on completion. |
-| **Long Press** | Context menu (copy, share, delete). | Haptic feedback, menu appears. |
+Avoid dashboard vanity metrics that do not help the user decide or act.
+
+Private student documents belong in the approved authenticated storage path. Never expose private URLs or student PII in public surfaces or logs.
 
 ---
 
-## Accessibility
+## 9. Dr. X + interactive founder profiles
 
-- All buttons and interactive elements have minimum 44x44pt touch target.
-- Color is never the only indicator of status (use icons + text).
-- All images have descriptive alt text.
-- Text contrast meets WCAG AA standards (4.5:1 for body text).
-- Support for system font scaling (up to 200%).
+**Dr. X is the single visible intelligence identity for Last Bench.** The previous public name **Bench AI is retired**. The legacy `landing/bench-ai.js` filename may remain only as a compatibility implementation detail and must not reappear as a user-facing assistant identity.
+
+### Public Dr. X role
+
+Within Last Bench, Dr. X may:
+
+- explain the Last Bench ecosystem and route people to Education & Mobility, CLASS[Λ], co.lab or the relevant partner path;
+- explain the six-stage Malaysia journey and help structure research questions;
+- help users compare profile, budget and intake constraints without fabricating volatile facts;
+- identify missing questions/documents and route authenticated users toward the Journey OS;
+- surface approved founder-profile information and provide an interactive profile experience;
+- escalate high-stakes or current-verification questions to the appropriate human owner.
+
+Dr. X must not invent current fees, visa probability, scholarship percentages, entry requirements, university partnership status, application status or any other high-trust fact.
+
+### Founder identity rule
+
+The founder profiles are **human-first real profiles**, not separate AI brands.
+
+Use the founders' full names:
+
+- **Sayem Ahmed** — Co-founder & CEO;
+- **Fahim Shahbaz Mahmud** — Co-founder & COO;
+- **Erfan Uddin** — Co-founder & Chief Business & Innovation Officer.
+
+Do not publish labels such as `Sayem AI`, `Fahim AI`, `Erfan AI`, `AI Twin` or `AI Clone` as the founder identity.
+
+Each interactive founder profile may carry the small sublabel **Powered by Dr. X**. On Erfan Uddin's profile, explicitly state **Also known as Dr. X**.
+
+### Founder source and trust rule
+
+Founder profile content must come from approved Last Bench identity assets, current canonical founder mandates and verified public/profile sources.
+
+- use approved real portraits; never generate or approximate a founder's face;
+- show an external LinkedIn/social/profile link only after its exact URL has been verified;
+- do not infer biography, achievements, companies, contact details or social accounts merely because a search result looks plausible;
+- generated interactive-profile replies are **not direct statements from the founder** unless an exact statement/source has been verified and attributed;
+- consequential requests must escalate to the human founder/team rather than fabricate personal authorization.
+
+### Privacy / scope boundary
+
+The public Last Bench Dr. X surface is a **project-scoped projection**, not access to Erfan's private Founder DR.X or global Second Brain.
+
+The browser must never receive unrestricted personal founder memory, unrelated venture context, credentials, internal strategy, private communications or cross-project data. Public founder interaction receives only the minimum approved Last Bench/public profile context required for the request.
 
 ---
 
-## Responsive Design
+## 10. University explorer
 
-The app is designed for **portrait orientation (9:16)** on mobile devices. Key breakpoints:
+The university explorer is a **research and orientation surface** unless a specific relationship is separately verified.
 
-| Device | Width | Adjustments |
-|--------|-------|-------------|
-| **Small Phone** | 320px | Reduced padding, single-column layout |
-| **Standard Phone** | 375-414px | Default design (primary target) |
-| **Large Phone** | 480px+ | Increased padding, optional 2-column for lists |
-| **Tablet** | 768px+ | 2-column layout, larger cards, split-view for detail |
+Each university card or detail should distinguish:
+
+- relatively stable descriptive data
+- programme discovery data
+- volatile data requiring verification
+- Last Bench relationship status, only when a verified partner record exists
+
+Never infer “partner university” from inclusion in the dataset.
 
 ---
 
-## Next Steps for Implementation
+## 11. Beyond arrival
 
-1. **Phase 1:** Build authentication, student onboarding, and dashboard.
-2. **Phase 2:** Implement AI guidance chat and application tracking.
-3. **Phase 3:** Add tutor/coach dashboard and referral system.
-4. **Phase 4:** Build admin panel and notification system.
-5. **Phase 5:** Implement community/skills section.
-6. **Phase 6:** Polish, testing, and delivery.
+For the Malaysia service, admission is only the beginning:
 
+**SETTLE → BELONG → PROGRESS → RETURN**
+
+- **Settle:** practical first steps and local orientation.
+- **Belong:** peer support, events and trusted community.
+- **Progress:** relevant capability pathways when active.
+- **Return:** stories, referrals, mentoring and opportunity.
+
+Progression into CLASS[Λ] or co.lab must be shown as an available/active pathway, not a guaranteed outcome of mobility.
+
+---
+
+## 12. Partner experience
+
+Tutors, coaching/IELTS centers, counsellors, institutions and education partners can support distribution and opportunity creation without redefining the parent brand.
+
+Partner tooling may include onboarding/verification, referral attribution, consent-bound student visibility, approved campaign material, commission status under a current signed model, and auditable payout workflow.
+
+Do not expose a fixed commission model publicly unless the current agreement and eligibility rules are verified and approved for publication.
+
+---
+
+## 13. Brand system — fixed
+
+### Canonical Last Bench colors
+
+| Token | Value | Use |
+|---|---|---|
+| Brand Green | `#00C853` | progress, primary CTA, brand signal |
+| Brand Green Dark/Bright | `#00E676` | active accents, focus, luminous progress |
+| Charcoal | `#111111` | structural dark |
+| Warm White | `#FAFAF8` | trust/light surfaces |
+| Sage Green | `#E6F2E9` | supporting light surface |
+| Gray | `#6B6F76` | secondary copy |
+| Soft Gray | `#A1A1AA` | tertiary copy |
+
+The historical teal palette (`#0a7ea4`) is **not** the current Last Bench brand palette and must not be reintroduced as a primary identity color.
+
+### Typography
+
+- Formal brand/app display: General Sans / approved cinematic display treatment.
+- Formal brand/app body: Sora.
+- Existing production marketing surfaces may retain their approved production typography until a deliberate redesign is accepted.
+- Bangla: use a legible approved Bangla fallback/treatment without changing Latin brand marks.
+
+### Logo
+
+Canonical logo files under `assets/branding/` are immutable assets. Never approximate, redraw, trace, recolor or generate a substitute bench/tick mark.
+
+### Visual law
+
+**Dark for emotion. White for trust. Green for progress.**
+
+Avoid generic education-agency stock photography, trust-badge clutter, WhatsApp-button spam, generic SaaS card grids, purple/blue startup gradients and charity/pity framing.
+
+---
+
+## 14. Accessibility and resilience
+
+- Minimum 44×44px interactive targets.
+- Visible keyboard focus.
+- Do not use color as the sole state indicator.
+- WCAG AA contrast for functional/body text.
+- Respect `prefers-reduced-motion`.
+- Core conversion and journey explanation must remain understandable if 3D/WebGL fails.
+- Avoid making a user wait for decorative assets before they can understand or act.
+- Preserve usable behavior on narrow Android viewports and variable connections.
+
+---
+
+## 15. Evidence-driven product rule
+
+The north star is not traffic, applications, attendance or campaign output alone.
+
+The product should measure **people reaching the next meaningful stage with verified evidence and accountable ownership**.
+
+For every new feature ask:
+
+1. Which lab/service/domain or governed system owns this?
+2. What opportunity does it accelerate?
+3. What is the next meaningful action?
+4. Who owns the outcome?
+5. What evidence proves it happened?
+6. Is this live now or future-blueprint complexity?
+
+If those answers are unclear, do not add the feature to a primary user journey yet.
+
+---
+
+## 16. Cross-surface cinematic experience law
+
+The Last Bench company should feel like one premium product family without turning the Human Lab, Business Lab or operating/service domains into visual clones.
+
+### Shared cinematic grammar
+
+Every major public experience may use cinematic depth, spatial transitions and 3D only when the motion helps the user understand a change in state, story or system.
+
+Shared rules:
+
+- **85% clarity / 15% spectacle.** The interaction must remain understandable without the cinematic layer.
+- **One idea per scene.** Do not stack multiple sales messages into one visual moment.
+- **Motion preserves context.** A scene should transform into the next state rather than disappear into unrelated animation.
+- **Depth has meaning.** Foreground = current action, mid-ground = system/context, background = possibility or continuity.
+- **No forced viewing.** Video, 3D and narrative sequences must have an immediate skip path and cannot block the primary CTA.
+- **Sound is opt-in.** Never autoplay audible media.
+- **Reduced-motion is a first-class mode.** Preserve hierarchy and state change without camera travel, parallax or large transforms.
+- **Performance tiers.** Heavy rendering may simplify on lower-powered/mobile devices without removing the core story or CTA.
+- **Exact brand assets only.** Cinematic treatment must never redraw, distort, recolor or approximate Last Bench, CLASS[Λ] or co.lab marks.
+
+### Last Bench parent world
+
+The corporate Last Bench experience represents **possibility, access and forward motion**.
+
+Preferred metaphors:
+
+- the bench as a starting point, not a limitation
+- multiple paths converging into credible opportunity
+- progress signals, thresholds, gates and evidence
+- human relationships carrying context forward
+
+The parent experience must not become a Malaysia travel site, a CLASS[Λ] course page or a co.lab agency portfolio.
+
+### Education & Mobility world
+
+The current Malaysia service may own the literal journey language:
+
+- distance
+- departure
+- cities
+- flight
+- arrival
+- settlement
+- continuity after landing
+
+The Malaysia cinematic environment belongs to Education & Mobility. Do not copy airports, planes, Kuala Lumpur skylines or the same travel camera path into CLASS[Λ] or co.lab.
+
+### CLASS[Λ] world
+
+CLASS[Λ] represents **intelligence becoming proof**.
+
+Visual law:
+
+- near-black / graphite / metallic silver
+- exact CLASS[Λ] lockup
+- the metallic **20** and orbital system as a recurring capability object
+- Last Bench green only as restrained progress / energy / CTA signal
+- editorial typography, large negative space, controlled technical detail
+- no generic robot, chatbot, neon-AI or course-platform aesthetic
+
+Masterclass entry choreography:
+
+1. **Scene 01 — Reel:** the approved cinematic reel begins at black with 0.01%, offers **ENTER EXPERIENCE** and immediate **SKIP**, and enables sound only after user interaction.
+2. The reel plays as the opening scene, not as a detached splash screen.
+3. Around **26.88 seconds**, the approved reel is cut on the final CLASS[Λ] lockup, before the Last Bench end card; the exact CLASS[Λ] mark holds briefly, then the website transforms into the interactive metallic 20 / orbital system.
+4. The narrative then progresses through **Command → Research → Build → Create → Sell → Operate**.
+5. Core transformation copy: **TURN AI INTO YOUR TEAM.**
+6. Outcome framing: **Build and run a one-person business with AI.**
+7. The registration CTA remains available before the film ends.
+
+### co.lab world
+
+co.lab represents **growth architecture becoming a living system**.
+
+Canonical sequence:
+
+**Collaboration → Connection → Community**
+
+Preferred spatial metaphors:
+
+- blueprint layers aligning into one system
+- independent nodes connecting into a network
+- strategy becoming repeatable operating rails
+- community signals compounding outward
+- growth loops, not funnels that reset
+
+co.lab’s own visual authority is monochrome / soft gray with **Electric Blue #2D7CFF at no more than roughly 5% usage**, primarily for action, active state and system energy. The experience may use depth, particles, orbit/network geometry, an interactive globe and camera transitions, but it must not drift into purple/cyan cyberpunk, generic AI neon or CLASS[Λ] metallic-course styling.
+
+### Premium interaction standard
+
+Use Apple-level product discipline as a quality benchmark, not as a visual imitation:
+
+- immediate comprehension before decoration
+- decisive hierarchy and generous optical spacing
+- one obvious primary action per state
+- restrained copy with high information value
+- animation that feels physically continuous and interruptible
+- crisp typography and consistent role scales
+- minimum 44×44px touch targets
+- visible keyboard focus and logical navigation
+- fast perceived loading; never make users wait for nonessential 3D
+- no layout jump when media or fonts arrive
+- graceful failure when WebGL, media playback or network quality is limited
+- every transition should answer: **what changed, why, and what can I do next?**
+
+The standard is not “more animation.” The standard is **less confusion, stronger emotion, and more precise control**.

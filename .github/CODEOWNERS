@@ -1,0 +1,26 @@
+# Default owner
+* @lets-colab
+
+# High-trust backend and data surfaces
+/server/ @lets-colab
+/drizzle/ @lets-colab
+/tests/ @lets-colab
+/.github/workflows/ @lets-colab
+/render.yaml @lets-colab
+/.env.example @lets-colab
+
+# Brand and public conversion surfaces
+/landing/ @lets-colab
+/assets/branding/ @lets-colab
+/design-system/ @lets-colab
+
+# Last Bench brand identity lock
+/skills/last-bench-brand-source-lock/ @lets-colab
+/.claude/skills/last-bench-brand-source-lock/ @lets-colab
+/.agents/skills/last-bench-brand-source-lock/ @lets-colab
+/design-system/brand-lock.json @lets-colab
+/scripts/validate-brand-lock.mjs @lets-colab
+/.github/workflows/brand-lock.yml @lets-colab
+
+# Canonical brand registry and blueprints
+/brand/ @lets-colab
