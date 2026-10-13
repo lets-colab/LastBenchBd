@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { readFileSync } from "node:fs";
+import { Buffer } from "node:buffer";
 const html=readFileSync(new URL("../landing/showcase/skin-needs/index.html",import.meta.url),"utf8");
 const between=(from,to)=>{const a=html.indexOf(from),b=html.indexOf(to,a+from.length);assert.ok(a>=0&&b>a,"Expected boundary absent");return html.slice(a+from.length,b)};
 const db=JSON.parse(between("const DB=",";\nconst $="));
