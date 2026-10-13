@@ -36,7 +36,9 @@ describe("CLASS[Λ] branded transactional email contract", () => {
   it("does not turn registration or payment into an admission decision", () => {
     expect(confirmation).toContain("Not confirmed by this email");
     expect(confirmation).toContain("Application reference:");
-    expect(receipt).toContain("Final admission is verified separately");
+    expect(receipt).toContain("Payment verification is separate from final seat acceptance.");
+    expect(receipt).toContain("Final seat acceptance is separate.");
+    expect(receipt).toContain("Verification is not bank reconciliation or seat acceptance.");
     expect(receipt).not.toContain("YOUR SEAT IS SECURED");
     expect(receipt).not.toContain("10 October 2026");
     expect(receipt).not.toContain('["Payment method","bKash"]');
