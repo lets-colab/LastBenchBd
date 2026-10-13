@@ -1,0 +1,7 @@
+# Deploy previews use the same public client configuration as the canonical
+# GitHub Pages build. Build command, publish directory, and production settings
+# remain owned by their existing deployment configuration.
+[context.deploy-preview.environment]
+  EXPO_PUBLIC_API_BASE_URL = "https://api.lastbenchbd.com"
+  EXPO_PUBLIC_SUPABASE_URL = "https://tocxdyqlrvzthpexnmxe.supabase.co"
+  EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_"
