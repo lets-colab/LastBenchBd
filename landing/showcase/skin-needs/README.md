@@ -32,6 +32,6 @@ Any claim that Steve Jobs personally verified the site would be false; a Steve J
 
 ## Smoke and regression test
 
-`node --test scripts/skin-needs-preview.test.mjs` in this repo checks the hosting artifact's nontransactional, identity, 3D fallback and catalog invariants. Co.lab maintains the canonical source/test under `projectx/clients/skin-needs/`.
+`node --test scripts/skin-needs-preview.check.mjs` in this repo checks the hosting artifact's nontransactional, identity, 3D fallback and catalog invariants. Co.lab maintains the canonical source/test under `projectx/clients/skin-needs/`.
 
 **This is a draft PR, not a production approved release.**
