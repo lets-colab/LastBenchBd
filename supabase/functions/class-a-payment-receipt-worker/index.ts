@@ -63,43 +63,57 @@ async function receiptPdf(input:{
   const page=pdf.addPage([595.28,841.89]);
   const bold=await pdf.embedFont(StandardFonts.HelveticaBold);
   const regular=await pdf.embedFont(StandardFonts.Helvetica);
-  const green=rgb(0,0.65,0.27);
-  const dark=rgb(0.05,0.07,0.06);
-  page.drawRectangle({x:0,y:829,width:595.28,height:12,color:green});
+  const green=rgb(0,0.77,0.32);
+  const dark=rgb(0.035,0.085,0.065);
+  const white=rgb(1,1,1);
+  const muted=rgb(.42,.48,.45);
+  const W=595.28;
+  // Approved green/black/white design language. Parliament photo is intentionally
+  // not fabricated: provide a verified, rights-cleared background asset separately.
+  page.drawRectangle({x:0,y:0,width:W,height:841.89,color:rgb(.97,.98,.97)});
+  page.drawRectangle({x:0,y:580,width:W,height:261.89,color:dark});
+  page.drawRectangle({x:0,y:828,width:W,height:13.89,color:green});
   const logoResponse=await fetch(BRAND_LOGO);
   if(!logoResponse.ok) throw new Error("canonical_brand_logo_unavailable");
   const logo=await pdf.embedPng(new Uint8Array(await logoResponse.arrayBuffer()));
-  const fit=logo.scaleToFit(170,66);
-  page.drawImage(logo,{x:44,y:771,width:fit.width,height:fit.height});
-  page.drawText("OFFICIAL PAYMENT RECEIPT",{x:44,y:719,size:23,font:bold,color:dark});
-  page.drawText("CLASS VENTURE BUILDER - PAYMENT RECORD",{x:44,y:697,size:10,font:regular,color:rgb(.35,.38,.36)});
+  const fit=logo.scaleToFit(200,72);
+  // Use exact production logo; no substitute wordmark or AI-drawn logo.
+  page.drawRectangle({x:34,y:738,width:fit.width+24,height:fit.height+18,color:white});
+  page.drawImage(logo,{x:46,y:747,width:fit.width,height:fit.height});
+  page.drawText("CLASS  /  HUMAN LAB",{x:46,y:697,size:11,font:bold,color:green});
+  page.drawText("OFFICIAL PAYMENT RECEIPT",{x:46,y:656,size:24,font:bold,color:white});
+  page.drawText("LAST BENCH  |  CREATING A LASTING BENCHMARK",{x:46,y:631,size:9,font:regular,color:rgb(.82,.91,.84)});
+  page.drawRectangle({x:36,y:342,width:523,height:221,color:white});
   const rows=[
-    ["Receipt",input.receiptNumber],
-    ["Learner",input.learner],
-    ["Registration ID",String(input.registrationId)],
-    ["Amount","BDT "+input.amount],
-    ["Payment method",input.paymentMethod],
-    ["Transaction ID",input.transactionId],
-    ["Verified at",input.verifiedAt],
-    ["Verified by",input.verifiedBy],
-    ["Status","VERIFIED BY LAST BENCH"]
+    ["RECEIPT NUMBER",input.receiptNumber],
+    ["LEARNER",input.learner],
+    ["REGISTRATION ID",String(input.registrationId)],
+    ["PAYMENT METHOD",input.paymentMethod],
+    ["TRANSACTION REFERENCE",input.transactionId],
+    ["VERIFIED AT (UTC)",input.verifiedAt],
+    ["VERIFICATION BASIS",input.verifiedBy]
   ];
-  let y=648;
+  let y=535;
   for(const [k,v] of rows){
-    page.drawText(k.toUpperCase(),{x:44,y,size:9,font:bold,color:rgb(.35,.38,.36)});
+    page.drawText(k,{x:54,y,size:8,font:bold,color:muted});
     let value=String(v??"");
-    let size=11;
-    while(size>8 && regular.widthOfTextAtSize(value,size)>355) size-=0.5;
-    while(value.length>4 && regular.widthOfTextAtSize(value,size)>355) value=value.slice(0,-2)+"…";
-    page.drawText(value,{x:190,y,size,font:regular,color:dark});
-    page.drawLine({start:{x:44,y:y-10},end:{x:551,y:y-10},thickness:.5,color:rgb(.85,.88,.86)});
-    y-=45;
+    let size=10;
+    while(size>7 && regular.widthOfTextAtSize(value,size)>300) size-=.5;
+    if(regular.widthOfTextAtSize(value,size)>300) throw new Error("receipt_field_too_long:"+k);
+    page.drawText(value,{x:240,y,size,font:regular,color:dark});
+    page.drawLine({start:{x:54,y:y-9},end:{x:539,y:y-9},thickness:.4,color:rgb(.86,.89,.86)});
+    y-=29;
   }
-  page.drawRectangle({x:44,y:160,width:507,height:78,color:rgb(.94,.98,.95)});
-  page.drawText("PAYMENT VERIFIED",{x:62,y:204,size:12,font:bold,color:green});
-  page.drawText("Payment verified in Last Bench records against available evidence.",{x:62,y:183,size:9,font:regular,color:dark});
-  page.drawText("Final admission is verified separately; contact Last Bench for corrections.",{x:62,y:166,size:9,font:regular,color:rgb(.35,.38,.36)});
-  page.drawText("LAST BENCH  |  info@lastbenchbd.com",{x:44,y:91,size:10,font:bold,color:dark});
+  page.drawRectangle({x:36,y:221,width:523,height:102,color:dark});
+  page.drawText("TOTAL RECEIVED",{x:54,y:289,size:10,font:bold,color:rgb(.80,.91,.84)});
+  page.drawText("BDT "+input.amount,{x:54,y:248,size:28,font:bold,color:white});
+  page.drawText("PAYMENT VERIFIED",{x:364,y:267,size:11,font:bold,color:green});
+  page.drawText("Verified in Last Bench records",{x:364,y:248,size:8,font:regular,color:white});
+  page.drawText("Verification is not bank reconciliation or seat acceptance.",{x:46,y:179,size:10,font:regular,color:dark});
+  page.drawText("This receipt documents the recorded payment and verification basis.",{x:46,y:162,size:9,font:regular,color:muted});
+  page.drawLine({start:{x:46,y:126},end:{x:549,y:126},thickness:.7,color:green});
+  page.drawText("LAST BENCH  |  info@lastbenchbd.com  |  lastbenchbd.com",{x:46,y:104,size:9,font:bold,color:dark});
+  page.drawText("Generated from verified payment fields. No signature or seal implied.",{x:46,y:87,size:8,font:regular,color:muted});
   return new Uint8Array(await pdf.save());
 }
 
@@ -131,7 +145,8 @@ async function sendReceipt(row:any, reg:any){
   });
   const body=await r.json().catch(()=>({}));
   if(!r.ok) throw new Error(`email_failed:${body.message||r.status}`);
-  return String(body.id||"resend");
+  if(!body.id) throw new Error("provider_receipt_id_missing_delivery_uncertain");
+  return String(body.id);
 }
 
 Deno.serve(async(req)=>{
@@ -165,18 +180,20 @@ Deno.serve(async(req)=>{
       if(!reg||reg.record_kind!=="genuine"||reg.program!=="course") throw new Error("ineligible_course_registration");
       const ref=await sendReceipt(row,reg);
       const now=new Date().toISOString();
-      await c.from("class_a_payments").update({
+      const {data:recorded,error:recordError}=await c.from("class_a_payments").update({
         receipt_status:"sent",receipt_sent_at:now,receipt_external_ref:ref,receipt_last_error:null,updated_at:now
-      }).eq("id",row.id);
+      }).eq("id",row.id).eq("receipt_status","processing").select("id").maybeSingle();
+      if(recordError||!recorded) throw new Error("delivery_uncertain_provider_accepted:"+ref);
       await c.from("class_a_payment_events").insert({
         payment_id:row.id,event_type:"receipt_sent",actor_ref:"class-a-payment-receipt-worker",
         evidence:{external_ref:ref,channel:"email"}
       });
       out.sent++;
     }catch(err){
+      const uncertain=String(err).includes("delivery_uncertain");
       await c.from("class_a_payments").update({
-        receipt_status:"failed",receipt_last_error:String(err).slice(0,500),updated_at:new Date().toISOString()
-      }).eq("id",row.id);
+        receipt_status:uncertain?"processing":"failed",receipt_last_error:String(err).slice(0,500),updated_at:new Date().toISOString()
+      }).eq("id",row.id).eq("receipt_status","processing");
       await c.from("class_a_payment_events").insert({
         payment_id:row.id,event_type:"receipt_failed",actor_ref:"class-a-payment-receipt-worker",
         evidence:{error:String(err).slice(0,500)}
