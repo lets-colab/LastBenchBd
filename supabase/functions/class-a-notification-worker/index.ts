@@ -3,9 +3,9 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 type Row = Record<string, any>;
 const SITE = "https://lastbenchbd.com/class-a";
-const CHANNEL_ID = Deno.env.get("CLASS_A_SLACK_CHANNEL_ID") || "C0BRY6AR0DC";
+// Default to the verified Last Bench owner, never a public team channel.
+const CHANNEL_ID = Deno.env.get("CLASS_A_SLACK_CHANNEL_ID") || "U0BRY5WMLLW";
 const SLACK_BOT_TOKEN = Deno.env.get("SLACK_BOT_TOKEN") || "";
-const SLACK_WEBHOOK_URL = Deno.env.get("SLACK_WEBHOOK_URL") || "";
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") || "";
 const EMAIL_FROM = Deno.env.get("CLASS_A_EMAIL_FROM") || "CLASS[Λ] <info@lastbenchbd.com>";
 
@@ -33,27 +33,24 @@ function bdTime(value?: string | null) {
   }
 }
 
+function escapeHtml(input:unknown){return String(input??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]||c));}
+function safeLink(raw:string){try{const url=new URL(raw);return url.protocol==="https:"?url.toString():"";}catch{return "";}}
+const OFFICIAL_LOGO="https://lastbenchbd.com/assets/logo-full.png";
+function brandedEmail(body:string){return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:#F2F3F1;color:#111111;font-family:Arial,Helvetica,sans-serif"><table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#F2F3F1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;background:#FAFAF8;border-collapse:collapse;border:1px solid #DBE4DD"><tr><td style="height:6px;background:#00C853"></td></tr><tr><td style="padding:28px 28px 0"><img alt="Last Bench — Creating a Lasting Benchmark" src="${OFFICIAL_LOGO}" width="170" style="display:block;width:170px;max-width:70%;height:auto;border:0"></td></tr><tr><td style="padding:24px 28px;font-size:15px;line-height:1.65"><p style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:#44624C">CLASS[Λ] · HUMAN LAB</p>${body}</td></tr><tr><td style="padding:16px 28px 28px;border-top:1px solid #CBD7CF;color:#55635B;font-size:12px">CLASS[Λ] · Last Bench · <a href="mailto:info@lastbenchbd.com">info@lastbenchbd.com</a></td></tr></table></td></tr></table></body></html>`;}
+
+// Slack public channels start with C. Send only to direct messages or private channels.
+// Incoming webhooks have opaque destinations and cannot satisfy this proof gate.
+function privateSlackReady(){return Boolean(SLACK_BOT_TOKEN && /^[UDG][A-Z0-9]+$/.test(CHANNEL_ID));}
 async function sendSlack(message:string) {
-  if (SLACK_BOT_TOKEN) {
-    const res=await fetch("https://slack.com/api/chat.postMessage",{
-      method:"POST",
-      headers:{Authorization:`Bearer ${SLACK_BOT_TOKEN}`,"Content-Type":"application/json"},
-      body:JSON.stringify({channel:CHANNEL_ID,text:message,unfurl_links:false,unfurl_media:false})
-    });
-    const body=await res.json().catch(()=>({}));
-    if(!res.ok||!body.ok) throw new Error(`slack_bot_failed:${body.error||res.status}`);
-    return String(body.ts||"slack");
-  }
-  if (SLACK_WEBHOOK_URL) {
-    const res=await fetch(SLACK_WEBHOOK_URL,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({text:message})
-    });
-    if(!res.ok) throw new Error(`slack_webhook_failed:${res.status}`);
-    return "webhook";
-  }
-  throw new Error("missing_slack_transport");
+  if(!privateSlackReady()) throw new Error("private_slack_destination_not_authorized");
+  const res=await fetch("https://slack.com/api/chat.postMessage",{
+    method:"POST",
+    headers:{Authorization:`Bearer ${SLACK_BOT_TOKEN}`,"Content-Type":"application/json"},
+    body:JSON.stringify({channel:CHANNEL_ID,text:message,unfurl_links:false,unfurl_media:false})
+  });
+  const body=await res.json().catch(()=>({}));
+  if(!res.ok||!body.ok) throw new Error(`slack_bot_failed:${body.error||res.status}`);
+  return String(body.ts||"slack");
 }
 
 function calendarUrl(session:Row) {
@@ -71,14 +68,16 @@ function calendarUrl(session:Row) {
 }
 
 function button(label:string,href?:string|null) {
-  if(!href) return "";
-  return `<p><a href="${href}" style="display:inline-block;padding:13px 20px;border-radius:999px;background:#00C853;color:#001b0b;text-decoration:none;font-weight:800">${label}</a></p>`;
+  const safe=href?safeLink(href):"";
+  if(!safe) return "";
+  return `<p><a href="${safe}" style="display:inline-block;padding:13px 20px;border-radius:999px;background:#00C853;color:#001b0b;text-decoration:none;font-weight:800">${label}</a></p>`;
 }
 
 function emailCopy(kind:string,name:string,session:Row) {
-  const when=session?.starts_at?bdTime(session.starts_at)+" Bangladesh time":"Schedule pending";
+  name=escapeHtml(name);
+  const when=session?.starts_at?escapeHtml(bdTime(session.starts_at))+" Bangladesh time":"Schedule pending";
   const join=session?.join_url||SITE+"/pass.html";
-  const common=`<p><strong>Session:</strong> ${session?.title||"CLASS[Λ] Masterclass"}<br><strong>Time:</strong> ${when}</p>`;
+  const common=`<p><strong>Session:</strong> ${escapeHtml(session?.title||"CLASS[Λ] Masterclass")}<br><strong>Time:</strong> ${when}</p>`;
   const packUrl=String(session?.analysis_summary?.after_class_pack_url||"");
   const recordingUrl=String(session?.recording_url||"");
   const transcriptUrl=String(session?.transcript_url||"");
@@ -108,7 +107,9 @@ function emailCopy(kind:string,name:string,session:Row) {
       html:`<p>Hi ${name},</p><p>Thank you for completing the CLASS[Λ] live session.</p><p>Your approved after-class materials are below.</p>${button("OPEN AFTER-CLASS PACK",packUrl)}${button("WATCH CLASS RECORDING",recordingUrl)}${button("OPEN NOTES / TRANSCRIPT",transcriptUrl)}${button("EXPLORE THE 20-CLASS PROGRAM",SITE+"/course.html")}<p>Participant-specific personal or company materials remain private unless explicitly approved for sharing.</p>`
     }
   };
-  return map[kind]||map.registration_confirmation;
+  const copy=map[kind];
+  if(!copy) throw new Error(`unsupported_notification_type:${kind}`);
+  return {...copy,html:brandedEmail(copy.html)};
 }
 
 function courseRegistrationCopy(name:string) {
@@ -142,7 +143,6 @@ Deno.serve(async (req:Request)=>{
   const db=adminClient();
   const report:any={
     slack:{sent:0,blocked:0,failed:0},
-    courseEmail:{sent:0,blocked:0,failed:0,skipped:0},
     email:{sent:0,blocked:0,failed:0,skipped:0,deferred:0},
     attendance:{sent:0,blocked:0,failed:0}
   };
@@ -168,12 +168,12 @@ Deno.serve(async (req:Request)=>{
         .eq("id",event.id);
       continue;
     }
-    if(!SLACK_BOT_TOKEN&&!SLACK_WEBHOOK_URL){
+    if(!privateSlackReady()){
       report.slack.blocked++;
       continue;
     }
     try{
-      const ref=await sendSlack(`*CLASS[Λ] signup confirmed*\n${reg.full_name} · ${event.program||reg.program||"masterclass"} · ${event.skill_level||"Skill level not supplied"}\nRegistration ID: \`${reg.id}\`\nRegistered: ${bdTime(event.registration_created_at)} (Bangladesh time)\nStatus: *CONFIRMED*`);
+      const ref=await sendSlack(`*CLASS[Λ] application recorded*\nRegistration ID: \`${reg.id}\`\nProgram: ${event.program||reg.program||"masterclass"}\nRegistered: ${bdTime(event.registration_created_at)} (Bangladesh time)\nStatus: *APPLICATION RECEIVED — admission/payment separately verified*`);
       await db.from("class_a_signup_events")
         .update({status:"sent",processed_at:new Date().toISOString(),slack_notified_at:new Date().toISOString(),last_error:null,resolution_note:`slack:${ref}`})
         .eq("id",event.id);
@@ -186,49 +186,8 @@ Deno.serve(async (req:Request)=>{
     }
   }
 
-  const {data:courseEmailRows,error:courseEmailError}=await db
-    .from("class_a_signup_events")
-    .select("id,registration_id,email_status,email_attempts")
-    .in("email_status",["pending","failed"])
-    .lt("email_attempts",5)
-    .order("id",{ascending:true})
-    .limit(25);
-  if(courseEmailError) throw courseEmailError;
-
-  for(const event of courseEmailRows||[]) {
-    const {data:reg}=await db
-      .from("class_a_registrations")
-      .select("full_name,email,record_kind,program")
-      .eq("id",event.registration_id)
-      .maybeSingle();
-
-    if(!reg||reg.record_kind!=="genuine"||reg.program!=="course"||!reg.email){
-      await db.from("class_a_signup_events")
-        .update({email_status:"not_applicable",email_last_error:"not_genuine_course_or_missing_email"})
-        .eq("id",event.id);
-      report.courseEmail.skipped++;
-      continue;
-    }
-    if(!RESEND_API_KEY){
-      report.courseEmail.blocked++;
-      continue;
-    }
-
-    await db.from("class_a_signup_events").update({email_status:"processing"}).eq("id",event.id);
-    try{
-      const copy=courseRegistrationCopy(reg.full_name);
-      const ref=await sendEmail(reg.email,copy.subject,copy.html);
-      await db.from("class_a_signup_events")
-        .update({email_status:"sent",email_sent_at:new Date().toISOString(),email_external_ref:ref,email_last_error:null})
-        .eq("id",event.id);
-      report.courseEmail.sent++;
-    }catch(err){
-      await db.from("class_a_signup_events")
-        .update({email_status:"failed",email_attempts:(Number(event.email_attempts)||0)+1,email_last_error:String(err)})
-        .eq("id",event.id);
-      report.courseEmail.failed++;
-    }
-  }
+  // Course confirmation is sent exclusively by class-a-course-confirmation-worker.
+  // Never run two sender loops against the same signup-event outbox.
 
   const {data:attended}=await db
     .from("class_a_session_enrollments")
@@ -239,7 +198,7 @@ Deno.serve(async (req:Request)=>{
     .limit(25);
 
   for(const row of attended||[]) {
-    if(!SLACK_BOT_TOKEN&&!SLACK_WEBHOOK_URL){
+    if(!privateSlackReady()){
       report.attendance.blocked++;
       continue;
     }
@@ -249,7 +208,7 @@ Deno.serve(async (req:Request)=>{
       .maybeSingle();
     if(!reg||reg.record_kind!=="genuine") continue;
     try{
-      await sendSlack(`*CLASS[Λ] attendance verified*\n${reg.full_name}\nRegistration ID: \`${row.registration_id}\`\nAttended: ${bdTime(row.attended_at)} (Bangladesh time)\nStatus: *ATTENDED*`);
+      await sendSlack(`*CLASS[Λ] attendance verified*\nRegistration ID: \`${row.registration_id}\`\nAttended: ${bdTime(row.attended_at)} (Bangladesh time)\nStatus: *ATTENDED (recorded evidence)*`);
       await db.from("class_a_session_enrollments")
         .update({attendance_slack_notified_at:new Date().toISOString(),attendance_slack_last_error:null})
         .eq("id",row.id);
@@ -273,12 +232,13 @@ Deno.serve(async (req:Request)=>{
   if(dueError) throw dueError;
 
   for(const item of due||[]) {
-    if(!RESEND_API_KEY){
-      report.email.blocked++;
-      continue;
-    }
-
-    await db.from("class_a_session_notifications").update({status:"processing"}).eq("id",item.id);
+    // Claim only once, otherwise concurrent cron/trigger workers can send twice.
+    const {data:claimed,error:claimError}=await db.from("class_a_session_notifications")
+      .update({status:"processing"}).eq("id",item.id)
+      .eq("status",item.status).eq("attempts",item.attempts)
+      .select("id").maybeSingle();
+    if(claimError) throw claimError;
+    if(!claimed){report.email.skipped++;continue;}
 
     const [{data:reg},{data:session},{data:enrollment}]=await Promise.all([
       db.from("class_a_registrations")
@@ -286,7 +246,7 @@ Deno.serve(async (req:Request)=>{
         .eq("id",item.registration_id)
         .maybeSingle(),
       db.from("class_a_sessions")
-        .select("title,starts_at,ends_at,timezone,join_url,recording_url,transcript_url,analysis_status,analysis_summary")
+        .select("title,status,starts_at,ends_at,timezone,join_url,recording_url,transcript_url,analysis_status,analysis_summary")
         .eq("id",item.session_id)
         .maybeSingle(),
       db.from("class_a_session_enrollments")
@@ -294,6 +254,28 @@ Deno.serve(async (req:Request)=>{
         .eq("id",item.enrollment_id)
         .maybeSingle()
     ]);
+
+    // Never deliver outdated schedule notices after a session has started/closed.
+    // This applies even when the mail provider is unconfigured.
+    const isPresession=["registration_confirmation","calendar_invite","reminder_24h","reminder_6h","room_open"].includes(item.notification_type);
+    const startTime=session?.starts_at?new Date(session.starts_at).getTime():NaN;
+    const isClosed=(!session || ["completed","cancelled","canceled"].includes(String(session.status||"").toLowerCase()));
+    const minutesUntilStart=(startTime-Date.now())/60000;
+    const misleadingTiming=(
+      (item.notification_type==="reminder_24h" && (minutesUntilStart<20*60 || minutesUntilStart>30*60)) ||
+      (item.notification_type==="reminder_6h" && (minutesUntilStart<4*60 || minutesUntilStart>8*60)) ||
+      (item.notification_type==="room_open" && (minutesUntilStart<0 || minutesUntilStart>30))
+    );
+    if(isPresession && (isClosed || !Number.isFinite(startTime) || startTime<=Date.now() || misleadingTiming)){
+      await db.from("class_a_session_notifications").update({status:"skipped",last_error:"expired_or_closed_session"}).eq("id",item.id);
+      report.email.skipped++;
+      continue;
+    }
+    if(!RESEND_API_KEY){
+      await db.from("class_a_session_notifications").update({status:item.status,last_error:"missing_email_transport"}).eq("id",item.id);
+      report.email.blocked++;
+      continue;
+    }
 
     if(!reg||reg.record_kind!=="genuine"||!reg.email){
       await db.from("class_a_session_notifications")

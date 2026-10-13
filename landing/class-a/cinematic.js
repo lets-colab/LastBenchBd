@@ -285,6 +285,14 @@
     }
   };
 
+  const showFailure = (title, message) => {
+    const heading = errorBox?.querySelector('[data-error-title]');
+    const detail = errorBox?.querySelector('[data-error-message]');
+    if (heading) heading.textContent = title;
+    if (detail) detail.textContent = message;
+    setStatus(errorBox);
+  };
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
@@ -319,12 +327,24 @@
         body: JSON.stringify(payload),
       });
 
+      if (response.status === 409) {
+        // Supabase enforces one course registration per email and phone.
+        // Do not read or disclose existing records from the public client.
+        showFailure(
+          'APPLICATION MAY ALREADY EXIST.',
+          'An application may already exist for this email or phone. Do not register again. Contact info@lastbenchbd.com to check your application status.'
+        );
+        return;
+      }
       if (!response.ok) throw new Error(`Registration failed with ${response.status}`);
       form.reset();
       setStatus(success);
     } catch (error) {
       console.error('CLASS A registration failed', error);
-      setStatus(errorBox);
+      showFailure(
+        'APPLICATION NOT CONFIRMED.',
+        'We could not save your application right now. Please try again later or contact info@lastbenchbd.com.'
+      );
     } finally {
       if (submit) {
         submit.disabled = false;
