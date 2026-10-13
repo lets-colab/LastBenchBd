@@ -1,0 +1,20 @@
+name: Skin Needs isolated preview QA
+on:
+  pull_request:
+    paths:
+      - 'landing/showcase/skin-needs/**'
+      - 'scripts/skin-needs-preview.check.mjs'
+      - '.github/workflows/skin-needs-preview-qa.yml'
+permissions:
+  contents: read
+jobs:
+  nontransactional-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify logo, SKU protections, motion and accessibility safeguards
+        run: node --test scripts/skin-needs-preview.check.mjs
