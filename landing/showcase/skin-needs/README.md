@@ -4,7 +4,7 @@
 
 ## Hosting and publication
 
-- **Domain owner/host:** existing Last Bench deployment, target URL `https://lastbenchbd.com/showcase/skin-needs/`. Not yet released on that production route.
+- **GitHub Pages LIVE — independent concept only:** https://lastbenchbd.com/showcase/skin-needs/ (verified 13 Oct 2026; LastBench PR #130 squash merged at `41f8166565e0984e8eec38333321d31b37d12f0d`; GitHub Pages build/deploy and production smoke successful).
 - **Verified review preview:** https://deploy-preview-130--lastbenchbdd.netlify.app/showcase/skin-needs/
 - **Git identity proof:** both Co.lab canonical source and this mirror have the identical content Git blob SHA `fd37a233df4394c41d69a2e78b1791688989db9e`.
 - **Release method:** change canonical Co.lab file first; perform reviewed copy into this mirror; compare actual Git blob hashes; only then deploy. Automated cross-repository sync is **not configured**.
@@ -19,12 +19,12 @@
 - **Graphics:** three scroll-controlled WebGL motion chapters, CSS fallback, reduced motion; representative physical hardware WebGL still needs inspection.
 - **Privacy:** noindex/nofollow and no customer capture. Respect merchant branding rights and consent.
 
-## Required gates before main-domain production release
+## Required gates before any *official merchant / transactional* launch
 
 1. Merchant provides written approval for use of identity, scope, clean logo and colors.
 2. Independently verify motion on actual low-power mobile, desktop, keyboard/screen reader and reduced-motion environments.
 3. Use an actual owner-approved SKU, prices and stock ledger before transactional commerce.
-4. Resolve all relevant failed builds with actual evidence and verify main-domain route plus existing Last Bench functionality.
+4. GitHub Pages route and existing Last Bench homepage, student app, CLASS have been smoke-tested; Cloudflare Workers builds fail independently and still require log-backed diagnosis before declaring broader infrastructure green.
 5. Compare canonical Co.lab source and mirrored Last Bench artifact SHA **at release time**.
 6. Run JeX/JEVGate checks, record actual evidence, and obtain founder approval for publication.
 
@@ -34,4 +34,4 @@ Any claim that Steve Jobs personally verified the site would be false; a Steve J
 
 `node --test scripts/skin-needs-preview.check.mjs` in this repo checks the hosting artifact's nontransactional, identity, 3D fallback and catalog invariants. Co.lab maintains the canonical source/test under `projectx/clients/skin-needs/`.
 
-**This is a draft PR, not a production approved release.**
+**GitHub Pages non-transactional concept is live; this is NOT an authorized official merchant store or production commerce release.**
