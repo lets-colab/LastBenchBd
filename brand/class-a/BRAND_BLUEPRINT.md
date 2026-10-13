@@ -33,10 +33,15 @@ Use:
 - near-black cinematic canvas;
 - editorial white/off-white typography;
 - neutral graphite/silver materials;
+- **smoked translucent glass UI planes with neon-green edge light**;
+- original brand green `#00C853` as the primary energy color and `#00E676` only as a bright edge/highlight state;
 - strong negative space;
 - technical/grid texture kept extremely subtle;
 - controlled depth, perspective and orbital geometry;
+- restrained glass reflections, blur and green luminous depth;
 - a premium technical/editorial feel.
+
+The current locked material direction is **neon glassy green 3D**: dimensional smoked glass, precise green light, metallic/silver capability objects and black space. It must not become a generic cyberpunk/neon gaming interface.
 
 Do **not** automatically apply Last Bench green/white marketing styling to CLASS[Λ].
 

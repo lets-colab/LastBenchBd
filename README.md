@@ -4,13 +4,13 @@
 
 <h1 align="center">Last Bench</h1>
 
-<p align="center"><strong>Opportunity Accelerator</strong></p>
+<p align="center"><strong>The Company · Two Labs · One Intelligence Loop</strong></p>
 
-<p align="center"><strong>Education · Capability · Business · Community</strong></p>
+<p align="center"><strong>CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X</strong></p>
 
 <p align="center">From where you are. To what you can build.</p>
 
-<p align="center">Last Bench is the umbrella platform. Malaysia Admissions is one active service inside Education & Mobility; CLASS[Λ] is the capability engine; co.lab is the business & growth engine; Community + Platform connects opportunity, proof and continuity across the ecosystem.</p>
+<p align="center">Last Bench is the company. CLASS[Λ] builds builders. co.lab incubates, accelerates and grows businesses through Ventures, Projects, Services and Community. Co.MPASS converges governed evidence. Dr. X is the Founder Second Brain / Twin.</p>
 
 <p align="center">
   <a href="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml"><img src="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
@@ -21,14 +21,13 @@
 
 ## Business architecture
 
-- **Education & Mobility — Access:** current active service includes Malaysia Admissions and its study/settle/succeed journey.
-- **CLASS[Λ] — Capability:** free Class 0 + 20-Class One-Person Venture Builder; proof-of-work first.
-- **co.lab — Business & Growth:** brand development, business development, growth systems, creator/community systems, venture validation and automation.
-- **Community + Platform — Connection & Continuity:** relationships, opportunity routing, verified progress, referrals and shared context where operationally real.
+- **CLASS[Λ] — Human Lab:** builds builders through capability, execution and proof.
+- **co.lab — Business Lab:** Ventures · Projects · Services · Community. ProjectX = Website Projects.
+- **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction.
+- **Dr. X — Founder Second Brain / Twin:** governed memory, founder context, JEV judgment and reasoning for decisions.
+- **Education & Mobility:** an operating/service domain inside Last Bench; Malaysia Admissions is one current service.
 
-Strategic progression: **Access → Capability → Creation → Ownership.**
-
-This is not a mandatory funnel. People can enter through the engine relevant to their need.
+Flywheel: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved labs → new evidence.**
 
 For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experience rules, read [`design.md`](./design.md).
 
@@ -38,13 +37,14 @@ For canonical product positioning, read [`PRODUCT.md`](./PRODUCT.md). For experi
 
 | Layer | Platform | Contract |
 | --- | --- | --- |
-| Marketing + web app | **GitHub Pages** | `main` builds and deploys the exact production artifact; Netlify is legacy fallback only |
+| Marketing + web app | **GitHub Pages** | Sole canonical production web host; `main` builds and deploys the exact production artifact |
 | API | **Render** | Express + tRPC |
 | Identity | **Supabase Auth** | Email/password sessions; HTTP-only cookies on web, bearer/refresh tokens on native |
 | Database | **Supabase Postgres** | Drizzle schema + reviewed SQL migration ledger |
 | Private files | **Supabase Storage** | `student-documents`, private, per-user RLS |
-| AI | **OpenAI Responses API** | Server-side only; optional until a production API key is configured |
-| Canonical web | `https://lastbenchbd.com` | DNS cutover to the verified GitHub Pages deployment is the remaining host gate |
+| Public intelligence | **Dr. X** | Human-facing Last Bench intelligence identity; founder profiles remain real-person profiles powered by Dr. X |
+| AI execution provider | **OpenAI Responses API** | Current server-side provider when configured; replaceable implementation detail |
+| Canonical web | `https://lastbenchbd.com` | DNS cutover to GitHub Pages complete; current release fingerprint/render verification remains a release gate |
 | Canonical API | `https://api.lastbenchbd.com` | Render custom domain |
 
 **Manus and Forge are not part of the supported production architecture.** Legacy integration modules and environment contracts have been removed.
@@ -65,7 +65,7 @@ api.lastbenchbd.com/
 └── /api       → Express + tRPC runtime
 ```
 
-The current `/` marketing implementation is historically Malaysia-service-led. That implementation should not be treated as proof that Malaysia defines the parent company. Any corporate-homepage migration to the Opportunity Accelerator architecture must be deliberate, tested and visually verified so the active Malaysia conversion journey is not broken.
+The current `/` marketing implementation has historical Malaysia-service-led sections. They must remain correctly scoped as service content while the corporate framing follows JEV Architecture `2026.09.29`. Any migration must be tested and visually verified so the active Malaysia conversion journey is not broken.
 
 Repository surfaces:
 
@@ -113,13 +113,23 @@ The bucket/policies are infrastructure foundation. The complete document-picker/
 
 ---
 
-## AI guidance
+## Dr. X public intelligence
 
-AI guidance calls the OpenAI Responses API directly from the Render server. `OPENAI_API_KEY` is server-only and never belongs in a static host or the Expo bundle.
+The public Last Bench intelligence identity is **Dr. X**. The previous visible **Bench AI** name is retired. The legacy `landing/bench-ai.js` filename remains temporarily for compatibility with the verified landing export and must not be treated as a separate product or brain.
 
-AI is deliberately an optional integration: the core API, auth, applications and other product functions must remain available when no OpenAI key is configured. `/api/health` reports `aiConfigured` and the overall degraded state.
+The founder experience is human-first:
 
-AI guidance must remain grounded in verified project data. Never invent or imply certainty around current fees, rankings, visa probability, scholarships, eligibility, admission probability, partner status, revenue, traction or other high-stakes facts. Escalate to a human owner when current verification or professional judgment is required.
+- **Sayem Ahmed** — Co-founder & CEO — interactive profile **Powered by Dr. X**;
+- **Fahim Shahbaz Mahmud** — Co-founder & COO — interactive profile **Powered by Dr. X**;
+- **Erfan Uddin** — Co-founder & Chief Business & Innovation Officer — **Also known as Dr. X**.
+
+Portraits must come from approved identity sources. Exact external founder-profile links are published only after URL verification. Generated founder-profile replies are not direct statements from the founder unless explicitly source-verified.
+
+Current runtime truth: AI guidance still calls the OpenAI Responses API from the Render server when `OPENAI_API_KEY` is configured. A future DR.X Gateway/provider route may replace or govern that provider, but repository identity changes do not prove that Gateway routing is live in production.
+
+The core API, auth, applications and other product functions must remain available when no AI provider key is configured. `/api/health` reports `aiConfigured` and the overall degraded state.
+
+Dr. X guidance must remain grounded in verified project data. Never invent or imply certainty around current fees, rankings, visa probability, scholarships, eligibility, admission probability, partner status, revenue, traction or other high-stakes facts. Escalate to a human owner when current verification or professional judgment is required. Public Dr. X/founder-profile requests are Last Bench-scoped and must not receive private Founder DR.X, unrelated-project or unrestricted Second Brain context.
 
 ---
 
@@ -192,22 +202,22 @@ A green build is not proof of a working product. Before calling the authenticate
 
 - [x] Supabase database migrations through homepage intake `0005` are applied
 - [x] relational foreign keys/uniqueness/indexes are verified
-- [x] production DB security advisor has no known foundation WARN/ERROR findings
+- [ ] production DB security advisor is fully reconciled — current live advisor still reports WARN findings: public `SECURITY DEFINER` CLASS RPC exposure, `pg_net` installed in `public`, and Auth leaked-password protection disabled. RLS-enabled/no-policy notices remain informational/default-deny candidates and must not be blanket-fixed without an access model.
 - [x] production smoke workflow exists
 - [x] migration `0004` storage/auth-identity contract is merged and applied
 - [x] canonical Render service reports Supabase auth/storage configured
 - [x] `api.lastbenchbd.com/api/health` returns semantic JSON health
 - [x] homepage Supabase REST intake accepts an anonymous insert without exposing lead reads
 - [x] GitHub Pages builds and deploys the verified production artifact from current `main`
-- [ ] `lastbenchbd.com` DNS serves the verified GitHub Pages release instead of the legacy Netlify host
+- [x] `lastbenchbd.com` DNS points to the GitHub Pages custom-domain configuration
 - [ ] fresh sign-in succeeds with a real user
 - [ ] returning session succeeds
 - [ ] authenticated API request succeeds
 - [ ] logout prevents session resurrection
 - [ ] student document upload/download authorization is verified
 - [ ] homepage, CLASS[Λ] masterclass and CLASS[Λ] course receipt is verified with real production Supabase rows
-- [x] corporate runtime architecture is aligned to Opportunity Accelerator framing with Education & Mobility, CLASS[Λ], co.lab and the connective Community layer
-- [ ] visually verify the canonical-domain render after DNS cutover
+- [ ] corporate runtime architecture passes the JEV `2026.09.29` architecture-release gate on the canonical domain
+- [ ] visually verify the canonical-domain render and current release fingerprint
 
 No production user, credential, admissions result, business outcome or verification evidence should ever be fabricated to satisfy this checklist.
 
@@ -251,7 +261,7 @@ When documentation disagrees:
 
 1. Current explicit user direction recorded in canonical business/product documents.
 2. Current code + verified runtime/infrastructure behavior for implementation claims.
-3. `PRODUCT.md` for business/product architecture.
+3. `architecture/JEV_VERSION.json` + `PRODUCT.md` for current business/product architecture.
 4. `FOUNDATION_LOCK.md` / `drizzle/MIGRATION_STATUS.md` for production truth.
 5. `README.md` / `AGENT.md` / `design.md`.
 6. Feature-specific documentation.

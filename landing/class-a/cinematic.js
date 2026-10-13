@@ -117,6 +117,18 @@
     scene.prepend(orbitSystem);
   }
 
+  if (scene && !scene.querySelector('.class-ui-stack')) {
+    const uiStack = document.createElement('div');
+    uiStack.className = 'class-ui-stack';
+    uiStack.setAttribute('aria-hidden', 'true');
+    uiStack.innerHTML = [
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.25"/><path d="M5.5 20c.5-4.2 2.7-6.3 6.5-6.3s6 2.1 6.5 6.3"/></svg><span><small>YOU</small><strong>Decide outcome</strong></span></div>',
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><path d="M9 4h6l3 3v10l-3 3H9l-3-3V7z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span><small>AI</small><strong>Think with it</strong></span></div>',
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span><small>SYSTEMS</small><strong>Make it repeatable</strong></span></div>'
+    ].join('');
+    scene.append(uiStack);
+  }
+
   if (brandIntro) {
     const removeIntro = () => brandIntro.remove();
     const handleIntroEnd = (event) => {
@@ -273,6 +285,14 @@
     }
   };
 
+  const showFailure = (title, message) => {
+    const heading = errorBox?.querySelector('[data-error-title]');
+    const detail = errorBox?.querySelector('[data-error-message]');
+    if (heading) heading.textContent = title;
+    if (detail) detail.textContent = message;
+    setStatus(errorBox);
+  };
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
@@ -307,12 +327,24 @@
         body: JSON.stringify(payload),
       });
 
+      if (response.status === 409) {
+        // Supabase enforces one course registration per email and phone.
+        // Do not read or disclose existing records from the public client.
+        showFailure(
+          'APPLICATION MAY ALREADY EXIST.',
+          'An application may already exist for this email or phone. Do not register again. Contact info@lastbenchbd.com to check your application status.'
+        );
+        return;
+      }
       if (!response.ok) throw new Error(`Registration failed with ${response.status}`);
       form.reset();
       setStatus(success);
     } catch (error) {
       console.error('CLASS A registration failed', error);
-      setStatus(errorBox);
+      showFailure(
+        'APPLICATION NOT CONFIRMED.',
+        'We could not save your application right now. Please try again later or contact info@lastbenchbd.com.'
+      );
     } finally {
       if (submit) {
         submit.disabled = false;

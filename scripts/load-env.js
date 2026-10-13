@@ -1,5 +1,5 @@
 /**
- * Local environment loader. Production values come from Render/Netlify.
+ * Local environment loader. Production values come from the canonical Render/Supabase environment.
  * Existing process environment always wins over values from .env.
  */
 import fs from "fs";

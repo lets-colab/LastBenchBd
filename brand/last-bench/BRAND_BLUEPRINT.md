@@ -6,13 +6,13 @@ Repository: `lets-colab/LastBenchBd`
 ## 1. Brand definition
 
 **Name:** Last Bench  
-**Category:** Opportunity Accelerator  
-**Descriptor:** Education · Capability · Business · Community  
+**Category:** Company / opportunity-building ecosystem  
+**Architecture descriptor:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain  
 **Brand promise:** **From where you are. To what you can build.**  
 **Official tagline:** **Creating a Lasting Benchmark**  
 **Approved slogan in the current design system:** **From Last Bench. To The World.**
 
-Last Bench is the parent opportunity platform. It connects education and mobility, capability building, business creation/growth, community, and the shared platform layer.
+Last Bench is the company. CLASS[Λ] builds builders; co.lab incubates, accelerates and grows businesses; Co.MPASS converges governed company evidence into context and direction; Dr. X is the Founder Second Brain / Twin that reasons and decides. Education & Mobility remains an operating/service domain rather than a separate top-level engine in the locked architecture.
 
 ## 2. Brand architecture
 
@@ -22,11 +22,11 @@ Helps Bangladeshi students navigate the journey to study, settle and succeed in 
 
 ### CLASS[Λ]
 
-Independent capability accelerator under the Last Bench ecosystem. It keeps its own visual namespace.
+Human Lab inside Last Bench. It builds builders through skill, execution and proof and keeps its own visual namespace.
 
 ### co.lab
 
-Independent Business & Growth namespace. Its canonical brand assets and blueprint live in the separate `lets-colab/letscolab` repository.
+Business Lab inside Last Bench. Its four doors are Ventures, Projects, Services and Community. ProjectX is Website Projects. Its canonical brand assets and blueprint live in the separate `lets-colab/letscolab` repository.
 
 Shared ownership does **not** mean identical visual treatment.
 
@@ -61,6 +61,24 @@ Canonical files in this folder:
 - `logo-lockups.png` — master/reference board
 
 The exact fingerprints are in `brand-lock.json`.
+
+### Adaptive transparent logo rule
+
+This rule overrides any older mockup or preview treatment:
+
+- **Logo background is always transparent.** Never export or place the Last Bench logo with a baked-in black, white, cream, or colored rectangle.
+- **Light/white background:** use the black/charcoal `LAST BENCH` wordmark. The bench + rising-arrow mark stays Brand Green.
+- **Dark/black background:** use the white `LAST BENCH` wordmark. The bench + rising-arrow mark stays Brand Green.
+- The non-green portion of the tagline follows the wordmark contrast: black/charcoal on light backgrounds, white on dark backgrounds. `BENCHMARK` remains Brand Green.
+- **Never add a logo plate/box** merely to create contrast. Move the logo to a suitable area or adjust the surrounding composition instead.
+- Do not recolor the green bench-arrow to solve contrast.
+- Do not use a white-wordmark variant on a light background or a black-wordmark variant on a dark background.
+
+For Canva, the currently verified transparent working variants are:
+- light-background / black-wordmark: asset `MAHWdEIgzME`
+- dark-background / white-wordmark: asset `MAHWdLPnTmc`
+
+These Canva IDs are workflow references, not substitutes for the repository brand master.
 
 ### Non-negotiable logo rules
 

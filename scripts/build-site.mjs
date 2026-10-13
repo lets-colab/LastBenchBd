@@ -190,7 +190,7 @@ try {
   console.log("[build-site] copying landing/ → temporary build (front door)");
   // Hosting configuration is not production page content. The GitHub Pages
   // workflow creates dist/CNAME only after this host-neutral build succeeds.
-  const exclude = new Set(["netlify.toml", "CNAME"]);
+  const exclude = new Set(["CNAME"]);
   for (const entry of readdirSync(landing)) {
     if (exclude.has(entry)) continue;
     cpSync(path.join(landing, entry), path.join(buildDir, entry), { recursive: true });

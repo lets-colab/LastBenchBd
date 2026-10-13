@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CLASS[Λ] — Attendance</title>
+<style>
+body{margin:0;background:#050505;color:#fff;font-family:Inter,Arial,sans-serif;min-height:100vh;display:grid;place-items:center}
+main{width:min(560px,90vw);padding:36px;border:1px solid #2b2b2b;border-radius:24px;background:#101010;box-sizing:border-box}
+h1{font-size:clamp(28px,7vw,48px);margin:0 0 10px;letter-spacing:-.04em}
+p{color:#b9b9b9;line-height:1.55}
+label{display:block;margin:18px 0 7px;font-size:12px;letter-spacing:.12em;color:#aaa}
+input{width:100%;box-sizing:border-box;padding:15px;border-radius:12px;border:1px solid #3b3b3b;background:#080808;color:#fff;font-size:16px}
+button{width:100%;margin-top:22px;padding:16px;border:0;border-radius:12px;background:#b7ff3c;color:#050505;font-weight:800;font-size:15px;cursor:pointer}
+#status{margin-top:18px;white-space:pre-line}
+.code{font-weight:800;letter-spacing:.08em}
+</style>
+</head>
+<body><main>
+<div class="code">CLASS[Λ] · 0.01% BUILDERS</div>
+<h1>Register your attendance</h1>
+<p>Use the session code shared by Last Bench and the same email + phone number you used when registering.</p>
+<form id="f">
+<label>FULL NAME</label><input id="name" required>
+<label>EMAIL</label><input id="email" type="email" required>
+<label>WHATSAPP / PHONE</label><input id="phone" required>
+<label>SESSION CODE</label><input id="code" value="CLASS-LAMBDA-0410" required>
+<button>CHECK IN →</button>
+</form><div id="status"></div>
+</main>
+<script>
+const SUPABASE_URL='https://tocxdyqlrvzthpexnmxe.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_';
+const f=document.getElementById('f'),s=document.getElementById('status');
+f.addEventListener('submit',async e=>{
+e.preventDefault();s.textContent='Checking you in…';
+try{
+const r=await fetch(SUPABASE_URL+'/rest/v1/rpc/class_a_self_checkin',{method:'POST',headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},body:JSON.stringify({p_full_name:name.value,p_email:email.value,p_phone:phone.value,p_attendance_code:code.value})});
+if(!r.ok)throw Error('Check-in service unavailable');
+const rows=await r.json(),x=Array.isArray(rows)?rows[0]:rows;
+const m={checked_in:'Attendance recorded successfully.',already_checked_in:'Your attendance is already recorded.',invalid_session_code:'That session code is not valid.',registration_not_found:'We could not match your registration. Use the same email and phone used to register.',not_enrolled:'You are not enrolled in this session.'};
+s.textContent=m[x.outcome]||'We could not complete check-in.';
+}catch(err){s.textContent='We could not complete check-in. Please try again.'}
+});
+</script></body></html>

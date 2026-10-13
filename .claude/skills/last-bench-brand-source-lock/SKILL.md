@@ -47,6 +47,41 @@ Current production assets:
 
 Never use `design-system/logo.svg` in production. It is a legacy recreation retained only for historical compatibility.
 
+## Adaptive Transparent Logo Rule
+
+This is a hard identity rule and overrides older previews/mockups:
+
+- The logo must always be placed on a **transparent background**. Never bake a black, white, cream, or colored rectangle into the logo asset.
+- On **light/white backgrounds**, the `LAST BENCH` wordmark is black/charcoal.
+- On **dark/black backgrounds**, the `LAST BENCH` wordmark is white.
+- The **bench + rising-arrow mark stays Brand Green** in both cases.
+- The base tagline text follows wordmark contrast; `BENCHMARK` stays Brand Green.
+- Never add a rectangular logo plate merely to force contrast.
+- Never use the white-wordmark variant on a light background.
+- Never use the black-wordmark variant on a dark background.
+- If contrast is poor, reposition the logo or alter the surrounding composition; do not recolor the green mark or add a background box.
+
+Verified Canva working variants:
+- Light background / black wordmark / transparent: `MAHWdEIgzME`
+- Dark background / white wordmark / transparent: `MAHWdLPnTmc`
+
+## Style DNA Retrieval Gate
+
+Before producing or reviewing any Last Bench branded visual, read:
+
+1. `brand/last-bench/LOGO_USAGE.md`
+2. `brand/last-bench/ART_DIRECTION.md`
+3. `brand/last-bench/STYLE_DNA.md`
+4. `brand/last-bench/brand-lock.json`
+
+The approved execution grammar is:
+
+**warm-white trust field + bold black editorial type + restrained green progress accents + topographic/journey texture + grounded black or photographic lower field.**
+
+For light-led campaign work, green should usually remain about **5–12%** of the visual field. Reuse the signature devices—stacked headlines, contour texture, black lower wave, journey route, skyline context, thin circular service icons—rather than inventing a new visual gimmick for each campaign.
+
+Reference mockups may contain stale copy/contact details. Learn their **visual language**, not their factual content.
+
 ## Absolute Prohibitions
 
 For the Last Bench identity:
@@ -134,7 +169,7 @@ The compositor, not the image generator, owns brand placement.
 Before any Last Bench design task, recall these locked facts from repository sources rather than memory:
 
 - Parent brand: Last Bench.
-- Category: Opportunity Accelerator.
+- Company: Last Bench.\n- Architecture: CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain / Twin.\n- Minimum current architecture: JEV 2026.09.29.
 - Visual law: Dark for emotion. White for trust. Green for progress.
 - Brand Green: `#00C853`.
 - Bright Green on dark: `#00E676`.

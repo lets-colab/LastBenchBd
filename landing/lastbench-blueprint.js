@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const ALIGNMENT_VERSION = '2026-09-22';
+  const ALIGNMENT_VERSION = '2026-09-29-jev-lock';
   const PARTNER_WHATSAPP = 'https://wa.me/8801300801785?text=I%20want%20to%20learn%20about%20the%20Last%20Bench%20partner%20pathway.';
   const CONTACT_EMAIL = 'info@lastbenchbd.com';
   const CONTACT_HREF = 'mailto:info@lastbenchbd.com?subject=Last%20Bench%20question';
@@ -9,7 +9,7 @@
 
   const COPY = {
     en: {
-      kicker: 'EDUCATION & MOBILITY · CURRENT MARKET — MALAYSIA',
+      kicker: 'MALAYSIA · EDUCATION & MOBILITY SERVICE',
       titleA: 'ACCESS WITH', titleB: 'CLARITY.',
       lede: 'Malaysia Admissions is one active service inside Last Bench Education & Mobility. It helps Bangladeshi students make credible education decisions, move through high-stakes application and visa processes, prepare for departure and continue with practical support after arrival.',
       steps: [
@@ -35,7 +35,7 @@
       portal: 'CHOOSE YOUR PATH →', portalAria: 'Choose your Last Bench path',
     },
     bn: {
-      kicker: 'এডুকেশন অ্যান্ড মোবিলিটি · বর্তমান মার্কেট — মালয়েশিয়া',
+      kicker: 'মালয়েশিয়া · এডুকেশন অ্যান্ড মোবিলিটি সেবা',
       titleA: 'স্পষ্টতার সাথে', titleB: 'অ্যাক্সেস।',
       lede: 'মালয়েশিয়া অ্যাডমিশন লাস্ট বেঞ্চের Education & Mobility বিভাগের একটি সক্রিয় সেবা। এটি শিক্ষার্থীদের বিশ্বাসযোগ্য শিক্ষা সিদ্ধান্ত, আবেদন ও ভিসা প্রক্রিয়া, প্রি-ডিপারচার প্রস্তুতি এবং পৌঁছানোর পর বাস্তব সহায়তায় সাহায্য করে।',
       steps: [
@@ -94,7 +94,7 @@
     const c = COPY[lang];
     const steps = c.steps.map((step, i) => `<div class="lbp-step"><div class="lbp-num">${String(i + 1).padStart(2,'0')}</div><strong>${step[0]}</strong><span>${step[1]}</span></div>`).join('');
     const services = c.services.map((s) => `<span>${s}</span>`).join('');
-    return `<div class="lbp-panel"><div class="lbp-kicker">${c.kicker}</div><h2 class="lbp-title" id="lbp-journey-title">${c.titleA} <span>${c.titleB}</span></h2><p class="lbp-lede">${c.lede}</p><div class="lbp-grid" aria-label="Six Last Bench journey milestones">${steps}</div><div class="lbp-services">${services}</div><div class="lbp-actions"><a class="lbp-btn lbp-btn-primary" href="#signup">${c.start}</a><a class="lbp-btn lbp-btn-secondary" href="./app/">${c.track}</a><a class="lbp-partner" href="${PARTNER_WHATSAPP}" target="_blank" rel="noopener">${c.partner}</a><a class="lbp-contact" href="${CONTACT_HREF}">${c.email}</a></div><div class="lbp-trust">${c.trust}</div></div>`;
+    return `<div class="lbp-panel"><div class="lbp-kicker">${c.kicker}</div><h2 class="lbp-title" id="lbp-journey-title">${c.titleA} <span>${c.titleB}</span></h2><p class="lbp-lede">${c.lede}</p><div class="lbp-grid" aria-label="Six Last Bench journey milestones">${steps}</div><div class="lbp-services">${services}</div><div class="lbp-actions"><a class="lbp-btn lbp-btn-primary" href="#signup">${c.start}</a><a class="lbp-btn lbp-btn-secondary" href="/app/">${c.track}</a><a class="lbp-partner" href="${PARTNER_WHATSAPP}" target="_blank" rel="noopener">${c.partner}</a><a class="lbp-contact" href="${CONTACT_HREF}">${c.email}</a></div><div class="lbp-trust">${c.trust}</div></div>`;
   }
 
   function beyondMarkup(lang) {
@@ -117,7 +117,7 @@
   function alignPrimaryCTA(lang) {
     const el = document.querySelector('.lb-class-portal'); if (!el) return;
     const c = COPY[lang];
-    if (el.getAttribute('href') !== '#lb-company') el.setAttribute('href','#lb-company');
+    if (el.getAttribute('href') !== '/') el.setAttribute('href','/');
     if (el.getAttribute('aria-label') !== c.portalAria) el.setAttribute('aria-label',c.portalAria);
     if (el.textContent !== c.portal) el.textContent = c.portal;
   }
@@ -142,16 +142,20 @@
   }
 
   function updateMetadata() {
-    const title='Last Bench — Opportunity Accelerator';
-    const description='Education, capability and business connected by community — helping people turn credible opportunity into progress.';
+    const title='Study in Malaysia — Last Bench';
+    const description='Last Bench is the company: CLASS[Λ] builds builders, co.lab incubates and accelerates businesses, Co.MPASS converges company evidence, and Dr. X supports founder decisions.';
     document.documentElement.dataset.businessBlueprintAligned=ALIGNMENT_VERSION;
-    document.documentElement.dataset.parentCategory='opportunity-accelerator';
+    document.documentElement.dataset.parentCategory='company';
     window.__LB_BLUEPRINT_ALIGNMENT__={
       version:ALIGNMENT_VERSION,
-      category:'Opportunity Accelerator',
-      engines:['Education & Mobility','CLASS[Λ]','co.lab'],
-      connectiveLayer:'Community + Platform',
-      currentEducationMarket:'Malaysia'
+      company:'Last Bench',
+      humanLab:'CLASS[Λ]',
+      businessLab:'co.lab',
+      businessLabDoors:['Ventures','Projects','Services','Community'],
+      projectX:'Website Projects',
+      dashboard:'Co.MPASS',
+      founderSecondBrain:'Dr. X',
+      educationMobilityService:'Malaysia'
     };
     document.title=title;
     const setMeta=(selector,attribute,value)=>{

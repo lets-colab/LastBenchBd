@@ -7,6 +7,7 @@ on:
     paths:
       - .github/workflows/claude-design-visual-qa.yml
       - landing/index.html
+      - landing/malaysia/index.html
       - landing/claude-design-preview.html
       - landing/bench-ai.js
   workflow_dispatch:
@@ -49,9 +50,9 @@ jobs:
           import fs from 'node:fs';
           const browser = await chromium.launch({headless:true});
           const cases = [
-            {name:'current-desktop', path:'/index.html', viewport:{width:1440,height:1000}},
+            {name:'current-desktop', path:'/malaysia/', viewport:{width:1440,height:1000}},
             {name:'claude-desktop', path:'/claude-design-preview.html', viewport:{width:1440,height:1000}},
-            {name:'current-mobile', path:'/index.html', viewport:{width:390,height:844}, mobile:true},
+            {name:'current-mobile', path:'/malaysia/', viewport:{width:390,height:844}, mobile:true},
             {name:'claude-mobile', path:'/claude-design-preview.html', viewport:{width:390,height:844}, mobile:true},
           ];
           const report=[];
@@ -82,7 +83,7 @@ jobs:
               interaction='url='+page.url();
             }
             let benchAi='not expected';
-            if (c.path === '/index.html') {
+            if (c.path === '/malaysia/') {
               const launcher=page.locator('.lb-ai-launcher');
               if (await launcher.count()) {
                 await launcher.click();

@@ -6,15 +6,15 @@ This document is the production-trust contract for Last Bench. It separates veri
 
 Important product state must have one authoritative source, one owner, one verified state, and one safe mutation path.
 
-## Current verified foundation — 22 September 2026
+## Current verified foundation — 29 September 2026
 
 - Canonical repository: `lets-colab/LastBenchBd`.
 - Canonical web URL: `https://lastbenchbd.com`.
 - GitHub Pages is the primary production web deployment path. Workflow `.github/workflows/deploy-github-pages.yml` builds the exact host-neutral artifact from `main` and deploys it with GitHub Pages provenance.
 - The first GitHub Pages production run (`35683150738`) completed successfully for commit `c9f98c678a43a59c64cbc60e9d09851684a8b2b4`; both build and deploy jobs passed and GitHub reported `https://lets-colab.github.io/LastBenchBd/` as the deployment URL.
 - The immutable production artifact from that run is `lastbench-production-dist` `10675761617`, SHA-256 `e2fca9453673353c8a1f68d4099a21a7dd1d05f53c9c3106e72b6fb2707757c3`.
-- Automatic Netlify production deployment is retired. Netlify remains a legacy manual fallback only.
-- The canonical domain has **not** completed host cutover yet. DNS verified on 22 September 2026 still points the apex to Netlify addresses `75.2.60.5` / `99.83.231.61`, while `www.lastbenchbd.com` CNAMEs to `lastbenchbdd.netlify.app`. Therefore `lastbenchbd.com` must not be treated as proof of the GitHub Pages release until DNS is changed and the release fingerprint is re-verified.
+- GitHub Pages is the sole canonical production web host; the former Netlify hosting path is retired and removed from active repository architecture.
+- Canonical-domain DNS cutover was re-verified on 29 September 2026: the apex resolves to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153`; `www.lastbenchbd.com` CNAMEs to `lets-colab.github.io`; Cloudflare nameservers remain authoritative.
 - Current `main` builds the complete host-neutral production artifact successfully.
 - A release fingerprint prevents a stale homepage from passing production smoke checks.
 - Canonical API custom hostname: `https://api.lastbenchbd.com`.
@@ -26,7 +26,7 @@ Important product state must have one authoritative source, one owner, one verif
 - Production web configuration for GitHub Pages is explicit in `.github/workflows/deploy-github-pages.yml` and uses the reviewed public API/Supabase values.
 - The live Supabase migration ledger includes the repository foundation migrations, Supabase identity/storage migration, CLASS[Λ] registration migration, DR.X social-engine runtime/activation migrations, and the insert-only homepage signup migration.
 - The homepage source now submits directly to `public.lastbench_signups`; public roles have INSERT only and cannot read, update or delete submitted leads.
-- Supabase security advisor currently has no WARN or ERROR findings; remaining RLS notices are informational and consistent with the server-owned default-deny model.
+- Supabase security advisor is **not currently warning-free**. Live review on 2 Oct 2026 reports: Auth leaked-password protection disabled; `pg_net` installed in `public` (non-relocatable in the current installation); and 11 CLASS `SECURITY DEFINER` RPCs executable by anon/authenticated roles. RLS-enabled/no-policy notices remain informational/default-deny candidates. Do not clear these findings by breaking public registration/check-in or adding blanket policies without an explicit access model.
 - `pnpm db:push` remains intentionally blocked while legacy Drizzle snapshots are incomplete; production DDL uses reviewed SQL through Supabase migrations.
 - Production smoke monitoring is automated by `.github/workflows/production-smoke.yml` and distinguishes the Render control-plane origin from the custom API hostname.
 
@@ -50,7 +50,7 @@ The safe production migration path is:
 
 **Do not point `drizzle-kit migrate` or `pnpm db:push` blindly at production.**
 
-## Gate B — Production web/API routing ⚠ web cutover active
+## Gate B — Production web/API routing ✅ DNS cutover complete
 
 Public health automation targets:
 
@@ -58,6 +58,8 @@ Public health automation targets:
 - `https://lastbenchbd.com/app/`
 - `https://lastbenchbd.com/class-a/`
 - `https://lastbenchbd.com/class-a/masterclass.html`
+- `https://lastbenchbd.com/class-a/pass.html`
+- `https://lastbenchbd.com/class-a/live-control.html`
 - `https://lastbenchbd.com/class-a/course.html`
 - `https://api.lastbenchbd.com/api/health`
 - diagnostic control plane: `https://last-bench-api-v2.onrender.com/api/health`
@@ -69,8 +71,8 @@ Current verified state:
 - [x] Current repository builds the complete production web artifact.
 - [x] GitHub Pages build and deployment completed successfully from `main`.
 - [x] GitHub Pages generated a working deployment target at `https://lets-colab.github.io/LastBenchBd/`.
-- [ ] Move the canonical apex and `www` DNS away from Netlify to the GitHub Pages custom-domain configuration.
-- [ ] Verify `lastbenchbd.com` serves the same release fingerprint after DNS/HTTPS convergence.
+- [x] Canonical apex and `www` DNS point to the GitHub Pages custom-domain configuration.
+- [ ] Verify `lastbenchbd.com` serves the current release fingerprint and visually certify the rendered experience.
 
 A successful static build, deploy or green CI run is not production-routing proof.
 
@@ -94,13 +96,13 @@ Before declaring authenticated production complete, verify:
 
 ## Gate D — Forms and conversion proof
 
-The repository homepage now posts to the RLS-protected Supabase table `public.lastbench_signups`. CLASS[Λ] posts to `public.class_a_registrations`; compatibility Netlify markup remains during the host transition. Historical Netlify submissions are retained.
+The repository homepage posts to the RLS-protected Supabase table `public.lastbench_signups`. CLASS[Λ] person/program identity remains in `public.class_a_registrations`. The online masterclass now adds a recurring session-enrollment layer, personal pass, schedule-aware notification outbox and evidence-based attendance verification; compatibility Netlify markup remains during the host transition. Historical Netlify submissions are retained.
 
 Before declaring conversion flows complete:
 
 - [x] Homepage intake schema, insert-only RLS and public REST transport are verified in production Supabase.
 - [ ] A real production homepage journey creates the expected `lastbench_signups` row.
-- [ ] A real CLASS[Λ] masterclass journey creates the expected `class_a_registrations` row.
+- [ ] A real CLASS[Λ] online masterclass journey creates/reuses the expected genuine `class_a_registrations` identity and creates the expected `class_a_session_enrollments` row without rewriting historical attendance.
 - [ ] A real CLASS[Λ] course journey creates the expected `class_a_registrations` row.
 - [ ] Receipt is verified in the intended Supabase table rather than inferred from a thank-you screen.
 
@@ -138,8 +140,8 @@ Still required before broad public launch:
 - [x] PR safety template exists.
 - [x] Production smoke monitoring automatically opens/updates/closes a GitHub incident issue.
 - [x] CI rejects stale production-homepage assumptions through release fingerprinting.
-- [x] GitHub Pages production deployment is integrated with `main`; automatic Netlify production deployment is retired.
-- [ ] Complete canonical-domain DNS cutover to the verified GitHub Pages deployment.
+- [x] GitHub Pages production deployment is integrated with `main`; retired hosting configuration has been removed from active repository architecture.
+- [x] Canonical-domain DNS cutover to GitHub Pages is complete.
 
 ## Gate H — Mobile identity
 
@@ -163,7 +165,7 @@ Automate or certify these journeys before declaring the complete product release
 2. Student application → mentor/admin update → student sees sanitized state.
 3. Message A → B → B reads → unread state updates.
 4. Tutor referral → earned commission → payout reservation.
-5. Homepage/CLASS[Λ] form → confirmed Supabase row.
+5. Homepage/CLASS[Λ] form → confirmed Supabase row; online masterclass → personal session enrollment → join signal → independent attendance evidence.
 6. Logout → protected API call is rejected.
 7. Returning browser session → authenticated after refresh.
 

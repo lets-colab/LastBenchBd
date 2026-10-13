@@ -128,6 +128,8 @@
   const sceneTitle = document.querySelector('[data-scene-title]');
   const sceneBody = document.querySelector('[data-scene-body]');
   const indices = Array.from(document.querySelectorAll('[data-index]'));
+  const capabilityNodes = Array.from(document.querySelectorAll('[data-capability]'));
+  let transformTimer = 0;
   const scenes = [
     { kicker: 'COMMAND AI', title: 'STOP ASKING.\nSTART DIRECTING.', body: 'AI becomes useful when you stop treating it like a search box and start giving it roles, context, standards and outcomes.' },
     { kicker: 'RESEARCH', title: 'TURN ASSUMPTIONS\nINTO EVIDENCE.', body: 'Use AI to compare markets, pressure-test ideas and surface the evidence that should shape your next decision.' },
@@ -143,6 +145,18 @@
     index = Math.max(0, Math.min(scenes.length - 1, index));
     if (index === activeScene) return;
     activeScene = index;
+    const mechanics = [
+      {yaw:-7,pitch:2,roll:-1,x:-10,y:0},{yaw:8,pitch:-2,roll:1,x:8,y:-8},{yaw:-11,pitch:4,roll:-2,x:-4,y:6},
+      {yaw:12,pitch:-3,roll:2,x:10,y:-4},{yaw:-6,pitch:1,roll:-2,x:-8,y:8},{yaw:0,pitch:0,roll:0,x:0,y:-10}
+    ][index];
+    journey?.setAttribute('data-scene', String(index));
+    root.style.setProperty('--rig-yaw', mechanics.yaw + 'deg'); root.style.setProperty('--rig-pitch', mechanics.pitch + 'deg');
+    root.style.setProperty('--rig-roll', mechanics.roll + 'deg'); root.style.setProperty('--rig-shift-x', mechanics.x + 'px'); root.style.setProperty('--rig-shift-y', mechanics.y + 'px');
+    capabilityNodes.forEach((el,i)=>el.classList.toggle('is-active',i===index));
+    if (!reduced.matches && journey) {
+      journey.classList.remove('is-transforming'); void journey.offsetWidth; journey.classList.add('is-transforming');
+      window.clearTimeout(transformTimer); transformTimer = window.setTimeout(()=>journey.classList.remove('is-transforming'),820);
+    }
     journeyCopy?.classList.add('is-switching');
     window.setTimeout(() => {
       const s = scenes[index];
@@ -193,9 +207,21 @@
   const success = document.querySelector('[data-signup-success]');
   const passCode = document.querySelector('[data-pass-code]');
   const qrCanvas = document.querySelector('[data-qr]');
+  const sessionStatus = document.querySelector('[data-session-status]');
+  const sessionTitle = document.querySelector('[data-session-title]');
+  const sessionTime = document.querySelector('[data-session-time]');
+  const calendarLink = document.querySelector('[data-calendar-link]');
+  const passLink = document.querySelector('[data-pass-link]');
+  const whatsappChannel = document.querySelector('[data-whatsapp-channel]');
+  const unlockPass = document.querySelector('[data-unlock-pass]');
+  const followGate = document.querySelector('[data-follow-gate]');
+  const followNote = document.querySelector('[data-follow-note]');
+  const passReveal = document.querySelector('[data-pass-reveal]');
+  let pendingPass = null;
   let step = 0;
 
   const SUPABASE_URL = 'https://tocxdyqlrvzthpexnmxe.supabase.co';
+  const WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00';
   const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_';
 
   function setStep(next) {
@@ -219,7 +245,11 @@
     if (dialog.open && typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open');
     body.classList.remove('no-scroll');
   }
-  document.querySelectorAll('[data-open-signup]').forEach(btn => btn.addEventListener('click', openSignup));
+  const signupButtons = Array.from(document.querySelectorAll('[data-open-signup]'));
+  signupButtons.forEach(btn => {
+    if (!btn.dataset.openLabel) btn.dataset.openLabel = btn.textContent.trim();
+    btn.addEventListener('click', openSignup);
+  });
   document.querySelectorAll('[data-close-signup]').forEach(btn => btn.addEventListener('click', closeSignup));
   dialog?.addEventListener('click', event => { if (event.target === dialog) closeSignup(); });
 
@@ -232,7 +262,7 @@
   const confirmedAt = document.querySelector('[data-confirmed-at]');
 
   async function drawQR(code) {
-    const checkInUrl = `${location.origin}/class-a/checkin.html?code=${encodeURIComponent(code)}`;
+    const checkInUrl = `${location.origin}/class-a/pass.html#code=${encodeURIComponent(code)}`;
     try {
       if (window.QRCode?.toCanvas) {
         await window.QRCode.toCanvas(qrCanvas, checkInUrl, { width: 220, margin: 1, color: { dark: '#050607', light: '#ffffff' } });
@@ -260,6 +290,166 @@
     } catch (_) { return ''; }
   }
 
+  function formatSessionTime(startValue, endValue, timezone = 'Asia/Dhaka') {
+    if (!startValue) return 'The next live session is being scheduled. Your pass is already reserved.';
+    try {
+      const start = new Date(startValue);
+      const end = endValue ? new Date(endValue) : null;
+      const date = new Intl.DateTimeFormat('en-GB', {
+        timeZone: timezone, weekday: 'long', day: '2-digit', month: 'short', year: 'numeric'
+      }).format(start);
+      const time = new Intl.DateTimeFormat('en-GB', {
+        timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: true
+      }).format(start);
+      const endTime = end ? new Intl.DateTimeFormat('en-GB', {
+        timeZone: timezone, hour: '2-digit', minute: '2-digit', hour12: true
+      }).format(end) : null;
+      return `${date} · ${time}${endTime ? `–${endTime}` : ''} · Bangladesh time`;
+    } catch (_) {
+      return 'Live-session schedule confirmed. Open your personal pass for the latest details.';
+    }
+  }
+
+  async function hydratePublicSession() {
+    const chip = document.querySelector('[data-public-session-chip]');
+    const meta = document.querySelector('[data-public-session-meta]');
+    const finalLine = document.querySelector('[data-public-session-final]');
+    try {
+      const response = await fetch(SUPABASE_URL + '/rest/v1/rpc/class_a_public_session', {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          Authorization: 'Bearer ' + SUPABASE_PUBLISHABLE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: '{}'
+      });
+      if (!response.ok) return;
+      const payload = await response.json();
+      const session = Array.isArray(payload) ? payload[0] : payload;
+      if (!session?.starts_at) return;
+
+      const start = new Date(session.starts_at);
+      const end = session.ends_at ? new Date(session.ends_at) : null;
+      const zone = session.timezone || 'Asia/Dhaka';
+      const day = new Intl.DateTimeFormat('en-GB',{timeZone:zone,day:'2-digit',month:'short'}).format(start).toUpperCase();
+      const weekday = new Intl.DateTimeFormat('en-GB',{timeZone:zone,weekday:'short'}).format(start).toUpperCase();
+      const startTime = new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'numeric',minute:'2-digit',hour12:true}).format(start);
+      const endTime = end ? new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'numeric',minute:'2-digit',hour12:true}).format(end) : '';
+      if (chip) chip.innerHTML = '<i></i> ' + day + ' · ' + startTime + ' · LIVE ONLINE';
+      if (meta) meta.textContent = weekday + ' ' + day + ' · ' + startTime + (endTime ? '–' + endTime : '') + ' · GOOGLE MEET · FREE REGISTRATION';
+      if (finalLine) finalLine.textContent = weekday + ' ' + day + ' · ' + startTime + (endTime ? '–' + endTime : '') + ' · Google Meet · Free registration';
+      const registrationOpen = session.registration_open !== false;
+      signupButtons.forEach(el => {
+        el.disabled = !registrationOpen;
+        el.setAttribute('aria-disabled', registrationOpen ? 'false' : 'true');
+        el.textContent = registrationOpen
+          ? (el.dataset.openLabel || 'REGISTER FREE')
+          : 'REGISTRATION CLOSED';
+      });
+    } catch (_) {}
+  }
+
+  hydratePublicSession();
+
+  function compactUtc(value) {
+    return new Date(value).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+  }
+
+  function buildGoogleCalendarUrl(result) {
+    if (!result.session_starts_at) return '';
+    const start = compactUtc(result.session_starts_at);
+    const end = compactUtc(result.session_ends_at || new Date(new Date(result.session_starts_at).getTime() + 2 * 60 * 60 * 1000));
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: result.session_title || 'CLASS[Λ] — The 0.01% Builders Masterclass',
+      dates: `${start}/${end}`,
+      details: 'Your personal CLASS[Λ] masterclass pass contains the latest room and attendance details.',
+      location: result.session_join_url || 'Online · Google Meet'
+    });
+    return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  }
+
+  function renderSession(result, code) {
+    if (sessionStatus) sessionStatus.textContent = `SESSION · ${String(result.session_status || 'planning').toUpperCase()}`;
+    if (sessionTitle) sessionTitle.textContent = result.session_title || 'CLASS[Λ] — The 0.01% Builders Masterclass';
+    if (sessionTime) sessionTime.textContent = formatSessionTime(result.session_starts_at, result.session_ends_at, result.session_timezone);
+    const personalUrl = `${location.origin}/class-a/pass.html#code=${encodeURIComponent(code)}`;
+    if (passLink) passLink.href = personalUrl;
+    const calendarUrl = buildGoogleCalendarUrl(result);
+    if (calendarLink) {
+      if (calendarUrl) {
+        calendarLink.href = calendarUrl;
+        calendarLink.hidden = false;
+      } else {
+        calendarLink.hidden = true;
+        calendarLink.removeAttribute('href');
+      }
+    }
+  }
+
+  function prepareWhatsappUnlock(result) {
+    pendingPass = result && result.unlock_token ? result : null;
+    if (whatsappChannel) whatsappChannel.href = WHATSAPP_CHANNEL_URL;
+    if (unlockPass) unlockPass.disabled = true;
+    if (followNote) followNote.textContent = 'Open the channel first. Your pass has not been released yet.';
+    if (followGate) followGate.hidden = false;
+    if (passReveal) passReveal.hidden = true;
+  }
+
+  whatsappChannel?.addEventListener('click', () => {
+    if (!pendingPass?.unlock_token) return;
+    if (unlockPass) unlockPass.disabled = false;
+    if (followNote) followNote.textContent = 'After following the channel, return here and tap “I’VE FOLLOWED — UNLOCK MY PASS”.';
+  });
+
+  unlockPass?.addEventListener('click', async () => {
+    if (!pendingPass?.unlock_token || unlockPass.disabled) return;
+    unlockPass.disabled = true;
+    if (followNote) followNote.textContent = 'Unlocking your personal CLASS[Λ] pass…';
+
+    try {
+      const response = await fetch(SUPABASE_URL + '/rest/v1/rpc/class_a_unlock_online_pass', {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          p_unlock_token: pendingPass.unlock_token,
+          p_follow_confirmed: true
+        })
+      });
+      if (!response.ok) throw new Error('Pass unlock failed (' + response.status + ')');
+      const rows = await response.json();
+      const result = Array.isArray(rows) ? rows[0] : rows;
+
+      if (!result || result.outcome === 'invalid_or_expired_unlock') {
+        if (followNote) followNote.textContent = 'This unlock window expired. Submit the registration again to restart the follow step.';
+        unlockPass.disabled = false;
+        return;
+      }
+      if (result.outcome !== 'unlocked' || !result.pass_code) {
+        if (followNote) followNote.textContent = 'Your pass could not be released. Please try the follow step again.';
+        unlockPass.disabled = false;
+        return;
+      }
+
+      if (passCode) passCode.textContent = result.pass_code;
+      if (confirmedAt) confirmedAt.textContent = 'Confirmed · ' + formatDhakaTime(result.confirmed_at) + ' · Bangladesh time';
+      renderSession(result, result.pass_code);
+      await drawQR(result.pass_code);
+      const personalUrl = location.origin + '/class-a/pass.html#code=' + encodeURIComponent(result.pass_code);
+      try { sessionStorage.setItem('class_a_last_pass_url', personalUrl); } catch (_) {}
+      if (followGate) followGate.hidden = true;
+      if (passReveal) passReveal.hidden = false;
+      pendingPass = null;
+    } catch (error) {
+      console.error(error);
+      if (followNote) followNote.textContent = 'Pass unlock failed. Check your connection and try again.';
+      unlockPass.disabled = false;
+    }
+  });
   document.querySelector('[data-copy-pass]')?.addEventListener('click', async () => {
     const code = passCode?.textContent?.trim();
     if (!code || code === '—') return;
@@ -273,8 +463,7 @@
 
   form?.addEventListener('submit', async event => {
     event.preventDefault();
-    const current = steps[step]?.querySelector('select, input:not(.honeypot)');
-    if (!current?.checkValidity()) { current?.reportValidity(); return; }
+    if (!form.checkValidity()) { form.reportValidity(); return; }
     const honeypot = form.querySelector('[name="company"]');
     if (honeypot?.value) return;
 
@@ -284,16 +473,17 @@
       p_phone: String(data.get('phone') || '').trim(),
       p_email: String(data.get('email') || '').trim(),
       p_skill_level: String(data.get('skill') || '').trim() || null,
-      p_source: 'class-a-builders-cinematic-v3'
+      p_source: 'class-a-online-masterclass-v2',
+      p_recording_consent: data.get('recording_consent') === 'yes'
     };
 
     status.classList.remove('is-error');
-    status.textContent = 'CONFIRMING YOUR SEAT…';
+    status.textContent = 'RESERVING YOUR REGISTRATION…';
     const submit = form.querySelector('.signup-submit');
     submit.disabled = true;
 
     try {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/class_a_register_confirmed`, {
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/class_a_register_online_gated`, {
         method: 'POST',
         headers: {
           apikey: SUPABASE_PUBLISHABLE_KEY,
@@ -306,21 +496,96 @@
       const result = Array.isArray(rows) ? rows[0] : rows;
       if (!result) throw new Error('No confirmation returned');
 
-      if (result.outcome === 'already_registered') {
-        status.textContent = `THIS EMAIL OR WHATSAPP IS ALREADY REGISTERED. YOUR EXISTING PASS ENDS IN ${result.redeem_code_last4 || '••••'}. CONTACT THE CLASS[Λ] TEAM IF YOU NEED THE FULL CODE AGAIN.`;
+      if (result.outcome === 'recording_consent_required') {
+        status.textContent = 'PLEASE ACCEPT THE RECORDING AND TRANSCRIPTION NOTICE TO JOIN THIS LIVE SESSION.';
         status.classList.add('is-error');
         return;
       }
-      if (result.outcome !== 'confirmed' || !result.redeem_code) throw new Error('Confirmation was not issued');
+      if (result.outcome === 'course_redirect') {
+        status.textContent = 'YOU HAVE ALREADY COMPLETED THE MASTERCLASS. TAKING YOU TO THE CLASS[Λ] COURSE…';
+        window.setTimeout(() => { location.href = './course.html?from=masterclass-returning'; }, 900);
+        return;
+      }
+      if (result.outcome === 'already_registered' || result.outcome === 'already_unlocked') {
+        status.textContent = 'YOU ARE ALREADY REGISTERED FOR THIS MASTERCLASS. USE YOUR EXISTING PASS. IF YOU NEED ACCESS RECOVERED, CONTACT THE CLASS[Λ] TEAM.';
+        status.classList.add('is-error');
+        return;
+      }
+      if (result.outcome === 'duplicate_confirmation_required') {
+        const registrationId = result.registration_id;
+        const duplicateProof = result.unlock_token;
+        if (!duplicateProof) {
+          throw new Error('Duplicate-resolution proof was not issued');
+        }
+        status.innerHTML = '<strong>YOU HAVE SIGNED UP BEFORE.</strong><br>Are you signing up again because you could not join the previous masterclass, or was this registration a mistake?<div class="duplicate-actions"><button type="button" class="button button-primary" data-duplicate-missed>YES — I MISSED THE PREVIOUS CLASS</button><button type="button" class="button button-ghost" data-duplicate-mistake>NO — THIS WAS A MISTAKE</button></div>';
+        const resolveDuplicate = async (reason) => {
+          status.textContent = reason === 'mistake' ? 'CANCELLING THIS EXTRA REGISTRATION…' : 'MOVING YOUR EXISTING REGISTRATION TO THE CURRENT MASTERCLASS…';
+          try {
+            const proofBoundReason = reason === 'missed_previous'
+              ? 'missed_previous:' + duplicateProof
+              : reason;
+            const duplicateResponse = await fetch(SUPABASE_URL + '/rest/v1/rpc/class_a_resolve_duplicate_registration', {
+              method: 'POST',
+              headers: { apikey: SUPABASE_PUBLISHABLE_KEY, 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                p_registration_id: registrationId,
+                p_reason: proofBoundReason,
+                p_recording_consent: payload.p_recording_consent
+              })
+            });
+            if (!duplicateResponse.ok) throw new Error('Duplicate resolution failed (' + duplicateResponse.status + ')');
+            const duplicateRows = await duplicateResponse.json();
+            const resolved = Array.isArray(duplicateRows) ? duplicateRows[0] : duplicateRows;
+            if (resolved?.outcome === 'duplicate_cancelled') {
+              status.textContent = 'NO PROBLEM. NOTHING NEW WAS CREATED. YOUR PREVIOUS REGISTRATION IS UNCHANGED.';
+              return;
+            }
+            if (resolved?.outcome === 'course_redirect') {
+              status.textContent = 'YOU HAVE ALREADY COMPLETED THE MASTERCLASS. TAKING YOU TO THE CLASS[Λ] COURSE…';
+              window.setTimeout(() => { location.href = './course.html?from=masterclass-returning'; }, 900);
+              return;
+            }
+            if (resolved?.outcome !== 'follow_required' || !resolved.unlock_token) throw new Error('Current-session pass was not issued');
+            steps.forEach(el => el.classList.remove('is-active'));
+            form.querySelector('.steps')?.setAttribute('hidden','');
+            form.querySelector('.signup-head')?.setAttribute('hidden','');
+            status.textContent = '';
+            success.hidden = false;
+            prepareWhatsappUnlock(resolved);
+            form.reset();
+          } catch (error) {
+            console.error(error);
+            status.textContent = 'WE COULD NOT CONFIRM YOUR CURRENT-SESSION REGISTRATION. PLEASE TRY AGAIN.';
+            status.classList.add('is-error');
+          }
+        };
+        status.querySelector('[data-duplicate-missed]')?.addEventListener('click', () => resolveDuplicate('missed_previous'));
+        status.querySelector('[data-duplicate-mistake]')?.addEventListener('click', () => resolveDuplicate('mistake'));
+        return;
+      }
+      if (result.outcome === 'identity_conflict') {
+        status.textContent = 'THIS EMAIL OR WHATSAPP IS ALREADY CONNECTED TO A DIFFERENT REGISTRATION IDENTITY. CONTACT THE CLASS[Λ] TEAM SO WE CAN VERIFY IT WITHOUT OVERWRITING ANYONE’S RECORD.';
+        status.classList.add('is-error');
+        return;
+      }
+      if (result.outcome === 'excluded_record') {
+        status.textContent = 'THIS RECORD IS NOT ELIGIBLE FOR LIVE ENROLLMENT. CONTACT THE CLASS[Λ] TEAM FOR REVIEW.';
+        status.classList.add('is-error');
+        return;
+      }
+      if (result.outcome === 'no_session') {
+        status.textContent = 'THE NEXT LIVE SESSION HAS NOT BEEN OPENED FOR ENROLLMENT YET. PLEASE TRY AGAIN AFTER THE CLASS[Λ] TEAM PUBLISHES IT.';
+        status.classList.add('is-error');
+        return;
+      }
+      if (result.outcome !== 'follow_required' || !result.unlock_token) throw new Error('Follow gate was not issued');
 
-      if (passCode) passCode.textContent = result.redeem_code;
-      if (confirmedAt) confirmedAt.textContent = `Confirmed · ${formatDhakaTime(result.confirmed_at)} · Bangladesh time`;
-      await drawQR(result.redeem_code);
       steps.forEach(el => el.classList.remove('is-active'));
       form.querySelector('.steps')?.setAttribute('hidden','');
       form.querySelector('.signup-head')?.setAttribute('hidden','');
       status.textContent = '';
       success.hidden = false;
+      prepareWhatsappUnlock(result);
       form.reset();
     } catch (error) {
       console.error(error);

@@ -4,20 +4,21 @@
 
 ## 1. Corporate identity
 
-**Category:** Opportunity Accelerator  
-**Corporate descriptor:** Education · Capability · Business · Community  
+**Company:** Last Bench  
+**Architecture descriptor:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X  
 **Brand promise:** **From where you are. To what you can build.**
 
-Last Bench is the umbrella platform. Malaysia is an active service within Education & Mobility, not the corporate backbone.
+Last Bench is the company. Malaysia is an active service within Education & Mobility, not the corporate backbone.
 
-The operating architecture is:
+The current JEV 2026.09.29 architecture is:
 
-1. **Education & Mobility — Access**: education pathways, university guidance, admissions/application support, visa/process guidance, pre-departure, settlement and student community.
-2. **CLASS[Λ] — Capability**: AI fluency, research, building, creation, growth, sales, automation and proof-of-work.
-3. **co.lab — Business & Growth**: brand development, business development, growth strategy, creative execution, creator/community systems, venture validation and automation.
-4. **Community + Platform — Connection & Continuity**: relationships, identity, verified progress, opportunity routing and long-term context across engines.
+1. **CLASS[Λ] — Human Lab**: builds builders through skill, execution and proof.
+2. **co.lab — Business Lab**: Ventures · Projects · Services · Community. ProjectX is Website Projects; Community contains Influencers · Ambassadors · Creators · Advisors.
+3. **Co.MPASS — Business Dashboard**: converges governed company evidence into context, clarity and direction.
+4. **Dr. X — Founder Second Brain / Twin**: governed memory, founder context, JEV judgment and reasoning.
+5. **Education & Mobility — operating/service domain**: education pathways, university guidance, admissions/application support, visa/process guidance, pre-departure, settlement and student community.
 
-These are **multiple entry points**, not a mandatory funnel. A student may enter Education; a learner may enter CLASS[Λ] directly; a founder or business may enter co.lab directly.
+These are **multiple entry points**, not a mandatory funnel. A student may enter an Education & Mobility service; a learner may enter CLASS[Λ] directly; a founder or business may enter co.lab directly.
 
 The strategic progression thesis is **Access → Capability → Creation → Ownership**, but the UI must never imply that a person is required to buy every stage.
 
@@ -30,7 +31,7 @@ The strategic progression thesis is **Access → Capability → Creation → Own
 | **Clarity first** | A person should understand where they are and what comes next. | Show current stage, next milestone, accountable owner and evidence where a journey is being tracked. |
 | **Truth builds trust** | Never make an uncertain process look guaranteed. | Label what is verified, what can change and what requires current confirmation. |
 | **Opportunity before feature** | Products exist to move someone toward a meaningful opportunity. | Explain the outcome before the tool, workflow or technology. |
-| **Multiple entry points** | Last Bench is an ecosystem, not one linear funnel. | Lead with the engine relevant to the user's actual intent. |
+| **Multiple entry points** | Last Bench is an ecosystem, not one linear funnel. | Lead with the lab/service/domain relevant to the user's actual intent. |
 | **Community compounds** | Relationships should grow in value over time. | Make referrals, alumni, mentoring and opportunity continuity visible only when real. |
 | **Technology serves humans** | AI and automation support judgment; they do not fabricate certainty. | Escalate high-stakes choices to humans and show reasoning/evidence. |
 | **Mobile first** | Key audiences often use mid-range Android phones and variable connections. | Large touch targets, progressive enhancement, restrained payloads, graceful fallback. |
@@ -43,12 +44,12 @@ The strategic progression thesis is **Access → Capability → Creation → Own
 A Last Bench corporate surface should explain the ecosystem in this order:
 
 1. **Brand truth** — the starting point is not the ceiling.
-2. **Category** — Last Bench is an Opportunity Accelerator.
-3. **Three operating engines** — Education & Mobility, CLASS[Λ], co.lab.
-4. **Connective layer** — Community + Platform.
+2. **Company** — Last Bench is the company.
+3. **Two laboratories** — CLASS[Λ] Human Lab and co.lab Business Lab.
+4. **Intelligence loop** — Co.MPASS converges governed evidence; Dr. X is the Founder Second Brain / Twin.
 5. **Multiple entry points** — people enter through the problem they actually have.
 6. **Proof and trust** — distinguish verified current operations from roadmap or proposed capability.
-7. **Relevant CTA** — route the user to the correct engine, not one universal sales funnel.
+7. **Relevant CTA** — route the user to the correct lab or service route, not one universal sales funnel.
 
 Corporate pages may show the whole system. They should not make Malaysia, CLASS[Λ] or co.lab appear to be the definition of Last Bench by itself.
 
@@ -56,7 +57,7 @@ Corporate pages may show the whole system. They should not make Malaysia, CLASS[
 
 ## 4. Education & Mobility design rule
 
-Education & Mobility is one engine inside Last Bench. The current active service is Malaysia Admissions.
+Education & Mobility is an operating/service domain inside Last Bench. The current active service is Malaysia Admissions.
 
 The Malaysia service should remain highly focused on the student and parent problem it solves.
 
@@ -100,7 +101,7 @@ Avoid guaranteed visa approval, guaranteed scholarship percentages, guaranteed a
 
 ## 5. CLASS[Λ] design boundary
 
-CLASS[Λ] is the capability accelerator and a distinct visual/product namespace.
+CLASS[Λ] is the Human Lab and a distinct visual/product namespace.
 
 Current product hierarchy:
 
@@ -109,7 +110,7 @@ Current product hierarchy:
 - Progression: **AI Driver → AI Builder → AI Creator → AI Operator → AI Founder.**
 - Final venture gates: **Select → Validate → Design → Automate → Launch.**
 
-Its visual system is cinematic, near-black, editorial and proof-led. Do not automatically inherit Last Bench green/white service-page styling into CLASS[Λ]. Likewise, CLASS[Λ]'s dark 3D language must not overwrite the parent brand or Education & Mobility surfaces.
+Its visual system is cinematic, near-black, editorial and proof-led. The latest approved art direction adds smoked dimensional UI panes, original Brand Green #00C853 as the active energy signal, a perspective technical coordinate floor, and cinematic mechanical reconfiguration between scroll states. The page should feel like one AI operating system assembling and transforming, not a stack of generic SaaS cards. Do not automatically inherit Last Bench green/white service-page styling into CLASS[Λ]. Likewise, CLASS[Λ]'s dark 3D language must not overwrite the parent brand or Education & Mobility surfaces.
 
 The core product principle is **proof > attendance; output > certificate**.
 
@@ -117,7 +118,7 @@ The core product principle is **proof > attendance; output > certificate**.
 
 ## 6. co.lab design boundary
 
-co.lab is the Business & Growth accelerator and a distinct visual/product namespace.
+co.lab is the Business Lab and a distinct visual/product namespace.
 
 Current positioning: **The Growth Operating System for Modern Brands.**
 
@@ -131,9 +132,9 @@ co.lab can serve founders and businesses directly. Its venture-gate method may s
 
 ---
 
-## 7. Community + Platform
+## 7. co.lab Community
 
-Community is the connective layer across the ecosystem, not merely another card in a product grid.
+Community is one of co.lab's four doors — Influencers, Ambassadors, Creators and Advisors — not a separate Last Bench architecture layer.
 
 The experience may connect students, learners, founders, businesses, alumni, tutors, creators, institutions and partners where the relationship is relevant and permissioned.
 
@@ -161,23 +162,52 @@ Private student documents belong in the approved authenticated storage path. Nev
 
 ---
 
-## 9. Bench AI
+## 9. Dr. X + interactive founder profiles
 
-Bench AI is a guidance layer, not an admissions oracle and not the corporate identity of Last Bench.
+**Dr. X is the single visible intelligence identity for Last Bench.** The previous public name **Bench AI is retired**. The legacy `landing/bench-ai.js` filename may remain only as a compatibility implementation detail and must not reappear as a user-facing assistant identity.
 
-Within the Malaysia service it may:
+### Public Dr. X role
 
-- explain the six-stage journey
-- help structure a university shortlist
-- compare profile, budget and intake constraints
-- explain common process concepts
-- identify missing questions/documents
-- route to Journey OS
-- escalate to a human
+Within Last Bench, Dr. X may:
 
-It must not invent current fees, visa probability, scholarship percentages, entry requirements, university partnership status or application status.
+- explain the Last Bench ecosystem and route people to Education & Mobility, CLASS[Λ], co.lab or the relevant partner path;
+- explain the six-stage Malaysia journey and help structure research questions;
+- help users compare profile, budget and intake constraints without fabricating volatile facts;
+- identify missing questions/documents and route authenticated users toward the Journey OS;
+- surface approved founder-profile information and provide an interactive profile experience;
+- escalate high-stakes or current-verification questions to the appropriate human owner.
 
-High-stakes guidance should identify what requires current official verification and where human judgment is needed.
+Dr. X must not invent current fees, visa probability, scholarship percentages, entry requirements, university partnership status, application status or any other high-trust fact.
+
+### Founder identity rule
+
+The founder profiles are **human-first real profiles**, not separate AI brands.
+
+Use the founders' full names:
+
+- **Sayem Ahmed** — Co-founder & CEO;
+- **Fahim Shahbaz Mahmud** — Co-founder & COO;
+- **Erfan Uddin** — Co-founder & Chief Business & Innovation Officer.
+
+Do not publish labels such as `Sayem AI`, `Fahim AI`, `Erfan AI`, `AI Twin` or `AI Clone` as the founder identity.
+
+Each interactive founder profile may carry the small sublabel **Powered by Dr. X**. On Erfan Uddin's profile, explicitly state **Also known as Dr. X**.
+
+### Founder source and trust rule
+
+Founder profile content must come from approved Last Bench identity assets, current canonical founder mandates and verified public/profile sources.
+
+- use approved real portraits; never generate or approximate a founder's face;
+- show an external LinkedIn/social/profile link only after its exact URL has been verified;
+- do not infer biography, achievements, companies, contact details or social accounts merely because a search result looks plausible;
+- generated interactive-profile replies are **not direct statements from the founder** unless an exact statement/source has been verified and attributed;
+- consequential requests must escalate to the human founder/team rather than fabricate personal authorization.
+
+### Privacy / scope boundary
+
+The public Last Bench Dr. X surface is a **project-scoped projection**, not access to Erfan's private Founder DR.X or global Second Brain.
+
+The browser must never receive unrestricted personal founder memory, unrelated venture context, credentials, internal strategy, private communications or cross-project data. Public founder interaction receives only the minimum approved Last Bench/public profile context required for the request.
 
 ---
 
@@ -277,7 +307,7 @@ The product should measure **people reaching the next meaningful stage with veri
 
 For every new feature ask:
 
-1. Which engine or connective layer owns this?
+1. Which lab/service/domain or governed system owns this?
 2. What opportunity does it accelerate?
 3. What is the next meaningful action?
 4. Who owns the outcome?
@@ -288,9 +318,9 @@ If those answers are unclear, do not add the feature to a primary user journey y
 
 ---
 
-## 16. Cross-engine cinematic experience law
+## 16. Cross-surface cinematic experience law
 
-The Last Bench ecosystem should feel like one premium product family without turning the three operating engines into visual clones.
+The Last Bench company should feel like one premium product family without turning the Human Lab, Business Lab or operating/service domains into visual clones.
 
 ### Shared cinematic grammar
 
@@ -352,7 +382,7 @@ Masterclass entry choreography:
 
 1. **Scene 01 — Reel:** the approved cinematic reel begins at black with 0.01%, offers **ENTER EXPERIENCE** and immediate **SKIP**, and enables sound only after user interaction.
 2. The reel plays as the opening scene, not as a detached splash screen.
-3. Around **23.6 seconds**, the reel freezes briefly and transforms into the interactive metallic 20 / orbital CLASS[Λ] system.
+3. Around **26.88 seconds**, the approved reel is cut on the final CLASS[Λ] lockup, before the Last Bench end card; the exact CLASS[Λ] mark holds briefly, then the website transforms into the interactive metallic 20 / orbital system.
 4. The narrative then progresses through **Command → Research → Build → Create → Sell → Operate**.
 5. Core transformation copy: **TURN AI INTO YOUR TEAM.**
 6. Outcome framing: **Build and run a one-person business with AI.**

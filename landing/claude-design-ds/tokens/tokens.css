@@ -13,4 +13,11 @@
   --lb-font-display: "General Sans", "Sora", system-ui, sans-serif;
   --lb-font-body: "Sora", "Hind Siliguri", system-ui, sans-serif;
   --lb-font-bengali: "Hind Siliguri", system-ui, sans-serif;
+
+  --lb-art-contour-opacity-light: .08;
+  --lb-art-contour-opacity-dark: .11;
+  --lb-art-green-share-max: 12%;
+  --lb-art-headline-lines-max: 4;
+  --lb-art-wave-fill: #111111;
+  --lb-art-wave-accent: #00C853;
 }
