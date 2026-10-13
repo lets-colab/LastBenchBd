@@ -39,7 +39,7 @@
 - [ ] Real production environment values are configured outside the repo where required.
 - [ ] Fresh login / returning session / logout tested when auth changes.
 - [ ] At least one authenticated API request tested when backend changes.
-- [ ] Netlify forms tested when conversion forms change.
+- [ ] Supabase intake tested when conversion forms change.
 - [ ] Database migration status explicitly verified when schema changes.
 
 ## Known gaps

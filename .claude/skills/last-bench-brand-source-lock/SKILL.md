@@ -169,7 +169,7 @@ The compositor, not the image generator, owns brand placement.
 Before any Last Bench design task, recall these locked facts from repository sources rather than memory:
 
 - Parent brand: Last Bench.
-- Category: Opportunity Accelerator.
+- Company: Last Bench.\n- Architecture: CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain / Twin.\n- Minimum current architecture: JEV 2026.09.29.
 - Visual law: Dark for emotion. White for trust. Green for progress.
 - Brand Green: `#00C853`.
 - Bright Green on dark: `#00E676`.

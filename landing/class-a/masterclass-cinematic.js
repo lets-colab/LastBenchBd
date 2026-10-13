@@ -245,7 +245,11 @@
     if (dialog.open && typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open');
     body.classList.remove('no-scroll');
   }
-  document.querySelectorAll('[data-open-signup]').forEach(btn => btn.addEventListener('click', openSignup));
+  const signupButtons = Array.from(document.querySelectorAll('[data-open-signup]'));
+  signupButtons.forEach(btn => {
+    if (!btn.dataset.openLabel) btn.dataset.openLabel = btn.textContent.trim();
+    btn.addEventListener('click', openSignup);
+  });
   document.querySelectorAll('[data-close-signup]').forEach(btn => btn.addEventListener('click', closeSignup));
   dialog?.addEventListener('click', event => { if (event.target === dialog) closeSignup(); });
 
@@ -335,12 +339,14 @@
       if (chip) chip.innerHTML = '<i></i> ' + day + ' · ' + startTime + ' · LIVE ONLINE';
       if (meta) meta.textContent = weekday + ' ' + day + ' · ' + startTime + (endTime ? '–' + endTime : '') + ' · GOOGLE MEET · FREE REGISTRATION';
       if (finalLine) finalLine.textContent = weekday + ' ' + day + ' · ' + startTime + (endTime ? '–' + endTime : '') + ' · Google Meet · Free registration';
-      if (session.registration_open === false) {
-        document.querySelectorAll('[data-open-signup]').forEach(el => {
-          el.disabled = true;
-          el.textContent = 'REGISTRATION CLOSED';
-        });
-      }
+      const registrationOpen = session.registration_open !== false;
+      signupButtons.forEach(el => {
+        el.disabled = !registrationOpen;
+        el.setAttribute('aria-disabled', registrationOpen ? 'false' : 'true');
+        el.textContent = registrationOpen
+          ? (el.dataset.openLabel || 'REGISTER FREE')
+          : 'REGISTRATION CLOSED';
+      });
     } catch (_) {}
   }
 
@@ -495,9 +501,66 @@
         status.classList.add('is-error');
         return;
       }
-      if (result.outcome === 'already_unlocked') {
-        status.textContent = 'YOU ARE ALREADY ENROLLED AND YOUR PASS HAS ALREADY BEEN UNLOCKED. USE YOUR EXISTING PASS, OR CONTACT THE CLASS[Λ] TEAM IF YOU NEED ACCESS RECOVERED.';
+      if (result.outcome === 'course_redirect') {
+        status.textContent = 'YOU HAVE ALREADY COMPLETED THE MASTERCLASS. TAKING YOU TO THE CLASS[Λ] COURSE…';
+        window.setTimeout(() => { location.href = './course.html?from=masterclass-returning'; }, 900);
+        return;
+      }
+      if (result.outcome === 'already_registered' || result.outcome === 'already_unlocked') {
+        status.textContent = 'YOU ARE ALREADY REGISTERED FOR THIS MASTERCLASS. USE YOUR EXISTING PASS. IF YOU NEED ACCESS RECOVERED, CONTACT THE CLASS[Λ] TEAM.';
         status.classList.add('is-error');
+        return;
+      }
+      if (result.outcome === 'duplicate_confirmation_required') {
+        const registrationId = result.registration_id;
+        const duplicateProof = result.unlock_token;
+        if (!duplicateProof) {
+          throw new Error('Duplicate-resolution proof was not issued');
+        }
+        status.innerHTML = '<strong>YOU HAVE SIGNED UP BEFORE.</strong><br>Are you signing up again because you could not join the previous masterclass, or was this registration a mistake?<div class="duplicate-actions"><button type="button" class="button button-primary" data-duplicate-missed>YES — I MISSED THE PREVIOUS CLASS</button><button type="button" class="button button-ghost" data-duplicate-mistake>NO — THIS WAS A MISTAKE</button></div>';
+        const resolveDuplicate = async (reason) => {
+          status.textContent = reason === 'mistake' ? 'CANCELLING THIS EXTRA REGISTRATION…' : 'MOVING YOUR EXISTING REGISTRATION TO THE CURRENT MASTERCLASS…';
+          try {
+            const proofBoundReason = reason === 'missed_previous'
+              ? 'missed_previous:' + duplicateProof
+              : reason;
+            const duplicateResponse = await fetch(SUPABASE_URL + '/rest/v1/rpc/class_a_resolve_duplicate_registration', {
+              method: 'POST',
+              headers: { apikey: SUPABASE_PUBLISHABLE_KEY, 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                p_registration_id: registrationId,
+                p_reason: proofBoundReason,
+                p_recording_consent: payload.p_recording_consent
+              })
+            });
+            if (!duplicateResponse.ok) throw new Error('Duplicate resolution failed (' + duplicateResponse.status + ')');
+            const duplicateRows = await duplicateResponse.json();
+            const resolved = Array.isArray(duplicateRows) ? duplicateRows[0] : duplicateRows;
+            if (resolved?.outcome === 'duplicate_cancelled') {
+              status.textContent = 'NO PROBLEM. NOTHING NEW WAS CREATED. YOUR PREVIOUS REGISTRATION IS UNCHANGED.';
+              return;
+            }
+            if (resolved?.outcome === 'course_redirect') {
+              status.textContent = 'YOU HAVE ALREADY COMPLETED THE MASTERCLASS. TAKING YOU TO THE CLASS[Λ] COURSE…';
+              window.setTimeout(() => { location.href = './course.html?from=masterclass-returning'; }, 900);
+              return;
+            }
+            if (resolved?.outcome !== 'follow_required' || !resolved.unlock_token) throw new Error('Current-session pass was not issued');
+            steps.forEach(el => el.classList.remove('is-active'));
+            form.querySelector('.steps')?.setAttribute('hidden','');
+            form.querySelector('.signup-head')?.setAttribute('hidden','');
+            status.textContent = '';
+            success.hidden = false;
+            prepareWhatsappUnlock(resolved);
+            form.reset();
+          } catch (error) {
+            console.error(error);
+            status.textContent = 'WE COULD NOT CONFIRM YOUR CURRENT-SESSION REGISTRATION. PLEASE TRY AGAIN.';
+            status.classList.add('is-error');
+          }
+        };
+        status.querySelector('[data-duplicate-missed]')?.addEventListener('click', () => resolveDuplicate('missed_previous'));
+        status.querySelector('[data-duplicate-mistake]')?.addEventListener('click', () => resolveDuplicate('mistake'));
         return;
       }
       if (result.outcome === 'identity_conflict') {

@@ -13,14 +13,19 @@ const activeFiles=[
  'PRODUCT.md','README.md','AGENT.md','AGENTS.md','design.md','SITE_BLUEPRINT.md',
  'CHATGPT_SITE_PUBLISH.md','content/CONTENT_OS.md','brand/last-bench/BRAND_BLUEPRINT.md',
  'brand/last-bench/ART_DIRECTION.md','design-system/README.md','design-system/tokens.json',
- 'landing/index.html','landing/lastbench-blueprint.js','landing/bench-ai.js'
+ 'landing/index.html','landing/malaysia/index.html','landing/lastbench-blueprint.js','landing/bench-ai.js'
 ];
 const retired=[
  /Last Bench is an Opportunity Accelerator/i,
  /three (?:independent )?operating engines/i,
  /Community \+ Platform connects/i,
  /CLASS\[Λ\] is the capability engine/i,
- /co\.lab is the business\s*&\s*growth engine/i
+ /co\.lab is the business\s*&\s*growth engine/i,
+ /Education & Mobility is (?:one |an )?operating engine/i,
+ /Community is the connective layer across the ecosystem/i,
+ /Community \+ Platform/i,
+ /Relevant engine: CLASS\[Λ\]/i,
+ /Relevant engine: co\.lab/i
 ];
 let failed=false;
 for(const file of activeFiles){

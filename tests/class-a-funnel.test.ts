@@ -21,8 +21,8 @@ const liveControlScript = read("live-control.js");
 
 describe("CLASS A signup funnel", () => {
   it("keeps all three routes linked", () => {
-    expect(landing).toContain('href="./class-a/"');
-    expect(landing).toContain("ENTER CLASS[Λ]");
+    expect(landing).toMatch(/href=["'](?:\.\/)?class-a\//);
+    expect(landing).toMatch(/Enter CLASS\[Λ\]/i);
     expect(hub).toContain('href="./masterclass.html"');
     expect(hub).toContain('href="./course.html"');
     expect(masterclass).toContain('href="./course.html"');
@@ -47,7 +47,8 @@ describe("CLASS A signup funnel", () => {
   it("uses required labelled forms and the accepted Supabase program values", () => {
     for (const page of [masterclass, course]) {
       expect(page.match(/ required/g)?.length).toBeGreaterThanOrEqual(4);
-      expect(page).toContain('netlify-honeypot="company"');
+      expect(page).not.toContain('data-netlify');
+      expect(page).not.toContain('netlify-honeypot');
       expect(page).toContain('data-signup-form');
       expect(page).toContain('role="status"');
       expect(page).toContain('role="alert"');
@@ -56,6 +57,18 @@ describe("CLASS A signup funnel", () => {
     expect(course).toContain('data-program="course"');
     expect(script).toContain("sb_publishable_");
     expect(script).not.toContain("SUPABASE_ANON_KEY");
+  });
+
+  it("separates duplicate course registration from a connection failure", () => {
+    expect(script).toContain("response.status === 409");
+    expect(script).toContain("APPLICATION MAY ALREADY EXIST.");
+    expect(script).toContain("Do not register again.");
+    expect(script).toContain("setStatus(errorBox)");
+    expect(course).toContain("data-error-title");
+    expect(course).toContain("data-error-message");
+    expect(course).toContain("APPLICATION NOT CONFIRMED.");
+    // Duplicate detection must never disclose an existing learner's identity.
+    expect(script).not.toContain("select=id,full_name,email");
   });
 
   it("preserves cinematic art direction and reduced-motion support", () => {
