@@ -1,26 +1,37 @@
-# The Skin Needs Co. — Private concept only
+# The Skin Needs Co. — Last Bench domain deployment mirror
 
-Prepared as a proposed co.lab / ProjectX concept under Last Bench.
+> **NON-CANONICAL DEPLOYMENT ARTIFACT.** The authoritative source lives under co.lab → ProjectX, in [`lets-colab/letscolab/projectx/clients/skin-needs/index.html`](https://github.com/lets-colab/letscolab/blob/feat/projectx-skin-needs-canonical/projectx/clients/skin-needs/index.html). Review the [Co.lab canonical source PR #11](https://github.com/lets-colab/letscolab/pull/11) before editing this artifact.
 
-## Status
-- The exact printed droplet/wordmark was extracted from the user's photograph of The Skin Needs Co. business card. This is **not** the owner's editable original brand master.
-- Brand colors use the business card cyan / white and complementary dark blue for readable text.
-- 138 candidate product families/lines in research evidence. **Zero** exact SKUs, quantities, prices or product authenticity claims approved.
-- Checkout, payments, customer accounts, order collection, loyalty and delivery are deliberately not implemented.
-- No owner endorsement is implied. Do not market this as an official site.
-- The WebGL scene uses a genuine 3D lathed droplet mesh with scroll-controlled rotation, and CSS 3D fallback when WebGL is unavailable; the latter was exercised in automated browser QA.
-- Reduced-motion fallback is present. Do not publish until checked on actual mobile WebGL, keyboard, accessibility, layout and merchant sign-off.
+## Hosting and publication
 
-## Local viewing
-Open `preview-standalone.html` directly in a modern browser. The preview has no external dependencies. The original source files remain in this package.
+- **Domain owner/host:** existing Last Bench deployment, target URL `https://lastbenchbd.com/showcase/skin-needs/`. Not yet released on that production route.
+- **Verified review preview:** https://deploy-preview-130--lastbenchbdd.netlify.app/showcase/skin-needs/
+- **Git identity proof:** both Co.lab canonical source and this mirror have the identical content Git blob SHA `fd37a233df4394c41d69a2e78b1791688989db9e`.
+- **Release method:** change canonical Co.lab file first; perform reviewed copy into this mirror; compare actual Git blob hashes; only then deploy. Automated cross-repository sync is **not configured**.
+- **Repo boundary:** No Last Bench homepage, private student app, payments, organization identity, or custom domain settings may be changed as a side effect of this client concept.
 
-## Skills
-The Last Bench repository already has Impeccable Design 4.5.2 and brand-source-lock installed; no new network installs were made.
+## Truth and access controls
 
-## Explicit release gates
-1. Merchant grants permission to use their identity in a public concept.
-2. Confirm clean master logo artwork and exact brand color values.
-3. Confirm WebGL animations on representative physical mobile and desktop browsers and fallback on low-power devices.
-4. Confirm product category descriptions do not claim SKU accuracy; no checkout until all SKU and operational gates pass.
-5. Verify GitHub Pages/Last Bench route does not overwrite or change other existing pages and CI/release smoke passes.
-6. Steve Jobs-inspired product-direction review can be performed; no claim that Steve Jobs personally endorsed or verified the site.
+- **Independent, non-transactional demonstration, not an official merchant store.** No merchant authorization confirmed.
+- **Brand:** existing printed card photograph supplies white water-drop and wordmark extraction, NOT a merchant-approved clean master/logo license; cyan/white palette is sampled.
+- **Product accuracy:** 138 observed candidate families and lines, **0 merchant-verified saleable SKUs**, and no verified inventory quantities, prices, ingredients, expiry or authenticity.
+- **Commerce:** checkout/payment/order collection/courier/CRM/POS are not built. Do not suggest otherwise.
+- **Graphics:** three scroll-controlled WebGL motion chapters, CSS fallback, reduced motion; representative physical hardware WebGL still needs inspection.
+- **Privacy:** noindex/nofollow and no customer capture. Respect merchant branding rights and consent.
+
+## Required gates before main-domain production release
+
+1. Merchant provides written approval for use of identity, scope, clean logo and colors.
+2. Independently verify motion on actual low-power mobile, desktop, keyboard/screen reader and reduced-motion environments.
+3. Use an actual owner-approved SKU, prices and stock ledger before transactional commerce.
+4. Resolve all relevant failed builds with actual evidence and verify main-domain route plus existing Last Bench functionality.
+5. Compare canonical Co.lab source and mirrored Last Bench artifact SHA **at release time**.
+6. Run JeX/JEVGate checks, record actual evidence, and obtain founder approval for publication.
+
+Any claim that Steve Jobs personally verified the site would be false; a Steve Jobs-inspired product-direction review is an optional quality lens.
+
+## Smoke and regression test
+
+`node --test scripts/skin-needs-preview.test.mjs` in this repo checks the hosting artifact's nontransactional, identity, 3D fallback and catalog invariants. Co.lab maintains the canonical source/test under `projectx/clients/skin-needs/`.
+
+**This is a draft PR, not a production approved release.**
