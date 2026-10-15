@@ -12,7 +12,8 @@ Turn the Last Bench brand strategy into clear, credible and consistent content a
 - **Company:** Last Bench.
 - **Brand promise:** From where you are. To what you can build.
 - **Architecture:** CLASS[Λ] Human Lab / co.lab Business Lab / Co.MPASS Business Dashboard / Dr. X Founder Second Brain.
-- **Flywheel:** build builders → incubate/accelerate businesses → evidence → Co.MPASS → Dr. X decision → learning back into both labs.
+- **Founder outcome:** teach practical skills → build visible proof → help one person build, launch and operate a one-person AI-powered business.
+- **Flywheel:** Learn to Build in CLASS[Λ] → Build & Get Accelerated in co.lab → evidence → Co.MPASS → Dr. X decision → learning back into both labs.
 - **Non-duplication:** patch canonical resources; never create parallel truth systems to represent the architecture.
 
 ### Education & Mobility
@@ -21,15 +22,15 @@ Turn the Last Bench brand strategy into clear, credible and consistent content a
 - **Malaysia is one service inside Education & Mobility, not the backbone or definition of Last Bench.**
 
 ### CLASS[Λ]
-- **Role:** Human Lab — builds builders through skill, execution and proof.
+- **Role:** Human Lab — **Learn to Build** through skill, execution and proof.
 - **Current offer:** free Class 0 + 20-Class One-Person Venture Builder.
 - **Doctrine:** proof > attendance; output > certificate.
 
 ### co.lab
-- **Role:** Business Lab.
+- **Role:** Business Lab — **Build & Get Accelerated**.
 - **Doors:** Ventures · Projects · Services · Community.
-- **Ventures:** businesses incubated/accelerated from the CLASS[Λ] founder pathway.
-- **Projects:** ProjectX = Website Projects.
+- **Ventures:** businesses incubated/accelerated from the CLASS[Λ] founder pathway or admitted independently when appropriate.
+- **Projects:** defined build work. **ProjectX is one incubated student product associated with Abdul Moontakim (Moon Takim); it is not the Projects category and it is not co.lab itself.**
 - **Services:** repeatable brand, business and growth capabilities.
 - **Community:** Influencers · Ambassadors · Creators · Advisors.
 - **Sequence:** Collaboration → Connection → Community.
