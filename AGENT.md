@@ -14,8 +14,8 @@ Last Bench is the umbrella platform. It is not defined by Malaysia, admissions, 
 
 Canonical architecture:
 
-1. **CLASS[Λ] — Human Lab:** builds builders through skill, execution and proof.
-2. **co.lab — Business Lab:** four doors — Ventures, Projects, Services, Community. Ventures are CLASS[Λ]-originated businesses formally admitted for incubation/acceleration. ProjectX = Website Projects. Community = Influencers, Ambassadors, Creators, Advisors.
+1. **CLASS[Λ] — Human Lab / Learn to Build:** builds practical capability through skill, execution and proof.
+2. **co.lab — Business Lab / Build & Get Accelerated:** four doors — Ventures, Projects, Services, Community. Ventures may originate from CLASS[Λ] or be admitted independently when appropriate. ProjectX is one incubated student product associated with Abdul Moontakim (Moon Takim); it is not the Projects category and it is not co.lab itself. Community = Influencers, Ambassadors, Creators, Advisors.
 3. **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction.
 4. **Dr. X — Founder Second Brain / Twin:** governed memory, Founder Twin context, JEV judgment and reasoning for founder decisions.
 5. **Education & Mobility:** real operating/service domain inside Last Bench; not a separate top-level lab.
@@ -27,6 +27,8 @@ The Malaysia service promise remains: **help Bangladeshi students study, settle 
 Do not turn that service promise into the parent-company definition.
 
 The company is a learning flywheel, not a mandatory funnel: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved labs → new evidence.**
+
+Current founder outcome lock: **teach practical skills → build visible proof → help one person build, launch and operate a one-person AI-powered business.** This is a capability/incubation goal, not a guarantee of business success.
 
 Non-negotiable product principles:
 

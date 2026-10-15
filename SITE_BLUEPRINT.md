@@ -16,8 +16,8 @@
 
 ### Public descriptor
 
-**CLASS[Λ] builds builders.**  
-**co.lab builds, incubates and accelerates businesses.**  
+**CLASS[Λ] — Learn to Build.**  
+**co.lab — Build & Get Accelerated.**  
 **Co.MPASS converges company evidence.**  
 **Dr. X is the Founder Second Brain / Twin.**
 
@@ -37,13 +37,14 @@ Last Bench is the umbrella opportunity-acceleration platform. It is **not** defi
 
 Last Bench uses **two primary laboratories and one intelligence loop**:
 
-1. **CLASS[Λ] — Human Lab**  
-   Builds builders through skill, execution and proof.
+1. **CLASS[Λ] — Human Lab / Learn to Build**  
+   Builds practical capability through skill, execution and proof.
 
-2. **co.lab — Business Lab**  
+2. **co.lab — Business Lab / Build & Get Accelerated**  
    Four doors: **Ventures · Projects · Services · Community**.
-   - Ventures = CLASS[Λ]-originated businesses incubated / accelerated.
-   - Projects = defined build work; **ProjectX = Website Projects**.
+   - Ventures = businesses incubated / accelerated from CLASS[Λ] or admitted independently when appropriate.
+   - Projects = defined build work.
+   - **ProjectX = one incubated student product associated with Abdul Moontakim (Moon Takim); it is not the Projects category and it is not co.lab itself.**
    - Services = repeatable brand, business and growth capabilities.
    - Community = Influencers · Ambassadors · Creators · Advisors.
 
@@ -52,6 +53,12 @@ Last Bench uses **two primary laboratories and one intelligence loop**:
 
 4. **Dr. X — Founder Second Brain / Twin**  
    Uses governed memory, Founder Twin context, JEV judgment and reasoning to support founder decisions.
+
+### Founder outcome — 15 October 2026 lock
+
+**Teach practical skills → build visible proof → help one person build, launch and operate a one-person AI-powered business.**
+
+This is the intended capability/incubation outcome. It must never be presented as guaranteed profit, revenue, investment or business success.
 
 ### Canonical flywheel
 

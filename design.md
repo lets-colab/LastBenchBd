@@ -12,8 +12,8 @@ Last Bench is the company. Malaysia is an active service within Education & Mobi
 
 The current JEV 2026.09.29 architecture is:
 
-1. **CLASS[Λ] — Human Lab**: builds builders through skill, execution and proof.
-2. **co.lab — Business Lab**: Ventures · Projects · Services · Community. ProjectX is Website Projects; Community contains Influencers · Ambassadors · Creators · Advisors.
+1. **CLASS[Λ] — Human Lab / Learn to Build**: builds practical capability through skill, execution and proof.
+2. **co.lab — Business Lab / Build & Get Accelerated**: Ventures · Projects · Services · Community. ProjectX is one incubated student product associated with Abdul Moontakim (Moon Takim), not the Projects category or co.lab itself; Community contains Influencers · Ambassadors · Creators · Advisors.
 3. **Co.MPASS — Business Dashboard**: converges governed company evidence into context, clarity and direction.
 4. **Dr. X — Founder Second Brain / Twin**: governed memory, founder context, JEV judgment and reasoning.
 5. **Education & Mobility — operating/service domain**: education pathways, university guidance, admissions/application support, visa/process guidance, pre-departure, settlement and student community.

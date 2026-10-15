@@ -12,7 +12,7 @@ Repository: `lets-colab/LastBenchBd`
 **Official tagline:** **Creating a Lasting Benchmark**  
 **Approved slogan in the current design system:** **From Last Bench. To The World.**
 
-Last Bench is the company. CLASS[Λ] builds builders; co.lab incubates, accelerates and grows businesses; Co.MPASS converges governed company evidence into context and direction; Dr. X is the Founder Second Brain / Twin that reasons and decides. Education & Mobility remains an operating/service domain rather than a separate top-level engine in the locked architecture.
+Last Bench is the company. CLASS[Λ] is the Human Lab where people **Learn to Build**; co.lab is the Business Lab where ventures **Build & Get Accelerated**; Co.MPASS converges governed company evidence into context and direction; Dr. X is the Founder Second Brain / Twin that reasons and supports decisions. Education & Mobility remains an operating/service domain rather than a separate top-level engine in the locked architecture.
 
 ## 2. Brand architecture
 
@@ -26,7 +26,7 @@ Human Lab inside Last Bench. It builds builders through skill, execution and pro
 
 ### co.lab
 
-Business Lab inside Last Bench. Its four doors are Ventures, Projects, Services and Community. ProjectX is Website Projects. Its canonical brand assets and blueprint live in the separate `lets-colab/letscolab` repository.
+Business Lab inside Last Bench. Its four doors are Ventures, Projects, Services and Community. ProjectX is one incubated student product associated with Abdul Moontakim (Moon Takim); it is not the Projects category and it is not co.lab itself. Its canonical brand assets and blueprint live in the separate `lets-colab/letscolab` repository.
 
 Shared ownership does **not** mean identical visual treatment.
 
