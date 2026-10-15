@@ -10,7 +10,7 @@
 
 <p align="center">From where you are. To what you can build.</p>
 
-<p align="center">Last Bench is the company. CLASS[Λ] builds builders. co.lab incubates, accelerates and grows businesses through Ventures, Projects, Services and Community. Co.MPASS converges governed evidence. Dr. X is the Founder Second Brain / Twin.</p>
+<p align="center">Last Bench is the company. CLASS[Λ] is where people Learn to Build. co.lab is where ventures Build &amp; Get Accelerated through Ventures, Projects, Services and Community. Co.MPASS converges governed evidence. Dr. X is the Founder Second Brain / Twin.</p>
 
 <p align="center">
   <a href="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml"><img src="https://github.com/lets-colab/LastBenchBd/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
@@ -21,11 +21,14 @@
 
 ## Business architecture
 
-- **CLASS[Λ] — Human Lab:** builds builders through capability, execution and proof.
-- **co.lab — Business Lab:** Ventures · Projects · Services · Community. ProjectX = Website Projects.
+- **CLASS[Λ] — Human Lab / Learn to Build:** builds practical capability through execution and proof.
+- **co.lab — Business Lab / Build & Get Accelerated:** Ventures · Projects · Services · Community.
+- **ProjectX:** one incubated student product associated with Abdul Moontakim (Moon Takim); not the Projects category and not co.lab itself.
 - **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction.
 - **Dr. X — Founder Second Brain / Twin:** governed memory, founder context, JEV judgment and reasoning for decisions.
 - **Education & Mobility:** an operating/service domain inside Last Bench; Malaysia Admissions is one current service.
+
+Founder outcome: **teach practical skills → build visible proof → help one person build, launch and operate a one-person AI-powered business.**
 
 Flywheel: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved labs → new evidence.**
 
