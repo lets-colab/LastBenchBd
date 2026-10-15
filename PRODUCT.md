@@ -10,16 +10,25 @@
 
 Last Bench is the company. Its current locked architecture is a learning flywheel rather than a three-engine hierarchy.
 
-1. **CLASS[Λ] — Human Lab:** builds builders through skill, execution and proof.
-2. **co.lab — Business Lab:** incubates, accelerates and grows businesses through four doors:
-   - **Ventures:** businesses incubated or accelerated from the CLASS[Λ] founder pathway.
-   - **Projects:** defined build work; **ProjectX = Website Projects**.
+1. **CLASS[Λ] — Human Lab / Learn to Build:** builds practical capability through skill, execution and proof.
+2. **co.lab — Business Lab / Build & Get Accelerated:** helps ventures and businesses build, commercialize, systemize and accelerate through four doors:
+   - **Ventures:** businesses incubated or accelerated from the CLASS[Λ] founder pathway or admitted independently when appropriate.
+   - **Projects:** defined build work. **ProjectX is one incubated student product associated with Abdul Moontakim (Moon Takim); it is not the Projects category and it is not co.lab itself.**
    - **Services:** repeatable brand, business and growth capabilities.
    - **Community:** Influencers · Ambassadors · Creators · Advisors.
 3. **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction. It does not replace source systems or founder judgment.
 4. **Dr. X — Founder Second Brain / Twin:** combines governed memory, Founder Twin context, JEV judgment and reasoning to support founder decisions.
 
 Business-facing loop: **CLASS[Λ] + co.lab activity → governed evidence → Co.MPASS → Dr. X → decision → improved CLASS[Λ] + co.lab → new evidence.**
+
+### Founder outcome — 15 October 2026 lock
+
+The intended progression is: **teach practical skills → build visible proof → help one person build, launch and operate a one-person AI-powered business.** This is a capability-and-incubation outcome, not a guarantee of profit, revenue or startup success.
+
+Public shorthand:
+- **CLASS[Λ] = Learn to Build**
+- **co.lab = Build & Get Accelerated**
+- **ProjectX = one incubated student product associated with Abdul Moontakim (Moon Takim), not co.lab itself.**
 
 Education & Mobility remains a real operating/service domain inside Last Bench. It must not silently recreate the superseded “three engines + connective layer” architecture.
 
