@@ -11,7 +11,7 @@ describe('Company gateway and Malaysia route separation',()=>{
   const page=read('landing/index.html');
   expect(page).toContain('href="malaysia/"');
   expect(page).toContain('href="class-a/"');
-  expect(page).toContain('https://colab-growth-os.onrender.com/');
+  expect(page).toContain('https://co-lab-growth-os.lovable.app/');
   expect(page).toContain('Malaysia · Student Mobility');
   expect(page).toContain('CLASS[Λ] · HUMAN LAB');
   expect(page).toContain('co.lab · BUSINESS LAB');
