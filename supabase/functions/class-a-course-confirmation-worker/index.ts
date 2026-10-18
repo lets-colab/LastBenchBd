@@ -38,7 +38,8 @@ async function mail(to:string,name:string,registrationId:number){
   const r=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:`Bearer ${key}`,"Content-Type":"application/json"},body:JSON.stringify({from:FROM,to:[to],subject:"CLASS[Λ] — Application received",html,text})});
   const body=await r.json().catch(()=>({}));
   if(!r.ok) throw new Error(`email_failed:${body.message||r.status}`);
-  return String(body.id||"resend");
+  if(!body.id) throw new Error("provider_email_id_missing_delivery_uncertain");
+  return String(body.id);
 }
 
 Deno.serve(async(req)=>{
@@ -66,7 +67,8 @@ Deno.serve(async(req)=>{
       await c.from("class_a_signup_events").update({email_status:"sent",email_sent_at:new Date().toISOString(),email_external_ref:ref,email_last_error:null}).eq("id",e.id);
       out.sent++;
     }catch(err){
-      await c.from("class_a_signup_events").update({email_status:"failed",email_attempts:(Number(e.email_attempts)||0)+1,email_last_error:String(err)}).eq("id",e.id);
+      const uncertain=String(err).includes("delivery_uncertain");
+      await c.from("class_a_signup_events").update({email_status:uncertain?"processing":"failed",email_attempts:uncertain?e.email_attempts:(Number(e.email_attempts)||0)+1,email_last_error:String(err)}).eq("id",e.id).eq("email_status","processing");
       out.failed++;
     }
   }
