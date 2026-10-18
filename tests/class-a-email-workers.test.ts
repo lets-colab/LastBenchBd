@@ -32,7 +32,9 @@ describe("CLASS[Λ] locked transactional email contract", () => {
     expect(shared).toContain("#222525");
     expect(shared).toContain("#101110");
     expect(shared).toContain("#1C2620");
-    expect(shared).toContain("https://lastbenchbd.com/assets/logo-full.png");
+    expect(shared).toContain("https://lastbenchbd.com/assets/logo-icon.png");
+    expect(shared).not.toContain("assets/logo-full.png");
+    expect(shared).not.toContain("background:#FFFFFF");
   });
 
   it("renders a readable mobile-safe dark email with approved parent logo endorsement", () => {
@@ -43,8 +45,9 @@ describe("CLASS[Λ] locked transactional email contract", () => {
     expect(html).toContain("background:#222525");
     expect(html).toContain("background:#1C2620");
     expect(html).toContain("APPLICATION<br>RECEIVED.");
-    expect(html).toContain('alt="Last Bench — Creating a Lasting Benchmark"');
-    expect(html).toContain("background:#101110;border-radius:5px");
+    expect(html).toContain('alt="Last Bench official green bench and rising-arrow icon — Creating a Lasting Benchmark"');
+    expect(html).toContain("width:52px;max-width:100%;height:auto");
+    expect(html).not.toContain("background:#FFFFFF");
     expect(html).toContain("CLASS[Λ]");
     expect(html).toContain("CLASS[Λ] · Last Bench");
     expect(html).toContain("padding:15px 22px");

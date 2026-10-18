@@ -49,7 +49,7 @@ describe("CLASS[Λ] notification fail-closed worker", () => {
     expect(due).toContain('completion_not_verified');
   });
   it("uses official brand and escapes learner-provided text", () => {
-    expect(email).toContain('https://lastbenchbd.com/assets/logo-full.png');
+    expect(email).toContain('https://lastbenchbd.com/assets/logo-icon.png');
     expect(email).toContain("Creating a Lasting Benchmark");
     expect(source).toContain("CLASS[Λ]");
     expect(email).toContain('#00C853');
