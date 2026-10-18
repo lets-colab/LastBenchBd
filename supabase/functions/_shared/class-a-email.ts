@@ -46,7 +46,7 @@ export function renderClassAEmail(input: {title:string;body:string;eyebrow?:stri
     '<h1 style="margin:0 0 24px;color:#FFFFFF;font-size:36px;line-height:1.11;letter-spacing:-.65px;font-weight:800">' + heading + '</h1>',
     '<div style="color:#D0D7D1;font-size:15px;line-height:1.72">' + input.body + '</div>',
     '</td></tr><tr><td style="padding:22px 28px 30px"><div style="border-top:1px solid #354139;padding-top:20px;color:#BCC9C0;font-size:12px;line-height:1.7">',
-    '<img src="https://lastbenchbd.com/assets/logo-full.png" alt="Last Bench — Creating a Lasting Benchmark" width="140" style="display:block;max-width:70%;height:auto;background:#FFFFFF;border-radius:5px;padding:7px;margin-bottom:13px;border:0">',
+    '<img src="https://lastbenchbd.com/assets/logo-full.png" alt="Last Bench — Creating a Lasting Benchmark" width="140" style="display:block;max-width:70%;height:auto;background:#101110;border-radius:5px;padding:7px;margin-bottom:13px;border:0">',
     'CLASS[Λ] · Last Bench<br><a href="mailto:info@lastbenchbd.com" style="color:#89E3A6;text-decoration:underline">info@lastbenchbd.com</a>',
     '</div></td></tr></table></td></tr></table></body></html>'
   ].join("");
