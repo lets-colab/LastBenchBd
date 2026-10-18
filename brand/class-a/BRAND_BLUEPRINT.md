@@ -135,6 +135,8 @@ The mandatory visual guardrail remains:
 
 ## 10. Outbound email design lock — CLASS[Λ] × LAST BENCH
 
+> **Receipt exception and precedence (owner-approved 11 October 2026):** The CLASS[Λ] payment-receipt artwork has a separate, older and **more specific** approved Bangladesh National Parliament/Jatiya Sangsad design. The exact receipt lock is [`PARLIAMENT_RECEIPT_LOCK.md`](PARLIAMENT_RECEIPT_LOCK.md). This section governs the *email body* around the PDF; it DOES NOT authorize a generic dark or white PDF replacing the Parliament-themed receipt. The payment-receipt worker must fail closed while the approved data-driven Parliament renderer is absent. Check the visual reference before drawing or sending any receipt.
+
 **Owner-approved:** 18 October 2026. **Scope:** CLASS[Λ] transactional and lifecycle email only; not the Last Bench corporate site, Education & Mobility, co.lab, or other brands. This section is the canonical design rule for future CLASS[Λ] email drafting, HTML template changes, email previews, and branded email PDF attachments. Supersede this visual system only with explicit new owner approval.
 
 ### Visual reference and appearance
