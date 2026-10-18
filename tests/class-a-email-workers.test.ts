@@ -155,6 +155,9 @@ describe("CLASS[Λ] locked transactional email contract", () => {
     expect(migration).toContain("a.evidence_type in ('meet_report','staff_code')");
     expect(migration).toContain("s.analysis_summary ->> 'after_class_pack_url'");
     expect(migration).toContain("class_a_postclass_requires_processing_claim");
+    expect(migration).toContain("new.last_error like 'completion_gate_moved_to_governed_followup:send_failed:%delivery_uncertain%'");
+    expect(migration).toContain("old.status = 'processing'");
+    expect(migration).toContain("new.status = 'processing'");
     expect(migration).toContain("new.status := 'skipped'");
     expect(migration).toContain("revoke all on function");
   });
