@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import {classAButton,classAPlainText,classAStatusCard,renderClassAEmail} from "../_shared/class-a-email.ts";
 
 type Row = Record<string, any>;
 const SITE = "https://lastbenchbd.com/class-a";
@@ -35,8 +36,9 @@ function bdTime(value?: string | null) {
 
 function escapeHtml(input:unknown){return String(input??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]||c));}
 function safeLink(raw:string){try{const url=new URL(raw);return url.protocol==="https:"?url.toString():"";}catch{return "";}}
-const OFFICIAL_LOGO="https://lastbenchbd.com/assets/logo-full.png";
-function brandedEmail(body:string){return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:#F2F3F1;color:#111111;font-family:Arial,Helvetica,sans-serif"><table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#F2F3F1;border-collapse:collapse"><tr><td align="center" style="padding:24px 12px"><table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;background:#FAFAF8;border-collapse:collapse;border:1px solid #DBE4DD"><tr><td style="height:6px;background:#00C853"></td></tr><tr><td style="padding:28px 28px 0"><img alt="Last Bench — Creating a Lasting Benchmark" src="${OFFICIAL_LOGO}" width="170" style="display:block;width:170px;max-width:70%;height:auto;border:0"></td></tr><tr><td style="padding:24px 28px;font-size:15px;line-height:1.65"><p style="font-size:12px;font-weight:700;letter-spacing:1.5px;color:#44624C">CLASS[Λ] · HUMAN LAB</p>${body}</td></tr><tr><td style="padding:16px 28px 28px;border-top:1px solid #CBD7CF;color:#55635B;font-size:12px">CLASS[Λ] · Last Bench · <a href="mailto:info@lastbenchbd.com">info@lastbenchbd.com</a></td></tr></table></td></tr></table></body></html>`;}
+function brandedEmail(body:string,title:string){
+  return renderClassAEmail({title,eyebrow:"CLASS[Λ] SESSION UPDATE",body});
+}
 
 // Slack public channels start with C. Send only to direct messages or private channels.
 // Incoming webhooks have opaque destinations and cannot satisfy this proof gate.
@@ -68,16 +70,14 @@ function calendarUrl(session:Row) {
 }
 
 function button(label:string,href?:string|null) {
-  const safe=href?safeLink(href):"";
-  if(!safe) return "";
-  return `<p><a href="${safe}" style="display:inline-block;padding:13px 20px;border-radius:999px;background:#00C853;color:#001b0b;text-decoration:none;font-weight:800">${label}</a></p>`;
+  return classAButton(label,href);
 }
 
 function emailCopy(kind:string,name:string,session:Row) {
   name=escapeHtml(name);
   const when=session?.starts_at?escapeHtml(bdTime(session.starts_at))+" Bangladesh time":"Schedule pending";
   const join=session?.join_url||SITE+"/pass.html";
-  const common=`<p><strong>Session:</strong> ${escapeHtml(session?.title||"CLASS[Λ] Masterclass")}<br><strong>Time:</strong> ${when}</p>`;
+  const common=classAStatusCard([["Session",session?.title||"CLASS[Λ] Masterclass"],["Time",session?.starts_at?bdTime(session.starts_at)+" Bangladesh time":"Schedule pending"]]);
   const packUrl=String(session?.analysis_summary?.after_class_pack_url||"");
   const recordingUrl=String(session?.recording_url||"");
   const transcriptUrl=String(session?.transcript_url||"");
@@ -109,10 +109,19 @@ function emailCopy(kind:string,name:string,session:Row) {
   };
   const copy=map[kind];
   if(!copy) throw new Error(`unsupported_notification_type:${kind}`);
-  return {...copy,html:brandedEmail(copy.html)};
+  const titles:Record<string,string>={
+    registration_confirmation:"MASTERCLASS\nREGISTRATION.",
+    calendar_invite:"ADD YOUR\nCLASS.",
+    reminder_24h:"YOUR CLASS\nSTARTS TOMORROW.",
+    reminder_6h:"CLASS STARTS\nIN 6 HOURS.",
+    room_open:"YOUR LIVE ROOM\nIS OPENING.",
+    post_class_followup:"YOUR AFTER-CLASS\nPACK."
+  };
+  return {...copy,html:brandedEmail(copy.html,titles[kind]||"CLASS[Λ]\nUPDATE.")};
 }
 
 function courseRegistrationCopy(name:string) {
+  name=escapeHtml(name);
   return {
     subject:"CLASS[Λ] — Course registration received",
     html:`<p>Hi ${name},</p><p>We received your CLASS[Λ] course registration successfully.</p><p>This confirms that your registration details are in the Last Bench system. Registration is separate from payment or final enrollment; those states require their own evidence.</p>${button("OPEN COURSE DETAILS",SITE+"/course.html")}<p>If you already completed a payment or enrollment step, keep the receipt or confirmation until it is reconciled with the official record.</p>`
@@ -124,7 +133,7 @@ async function sendEmail(to:string,subject:string,html:string) {
   const res=await fetch("https://api.resend.com/emails",{
     method:"POST",
     headers:{Authorization:`Bearer ${RESEND_API_KEY}`,"Content-Type":"application/json"},
-    body:JSON.stringify({from:EMAIL_FROM,to:[to],subject,html})
+    body:JSON.stringify({from:EMAIL_FROM,to:[to],subject,html,text:classAPlainText(html)})
   });
   const body=await res.json().catch(()=>({}));
   if(!res.ok) throw new Error(`email_failed:${body.message||res.status}`);
