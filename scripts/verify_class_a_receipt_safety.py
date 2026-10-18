@@ -55,6 +55,7 @@ proof_source = source_path.read_text(encoding="utf-8")
 tree = ast.parse(proof_source)
 assert "a016f74abf76b2a1d54aeee113ef9c279a8bd21fc231f6b870dbcf326161a60d" in proof_source
 assert "Refusing image: approved sanitized reference SHA256 mismatch" in proof_source
+assert "Image.open(io.BytesIO(data))" in proof_source and "Image.open(reference)" not in proof_source
 assert "Cannot overwrite the locked, sanitized reference image" in proof_source
 assert "DEMO - NOT ISSUED" in proof_source
 assert "SAMPLE NOT VALID" in proof_source
