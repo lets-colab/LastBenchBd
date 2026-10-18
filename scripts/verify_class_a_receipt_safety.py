@@ -46,3 +46,34 @@ for label,haystack,needle in [
     if needle.casefold() not in haystack.casefold():
         raise SystemExit(f"FAIL: {label}")
 print("PASS: receipt-specific Parliament design lock and fail-closed gate")
+
+# The private design-proof workflow must never accept a real learner record or
+# an unapproved screenshot. Validate its input guard without importing Pillow.
+import ast
+source_path = Path("scripts/class_a_receipt_design_proof.py")
+proof_source = source_path.read_text(encoding="utf-8")
+tree = ast.parse(proof_source)
+assert "a016f74abf76b2a1d54aeee113ef9c279a8bd21fc231f6b870dbcf326161a60d" in proof_source
+assert "Refusing image: approved sanitized reference SHA256 mismatch" in proof_source
+assert "DEMO - NOT ISSUED" in proof_source
+assert "SAMPLE NOT VALID" in proof_source
+assert "The official receipt issuing gate remains disabled." in proof_source
+assert "status:\"sent\"" not in proof_source
+validator = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name=="valid_test_values")
+import re
+namespace={"re":re}
+exec(compile(ast.fix_missing_locations(ast.Module(body=[validator],type_ignores=[])),"proof-validator","exec"),namespace)
+v=namespace["valid_test_values"]
+v("Sample Learner Alpha","sample.a@example.invalid.test","DEMO-ALPHA-01")
+for invalid in (
+    ("Real Recipient","sample.a@example.invalid.test","DEMO-01"),
+    ("Sample Learner Alpha","real@gmail.com","DEMO-01"),
+    ("Sample Learner Alpha","sample.a@example.invalid.test","LB-2026-44"),
+):
+    try:
+        v(*invalid)
+    except ValueError:
+        pass
+    else:
+        raise SystemExit("FAIL: synthetic proof accepted non-test values")
+print("PASS: Parliament preview proof source, PII test guards, and SHA-pinned input")
