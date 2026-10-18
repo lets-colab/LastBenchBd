@@ -8,7 +8,7 @@ The output is fictional, flattened and invalid for financial issuance.
 Requires Pillow (pip install Pillow) and a local DejaVu Sans font.
 """
 from __future__ import annotations
-import argparse, hashlib, re
+import argparse, hashlib
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
@@ -26,13 +26,14 @@ BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 def f(size: int, bold: bool = False):
     return ImageFont.truetype(BOLD if bold else FONT, size)
 
+FIXTURES = {
+    "alpha": ("Sample Learner Alpha", "sample.a@example.invalid.test", "DEMO-ALPHA-01"),
+    "beta": ("Sample Learner Beta", "sample.b@example.invalid.test", "DEMO-BETA-02"),
+}
+
 def valid_test_values(name: str, email: str, regid: str):
-    if not (1 <= len(name) <= 35 and name.startswith(("Sample ", "Demo ")) and all(32 <= ord(c) < 127 for c in name)):
-        raise ValueError("Fictional name must start Sample or Demo, ASCII, max 35 chars")
-    if not re.fullmatch(r"[a-z0-9._+-]{1,32}@example\.invalid\.test", email):
-        raise ValueError("Only fictional @example.invalid.test recipient permitted")
-    if not re.fullmatch(r"DEMO-[A-Z0-9-]{1,18}", regid):
-        raise ValueError("Only DEMO-... registration identifiers permitted")
+    if (name, email, regid) not in FIXTURES.values():
+        raise ValueError("Only the two fixed fictional preview records are permitted")
 
 def text(draw, xy, s, sz=18, col=INK, bold=False, maxw=None):
     ft=f(sz,bold)
@@ -107,8 +108,7 @@ if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("--sanitized-reference",type=Path,required=True)
     p.add_argument("--out",type=Path,required=True)
-    p.add_argument("--learner",default="Sample Learner Alpha")
-    p.add_argument("--email",default="sample.a@example.invalid.test")
-    p.add_argument("--registration",default="DEMO-ALPHA-01")
+    p.add_argument("--fixture",choices=tuple(FIXTURES),default="alpha")
     a=p.parse_args()
-    print(proof(a.sanitized_reference,a.out,a.learner,a.email,a.registration))
+    name,email,regid=FIXTURES[a.fixture]
+    print(proof(a.sanitized_reference,a.out,name,email,regid))
