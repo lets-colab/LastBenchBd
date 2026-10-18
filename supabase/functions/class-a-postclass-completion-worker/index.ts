@@ -34,9 +34,19 @@ async function send(to:string,name:string,session:any){
     (secondary?'<p style="margin-top:20px">'+secondary+'</p>':"")+
     '<p>Participant-specific personal or company materials remain private unless explicitly approved for sharing.</p>';
   const html=renderClassAEmail({title:"YOUR AFTER-CLASS\nPACK.",eyebrow:"AFTER-CLASS MATERIALS",body});
-  const r=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:"Bearer "+key,"Content-Type":"application/json"},body:JSON.stringify({from:FROM,to:[to],subject:"CLASS[Λ] — your after-class pack",html,text:classAPlainText(html)})});
+  // A transport failure may occur after provider acceptance. Do not retry
+  // without delivery reconciliation: doing so can duplicate a real email.
+  let r:Response;
+  try {
+    r=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:"Bearer "+key,"Content-Type":"application/json"},body:JSON.stringify({from:FROM,to:[to],subject:"CLASS[Λ] — your after-class pack",html,text:classAPlainText(html)})});
+  } catch {
+    throw new Error("delivery_uncertain_transport");
+  }
   const response=await r.json().catch(()=>({}));
-  if(!r.ok) throw new Error("email_failed:"+(response.message||r.status));
+  if(!r.ok) {
+    if(r.status >= 500) throw new Error("delivery_uncertain_provider_5xx:"+r.status);
+    throw new Error("provider_rejected:"+r.status);
+  }
   if(!response.id) throw new Error("provider_email_id_missing_delivery_uncertain");
   return String(response.id);
 }
