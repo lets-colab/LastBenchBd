@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const source = readFileSync(resolve(root, "supabase/functions/class-a-notification-worker/index.ts"), "utf8");
+const email = readFileSync(resolve(root, "supabase/functions/_shared/class-a-email.ts"), "utf8");
 const due = source.slice(source.indexOf("const {data:due,error:dueError}="));
 const signup = source.slice(source.indexOf("const {data:signupRows"));
 
@@ -48,12 +49,14 @@ describe("CLASS[Λ] notification fail-closed worker", () => {
     expect(due).toContain('completion_not_verified');
   });
   it("uses official brand and escapes learner-provided text", () => {
-    expect(source).toContain('https://lastbenchbd.com/assets/logo-full.png');
-    expect(source).toContain("Creating a Lasting Benchmark");
+    expect(email).toContain('https://lastbenchbd.com/assets/logo-full.png');
+    expect(email).toContain("Creating a Lasting Benchmark");
     expect(source).toContain("CLASS[Λ]");
-    expect(source).toContain('#00C853');
+    expect(email).toContain('#00C853');
+    expect(source).toContain('renderClassAEmail');
+    expect(source).toContain('classAStatusCard');
     expect(source).toContain("escapeHtml(name)");
-    expect(source).toContain("escapeHtml(session?.title");
+    expect(email).toContain("escapeClassAHtml(value)");
     expect(source).toContain("'\"':\"&quot;\"");
     expect(source).toContain("unsupported_notification_type");
   });
