@@ -114,6 +114,8 @@ Its visual system is cinematic, near-black, editorial and proof-led. The latest 
 
 The core product principle is **proof > attendance; output > certificate**.
 
+**CLASS[Λ] outbound email lock:** All CLASS[Λ] lifecycle/transactional emails use the owner-approved dark, green-accented visual standard and truth-state guardrails in [`brand/class-a/BRAND_BLUEPRINT.md` §10](brand/class-a/BRAND_BLUEPRINT.md#10-outbound-email-design-lock--classλ--last-bench). Do not import the light parent/service email design into CLASS[Λ] messages; verify live worker adoption separately.
+
 ---
 
 ## 6. co.lab design boundary
