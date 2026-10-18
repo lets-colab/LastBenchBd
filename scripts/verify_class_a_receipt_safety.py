@@ -76,4 +76,16 @@ for invalid in (
         pass
     else:
         raise SystemExit("FAIL: synthetic proof accepted non-test values")
-print("PASS: Parliament preview proof source, PII test guards, and SHA-pinned input")
+output_guard = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name=="output_paths")
+paths_namespace={"Path":Path}
+exec(compile(ast.fix_missing_locations(ast.Module(body=[output_guard],type_ignores=[])),"proof-output-paths","exec"),paths_namespace)
+paths = paths_namespace["output_paths"]
+assert paths(Path("preview.png")) == (Path("preview.png"),Path("preview.pdf"))
+for bad_name in ("preview.pdf","preview.jpeg","preview"):
+    try:
+        paths(Path(bad_name))
+    except ValueError:
+        pass
+    else:
+        raise SystemExit("FAIL: proof output path could overwrite or mislabel an artifact")
+print("PASS: Parliament preview proof source, PII/test guards, SHA-pinned input and distinct PNG/PDF outputs")
