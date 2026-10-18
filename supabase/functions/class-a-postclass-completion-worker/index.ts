@@ -36,7 +36,8 @@ async function send(to:string,name:string,session:any){
   const r=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:"Bearer "+key,"Content-Type":"application/json"},body:JSON.stringify({from:FROM,to:[to],subject:"CLASS[Λ] — your after-class pack",html,text:classAPlainText(html)})});
   const response=await r.json().catch(()=>({}));
   if(!r.ok) throw new Error("email_failed:"+(response.message||r.status));
-  return String(response.id||"resend");
+  if(!response.id) throw new Error("provider_email_id_missing_delivery_uncertain");
+  return String(response.id);
 }
 
 Deno.serve(async(req)=>{
@@ -62,12 +63,24 @@ Deno.serve(async(req)=>{
     if(!reg||reg.record_kind!=="genuine"||!reg.email||enrollment?.status!=="attended"||!completed||!session?.analysis_summary?.after_class_pack_url){
       out.waiting++; continue;
     }
+    // Atomic claim prevents concurrent workers from sending the same follow-up.
+    const {data:claimed,error:claimError}=await c.from("class_a_session_notifications")
+      .update({status:"processing"}).eq("id",item.id).eq("status","skipped")
+      .like("last_error","completion_gate_moved_to_governed_followup%").select("id").maybeSingle();
+    if(claimError) throw claimError;
+    if(!claimed){out.waiting++;continue;}
     try{
       const ref=await send(reg.email,reg.full_name||"there",session);
-      await c.from("class_a_session_notifications").update({status:"sent",sent_at:new Date().toISOString(),external_ref:ref,last_error:null}).eq("id",item.id);
+      const {data:recorded,error:recordError}=await c.from("class_a_session_notifications")
+        .update({status:"sent",sent_at:new Date().toISOString(),external_ref:ref,last_error:null})
+        .eq("id",item.id).eq("status","processing").select("id").maybeSingle();
+      if(recordError||!recorded) throw new Error("delivery_uncertain_provider_accepted:"+ref);
       out.sent++;
     }catch(err){
-      await c.from("class_a_session_notifications").update({last_error:`completion_gate_moved_to_governed_followup:send_failed:${String(err)}`}).eq("id",item.id);
+      const uncertain=String(err).includes("delivery_uncertain");
+      await c.from("class_a_session_notifications")
+        .update({status:uncertain?"processing":"skipped",last_error:"completion_gate_moved_to_governed_followup:send_failed:"+String(err)})
+        .eq("id",item.id).eq("status","processing");
       out.failed++;
     }
   }
