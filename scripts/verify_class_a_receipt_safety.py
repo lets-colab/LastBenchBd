@@ -60,11 +60,14 @@ assert "SAMPLE NOT VALID" in proof_source
 assert "The official receipt issuing gate remains disabled." in proof_source
 assert "status:\"sent\"" not in proof_source
 validator = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name=="valid_test_values")
-import re
-namespace={"re":re}
-exec(compile(ast.fix_missing_locations(ast.Module(body=[validator],type_ignores=[])),"proof-validator","exec"),namespace)
+fixtures = next(n for n in tree.body if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id=="FIXTURES" for t in n.targets))
+namespace={}
+exec(compile(ast.fix_missing_locations(ast.Module(body=[fixtures,validator],type_ignores=[])),"proof-validator","exec"),namespace)
+assert len(namespace["FIXTURES"]) == 2
+assert "--learner" not in proof_source and "--email" not in proof_source and "--registration" not in proof_source
 v=namespace["valid_test_values"]
-v("Sample Learner Alpha","sample.a@example.invalid.test","DEMO-ALPHA-01")
+for fictional in namespace["FIXTURES"].values():
+    v(*fictional)
 for invalid in (
     ("Real Recipient","sample.a@example.invalid.test","DEMO-01"),
     ("Sample Learner Alpha","real@gmail.com","DEMO-01"),
