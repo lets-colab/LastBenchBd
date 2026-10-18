@@ -53,6 +53,8 @@ def output_paths(out: Path):
 def proof(reference: Path, out: Path, learner: str, email: str, regid: str):
     valid_test_values(learner,email,regid)
     png, pdf=output_paths(out)
+    if reference.resolve() in (png.resolve(),pdf.resolve()):
+        raise ValueError("Cannot overwrite the locked, sanitized reference image")
     data=reference.read_bytes()
     if hashlib.sha256(data).hexdigest()!=APPROVED_SANITIZED_SHA256:
         raise ValueError("Refusing image: approved sanitized reference SHA256 mismatch")
