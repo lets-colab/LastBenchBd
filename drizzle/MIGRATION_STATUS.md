@@ -233,3 +233,15 @@ Verified directly against Supabase project `the-last-bench` on 18 October 2026:
 - The separate `PARLIAMENT_RECEIPT_RENDERER_APPROVED = false` lock remains enforced. Generic receipt PDFs must not be issued.
 
 **Remaining independent gates:** A real eligible post-class transition with explicit authorized test delivery and provider/inbox receipt; mobile/desktop email-client visual review against the owner's original screenshot references; receipt-specific Parliament PDF asset/visual/financial approval. GitHub CI and preview generation alone do not demonstrate those outcomes. Do not fabricate payment, enrollment, delivery or attendance evidence.
+
+
+### 18 October 2026 — CLASS[Λ] dark email footer production revision
+
+- Owner-approved October email theme remains the canonical dark CLASS[Λ] transactional design in `brand/class-a/BRAND_BLUEPRINT.md` §10.
+- PR #139 corrected the dark-background footer asset using the **exact canonical transparent Last Bench bench/arrow icon** (`landing/assets/logo-icon.png`, Git blob `6bedefa5e936807ac0de88d9cfd3b7bc6145c3bc`). No forbidden contrast plate, logo redraw or recoloring was introduced. The CLASS[Λ] × Last Bench header remains readable text.
+- PR #139 independent code review completed with no unresolved findings after the original hard-logo-policy objection was resolved. CI `verify`, CodeQL, JEV release gate, and browser preview generation passed on head `8bbf2afdb07260ce36619886a7f2bf3b7b1015e1`.
+- Deployed and read back from production Supabase project `the-last-bench`: course-confirmation worker **v4**, notification worker **v6**, post-class completion worker **v4**, payment-receipt worker **v5**. All ACTIVE with JWT verification enabled and loaded shared renderer, exact green icon reference, and no white logo plate.
+- The post-class claim guard remains present. `PARLIAMENT_RECEIPT_RENDERER_APPROVED = false` remains intact; no unsupported generic receipt issuance is authorized by this change.
+- Earlier version-3 post-class worker runtime logs showed **9 successful HTTP 200 function invocations** (scheduler route proof only; not delivery proof).
+- The owner-approved Parliament receipt reference was retrieved from private design evidence with SHA-256 `a6e71a9d5478c0de667dceadc4ff9cb4de950df4813f1efbfc5705c69c4fca0b`. A sanitized fiction-only, NOT VALID, non-issuable PDF preview was created for visual review outside this public repo. Personal receipt details were not committed.
+- **Still not independently signed off:** real Gmail/mobile inbox comparison against approved emails, controlled delivery with provider receipt, and exact Parliament PDF issuance template/financial acceptance. Gmail browser had no authenticated session and the connected Gmail tool had no eligible linked account during QA. No student or provider-facing test send was performed. Do not claim 10.5/10 until those external gates are satisfied.
