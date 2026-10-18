@@ -11,11 +11,41 @@ Prevent the exact failure mode where a later flat wireframe/Figma interpretation
 
 This skill is mandatory for every change to CLASS[Λ] visual design, Figma frames, Replit implementation, landing pages, responsive layouts, 3D scenes, motion, registration UI, or production publishing.
 
+## Latest approved art-direction lock — 2026-09-28
+
+The user's current approved reference is a 10-frame CLASS[Λ] 3D UI/UX montage supplied on 2026-09-28.
+
+Reference fingerprint recorded at approval time:
+- dimensions: `1536 × 768`
+- SHA-256: `0ed2b411f61566e0e50a97af254b04193037c43a3378431d573ccc4435b2a165`
+- role: `STYLE_ANCHOR` — it does not replace exact protected CLASS[Λ] logo or metallic-20 assets.
+
+This later explicit lock supersedes older conflicting CLASS[Λ] art-direction notes.
+
+Required visual DNA:
+- near-black spatial environment;
+- exact protected CLASS[Λ] lockup composited deterministically;
+- original brand green `#00C853` as the primary UI energy/accent color;
+- white editorial display typography with aggressive hierarchy and large negative space;
+- smoked/translucent dimensional UI panes with restrained green active edges;
+- metallic/silver dimensional 20 remains the signature capability object;
+- perspective technical coordinate floor/grid used as a spatial system, never generic full-page decoration;
+- thin orbit paths, precise nodes, subtle reflections and controlled depth;
+- UI modules feel like an operating system assembling around the user, not a normal SaaS card grid;
+- scroll transitions use cinematic mechanical reconfiguration: split → rotate/translate in depth → reassemble → lock;
+- the transformation may evoke precision mechanical assembly as an analogy, but must remain original CLASS[Λ] motion design rather than copying a film, character, vehicle, shot or proprietary transformation.
+
+### Signature interaction
+
+`CINEMATIC REEL → CLASS[Λ] LOCKUP → METALLIC 20 AWAKENS → UI MODULES ASSEMBLE → COMMAND → RESEARCH → BUILD → CREATE → SELL → OPERATE → ONE PERSON / FULL AI TEAM → REGISTRATION / PASS`
+
+The same spatial machine reconfigures between states. Do not present each stage as a detached card or conventional section.
+
 ## Canonical Creative Direction
 
 The locked reference is the approved mobile cinematic concept previously supplied by the user. Its defining visual DNA is:
 
-- Near-black cinematic canvas with an extremely subtle technical/grid texture.
+- Near-black cinematic canvas with an extremely subtle technical coordinate/grid floor that has spatial purpose.
 - Large editorial, condensed-feeling white typography with strong negative space.
 - Primary hero: `ONE PERSON. A FULL AI TEAM.`
 - Brand lockup: `CLASS[Λ] · ACQUIRE. APPLY. ADVANCE.`
@@ -24,6 +54,7 @@ The locked reference is the approved mobile cinematic concept previously supplie
 - Thin orbital rings beneath/around the floating object, implying an AI operating system rather than decorative circles.
 - Controlled depth, camera perspective, glow, reflections and parallax; cinematic, not game-like.
 - Registration CTA remains obvious and conversion-first, including the current course price when applicable.
+- Smoked dimensional UI panes and mechanical assembly/reconfiguration are part of the approved CLASS[Λ] signature language.
 - Mobile-first composition. Desktop is an expansion of the same visual language, never a separate flat redesign.
 
 ## Source Priority
@@ -62,7 +93,7 @@ Before changing CLASS[Λ], apply the relevant parts of this chain:
 - Secondary text: neutral cool gray.
 - Borders: subtle graphite.
 - 3D object: neutral metallic/silver-gray with believable material response.
-- No colorful accent system unless the user explicitly changes the brand direction.
+- Brand energy/accent is the locked original green `#00C853`; no unrelated accent colors.
 
 ### Typography
 

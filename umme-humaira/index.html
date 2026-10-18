@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#07120d" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Umme Humaira — Lecturer · Researcher · Educator</title>
+  <meta name="description" content="Academic portfolio of Umme Humaira, Lecturer of Accounting at Chittagong Independent University. Teaching, research, publications and academic journey." />
+  <meta property="og:title" content="Umme Humaira — Academic Portfolio" />
+  <meta property="og:description" content="Lecturer · Researcher · Educator — Accounting, finance and investor psychology." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:image" content="https://www.ciu.edu.bd/attachment-files/ciu-schools/ciubs-images/umme-humaira.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --ink:#07120d;
+      --ink-2:#0b1c14;
+      --green:#118452;
+      --green-bright:#44d18c;
+      --paper:#f5f7f3;
+      --paper-2:#e9eee9;
+      --text:#f4f8f4;
+      --muted:#bdc9c0;
+      --dark-text:#102017;
+      --dark-muted:#4f6256;
+      --lav:#b7a7d8;
+      --line:rgba(255,255,255,.15);
+      --line-dark:rgba(12,40,24,.14);
+      --max:1180px;
+      --nav-h:72px;
+      --radius:14px;
+      --z-nav:40;
+      --z-content:10;
+      --z-canvas:0;
+    }
+
+    @supports (color: oklch(50% .1 150)){
+      :root{
+        --ink:oklch(16% .035 155);
+        --ink-2:oklch(21% .045 155);
+        --green:oklch(54% .16 155);
+        --green-bright:oklch(76% .16 155);
+        --paper:oklch(97% .008 155);
+        --paper-2:oklch(92% .015 155);
+        --lav:oklch(75% .075 305);
+      }
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;background:var(--ink)}
+    body{
+      margin:0;
+      font-family:"Schibsted Grotesk",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      background:var(--ink);
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+    button,a{touch-action:manipulation}
+    :focus-visible{outline:3px solid var(--green-bright);outline-offset:4px;border-radius:6px}
+    .skip{
+      position:fixed;left:16px;top:12px;z-index:100;
+      transform:translateY(-160%);background:var(--paper);color:var(--dark-text);
+      padding:10px 14px;border-radius:8px;text-decoration:none;font-weight:700
+    }
+    .skip:focus{transform:none}
+
+    #webgl{
+      position:fixed;inset:0;width:100%;height:100%;
+      z-index:var(--z-canvas);pointer-events:none;
+      opacity:.95;
+    }
+    .vignette{
+      position:fixed;inset:0;z-index:1;pointer-events:none;
+      background:
+        radial-gradient(circle at 70% 38%, transparent 0 22%, rgba(7,18,13,.16) 48%, rgba(7,18,13,.72) 100%),
+        linear-gradient(90deg, rgba(7,18,13,.78) 0 36%, rgba(7,18,13,.08) 72%, rgba(7,18,13,.46) 100%);
+    }
+
+    .progress{
+      position:fixed;left:0;top:0;z-index:60;height:3px;width:100%;
+      transform-origin:left center;transform:scaleX(0);
+      background:var(--green-bright);
+    }
+
+    .nav{
+      position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:var(--z-nav);
+      display:flex;align-items:center;
+      background:linear-gradient(to bottom,rgba(7,18,13,.92),rgba(7,18,13,.54),transparent);
+      backdrop-filter:blur(8px);
+    }
+    .nav-inner{
+      width:min(var(--max),calc(100% - 40px));margin:auto;
+      display:flex;align-items:center;justify-content:space-between;gap:24px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;letter-spacing:-.02em
+    }
+    .brand-mark{
+      width:34px;height:34px;border:1px solid rgba(255,255,255,.28);
+      display:grid;place-items:center;border-radius:50%;font-size:12px;
+      background:rgba(8,23,16,.72)
+    }
+    .nav-links{display:flex;align-items:center;gap:22px}
+    .nav-links a{
+      text-decoration:none;color:#dce7df;font-size:.92rem;font-weight:600
+    }
+    .nav-links a:hover{color:white}
+    .nav-cta{
+      border:1px solid rgba(255,255,255,.32);
+      padding:9px 13px;border-radius:999px;
+    }
+
+    main{position:relative;z-index:var(--z-content)}
+    section{position:relative}
+
+    .hero{
+      min-height:100svh;
+      display:grid;align-items:center;
+      padding:calc(var(--nav-h) + 32px) max(20px,calc((100vw - var(--max))/2)) 40px;
+    }
+    .hero-grid{
+      width:100%;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(310px,.92fr);
+      gap:clamp(34px,6vw,92px);align-items:center;
+    }
+    .hero-copy{max-width:760px}
+    .hero-kicker{
+      display:inline-flex;align-items:center;gap:9px;
+      font-size:.92rem;color:#dce8df;font-weight:650;margin-bottom:24px
+    }
+    .hero-kicker::before{
+      content:"";width:32px;height:2px;background:var(--green-bright);border-radius:2px
+    }
+    h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.035em}
+    h1{
+      font-size:clamp(3.2rem,8.7vw,6rem);
+      line-height:.94;max-width:10ch;font-weight:800
+    }
+    .role{
+      margin:26px 0 0;
+      font-size:clamp(1.08rem,2vw,1.35rem);
+      color:#d7e2da;max-width:62ch;text-wrap:pretty
+    }
+    .role strong{color:white}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+    .btn{
+      min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      padding:11px 16px;border-radius:999px;text-decoration:none;font-weight:750;
+      transition:background .25s ease,border-color .25s ease,color .25s ease,transform .25s ease;
+    }
+    .btn-primary{background:var(--paper);color:var(--dark-text)}
+    .btn-primary:hover{transform:translateY(-2px)}
+    .btn-ghost{border:1px solid rgba(255,255,255,.3);color:white}
+    .btn-ghost:hover{border-color:rgba(255,255,255,.62);background:rgba(255,255,255,.06)}
+
+    .portrait-stage{
+      position:relative;display:grid;place-items:center;min-height:610px;
+    }
+    .portrait-orbit{
+      position:absolute;width:min(38vw,490px);aspect-ratio:1;border-radius:50%;
+      border:1px solid rgba(255,255,255,.15);
+      box-shadow:0 0 0 36px rgba(255,255,255,.025),0 0 0 72px rgba(255,255,255,.012);
+    }
+    .portrait-frame{
+      position:relative;width:min(36vw,430px);aspect-ratio:4/5;
+      border-radius:var(--radius);overflow:hidden;
+      background:linear-gradient(160deg,#153d2b,#a997c8);
+      box-shadow:0 10px 0 rgba(0,0,0,.18);
+      transform:rotate(1.5deg);
+    }
+    .portrait-frame img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      filter:saturate(.9) contrast(1.02);
+    }
+    .portrait-fallback{
+      position:absolute;inset:0;display:grid;place-items:center;z-index:-1;
+      font-size:clamp(4rem,10vw,8rem);font-weight:800;color:rgba(255,255,255,.8)
+    }
+    .portrait-caption{
+      position:absolute;right:0;bottom:42px;max-width:240px;
+      background:var(--paper);color:var(--dark-text);
+      padding:14px 16px;border-radius:10px;
+      box-shadow:0 8px 0 rgba(0,0,0,.14);
+      font-size:.86rem;font-weight:650
+    }
+    .portrait-caption span{display:block;color:var(--green);font-weight:800;margin-bottom:3px}
+
+    .scroll-cue{
+      position:absolute;left:max(20px,calc((100vw - var(--max))/2));bottom:24px;
+      display:flex;gap:10px;align-items:center;color:#c5d1c8;font-size:.84rem
+    }
+    .scroll-dot{
+      width:24px;height:36px;border:1px solid rgba(255,255,255,.32);
+      border-radius:999px;position:relative
+    }
+    .scroll-dot::after{
+      content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;
+      border-radius:4px;background:var(--green-bright);transform:translateX(-50%);
+      animation:scrollDot 1.8s ease-in-out infinite
+    }
+    @keyframes scrollDot{0%,100%{transform:translate(-50%,0);opacity:.4}50%{transform:translate(-50%,10px);opacity:1}}
+
+    .light-section{
+      background:var(--paper);color:var(--dark-text);
+      padding:clamp(90px,12vw,150px) max(20px,calc((100vw - var(--max))/2));
+    }
+    .dark-section{
+      background:linear-gradient(180deg,rgba(7,18,13,.4),rgba(7,18,13,.93));
+      padding:clamp(100px,13vw,170px) max(20px,calc((100vw - var(--max))/2));
+    }
+    .section-head{max-width:820px;margin-bottom:clamp(44px,7vw,78px)}
+    .section-head h2{
+      font-size:clamp(2.6rem,6.5vw,5.4rem);line-height:.98
+    }
+    .section-head p{
+      margin:24px 0 0;font-size:clamp(1.05rem,1.8vw,1.25rem);
+      max-width:68ch;color:var(--dark-muted);text-wrap:pretty
+    }
+    .dark-section .section-head p{color:#c3d0c7}
+
+    .identity-strip{
+      display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(32px,6vw,84px);align-items:start
+    }
+    .identity-quote{
+      font-size:clamp(1.55rem,3vw,2.7rem);line-height:1.16;font-weight:700;letter-spacing:-.03em
+    }
+    .identity-quote em{font-style:normal;color:var(--green)}
+    .identity-facts{
+      margin:0;padding:0;list-style:none;border-top:1px solid var(--line-dark)
+    }
+    .identity-facts li{
+      display:grid;grid-template-columns:130px 1fr;gap:18px;
+      padding:16px 0;border-bottom:1px solid var(--line-dark)
+    }
+    .identity-facts strong{font-size:.88rem;color:#355241}
+    .identity-facts span{font-weight:650}
+
+    .timeline{position:relative;max-width:980px}
+    .timeline::before{
+      content:"";position:absolute;left:14px;top:0;bottom:0;width:1px;background:rgba(255,255,255,.2)
+    }
+    .timeline-item{
+      position:relative;padding-left:58px;margin:0 0 54px;max-width:780px
+    }
+    .timeline-item:last-child{margin-bottom:0}
+    .timeline-node{
+      position:absolute;left:5px;top:7px;width:19px;height:19px;border:2px solid var(--green-bright);
+      border-radius:50%;background:var(--ink)
+    }
+    .timeline-year{color:var(--green-bright);font-weight:800;margin-bottom:5px}
+    .timeline-item h3{font-size:clamp(1.45rem,2.3vw,2rem);margin-bottom:6px}
+    .timeline-item p{margin:0;color:#c3d0c7;max-width:65ch}
+
+    .fields-layout{
+      display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(40px,8vw,120px);align-items:start
+    }
+    .fields-intro{
+      position:sticky;top:120px;font-size:clamp(1.35rem,2.3vw,2rem);
+      line-height:1.25;font-weight:650
+    }
+    .fields{
+      margin:0;padding:0;list-style:none;border-top:1px solid var(--line-dark)
+    }
+    .fields li{
+      display:flex;align-items:baseline;justify-content:space-between;gap:18px;
+      padding:22px 0;border-bottom:1px solid var(--line-dark)
+    }
+    .fields span:first-child{font-size:clamp(1.2rem,2.2vw,1.8rem);font-weight:750;letter-spacing:-.025em}
+    .fields small{color:#597063;font-size:.88rem}
+
+    .research{
+      background:#0b2418;color:white;
+      padding:clamp(100px,14vw,180px) max(20px,calc((100vw - var(--max))/2));
+      overflow:hidden
+    }
+    .research::before{
+      content:"";position:absolute;width:520px;height:520px;right:-180px;top:60px;border-radius:50%;
+      border:1px solid rgba(68,209,140,.18);box-shadow:0 0 0 70px rgba(68,209,140,.04),0 0 0 140px rgba(68,209,140,.02)
+    }
+    .research .section-head p{color:#bfd0c4}
+    .papers{display:grid;gap:0;position:relative;z-index:2}
+    .paper{
+      display:grid;grid-template-columns:160px minmax(0,1fr) 44px;gap:28px;align-items:start;
+      padding:34px 0;border-top:1px solid rgba(255,255,255,.18);text-decoration:none
+    }
+    .paper:last-child{border-bottom:1px solid rgba(255,255,255,.18)}
+    .paper-meta{color:#90aa99;font-size:.9rem;font-weight:650;line-height:1.5}
+    .paper h3{font-size:clamp(1.55rem,3vw,2.55rem);line-height:1.08;max-width:30ch}
+    .paper .arrow{
+      width:38px;height:38px;border:1px solid rgba(255,255,255,.3);border-radius:50%;
+      display:grid;place-items:center;transition:transform .25s ease,border-color .25s ease
+    }
+    .paper:hover .arrow{transform:translate(4px,-4px);border-color:var(--green-bright)}
+
+    .education-wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px)}
+    .edu{
+      min-height:300px;padding:28px 0;border-top:2px solid var(--green);
+      display:flex;flex-direction:column;justify-content:space-between
+    }
+    .edu-place{font-size:clamp(2rem,4vw,3.6rem);font-weight:800;letter-spacing:-.04em;line-height:1}
+    .edu p{margin:22px 0 0;color:var(--dark-muted);max-width:44ch}
+    .edu-foot{margin-top:44px;font-size:.9rem;font-weight:750;color:var(--green)}
+
+    .contact{
+      min-height:84svh;display:grid;align-items:end;
+      padding:120px max(20px,calc((100vw - var(--max))/2)) 52px;
+      background:var(--ink);overflow:hidden
+    }
+    .contact-inner{position:relative;z-index:2}
+    .contact h2{font-size:clamp(3.6rem,10vw,7.6rem);line-height:.9;max-width:9ch}
+    .contact p{color:#c7d3ca;font-size:1.12rem;max-width:55ch;margin:26px 0 0}
+    .contact-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+    .footer{
+      display:flex;justify-content:space-between;gap:20px;align-items:end;
+      padding-top:90px;color:#91a498;font-size:.84rem
+    }
+    .footer a{text-underline-offset:3px}
+
+    .motion-ready .hero-copy,.motion-ready .portrait-stage{opacity:.72;transform:translateY(10px)}
+    .motion-ready.loaded .hero-copy,.motion-ready.loaded .portrait-stage{
+      opacity:1;transform:none;transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)
+    }
+    [data-reveal]{transform:translateY(16px);opacity:.86;transition:transform .7s cubic-bezier(.16,1,.3,1),opacity .7s ease}
+    [data-reveal].is-visible{transform:none;opacity:1}
+
+    @media (max-width:900px){
+      :root{--nav-h:64px}
+      .nav-links a:not(.nav-cta){display:none}
+      .hero-grid{grid-template-columns:1fr;gap:22px}
+      .hero{padding-top:calc(var(--nav-h) + 36px);padding-bottom:90px}
+      h1{max-width:9ch}
+      .portrait-stage{min-height:480px}
+      .portrait-frame{width:min(78vw,390px)}
+      .portrait-orbit{width:min(80vw,430px)}
+      .portrait-caption{right:4%;bottom:24px}
+      .scroll-cue{bottom:14px}
+      .identity-strip,.fields-layout,.education-wrap{grid-template-columns:1fr}
+      .fields-intro{position:relative;top:auto}
+      .paper{grid-template-columns:1fr 38px;gap:12px}
+      .paper-meta{grid-column:1/-1}
+      .vignette{background:linear-gradient(180deg,rgba(7,18,13,.46),rgba(7,18,13,.7))}
+    }
+    @media (max-width:560px){
+      .nav-inner{width:calc(100% - 28px)}
+      .brand span:last-child{display:none}
+      .hero,.light-section,.dark-section,.research,.contact{
+        padding-left:20px;padding-right:20px
+      }
+      h1{font-size:clamp(3.1rem,17vw,4.5rem)}
+      .role{font-size:1rem}
+      .portrait-stage{min-height:430px}
+      .portrait-frame{width:min(82vw,345px)}
+      .portrait-caption{max-width:205px;font-size:.78rem}
+      .identity-facts li{grid-template-columns:1fr;gap:4px}
+      .timeline-item{padding-left:46px}
+      .paper h3{font-size:1.55rem}
+      .contact h2{font-size:clamp(3.2rem,18vw,5rem)}
+      .footer{flex-direction:column;align-items:flex-start}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+      #webgl{display:none}
+      .vignette{background:linear-gradient(135deg,#07120d,#123b29)}
+      .motion-ready .hero-copy,.motion-ready .portrait-stage,[data-reveal]{opacity:1;transform:none}
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Umme Humaira",
+    "jobTitle":"Lecturer of Accounting",
+    "worksFor":{"@type":"CollegeOrUniversity","name":"Chittagong Independent University"},
+    "email":"mailto:umme_humaira@ciu.edu.bd",
+    "alumniOf":[
+      {"@type":"CollegeOrUniversity","name":"Monash University"},
+      {"@type":"CollegeOrUniversity","name":"North South University"}
+    ],
+    "sameAs":[
+      "https://www.researchgate.net/profile/Umme-Humaira",
+      "https://ciu.edu.bd/our-teacher-details/ciubs/umme-humaira"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <canvas id="webgl" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Primary">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Umme Humaira — home">
+        <span class="brand-mark">UH</span><span>Umme Humaira</span>
+      </a>
+      <div class="nav-links">
+        <a href="#journey">Journey</a>
+        <a href="#research">Research</a>
+        <a href="#education">Education</a>
+        <a class="nav-cta" href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="hero-kicker">Lecturer · Researcher · Educator</div>
+          <h1 id="hero-title">Knowledge, taught with perspective.</h1>
+          <p class="role"><strong>Umme Humaira</strong> is a Lecturer of Accounting at Chittagong Independent University, working across accounting, financial analysis and the human behaviour behind financial markets.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#research">Explore research <span aria-hidden="true">↘</span></a>
+            <a class="btn btn-ghost" href="mailto:umme_humaira@ciu.edu.bd">Academic email</a>
+          </div>
+        </div>
+
+        <div class="portrait-stage" aria-label="Portrait of Umme Humaira">
+          <div class="portrait-orbit" aria-hidden="true"></div>
+          <figure class="portrait-frame">
+            <div class="portrait-fallback" aria-hidden="true">UH</div>
+            <img src="https://www.ciu.edu.bd/attachment-files/ciu-schools/ciubs-images/umme-humaira.jpg" alt="Umme Humaira, Lecturer at Chittagong Independent University" loading="eager" referrerpolicy="no-referrer" />
+          </figure>
+          <div class="portrait-caption"><span>Current academic role</span>Lecturer, CIU Business School · Accounting</div>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true"><span class="scroll-dot"></span><span>Scroll through the academic journey</span></div>
+    </section>
+
+    <section class="light-section" aria-labelledby="identity-title">
+      <div class="section-head" data-reveal>
+        <h2 id="identity-title">Teaching is the visible layer. Thinking is the work beneath it.</h2>
+      </div>
+      <div class="identity-strip">
+        <div class="identity-quote" data-reveal>
+          Her academic path connects <em>accounting discipline</em>, financial interpretation and the psychology of how people respond to uncertain markets.
+        </div>
+        <ul class="identity-facts" data-reveal>
+          <li><strong>Current</strong><span>Lecturer · CIU Business School</span></li>
+          <li><strong>Discipline</strong><span>Accounting & financial analysis</span></li>
+          <li><strong>Research</strong><span>Financial markets & investor psychology</span></li>
+          <li><strong>Location</strong><span>Chattogram, Bangladesh</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="dark-section" id="journey" aria-labelledby="journey-title">
+      <div class="section-head" data-reveal>
+        <h2 id="journey-title">A teaching journey built across roles, institutions and classrooms.</h2>
+        <p>From teaching assistance to permanent faculty, the progression is less about titles than continuity: explaining difficult ideas clearly, building analytical confidence and connecting theory to real decisions.</p>
+      </div>
+      <div class="timeline">
+        <article class="timeline-item" data-reveal>
+          <span class="timeline-node" aria-hidden="true"></span>
+          <div class="timeline-year">2020 — present</div>
+          <h3>Lecturer · Chittagong Independent University</h3>
+          <p>CIU Business School, with a current public profile identifying her as a Lecturer of Accounting.</p>
+        </article>
+        <article class="timeline-item" data-reveal>
+          <span class="timeline-node" aria-hidden="true"></span>
+          <div class="timeline-year">Earlier faculty role</div>
+          <h3>Adjunct Lecturer · CIU Business School</h3>
+          <p>An earlier teaching appointment at Chittagong Independent University before joining as permanent faculty.</p>
+        </article>
+        <article class="timeline-item" data-reveal>
+          <span class="timeline-node" aria-hidden="true"></span>
+          <div class="timeline-year">Foundation</div>
+          <h3>Teaching Assistant · North South University</h3>
+          <p>Early academic experience supporting learning in a university environment before moving into lecturer roles.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="light-section" aria-labelledby="fields-title">
+      <div class="fields-layout">
+        <div class="fields-intro" data-reveal>
+          The subject areas form a connected system: statements become signals, signals become decisions, and decisions become behaviour.
+        </div>
+        <div>
+          <div class="section-head" style="margin-bottom:32px" data-reveal>
+            <h2 id="fields-title">Fields of focus</h2>
+          </div>
+          <ul class="fields">
+            <li data-reveal><span>Accounting</span><small>01</small></li>
+            <li data-reveal><span>Financial Accounting</span><small>02</small></li>
+            <li data-reveal><span>Management Accounting</span><small>03</small></li>
+            <li data-reveal><span>Financial Analysis</span><small>04</small></li>
+            <li data-reveal><span>Auditing</span><small>05</small></li>
+            <li data-reveal><span>Financial Statement Analysis</span><small>06</small></li>
+            <li data-reveal><span>Managerial Accounting</span><small>07</small></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="research" id="research" aria-labelledby="research-title">
+      <div class="section-head" data-reveal>
+        <h2 id="research-title">Research at the intersection of markets and human response.</h2>
+        <p>Two 2023 peer-reviewed publications examine how the Russia–Ukraine conflict affected financial markets and investor attitudes.</p>
+      </div>
+      <div class="papers">
+        <a class="paper" href="https://doi.org/10.1111/ecaf.12596" target="_blank" rel="noopener noreferrer" data-reveal>
+          <div class="paper-meta">Economic Affairs<br />2023 · Wiley</div>
+          <h3>The Russia–Ukraine conflict and investor psychology in financial markets</h3>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="paper" href="https://doi.org/10.1111/issj.12470" target="_blank" rel="noopener noreferrer" data-reveal>
+          <div class="paper-meta">International Social Science Journal<br />2023 · Wiley</div>
+          <h3>Transformation of investor attitude towards financial markets: A perspective on the Russia–Ukraine conflict</h3>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="light-section" id="education" aria-labelledby="education-title">
+      <div class="section-head" data-reveal>
+        <h2 id="education-title">Academic foundations across Bangladesh and Australia.</h2>
+      </div>
+      <div class="education-wrap">
+        <article class="edu" data-reveal>
+          <div>
+            <div class="edu-place">Monash University</div>
+            <p>Master of Professional Accounting (Advanced), strengthening the technical and analytical foundation behind her accounting practice and teaching.</p>
+          </div>
+          <div class="edu-foot">Australia · Postgraduate study</div>
+        </article>
+        <article class="edu" data-reveal>
+          <div>
+            <div class="edu-place">North South University</div>
+            <p>Bachelor of Business Administration with Finance & Accounting majors and an Economics minor.</p>
+          </div>
+          <div class="edu-foot">Bangladesh · Undergraduate study</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact-inner">
+        <h2 id="contact-title">Continue the academic conversation.</h2>
+        <p>For research, academic collaboration or university correspondence, use her institutional email or verified academic profiles.</p>
+        <div class="contact-links">
+          <a class="btn btn-primary" href="mailto:umme_humaira@ciu.edu.bd">umme_humaira@ciu.edu.bd</a>
+          <a class="btn btn-ghost" href="https://ciu.edu.bd/our-teacher-details/ciubs/umme-humaira" target="_blank" rel="noopener noreferrer">CIU profile ↗</a>
+          <a class="btn btn-ghost" href="https://www.researchgate.net/profile/Umme-Humaira" target="_blank" rel="noopener noreferrer">ResearchGate ↗</a>
+        </div>
+        <footer class="footer">
+          <span>Umme Humaira · Academic Portfolio</span>
+          <span>Public academic information only · <a href="#top">Back to top ↑</a></span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    const body = document.body;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    body.classList.add('motion-ready');
+    requestAnimationFrame(() => body.classList.add('loaded'));
+
+    const progress = document.getElementById('progress');
+    const revealEls = [...document.querySelectorAll('[data-reveal]')];
+    if (!reduced && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        });
+      }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+      revealEls.forEach((el) => io.observe(el));
+    } else {
+      revealEls.forEach((el) => el.classList.add('is-visible'));
+    }
+
+    function setProgress(){
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+      const p = Math.min(1, Math.max(0, scrollY / max));
+      progress.style.transform = 'scaleX(' + p + ')';
+      return p;
+    }
+    setProgress();
+    addEventListener('scroll', setProgress, { passive:true });
+
+    if (!reduced) {
+      try {
+        const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.module.js');
+        const canvas = document.getElementById('webgl');
+        const lowPower = (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) || innerWidth < 620;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, .1, 100);
+        camera.position.set(0,0,5.6);
+
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: !lowPower,
+          alpha:true,
+          powerPreference:'high-performance'
+        });
+        renderer.setPixelRatio(Math.min(devicePixelRatio || 1, lowPower ? 1 : 1.5));
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+        const group = new THREE.Group();
+        scene.add(group);
+
+        const green = new THREE.Color('#44d18c');
+        const greenDeep = new THREE.Color('#118452');
+        const lavender = new THREE.Color('#b7a7d8');
+
+        const core = new THREE.Mesh(
+          new THREE.IcosahedronGeometry(1.05, lowPower ? 2 : 3),
+          new THREE.MeshPhysicalMaterial({
+            color: greenDeep,
+            roughness:.2,
+            metalness:.28,
+            transmission:.08,
+            transparent:true,
+            opacity:.82
+          })
+        );
+        group.add(core);
+
+        const wire = new THREE.Mesh(
+          new THREE.IcosahedronGeometry(1.18, 2),
+          new THREE.MeshBasicMaterial({
+            color:green,
+            wireframe:true,
+            transparent:true,
+            opacity:.17
+          })
+        );
+        group.add(wire);
+
+        const rings = [];
+        [[1.52,.015],[1.83,.012],[2.14,.01]].forEach((r,i) => {
+          const ring = new THREE.Mesh(
+            new THREE.TorusGeometry(r[0], r[1], 10, lowPower ? 72 : 120),
+            new THREE.MeshBasicMaterial({
+              color:i === 1 ? lavender : green,
+              transparent:true,
+              opacity:i === 1 ? .42 : .28
+            })
+          );
+          ring.rotation.set(i*.7 + .4, i*.9 + .2, i*.3);
+          group.add(ring);
+          rings.push(ring);
+        });
+
+        const count = lowPower ? 110 : 220;
+        const positions = new Float32Array(count*3);
+        for(let i=0;i<count;i++){
+          const y = 1 - (i/(count-1))*2;
+          const radius = Math.sqrt(1-y*y);
+          const theta = Math.PI*(3-Math.sqrt(5))*i;
+          const rr = 2.15 + .35*Math.sin(i*1.73);
+          positions[i*3] = Math.cos(theta)*radius*rr;
+          positions[i*3+1] = y*rr;
+          positions[i*3+2] = Math.sin(theta)*radius*rr;
+        }
+        const pointsGeo = new THREE.BufferGeometry();
+        pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+        const points = new THREE.Points(pointsGeo,new THREE.PointsMaterial({
+          color:'#d8efe1',
+          size:lowPower?.012:.016,
+          transparent:true,
+          opacity:.44
+        }));
+        group.add(points);
+
+        scene.add(new THREE.AmbientLight('#d7f1df',1.8));
+        const key = new THREE.PointLight('#56e39f',9,12);
+        key.position.set(3,3,4);
+        scene.add(key);
+        const fill = new THREE.PointLight('#baa9dc',6,10);
+        fill.position.set(-3,-1,2);
+        scene.add(fill);
+
+        let targetX = 0, targetY = 0, pointerX = 0, pointerY = 0;
+        addEventListener('pointermove',(e)=>{
+          if(innerWidth < 800) return;
+          targetX = (e.clientX/innerWidth - .5)*.32;
+          targetY = (e.clientY/innerHeight - .5)*.22;
+        },{passive:true});
+
+        function resize(){
+          camera.aspect = innerWidth/innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setPixelRatio(Math.min(devicePixelRatio || 1, ((navigator.hardwareConcurrency||8)<=4 || innerWidth<620) ? 1 : 1.5));
+          renderer.setSize(innerWidth,innerHeight);
+        }
+        addEventListener('resize',resize,{passive:true});
+
+        const clock = new THREE.Clock();
+        function animate(){
+          const t = clock.getElapsedTime();
+          const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+          const p = Math.min(1,Math.max(0,scrollY/max));
+
+          pointerX += (targetX-pointerX)*.04;
+          pointerY += (targetY-pointerY)*.04;
+
+          group.rotation.y = p*5.1 + t*.055 + pointerX;
+          group.rotation.x = .2 + Math.sin(p*Math.PI*2)*.32 + pointerY;
+          group.position.x = innerWidth > 900 ? .85 - p*.5 : .15;
+          group.position.y = .05 + Math.sin(p*Math.PI*3)*.22;
+          group.scale.setScalar(1 + Math.sin(p*Math.PI)*.12);
+
+          core.rotation.x = -t*.08;
+          core.rotation.z = t*.06;
+          wire.rotation.y = t*.08;
+          points.rotation.y = -t*.028;
+
+          rings.forEach((ring,i)=>{
+            ring.rotation.z += .0006*(i+1);
+            ring.rotation.x += .00022*(3-i);
+          });
+
+          const mix = .5 + .5*Math.sin(p*Math.PI*2);
+          core.material.color.copy(greenDeep).lerp(lavender,mix*.23);
+          camera.position.z = 5.65 - p*.48;
+          camera.position.x = Math.sin(p*Math.PI*2)*.28;
+          camera.lookAt(0,0,0);
+
+          renderer.render(scene,camera);
+          requestAnimationFrame(animate);
+        }
+        animate();
+      } catch (err) {
+        document.getElementById('webgl').style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

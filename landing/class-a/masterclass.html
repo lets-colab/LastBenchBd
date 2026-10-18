@@ -2,95 +2,242 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CLASS[Λ] Masterclass — Reserve a Free Seat</title>
-  <meta name="description" content="A free CLASS[Λ] masterclass showing how one person can use AI as a practical team for research, building, creation, growth and selling.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CLASS[Λ] — Turn AI Into Your Team</title>
+  <meta name="description" content="CLASS[Λ] free masterclass: learn to turn AI into your team and build a one-person business with AI.">
   <meta name="theme-color" content="#050607">
-  <link rel="icon" type="image/jpeg" href="./assets/class-a-favicon.jpg">
+  <link rel="icon" type="image/png" href="./assets/last-bench-bench.png">
+  <link rel="alternate icon" type="image/jpeg" href="./assets/class-a-favicon.jpg">
+  <link rel="preload" href="./assets/masterclass-entry.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="./assets/class-a-20-orbit.jpg" as="image" type="image/jpeg">
+  <link rel="preload" href="./assets/class-a-logo.jpg" as="image" type="image/jpeg">
   <link rel="canonical" href="https://lastbenchbd.com/class-a/masterclass.html">
-  <link rel="preload" href="./assets/class-a-20-orbit.jpg" as="image" type="image/jpeg" fetchpriority="high">
-  <link rel="stylesheet" href="./cinematic.css">
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f%5B%5D=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./masterclass-cinematic-a.css">
+  <link rel="stylesheet" href="./masterclass-cinematic-b.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <div class="wrap">
-    <nav class="nav" aria-label="CLASS A navigation">
-      <a class="brand" href="./" aria-label="CLASS Lambda home — a Last Bench program"><img class="brand-lockup" src="./assets/class-a-logo.jpg" alt="CLASS Lambda — Acquire. Apply. Advance." width="1280" height="386"></a>
-      <div class="nav-right"><span>ACQUIRE. APPLY. ADVANCE.</span><a class="outline" href="./course.html">FULL PROGRAM →</a></div>
-    </nav>
+  <a class="skip-link" href="#hero" data-skip>Skip cinematic intro</a>
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
 
-    <main id="main">
-      <section class="hero">
-        <div class="hero-copy-block reveal">
-          <p class="eyebrow">FREE MASTERCLASS · CLASS 0</p>
-          <h1><span>ONE PERSON.</span><span>A FULL AI TEAM.</span><span>SEE WHAT’S</span><span>POSSIBLE.</span></h1>
-          <p class="tag">AI BEGINNER → CAPABLE OPERATOR</p>
-          <p class="lead">Watch one person use AI as a research team, builder, creator, growth partner and sales assistant—in one practical workflow designed for people who want to build, not just learn prompts.</p>
-          <div class="offer"><div class="price">FREE</div><a class="primary" href="#register">RESERVE FREE SEAT →</a></div>
-          <p class="micro">Free registration · No payment required</p>
+  <section class="intro" data-intro data-reel-entry aria-label="CLASS Lambda cinematic introduction">
+    <div class="intro-vignette" aria-hidden="true"></div>
+    <video class="intro-film" data-intro-video playsinline preload="auto" poster="./assets/class-a-20-orbit.jpg">
+      <source src="./assets/masterclass-entry.mp4" type="video/mp4">
+    </video>
+    <div class="intro-end-card" data-intro-end-card aria-hidden="true">
+      <img src="./assets/class-a-logo.jpg" alt="">
+    </div>
+
+    <div class="intro-gate" data-intro-gate>
+      <div class="intro-number" role="img" aria-label="0.01 percent">0.01%</div>
+      <p class="gate-copy">Most people will use AI. The 0.01% will build with it. You’ve been invited to join them.</p>
+      <div class="gate-actions">
+        <button class="button button-primary" type="button" data-enter>ACCEPT INVITATION</button>
+        <button class="button button-ghost" type="button" data-skip>SKIP</button>
+      </div>
+      <p class="sound-note">Sound begins after you enter.</p>
+    </div>
+
+
+    <button class="intro-skip" type="button" data-skip aria-label="Skip introduction">SKIP</button>
+
+  </section>
+
+  <header class="topbar" data-topbar>
+    <a class="class-mark" href="#hero" aria-label="CLASS Lambda home">
+      <img src="./assets/class-a-logo.jpg" alt="CLASS Lambda — Acquire. Apply. Advance.">
+    </a>
+    <div class="topbar-actions">
+      <span class="seat-chip" data-public-session-chip><i></i> LIVE ONLINE · SESSION SCHEDULED</span>
+      <img class="bench-mark" src="./assets/last-bench-bench.png" alt="Last Bench">
+      <button class="mini-cta" type="button" data-open-signup>ACCEPT INVITATION →</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero" data-hero>
+      <div class="hero-grid" aria-hidden="true"></div><div class="hero-scanline" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <h1><span>TURN AI INTO</span><br><span>YOUR TEAM.</span></h1>
+        <p class="hero-lead">Build and run a <strong>one-person business with AI.</strong></p>
+        <p class="hero-meta">Research · Build · Create · Sell · Operate</p>
+        <div class="hero-actions">
+          <button class="button button-primary" type="button" data-open-signup>ACCEPT YOUR INVITATION</button>
+          <button class="button button-ghost" type="button" data-replay>REPLAY STORY</button>
         </div>
+        <p class="hero-micro" data-public-session-meta>LIVE ONLINE · GOOGLE MEET · FREE REGISTRATION</p>
+      </div>
 
-        <div class="hero-visual reveal" data-scroll-scene aria-label="A floating metallic 20 surrounded by orbital rings">
-          <div class="scene" data-scene>
-            <img class="hero-art" src="./assets/class-a-20-orbit.jpg" alt="Metallic 20-class symbol surrounded by orbital rings" width="1254" height="1254" fetchpriority="high">
-            <span class="scene-label scene-label-a">AI</span>
-            <span class="scene-label scene-label-b">RESEARCH</span>
-            <span class="scene-label scene-label-c">SELL</span>
+      <div class="hero-object" data-hero-object aria-label="Metallic 20 surrounded by orbital rings">
+        <div class="orbit orbit-a"></div>
+        <div class="orbit orbit-b"></div>
+        <div class="orbit orbit-green"></div>
+        <img src="./assets/class-a-20-orbit.jpg" alt="Metallic CLASS Lambda 20 symbol with orbital rings">
+        <span class="object-label label-a">BUILD</span>
+        <span class="object-label label-b">AI TEAM</span>
+        <span class="object-label label-c">OPERATE</span>
+        <div class="hero-system-stack" aria-hidden="true">
+          <div class="system-pane system-pane-you"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.25"/><path d="M5.5 20c.5-4.2 2.7-6.3 6.5-6.3s6 2.1 6.5 6.3"/></svg><span><small>YOU</small><strong>Decide the outcome</strong></span></div>
+          <div class="system-pane system-pane-ai"><svg viewBox="0 0 24 24"><path d="M9 4h6l3 3v10l-3 3H9l-3-3V7z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span><small>AI</small><strong>Helps you think</strong></span></div>
+          <div class="system-pane system-pane-systems"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span><small>SYSTEMS</small><strong>Make it repeatable</strong></span></div>
+        </div>
+      </div>
+
+      <div class="scroll-cue" aria-hidden="true"><span>SCROLL TO ENTER</span><b>↓</b></div>
+    </section>
+
+    <section class="journey" data-journey aria-label="CLASS Lambda operating journey">
+      <div class="journey-sticky">
+        <div class="journey-world" aria-hidden="true">
+          <div class="world-grid"></div>
+          <div class="world-halo"></div>
+          <img class="journey-object" src="./assets/class-a-20-orbit.jpg" alt="">
+          <div class="world-orbit world-orbit-1"></div>
+          <div class="world-orbit world-orbit-2"></div>
+          <div class="world-ray"></div>
+          <div class="transform-rig" data-transform-rig>
+            <span class="rig-spine rig-spine-a"></span><span class="rig-spine rig-spine-b"></span>
+            <div class="rig-panel rig-panel-a"><small>YOU</small><strong>OUTCOME</strong><i></i></div>
+            <div class="rig-panel rig-panel-b"><small>AI</small><strong>THINK</strong><i></i></div>
+            <div class="rig-panel rig-panel-c"><small>SYSTEMS</small><strong>EXECUTE</strong><i></i></div>
+            <div class="capability-ring">
+              <span class="capability-node is-active" data-capability="0"><b>01</b><strong>COMMAND</strong></span>
+              <span class="capability-node" data-capability="1"><b>02</b><strong>RESEARCH</strong></span>
+              <span class="capability-node" data-capability="2"><b>03</b><strong>BUILD</strong></span>
+              <span class="capability-node" data-capability="3"><b>04</b><strong>CREATE</strong></span>
+              <span class="capability-node" data-capability="4"><b>05</b><strong>SELL</strong></span>
+              <span class="capability-node" data-capability="5"><b>06</b><strong>OPERATE</strong></span>
+            </div><span class="rig-lock-flash"></span>
           </div>
-          <p class="scroll-note">SCROLL TO ENTER CLASS 0 ↓</p>
         </div>
-      </section>
 
-      <section class="register-section" id="register">
-        <div class="register-grid">
-          <div class="register-copy reveal">
-            <p class="section-kicker">CLASS 0 · THE ENTRY POINT</p>
-            <h2>SEE THE AI TEAM IN MOTION.</h2>
-            <p>This is the fastest way to understand the CLASS[Λ] operating model. See one workflow move from a messy problem to evidence, a useful build, a clear message and a commercial next step.</p>
-            <div class="signal-list" aria-label="Masterclass experience">
-              <div class="signal"><span>01 · COMMAND AI</span><span>Prompt · Compare · Verify</span></div>
-              <div class="signal"><span>02 · RESEARCH</span><span>Problem · Market · Evidence</span></div>
-              <div class="signal"><span>03 · BUILD</span><span>Idea · Tool · MVP</span></div>
-              <div class="signal"><span>04 · CREATE</span><span>Design · Content · Story</span></div>
-              <div class="signal"><span>05 · SELL</span><span>Lead · Message · Next step</span></div>
-            </div>
+        <div class="journey-copy" data-journey-copy>
+          <p class="journey-count"><span data-scene-number>01</span> / 06</p>
+          <p class="journey-kicker" data-scene-kicker>THE BUILDER</p>
+          <h2 data-scene-title>STOP ASKING.<br>START DIRECTING.</h2>
+          <p data-scene-body>AI becomes useful when you stop treating it like a search box and start giving it roles, context, standards and outcomes.</p>
+        </div>
+
+        <div class="journey-index" aria-hidden="true">
+          <span data-index="0">COMMAND</span>
+          <span data-index="1">RESEARCH</span>
+          <span data-index="2">BUILD</span>
+          <span data-index="3">CREATE</span>
+          <span data-index="4">SELL</span>
+          <span data-index="5">OPERATE</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta" id="reserve">
+      <div class="final-glow" aria-hidden="true"></div>
+      <img class="final-object" src="./assets/class-a-20-orbit.jpg" alt="Metallic CLASS Lambda 20 symbol">
+      <div class="final-copy">
+        <h2>YOUR INVITATION<br>IS OPEN.</h2>
+        <p>Accept your invitation to the live 0.01% Builders Masterclass. Your personal CLASS[Λ] pass becomes your single route to the schedule, live room and attendance verification.</p>
+        <button class="button button-primary button-large" type="button" data-open-signup>ACCEPT MY INVITATION →</button>
+        <p class="final-note" data-public-session-final>Live online · Schedule confirmed · Google Meet · Free registration</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <img src="./assets/class-a-logo.jpg" alt="CLASS Lambda — Acquire. Apply. Advance.">
+    <div><span>ACQUIRE. APPLY. ADVANCE.</span><span>A LAST BENCH CAPABILITY EXPERIENCE</span><a class="footer-program" href="./course.html">EXPLORE THE 20-CLASS PROGRAM →</a></div>
+    <img class="footer-bench" src="./assets/last-bench-bench.png" alt="Last Bench">
+  </footer>
+
+  <dialog class="signup" data-signup>
+    <form class="signup-shell" name="class-a-masterclass" data-signup-form data-program="masterclass" method="dialog" novalidate>
+      <input type="hidden" name="form-name" value="class-a-masterclass">
+      <input type="hidden" name="program" value="masterclass">
+      <button class="signup-close" type="button" data-close-signup aria-label="Close registration">×</button>
+      <div class="signup-orbit" aria-hidden="true"></div>
+      <div class="signup-head">
+        <p class="eyebrow">CLASS[Λ] · CLASS 0</p>
+        <h2>CLAIM YOUR PASS.</h2>
+        <p>Four quick steps. Your live-session pass is issued instantly. No payment.</p>
+      </div>
+
+      <div class="steps" aria-label="Registration progress"><span class="is-active"></span><span></span><span></span><span></span></div>
+      <div class="signup-step is-active" data-step="0">
+        <label for="name">WHAT SHOULD WE CALL YOU?</label>
+        <input id="name" name="name" autocomplete="name" minlength="2" maxlength="120" placeholder="Your full name" required>
+        <button type="button" class="signup-next" data-next>NEXT →</button>
+      </div>
+      <div class="signup-step" data-step="1">
+        <label for="phone">YOUR WHATSAPP NUMBER.</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" minlength="6" maxlength="40" placeholder="+880…" required>
+        <button type="button" class="signup-next" data-next>NEXT →</button>
+      </div>
+      <div class="signup-step" data-step="2">
+        <label for="email">WHERE SHOULD WE SEND THE CONFIRMATION?</label>
+        <input id="email" name="email" type="email" autocomplete="email" maxlength="200" placeholder="you@example.com" required>
+        <button type="button" class="signup-next" data-next>NEXT →</button>
+      </div>
+      <div class="signup-step" data-step="3">
+        <label for="skill">WHERE ARE YOU WITH AI TODAY?</label>
+        <select id="skill" name="skill" required>
+          <option value="">Choose one</option>
+          <option>AI beginner</option>
+          <option>Use AI sometimes</option>
+          <option>Regular AI user</option>
+          <option>Already building with AI</option>
+        </select>
+        <label class="consent-check">
+          <input type="checkbox" name="recording_consent" value="yes" required>
+          <span>I understand this live session may be recorded and transcribed for learning and quality improvement. This does not grant permission to use my image, voice, or words in public marketing.</span>
+        </label>
+        <input class="honeypot" name="company" autocomplete="off" tabindex="-1" aria-hidden="true">
+        <button type="submit" class="signup-next signup-submit">CLAIM MY PASS →</button>
+      </div>
+
+      <div class="signup-status" data-signup-status role="status" aria-live="polite"></div>
+      <div class="signup-alert" data-signup-alert role="alert" aria-live="assertive" hidden></div>
+      <div class="signup-success" data-signup-success hidden>
+        <div data-follow-gate>
+          <p class="success-kicker">REGISTRATION CONFIRMED.</p>
+          <h2>ONE STEP LEFT.</h2>
+          <p>Follow <strong>&lt;CLASS[Λ]&gt; | LEARN AI</strong> on WhatsApp, then return here to unlock your personal masterclass pass.</p>
+          <div class="whatsapp-follow">
+            <span>STEP 2 OF 2</span>
+            <strong>FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP</strong>
+            <small>WhatsApp does not provide this page a per-person follow callback. After you follow, return here and confirm; only then will the server release your pass.</small>
           </div>
+          <div class="success-actions">
+            <a class="button button-primary" data-whatsapp-channel href="https://whatsapp.com/channel/0029Vb8z67SGJP8MABoA3A00" target="_blank" rel="noopener">FOLLOW CHANNEL →</a>
+            <button type="button" class="button button-ghost" data-unlock-pass disabled>I'VE FOLLOWED — UNLOCK MY PASS</button>
+          </div>
+          <p class="follow-note" data-follow-note>Open the channel first. Your registration is reserved, but the pass code is not released until you complete this step.</p>
+        </div>
 
-          <div class="form-card reveal">
-            <h2>JOIN CLASS 0</h2>
-            <p>Reserve your free masterclass seat.</p>
-            <form name="class-a-masterclass" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="company" data-signup-form data-program="masterclass" data-loading-label="RESERVING…">
-              <input type="hidden" name="form-name" value="class-a-masterclass">
-              <input type="hidden" name="program" value="masterclass">
-              <p class="honeypot"><label>Company<input name="company" tabindex="-1" autocomplete="off"></label></p>
-              <div class="field"><label for="master-name">Full name</label><input id="master-name" name="name" autocomplete="name" minlength="2" maxlength="120" required></div>
-              <div class="field"><label for="master-phone">Phone</label><input id="master-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" minlength="6" maxlength="40" required></div>
-              <div class="field"><label for="master-email">Email</label><input id="master-email" type="email" name="email" autocomplete="email" maxlength="200" required></div>
-              <div class="field"><label for="master-skill">Current skill level</label><select id="master-skill" name="skill" required><option value="">Choose one</option><option>AI beginner</option><option>Use AI sometimes</option><option>Regular AI user</option><option>Already building with AI</option></select></div>
-              <button class="submit" type="submit">RESERVE FREE SEAT →</button>
-              <p class="form-note">Your registration is stored securely. No payment is collected here.</p>
-              <div class="status status-success" data-success role="status" aria-live="polite" hidden><strong>SEAT RESERVED.</strong><br>Your CLASS 0 registration has been received.</div>
-              <div class="status status-error" data-error role="alert" aria-live="assertive" hidden><strong>REGISTRATION NOT CONFIRMED.</strong><br>Please check your connection and try again.</div>
-            </form>
+        <div data-pass-reveal hidden>
+          <p class="success-kicker">YOU'RE IN.</p>
+          <h2>PASS UNLOCKED.</h2>
+          <p>Your CLASS[Λ] pass is now available. Keep the code private — it is your route to the live session and attendance verification.</p>
+          <div class="pass-card">
+            <canvas width="220" height="220" data-qr aria-label="Personal CLASS Lambda pass QR code"></canvas>
+            <div><span>CLASS[Λ] · 0.01% BUILDERS</span><strong data-pass-code>—</strong><small>Keep this private. It identifies your masterclass enrollment.</small><small data-confirmed-at></small></div>
+          </div>
+          <div class="session-card" data-session-card>
+            <span class="session-state" data-session-status>SESSION · PLANNING</span>
+            <strong data-session-title>CLASS[Λ] — The 0.01% Builders Masterclass</strong>
+            <small data-session-time>The next live session is being scheduled. Your pass is already reserved.</small>
+          </div>
+          <div class="success-actions">
+            <a class="button button-primary" data-calendar-link hidden target="_blank" rel="noopener">ADD TO GOOGLE CALENDAR →</a>
+            <a class="button button-ghost" data-pass-link target="_blank" rel="noopener">OPEN MY PASS</a>
+            <button type="button" class="button button-ghost" data-copy-pass>COPY CODE</button>
+            <button type="button" class="button button-ghost" data-close-signup>DONE</button>
           </div>
         </div>
-      </section>
+      </div>
+    </form>
+  </dialog>
 
-      <section class="experience" aria-labelledby="experience-title">
-        <div class="section-heading reveal"><p class="section-kicker">WHAT YOU’LL EXPERIENCE</p><h2 id="experience-title">FROM POSSIBILITY TO A REAL NEXT STEP.</h2></div>
-        <div class="stage-grid stage-grid-five">
-          <article class="stage reveal"><span>01</span><div><h3>COMMAND AI</h3><p>Get useful output instead of generic answers.</p></div></article>
-          <article class="stage reveal"><span>02</span><div><h3>RESEARCH</h3><p>Turn assumptions into evidence you can act on.</p></div></article>
-          <article class="stage reveal"><span>03</span><div><h3>BUILD</h3><p>Convert an idea into a visible useful micro-build.</p></div></article>
-          <article class="stage reveal"><span>04</span><div><h3>CREATE</h3><p>Make the idea clear enough for another person to understand.</p></div></article>
-          <article class="stage reveal"><span>05</span><div><h3>SELL</h3><p>Choose the next person, message or action that creates movement.</p></div></article>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer"><span>CLASS[Λ] · ACQUIRE. APPLY. ADVANCE.</span><a href="./course.html">20-CLASS VENTURE BUILDER →</a></footer>
-  </div>
-  <div class="mobile-stick"><a href="#register">RESERVE FREE SEAT →</a></div>
-  <script src="./cinematic.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js" defer></script>
+  <script src="./masterclass-cinematic.js?v=20261003-2" defer></script>
 </body>
 </html>

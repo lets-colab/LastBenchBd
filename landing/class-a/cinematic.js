@@ -11,6 +11,124 @@
   const brandIntro = document.querySelector('[data-brand-intro]');
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
 
+  const reelEntry = document.querySelector('[data-reel-entry]');
+  const reelVideo = document.querySelector('[data-masterclass-reel]');
+  const reelEnter = document.querySelector('[data-reel-enter]');
+  const reelSkip = document.querySelector('[data-reel-skip]');
+  const reelCta = document.querySelector('[data-reel-cta]');
+  const reelProgress = document.querySelector('[data-reel-progress]');
+
+  if (reelEntry) {
+    const handoffAt = 23.6;
+    let handoffStarted = false;
+    let removalTimer = 0;
+
+    const removeReel = () => {
+      if (!reelEntry.isConnected) return;
+      document.body.classList.remove('reel-locked');
+      reelEntry.remove();
+    };
+
+    const finishReel = ({ scrollToRegister = false } = {}) => {
+      if (handoffStarted) return;
+      handoffStarted = true;
+      if (reelVideo) reelVideo.pause();
+      reelEntry.classList.add('is-morphing');
+      window.setTimeout(() => {
+        reelEntry.classList.add('is-leaving');
+        removalTimer = window.setTimeout(() => {
+          removeReel();
+          if (scrollToRegister) {
+            document.querySelector('#register')?.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
+          } else {
+            document.querySelector('.hero .primary, .hero a, #main')?.focus?.({ preventScroll: true });
+          }
+        }, reduceMotion.matches ? 0 : 430);
+      }, reduceMotion.matches ? 0 : 420);
+    };
+
+    if (reduceMotion.matches || !reelVideo) {
+      removeReel();
+    } else {
+      reelEntry.classList.add('is-ready');
+      document.body.classList.add('reel-locked');
+      window.setTimeout(() => reelEnter?.focus({ preventScroll: true }), 0);
+
+      const playReel = async () => {
+        if (!reelVideo || handoffStarted) return;
+        reelVideo.currentTime = 0;
+        reelVideo.muted = false;
+        reelVideo.volume = 1;
+        try {
+          await reelVideo.play();
+        } catch (_) {
+          reelVideo.muted = true;
+          try { await reelVideo.play(); } catch (error) {
+            console.warn('CLASS[Λ] reel playback unavailable; continuing to the experience.', error);
+            finishReel();
+            return;
+          }
+        }
+        reelEntry.classList.add('is-playing');
+      };
+
+      const updateReel = () => {
+        if (!reelVideo || handoffStarted) return;
+        const p = clamp(reelVideo.currentTime / handoffAt);
+        if (reelProgress) reelProgress.style.transform = `scaleX(${p.toFixed(4)})`;
+        if (reelVideo.currentTime >= handoffAt - 0.06) finishReel();
+      };
+
+      reelEnter?.addEventListener('click', playReel);
+      reelSkip?.addEventListener('click', () => finishReel());
+      reelCta?.addEventListener('click', (event) => {
+        event.preventDefault();
+        finishReel({ scrollToRegister: true });
+      });
+      reelVideo.addEventListener('timeupdate', updateReel);
+      reelVideo.addEventListener('ended', () => finishReel());
+      reelVideo.addEventListener('error', () => {
+        console.warn('CLASS[Λ] reel asset could not be played; continuing to the experience.');
+        finishReel();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && reelEntry.isConnected) finishReel();
+      });
+      reduceMotion.addEventListener('change', () => {
+        if (reduceMotion.matches && reelEntry.isConnected) {
+          window.clearTimeout(removalTimer);
+          finishReel();
+        }
+      });
+    }
+  }
+
+  if (scene && !scene.querySelector('.scene-orbit-system')) {
+    const orbitSystem = document.createElement('div');
+    orbitSystem.className = 'scene-orbit-system';
+    orbitSystem.setAttribute('aria-hidden', 'true');
+    orbitSystem.innerHTML = [
+      '<span class="scene-orbit scene-orbit-1"></span>',
+      '<span class="scene-orbit scene-orbit-2"></span>',
+      '<span class="scene-orbit scene-orbit-3"></span>',
+      '<span class="scene-axis scene-axis-x"></span>',
+      '<span class="scene-axis scene-axis-y"></span>'
+    ].join('');
+    scene.prepend(orbitSystem);
+  }
+
+  if (scene && !scene.querySelector('.class-ui-stack')) {
+    const uiStack = document.createElement('div');
+    uiStack.className = 'class-ui-stack';
+    uiStack.setAttribute('aria-hidden', 'true');
+    uiStack.innerHTML = [
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.25"/><path d="M5.5 20c.5-4.2 2.7-6.3 6.5-6.3s6 2.1 6.5 6.3"/></svg><span><small>YOU</small><strong>Decide outcome</strong></span></div>',
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><path d="M9 4h6l3 3v10l-3 3H9l-3-3V7z"/><path d="M9 9h6M9 12h6M9 15h4"/></svg><span><small>AI</small><strong>Think with it</strong></span></div>',
+      '<div class="class-ui-pane"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg><span><small>SYSTEMS</small><strong>Make it repeatable</strong></span></div>'
+    ].join('');
+    scene.append(uiStack);
+  }
+
   if (brandIntro) {
     const removeIntro = () => brandIntro.remove();
     const handleIntroEnd = (event) => {
@@ -167,6 +285,14 @@
     }
   };
 
+  const showFailure = (title, message) => {
+    const heading = errorBox?.querySelector('[data-error-title]');
+    const detail = errorBox?.querySelector('[data-error-message]');
+    if (heading) heading.textContent = title;
+    if (detail) detail.textContent = message;
+    setStatus(errorBox);
+  };
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) return;
@@ -201,12 +327,24 @@
         body: JSON.stringify(payload),
       });
 
+      if (response.status === 409) {
+        // Supabase enforces one course registration per email and phone.
+        // Do not read or disclose existing records from the public client.
+        showFailure(
+          'APPLICATION MAY ALREADY EXIST.',
+          'An application may already exist for this email or phone. Do not register again. Contact info@lastbenchbd.com to check your application status.'
+        );
+        return;
+      }
       if (!response.ok) throw new Error(`Registration failed with ${response.status}`);
       form.reset();
       setStatus(success);
     } catch (error) {
       console.error('CLASS A registration failed', error);
-      setStatus(errorBox);
+      showFailure(
+        'APPLICATION NOT CONFIRMED.',
+        'We could not save your application right now. Please try again later or contact info@lastbenchbd.com.'
+      );
     } finally {
       if (submit) {
         submit.disabled = false;

@@ -26,13 +26,14 @@ Canonical sources, in priority order:
 1. `assets/branding/`
 2. `design-system/README.md`
 3. `design-system/tokens.json`
-4. `design-system/logo.svg`
-5. `PRODUCT.md`
+4. `PRODUCT.md`
+5. `design.md`
 6. Current approved production landing assets under `landing/`
 
 Rules:
 
 - Never redraw, reconstruct, recolor, or substitute the official Last Bench logo/marks.
+- `design-system/logo.svg` is a **legacy digital recreation**. It must not be used as a brand master or introduced into new production surfaces. Use the exact locked assets documented in `design-system/README.md`.
 - Do not inherit CLASS[Λ] cinematic styling into Last Bench by default.
 - Preserve the official green / charcoal / warm-white system and its typography unless the user explicitly changes it.
 - When code and design notes disagree, flag the conflict rather than silently merging them.

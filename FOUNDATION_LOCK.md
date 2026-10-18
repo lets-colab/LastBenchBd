@@ -6,26 +6,32 @@ This document is the production-trust contract for Last Bench. It separates veri
 
 Important product state must have one authoritative source, one owner, one verified state, and one safe mutation path.
 
-## Current verified foundation — 10 September 2026
+## Current verified foundation — 29 September 2026
 
 - Canonical repository: `lets-colab/LastBenchBd`.
 - Canonical web URL: `https://lastbenchbd.com`.
-- The current host is Netlify project `lastbenchbdd`, but its published upload is stale and must not be treated as proof that current `main` is live.
-- Cloudflare Pages is the approved replacement host. The project/preview must be verified before the canonical-domain cutover.
+- GitHub Pages is the primary production web deployment path. Workflow `.github/workflows/deploy-github-pages.yml` builds the exact host-neutral artifact from `main` and deploys it with GitHub Pages provenance.
+- The first GitHub Pages production run (`35683150738`) completed successfully for commit `c9f98c678a43a59c64cbc60e9d09851684a8b2b4`; both build and deploy jobs passed and GitHub reported `https://lets-colab.github.io/LastBenchBd/` as the deployment URL.
+- The immutable production artifact from that run is `lastbench-production-dist` `10675761617`, SHA-256 `e2fca9453673353c8a1f68d4099a21a7dd1d05f53c9c3106e72b6fb2707757c3`.
+- GitHub Pages is the sole canonical production web host; the former Netlify hosting path is retired and removed from active repository architecture.
+- Canonical-domain DNS cutover was re-verified on 29 September 2026: the apex resolves to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153`; `www.lastbenchbd.com` CNAMEs to `lets-colab.github.io`; Cloudflare nameservers remain authoritative.
 - Current `main` builds the complete host-neutral production artifact successfully.
-- A release fingerprint now prevents a stale homepage from passing production smoke checks.
+- A release fingerprint prevents a stale homepage from passing production smoke checks.
 - Canonical API custom hostname: `https://api.lastbenchbd.com`.
 - Canonical working Render service: `last-bench-api-v2` in Singapore.
 - Direct Render health is verified at `https://last-bench-api-v2.onrender.com/api/health`.
 - `https://api.lastbenchbd.com/api/health` is verified reachable with semantic JSON `ok: true`; the Render custom-domain routing gate is complete.
 - Authentication has been migrated away from Manus OAuth to Supabase Auth.
 - Supabase production project `the-last-bench` is `ACTIVE_HEALTHY` in `ap-southeast-1`.
-- Production web configuration uses the reviewed Supabase URL and publishable key from `netlify.toml`; those same public values must be configured in Cloudflare Pages.
+- Production web configuration for GitHub Pages is explicit in `.github/workflows/deploy-github-pages.yml` and uses the reviewed public API/Supabase values.
 - The live Supabase migration ledger includes the repository foundation migrations, Supabase identity/storage migration, CLASS[Λ] registration migration, DR.X social-engine runtime/activation migrations, and the insert-only homepage signup migration.
 - The homepage source now submits directly to `public.lastbench_signups`; public roles have INSERT only and cannot read, update or delete submitted leads.
-- Supabase security advisor currently has no WARN or ERROR findings; remaining RLS notices are informational and consistent with the server-owned default-deny model.
+- Supabase security advisor is **not currently warning-free**. Live review on 2 Oct 2026 reports: Auth leaked-password protection disabled; `pg_net` installed in `public` (non-relocatable in the current installation); and 11 CLASS `SECURITY DEFINER` RPCs executable by anon/authenticated roles. RLS-enabled/no-policy notices remain informational/default-deny candidates. Do not clear these findings by breaking public registration/check-in or adding blanket policies without an explicit access model.
 - `pnpm db:push` remains intentionally blocked while legacy Drizzle snapshots are incomplete; production DDL uses reviewed SQL through Supabase migrations.
 - Production smoke monitoring is automated by `.github/workflows/production-smoke.yml` and distinguishes the Render control-plane origin from the custom API hostname.
+
+- Cloudflare is not an authoritative Last Bench application deployment target in the current topology. The GitHub checks `Workers Builds: lastbenchbd` and `Workers Builds: the-last-bench` are legacy Worker Git integrations and should be disconnected in Cloudflare rather than satisfied by introducing duplicate Wrangler/Worker deployment code.
+- Until those external integrations are disconnected, their failed checks are tracked as infrastructure drift, not as evidence that the canonical GitHub Pages + Render runtime failed. They must never override a failing canonical gate, and they must never be converted into a false green by adding an unapproved duplicate runtime.
 
 See [`drizzle/MIGRATION_STATUS.md`](./drizzle/MIGRATION_STATUS.md) for database reconciliation evidence.
 
@@ -44,7 +50,7 @@ The safe production migration path is:
 
 **Do not point `drizzle-kit migrate` or `pnpm db:push` blindly at production.**
 
-## Gate B — Production web/API routing ⚠ web cutover active
+## Gate B — Production web/API routing ✅ DNS cutover complete
 
 Public health automation targets:
 
@@ -52,6 +58,8 @@ Public health automation targets:
 - `https://lastbenchbd.com/app/`
 - `https://lastbenchbd.com/class-a/`
 - `https://lastbenchbd.com/class-a/masterclass.html`
+- `https://lastbenchbd.com/class-a/pass.html`
+- `https://lastbenchbd.com/class-a/live-control.html`
 - `https://lastbenchbd.com/class-a/course.html`
 - `https://api.lastbenchbd.com/api/health`
 - diagnostic control plane: `https://last-bench-api-v2.onrender.com/api/health`
@@ -61,9 +69,10 @@ Current verified state:
 - [x] Direct Render API returns JSON with `ok: true`.
 - [x] `api.lastbenchbd.com` returns semantic JSON health from the Render service.
 - [x] Current repository builds the complete production web artifact.
-- [x] Student app and CLASS routes on the public domain return HTML successfully.
-- [ ] Cloudflare Pages builds current GitHub `main` and passes preview smoke checks.
-- [ ] `lastbenchbd.com` serves the verified Pages deployment. It currently serves an older Netlify homepage.
+- [x] GitHub Pages build and deployment completed successfully from `main`.
+- [x] GitHub Pages generated a working deployment target at `https://lets-colab.github.io/LastBenchBd/`.
+- [x] Canonical apex and `www` DNS point to the GitHub Pages custom-domain configuration.
+- [ ] Verify `lastbenchbd.com` serves the current release fingerprint and visually certify the rendered experience.
 
 A successful static build, deploy or green CI run is not production-routing proof.
 
@@ -87,13 +96,13 @@ Before declaring authenticated production complete, verify:
 
 ## Gate D — Forms and conversion proof
 
-The repository homepage now posts to the RLS-protected Supabase table `public.lastbench_signups`. CLASS[Λ] posts to `public.class_a_registrations`; compatibility Netlify markup remains during the host transition. Historical Netlify submissions are retained.
+The repository homepage posts to the RLS-protected Supabase table `public.lastbench_signups`. CLASS[Λ] person/program identity remains in `public.class_a_registrations`. The online masterclass now adds a recurring session-enrollment layer, personal pass, schedule-aware notification outbox and evidence-based attendance verification; compatibility Netlify markup remains during the host transition. Historical Netlify submissions are retained.
 
 Before declaring conversion flows complete:
 
 - [x] Homepage intake schema, insert-only RLS and public REST transport are verified in production Supabase.
 - [ ] A real production homepage journey creates the expected `lastbench_signups` row.
-- [ ] A real CLASS[Λ] masterclass journey creates the expected `class_a_registrations` row.
+- [ ] A real CLASS[Λ] online masterclass journey creates/reuses the expected genuine `class_a_registrations` identity and creates the expected `class_a_session_enrollments` row without rewriting historical attendance.
 - [ ] A real CLASS[Λ] course journey creates the expected `class_a_registrations` row.
 - [ ] Receipt is verified in the intended Supabase table rather than inferred from a thank-you screen.
 
@@ -131,7 +140,8 @@ Still required before broad public launch:
 - [x] PR safety template exists.
 - [x] Production smoke monitoring automatically opens/updates/closes a GitHub incident issue.
 - [x] CI rejects stale production-homepage assumptions through release fingerprinting.
-- [ ] Establish GitHub `main` integration for the verified Cloudflare Pages project.
+- [x] GitHub Pages production deployment is integrated with `main`; retired hosting configuration has been removed from active repository architecture.
+- [x] Canonical-domain DNS cutover to GitHub Pages is complete.
 
 ## Gate H — Mobile identity
 
@@ -155,7 +165,7 @@ Automate or certify these journeys before declaring the complete product release
 2. Student application → mentor/admin update → student sees sanitized state.
 3. Message A → B → B reads → unread state updates.
 4. Tutor referral → earned commission → payout reservation.
-5. Homepage/CLASS[Λ] form → confirmed Supabase row.
+5. Homepage/CLASS[Λ] form → confirmed Supabase row; online masterclass → personal session enrollment → join signal → independent attendance evidence.
 6. Logout → protected API call is rejected.
 7. Returning browser session → authenticated after refresh.
 
@@ -169,6 +179,30 @@ Automate or certify these journeys before declaring the complete product release
 
 It calls `scripts/release-smoke.mjs` with the canonical web/API origins plus the direct Render diagnostic origin. The smoke gate verifies semantic API health and detects stale homepage HTML through release fingerprints. A failed run creates or updates the GitHub issue **Production smoke gate**. A later successful run comments on and closes that issue automatically.
 
+## Gate J — Brand identity source lock
+
+Last Bench visual identity is governed by a deterministic source-lock system:
+
+- Canonical manifest: `design-system/brand-lock.json`.
+- Production logo: `landing/assets/logo-full.png`.
+- Production icon: `landing/assets/logo-icon.png`.
+- Master/reference board: `assets/branding/logo-lockups.png`.
+- Mandatory skill: `skills/last-bench-brand-source-lock/SKILL.md` with mirrored copies for Claude/agent runtimes.
+- Validation command: `pnpm brand:check`.
+- CI gate: `.github/workflows/brand-lock.yml`.
+
+Release requirements:
+
+- [x] Canonical logo/icon fingerprints are machine-locked.
+- [x] Approved duplicate assets must remain byte-identical to their canonical source.
+- [x] The legacy `design-system/logo.svg` recreation is blocked from production use.
+- [x] AI image generation is prohibited from rendering/recreating the Last Bench mark; AI may generate only an unbranded visual layer and the exact logo is composited afterward.
+- [x] Agent skill copies are checked for drift.
+- [x] Saved/exported artifact review is mandatory before calling a branded artifact final.
+- [ ] Enable branch/ruleset protection on `main` so the Brand Lock status check and CODEOWNERS review cannot be bypassed by direct pushes.
+
+A visually attractive result is not brand-approved unless this gate passes.
+
 ## Definition of done
 
-The Foundation Lock is fully complete when repository code, Supabase migration state, Cloudflare Pages production deploy, Render routing, authenticated sessions, form receipt and end-to-end release journeys all agree. Unknowns remain explicit gates; they are never converted into “done” statements by documentation or UI.
+The Foundation Lock is fully complete when repository code, Supabase migration state, GitHub Pages production deploy, canonical-domain DNS, Render routing, authenticated sessions, form receipt and end-to-end release journeys all agree. Unknowns remain explicit gates; they are never converted into “done” statements by documentation or UI.

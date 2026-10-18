@@ -14,6 +14,19 @@
  */
 
 import dns from "node:dns/promises";
+import { readFileSync } from "node:fs";
+
+const releaseContract = JSON.parse(
+  readFileSync(new URL("./release-contract.json", import.meta.url), "utf8"),
+);
+const corporateLandingFingerprint = releaseContract?.corporateLandingFingerprint;
+if (
+  !Array.isArray(corporateLandingFingerprint) ||
+  corporateLandingFingerprint.length === 0 ||
+  corporateLandingFingerprint.some((item) => typeof item !== "string" || item.length === 0)
+) {
+  throw new Error("Invalid corporate landing release fingerprint contract.");
+}
 
 const webOrigin = (process.env.WEB_ORIGIN ?? "https://lastbenchbd.com").replace(/\/+$/, "");
 const apiOrigin = (process.env.API_ORIGIN ?? "https://api.lastbenchbd.com").replace(/\/+$/, "");
@@ -32,20 +45,94 @@ for (const [name, value] of origins) {
 const checks = [
   { name: "API custom-domain health", url: `${apiOrigin}/api/health`, expectJson: true, dnsOnFailure: true },
   ...(renderOrigin ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }] : []),
-  { name: "Landing", url: `${webOrigin}/`, expectHtml: true, expectIncludes: ["claude-design-support.js", "bench-ai.js"] },
-  { name: "Blueprint business layer", url: `${webOrigin}/lastbench-blueprint.js`, expectIncludes: ["STUDY. SETTLE.", "TRACK MY JOURNEY", "UNIVERSITY EXPLORER"] },
-  ...(renderOrigin
-    ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }]
-    : []),
   {
-    name: "Landing",
+    name: "Corporate landing",
     url: `${webOrigin}/`,
     expectHtml: true,
-    expectIncludes: ["claude-design-support.js", "bench-ai.js", "/rest/v1/lastbench_signups"],
+    expectIncludes: corporateLandingFingerprint,
+  },
+  {
+    name: "Runtime blueprint alignment",
+    url: `${webOrigin}/lastbench-blueprint.js`,
+    expectIncludes: [
+      "2026-09-29-jev-lock",
+      "Education & Mobility",
+      "CLASS[Λ]",
+      "co.lab",
+      "businessLab:'co.lab'",
+      "educationMobilityService:'Malaysia'",
+      "lb-malaysia-service",
+    ],
   },
   { name: "Student app", url: `${webOrigin}/app/`, expectHtml: true },
   { name: "CLASS signup hub", url: `${webOrigin}/class-a/`, expectHtml: true },
-  { name: "CLASS masterclass", url: `${webOrigin}/class-a/masterclass.html`, expectHtml: true },
+  {
+    name: "CLASS masterclass",
+    url: `${webOrigin}/class-a/masterclass.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "masterclass-entry.mp4",
+      "data-intro-end-card",
+      "class=\"intro-number\"",
+      "<h1><span>TURN AI INTO</span>",
+      "hero-system-stack",
+      "transform-rig",
+      "ACCEPT INVITATION",
+      "TURN AI INTO",
+      "YOUR TEAM.",
+      "Research · Build · Create · Sell · Operate",
+      "data-public-session-chip",
+      "data-public-session-meta",
+      "GOOGLE MEET · FREE REGISTRATION",
+      "FOLLOW &lt;CLASS[Λ]&gt; | LEARN AI ON WHATSAPP",
+      "FOLLOW CHANNEL →",
+      "I'VE FOLLOWED — UNLOCK MY PASS",
+    ],
+  },
+  {
+    name: "CLASS personal masterclass pass",
+    url: `${webOrigin}/class-a/pass.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "YOUR",
+      "MASTERCLASS PASS.",
+      "LIVE ATTENDANCE PROOF",
+      "pass.js",
+    ],
+  },
+  {
+    name: "CLASS RSVP confirmation",
+    url: `${webOrigin}/class-a/rsvp.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "CONFIRM MY RESPONSE",
+      "class-a-rsvp",
+      "email-link scanners",
+    ],
+  },
+  {
+    name: "CLASS instructor live control",
+    url: `${webOrigin}/class-a/live-control.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "DR.X LIVE · INSTRUCTOR CONTROL",
+      "ISSUE LIVE",
+      "ATTENDANCE CODE.",
+      "live-control.js",
+    ],
+  },
+  {
+    name: "CLASS attendance check-in",
+    url: `${webOrigin}/class-a/checkin.html`,
+    expectHtml: true,
+    expectIncludes: [
+      "CLASS[Λ] staff check-in · Class 0",
+      "REDEEM ATTENDANCE.",
+      "MARK ATTENDED →",
+      "checkin.js",
+      "last-bench-bench.png",
+    ],
+  },
   { name: "CLASS course", url: `${webOrigin}/class-a/course.html`, expectHtml: true },
 ];
 
@@ -100,7 +187,10 @@ console.log("- Returning Supabase session survives refresh");
 console.log("- Authenticated tRPC request succeeds");
 console.log("- Logout causes the next protected request to be rejected");
 console.log("- Real homepage and CLASS[Λ] submissions appear in their intended Supabase tables");
+console.log("- Online CLASS[Λ] registration creates a session enrollment without rewriting historical attendance");
+console.log("- Personal pass opens from its private code and join-click remains a signal, not attendance");
+console.log("- Live attendance becomes verified only after personal-pass + active BUILD-code evidence");
 console.log("- Supabase migration ledger remains reconciled with drizzle/MIGRATION_STATUS.md");
-console.log("- Homepage business logic matches the current Last Bench mobility blueprint");
+console.log("- Homepage business logic matches JEV 2026.09.29 and keeps Malaysia scoped to Education & Mobility");
 
 process.exitCode = failed ? 1 : 0;

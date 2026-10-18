@@ -1,0 +1,21 @@
+name: APIsec (not configured)
+
+# APIsec was added from GitHub's starter workflow and was still pointing at the
+# demo project "VAmPI" with no configured credentials. That produced a false
+# red security signal on every push/PR. Keep this workflow manual-only until a
+# real Last Bench APIsec project and credentials are configured.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  configuration-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain configuration state
+        run: |
+          echo "APIsec scanning is intentionally disabled."
+          echo "Configure a real Last Bench APIsec project plus repository secrets before re-enabling automated scans."
+          echo "CodeQL and the repository CI remain active security/quality gates."
