@@ -93,4 +93,7 @@ for bad_name in ("preview.pdf","preview.jpeg","preview"):
         pass
     else:
         raise SystemExit("FAIL: proof output path could overwrite or mislabel an artifact")
+workflow = Path(".github/workflows/class-a-receipt-safety.yml").read_text(encoding="utf-8")
+assert "'scripts/class_a_receipt_design_proof.py'" in workflow, "FAIL: proof-script changes do not trigger receipt-safety CI"
+print("PASS: receipt CI path filter includes private synthetic proof script")
 print("PASS: Parliament preview proof source, PII/test guards, SHA-pinned input and distinct PNG/PDF outputs")
