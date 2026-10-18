@@ -44,7 +44,7 @@ jobs:
           test "$(find artifacts/class-a-email-previews -name '*-desktop.png' | wc -l | tr -d ' ')" -eq 4
       - name: Upload HTML and PNG inspection evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: class-a-dark-email-visual-previews
           path: artifacts/class-a-email-previews/
