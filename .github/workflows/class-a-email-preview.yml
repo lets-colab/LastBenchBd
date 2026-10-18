@@ -1,0 +1,51 @@
+name: CLASS Email Visual Preview
+on:
+  pull_request:
+    paths:
+      - 'supabase/functions/_shared/class-a-email.ts'
+      - 'supabase/functions/class-a-*/index.ts'
+      - 'scripts/render-class-a-email-previews.ts'
+      - '.github/workflows/class-a-email-preview.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  render-previews:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Generate fictional, non-sensitive HTML from canonical renderer
+        run: pnpm exec tsx scripts/render-class-a-email-previews.ts
+      - name: Capture reproducible mobile and desktop browser previews
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          if [[ -z "$CHROME" ]]; then
+            echo '::error::Chrome/Chromium unavailable; visual preview blocked'
+            exit 1
+          fi
+          for file in artifacts/class-a-email-previews/*.html; do
+            base="${file%.html}"
+            uri="file://$(realpath "$file")"
+            "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --window-size=425,1250 --screenshot="${base}-mobile.png" "$uri"
+            "$CHROME" --headless --no-sandbox --disable-gpu --disable-dev-shm-usage --hide-scrollbars --window-size=1100,1200 --screenshot="${base}-desktop.png" "$uri"
+          done
+          test "$(find artifacts/class-a-email-previews -name '*-mobile.png' | wc -l | tr -d ' ')" -eq 4
+          test "$(find artifacts/class-a-email-previews -name '*-desktop.png' | wc -l | tr -d ' ')" -eq 4
+      - name: Upload HTML and PNG inspection evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: class-a-dark-email-visual-previews
+          path: artifacts/class-a-email-previews/
+          retention-days: 14
