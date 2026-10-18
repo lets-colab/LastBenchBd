@@ -102,8 +102,12 @@ def proof(reference: Path, out: Path, learner: str, email: str, regid: str):
     text(dr,(152,1200),"The official receipt issuing gate remains disabled.",18,(0,99,56),True)
     # The exact SHA-pinned header carries the baked-in red SAMPLE NOT VALID flag.
     out.parent.mkdir(parents=True,exist_ok=True)
-    im.save(png,format="PNG",optimize=True)
-    im.save(pdf,format="PDF",resolution=120.0)
+    # Exclusive creation prevents hard-link, symlink, preexisting-file and
+    # concurrent destination aliases from overwriting any existing asset.
+    with png.open("xb") as target:
+        im.save(target,format="PNG",optimize=True)
+    with pdf.open("xb") as target:
+        im.save(target,format="PDF",resolution=120.0)
     return pdf
 
 if __name__=="__main__":
