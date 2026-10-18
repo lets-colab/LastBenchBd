@@ -140,4 +140,32 @@ describe("CLASS[Λ] locked transactional email contract", () => {
     expect(sendAt).toBeGreaterThan(verificationAt);
   });
 
+  it("preserves the legacy interlock while allowing only evidence-gated post-class claims", () => {
+    const migration=readFileSync(resolve(root,
+      "drizzle/migrations/20261018170000_class_a_postclass_governed_claim_handoff.sql"),"utf8");
+    expect(migration).toContain("create or replace function private.class_a_fail_closed_legacy_post_class()");
+    expect(migration).not.toContain("drop trigger");
+    expect(migration).toContain("old.status = 'skipped'");
+    expect(migration).toContain("new.status = 'processing'");
+    expect(migration).toContain("old.sent_at is null");
+    expect(migration).toContain("old.external_ref is null");
+    expect(migration).toContain("r.record_kind = 'genuine'");
+    expect(migration).toContain("e.status = 'attended'");
+    expect(migration).toContain("s.ends_at <= now()");
+    expect(migration).toContain("a.evidence_type in ('meet_report','staff_code')");
+    expect(migration).toContain("s.analysis_summary ->> 'after_class_pack_url'");
+    expect(migration).toContain("class_a_postclass_requires_processing_claim");
+    expect(migration).toContain("new.status := 'skipped'");
+    expect(migration).toContain("revoke all on function");
+  });
+
+  it("holds transport ambiguity and 5xx responses instead of permitting a duplicate send", () => {
+    expect(followup).toContain('delivery_uncertain_transport');
+    expect(followup).toContain('delivery_uncertain_provider_5xx:');
+    expect(followup).toContain('provider_email_id_missing_delivery_uncertain');
+    expect(followup).toContain('provider_rejected:');
+    expect(followup).toContain('status:uncertain?"processing":"skipped"');
+    expect(followup).toContain('postclassClaimAccepted(claimed,item.id)');
+  });
+
 });
