@@ -64,6 +64,13 @@ describe("CLASS[Λ] locked transactional email contract", () => {
     expect(notification).toContain("name=escapeHtml(name)");
   });
 
+  it("does not double-unescape encoded ampersands (CodeQL js/double-escaping regression)", () => {
+    const once=classAPlainText("<p>&amp;lt;script&amp;gt;</p>");
+    expect(once).toContain("&lt;script&gt;");
+    expect(once).not.toContain("<script>");
+    expect(classAPlainText("<p>A &amp; B &lt; C</p>")).toContain("A & B < C");
+  });
+
   it("rejects hostile or ambiguous URLs and escapes valid query strings", () => {
     for (const bad of ['javascript:alert(1)', 'data:text/html,test','http://insecure.test','https://user:pass@lastbenchbd.com','https://lastbenchbd.com/\nInjected: true']) {
       expect(safeClassAUrl(bad)).toBe("");
