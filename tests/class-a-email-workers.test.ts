@@ -4,6 +4,7 @@ import { dirname, resolve } from "node:path";
 import { transformSync } from "esbuild";
 import { describe, expect, it } from "vitest";
 import { escapeClassAHtml, safeClassAUrl, classAButton, classAStatusCard, classAPlainText, renderClassAEmail } from "../supabase/functions/_shared/class-a-email";
+import { postclassClaimAccepted } from "../supabase/functions/_shared/class-a-postclass-claim";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const worker = (name: string) => readFileSync(resolve(root, "supabase/functions", name, "index.ts"), "utf8");
@@ -102,7 +103,8 @@ describe("CLASS[Λ] locked transactional email contract", () => {
       expect(source).not.toContain('String(body.id||"resend")');
     }
     expect(followup).toContain('.eq("status","skipped")');
-    expect(followup).toContain('.eq("status","processing").select("id").maybeSingle()');
+    expect(followup).toContain('.select("id,status").maybeSingle()');
+    expect(followup).toContain("postclassClaimAccepted(claimed,item.id)");
     expect(followup).toContain("delivery_uncertain_provider_accepted");
     expect(confirmation).toContain('email_status:uncertain?"processing":"failed"');
     expect(notification).toContain('?"processing":"failed"');
@@ -122,4 +124,20 @@ describe("CLASS[Λ] locked transactional email contract", () => {
     expect(notification).toContain("classAPlainText(html)");
     expect(followup).toContain("classAPlainText(html)");
   });
+  it("fails closed when the deployed legacy post-class trigger rewrites an attempted processing claim", () => {
+    const ddl = readFileSync(resolve(root,"drizzle/migrations/20261006095000_class_a_legacy_postclass_failclosed.sql"),"utf8");
+    expect(ddl).toContain("new.status := 'skipped'");
+    expect(ddl).toContain("new.status in ('pending','failed','processing')");
+    // UPDATE ... RETURNING can return the row even though the BEFORE trigger
+    // reverted its status. A returned row is NOT proof that an atomic claim held.
+    expect(postclassClaimAccepted({id:42,status:"skipped"},42)).toBe(false);
+    expect(postclassClaimAccepted({id:42,status:"processing"},42)).toBe(true);
+    expect(postclassClaimAccepted({id:43,status:"processing"},42)).toBe(false);
+    expect(postclassClaimAccepted(null,42)).toBe(false);
+    const verificationAt = followup.indexOf("postclassClaimAccepted(claimed,item.id)");
+    const sendAt = followup.indexOf("const ref=await send(reg.email");
+    expect(verificationAt).toBeGreaterThan(0);
+    expect(sendAt).toBeGreaterThan(verificationAt);
+  });
+
 });
