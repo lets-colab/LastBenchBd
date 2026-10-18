@@ -44,8 +44,14 @@ def text(draw, xy, s, sz=18, col=INK, bold=False, maxw=None):
             raise ValueError(f"field too wide for visual card: {s[:22]}")
     draw.text(xy,s,font=ft,fill=col)
 
+def output_paths(out: Path):
+    if out.suffix.lower() != ".png":
+        raise ValueError("Output path must end in .png; paired PDF is written separately")
+    return out, out.with_suffix(".pdf")
+
 def proof(reference: Path, out: Path, learner: str, email: str, regid: str):
     valid_test_values(learner,email,regid)
+    png, pdf=output_paths(out)
     data=reference.read_bytes()
     if hashlib.sha256(data).hexdigest()!=APPROVED_SANITIZED_SHA256:
         raise ValueError("Refusing image: approved sanitized reference SHA256 mismatch")
@@ -93,8 +99,7 @@ def proof(reference: Path, out: Path, learner: str, email: str, regid: str):
     text(dr,(152,1200),"The official receipt issuing gate remains disabled.",18,(0,99,56),True)
     # The exact SHA-pinned header carries the baked-in red SAMPLE NOT VALID flag.
     out.parent.mkdir(parents=True,exist_ok=True)
-    im.save(out,format="PNG",optimize=True)
-    pdf=out.with_suffix(".pdf")
+    im.save(png,format="PNG",optimize=True)
     im.save(pdf,format="PDF",resolution=120.0)
     return pdf
 
