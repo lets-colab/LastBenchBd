@@ -44,7 +44,7 @@ describe("CLASS[Λ] locked transactional email contract", () => {
     expect(html).toContain("background:#1C2620");
     expect(html).toContain("APPLICATION<br>RECEIVED.");
     expect(html).toContain('alt="Last Bench — Creating a Lasting Benchmark"');
-    expect(html).toContain("background:#101110;border-radius:5px");
+    expect(html).toContain("background:#FFFFFF;color:#101110;border-radius:5px");
     expect(html).toContain("CLASS[Λ]");
     expect(html).toContain("CLASS[Λ] · Last Bench");
     expect(html).toContain("padding:15px 22px");
