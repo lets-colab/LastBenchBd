@@ -2,6 +2,13 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { PDFDocument, StandardFonts, rgb } from "npm:pdf-lib@1.17.1";
 
+// OWNER-APPROVED RECEIPT VISUAL LOCK: 11 October 2026, Jatiya Sangsad Bhaban.
+// More specific than the general 18 October 2026 CLASS[Λ] email body standard.
+// See brand/class-a/PARLIAMENT_RECEIPT_LOCK.md for the exact artwork and proof steps.
+// DO NOT toggle this until the PII-free, exact-logo, data-driven Parliament PDF renderer,
+// visual QA, finance contract and safe delivery tests are proven and owner-approved.
+const PARLIAMENT_RECEIPT_RENDERER_APPROVED = false;
+const PARLIAMENT_RECEIPT_LOCK_ID = "CLASSA_PARLIAMENT_20261011";
 const SITE="https://lastbenchbd.com/class-a/course.html";
 const FROM=Deno.env.get("CLASS_A_EMAIL_FROM")||"CLASS[Λ] <info@lastbenchbd.com>";
 const RESEND_KEY=Deno.env.get("RESEND_API_KEY")||"";
@@ -151,6 +158,13 @@ async function sendReceipt(row:any, reg:any){
 
 Deno.serve(async(req)=>{
   if(req.method!=="POST") return new Response("method_not_allowed",{status:405});
+  // FAIL CLOSED BEFORE claiming any payment, incrementing attempts, or sending messages.
+  // The previous generic receiptPdf()/paymentHtml() does NOT match the approved Parliament template.
+  if (!PARLIAMENT_RECEIPT_RENDERER_APPROVED) {
+    return new Response(JSON.stringify({ok:false,blocked:"parliament_receipt_template_not_implemented",
+      design_lock:PARLIAMENT_RECEIPT_LOCK_ID,sent:0,failed:0,skipped:0}),
+      {status:503,headers:{"Content-Type":"application/json"}});
+  }
   if(!RESEND_KEY) return new Response(JSON.stringify({ok:false,blocked:"missing_email_transport",sent:0,failed:0,skipped:0}),{status:503,headers:{"Content-Type":"application/json"}});
   const c=admin();
   const {data:rows,error}=await c.from("class_a_payments")
