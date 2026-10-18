@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import {createClient} from "npm:@supabase/supabase-js@2";
 import {escapeClassAHtml,safeClassAUrl,classAButton,classAInlineLink,renderClassAEmail,classAPlainText} from "../_shared/class-a-email.ts";
+import {postclassClaimAccepted} from "../_shared/class-a-postclass-claim.ts";
 
 const FROM=Deno.env.get("CLASS_A_EMAIL_FROM")||"CLASS[Λ] <info@lastbenchbd.com>";
 const COURSE="https://lastbenchbd.com/class-a/course.html";
@@ -66,9 +67,11 @@ Deno.serve(async(req)=>{
     // Atomic claim prevents concurrent workers from sending the same follow-up.
     const {data:claimed,error:claimError}=await c.from("class_a_session_notifications")
       .update({status:"processing"}).eq("id",item.id).eq("status","skipped")
-      .like("last_error","completion_gate_moved_to_governed_followup%").select("id").maybeSingle();
+      .like("last_error","completion_gate_moved_to_governed_followup%").select("id,status").maybeSingle();
     if(claimError) throw claimError;
-    if(!claimed){out.waiting++;continue;}
+    // PostgreSQL triggers can rewrite the requested status to "skipped" while
+    // still returning a row. Never send unless the persisted claim is processing.
+    if(!postclassClaimAccepted(claimed,item.id)){out.waiting++;continue;}
     try{
       const ref=await send(reg.email,reg.full_name||"there",session);
       const {data:recorded,error:recordError}=await c.from("class_a_session_notifications")
