@@ -95,6 +95,19 @@ describe("CLASS[Λ] locked transactional email contract", () => {
     expect(receipt).toContain("pdf.embedPng");
   });
 
+  it("holds provider-accepted-but-uncertain emails instead of inventing delivery evidence", () => {
+    for (const source of [confirmation,notification,followup]) {
+      expect(source).toContain("provider_email_id_missing_delivery_uncertain");
+      expect(source).toContain("delivery_uncertain");
+      expect(source).not.toContain('String(body.id||"resend")');
+    }
+    expect(followup).toContain('.eq("status","skipped")');
+    expect(followup).toContain('.eq("status","processing").select("id").maybeSingle()');
+    expect(followup).toContain("delivery_uncertain_provider_accepted");
+    expect(confirmation).toContain('email_status:uncertain?"processing":"failed"');
+    expect(notification).toContain('?"processing":"failed"');
+  });
+
   it("preserves existing delivery/retry and payment evidence guards", () => {
     for (const source of [confirmation,receipt]) {
       expect(source).toContain('blocked:"missing_email_transport"');
