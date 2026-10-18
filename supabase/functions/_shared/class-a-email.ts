@@ -52,7 +52,7 @@ export function renderClassAEmail(input: {title:string;body:string;eyebrow?:stri
   ].join("");
 }
 export function classAPlainText(html: string): string {
-  return html.replace(/<br\s*\/?\s*>/gi,"\n")
+  return html.replace(/<a\s+[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi,(_match,href,label)=>label+" ("+href+")")\n    .replace(/<br\s*\/?\s*>/gi,"\n")
     .replace(/<\/(?:p|h[1-6]|tr|table|div)>/gi,"\n")
     .replace(/<[^>]+>/g," ")
     .replace(/&nbsp;/gi," ").replace(/&amp;/gi,"&").replace(/&lt;/gi,"<")
