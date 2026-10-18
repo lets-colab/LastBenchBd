@@ -46,3 +46,57 @@ for label,haystack,needle in [
     if needle.casefold() not in haystack.casefold():
         raise SystemExit(f"FAIL: {label}")
 print("PASS: receipt-specific Parliament design lock and fail-closed gate")
+
+# The private design-proof workflow must never accept a real learner record or
+# an unapproved screenshot. Validate its input guard without importing Pillow.
+import ast
+source_path = Path("scripts/class_a_receipt_design_proof.py")
+proof_source = source_path.read_text(encoding="utf-8")
+tree = ast.parse(proof_source)
+assert "a016f74abf76b2a1d54aeee113ef9c279a8bd21fc231f6b870dbcf326161a60d" in proof_source
+assert "Refusing image: approved sanitized reference SHA256 mismatch" in proof_source
+assert "Image.open(io.BytesIO(data))" in proof_source and "Image.open(reference)" not in proof_source
+assert "Cannot overwrite the locked, sanitized reference image" in proof_source
+assert 'with png.open("xb") as target' in proof_source
+assert 'with pdf.open("xb") as target' in proof_source
+assert 'im.save(png,format="PNG"' not in proof_source and 'im.save(pdf,format="PDF"' not in proof_source
+assert "DEMO - NOT ISSUED" in proof_source
+assert "SAMPLE NOT VALID" in proof_source
+assert "The official receipt issuing gate remains disabled." in proof_source
+assert "status:\"sent\"" not in proof_source
+validator = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name=="valid_test_values")
+fixtures = next(n for n in tree.body if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id=="FIXTURES" for t in n.targets))
+namespace={}
+exec(compile(ast.fix_missing_locations(ast.Module(body=[fixtures,validator],type_ignores=[])),"proof-validator","exec"),namespace)
+assert len(namespace["FIXTURES"]) == 2
+assert "--learner" not in proof_source and "--email" not in proof_source and "--registration" not in proof_source
+v=namespace["valid_test_values"]
+for fictional in namespace["FIXTURES"].values():
+    v(*fictional)
+for invalid in (
+    ("Real Recipient","sample.a@example.invalid.test","DEMO-01"),
+    ("Sample Learner Alpha","real@gmail.com","DEMO-01"),
+    ("Sample Learner Alpha","sample.a@example.invalid.test","LB-2026-44"),
+):
+    try:
+        v(*invalid)
+    except ValueError:
+        pass
+    else:
+        raise SystemExit("FAIL: synthetic proof accepted non-test values")
+output_guard = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name=="output_paths")
+paths_namespace={"Path":Path}
+exec(compile(ast.fix_missing_locations(ast.Module(body=[output_guard],type_ignores=[])),"proof-output-paths","exec"),paths_namespace)
+paths = paths_namespace["output_paths"]
+assert paths(Path("preview.png")) == (Path("preview.png"),Path("preview.pdf"))
+for bad_name in ("preview.pdf","preview.jpeg","preview"):
+    try:
+        paths(Path(bad_name))
+    except ValueError:
+        pass
+    else:
+        raise SystemExit("FAIL: proof output path could overwrite or mislabel an artifact")
+workflow = Path(".github/workflows/class-a-receipt-safety.yml").read_text(encoding="utf-8")
+assert "'scripts/class_a_receipt_design_proof.py'" in workflow, "FAIL: proof-script changes do not trigger receipt-safety CI"
+print("PASS: receipt CI path filter includes private synthetic proof script")
+print("PASS: Parliament preview proof source, PII/test guards, SHA-pinned input and distinct PNG/PDF outputs")

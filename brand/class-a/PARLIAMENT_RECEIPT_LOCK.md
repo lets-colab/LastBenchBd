@@ -41,3 +41,14 @@ The existing `class-a-payment-receipt-worker` currently generates a generic whit
 5. Only then update the hard-coded worker approval gate in a reviewed code change alongside updated tests and signed-off artifacts. Do not toggle an environment variable or skip visual review to circumvent the lock.
 
 **Operational truth:** This file is a durable design contract and fail-closed control. It does **not** claim the new PDF renderer, provider reconciliation, or deployment is finished.
+
+
+## Non-issuable synthetic layout proof — 19 October 2026
+
+**Development only; still NOT approved for receipts.** The reusable script `scripts/class_a_receipt_design_proof.py` takes **only** an externally supplied privately sanitized Parliament preview with exact SHA-256 `a016f74abf76b2a1d54aeee113ef9c279a8bd21fc231f6b870dbcf326161a60d`. The private image file is deliberately **not** committed. This source checksum is *not* the original owner's source fingerprint above; it covers only the sanitized derivative.
+
+The script overlays fictional learner and registration fields on a separate central region; its header and footer are byte-identical to the sanitized reference and visibly include an immutable `SAMPLE · NOT VALID` marker. Local visual smoke tests generated two different synthetic PNG/PDF variants and compared unchanged header/footer regions; the central fields differed as expected. The proof uses Pillow and local DejaVu fonts. Only two enumerated, wholly fictional fixtures (`alpha` and `beta`) are accepted; there is no free-form learner name, email, registration-ID, payment or transaction input. The script rejects unknown fixtures, wrong reference hash, non-PNG output paths and mismatched dimensions.
+
+**Scope boundary:** The proof is a flattened image PDF, not a searchable/accessibility-reviewed/data-authoritative invoice or receipt. It does not establish artwork rights, an independently reconstructed transparent logo/Parliament art package, real payment validation, live email delivery, finance reconciliation, or user acceptance of the final official PDF. It is not loaded by the Supabase worker. The hard-coded `PARLIAMENT_RECEIPT_RENDERER_APPROVED = false` remains mandatory.
+
+Before production, obtain rights clearance for the original scenic artwork, extract/recreate legally sourced PII-free background assets while using only canonical approved logo files, implement a selectable-text, data-driven official receipt renderer with mandatory transaction validation and safe idempotency, compare it field-by-field with the owner-approved composition, obtain explicit owner sign-off, and test authenticated provider delivery. Do not use a prior student's customized screenshot or change the gate because this proof exists.

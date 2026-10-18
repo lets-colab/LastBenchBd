@@ -4,6 +4,7 @@ on:
     paths:
       - 'supabase/functions/class-a-payment-receipt-worker/**'
       - 'scripts/verify_class_a_receipt_safety.py'
+      - 'scripts/class_a_receipt_design_proof.py'
       - 'brand/class-a/BRAND_BLUEPRINT.md'
       - 'brand/class-a/PARLIAMENT_RECEIPT_LOCK.md'
       - '.github/workflows/class-a-receipt-safety.yml'
