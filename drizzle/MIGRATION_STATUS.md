@@ -214,3 +214,22 @@ Session scheduling is now LIVE: the real Google Calendar event and Meet room exi
 - The visible RSVP surface intentionally requires a second human confirmation click after the email button so automated link scanners cannot register attendance intent.
 
 - Follow-up migration `20261004100511_class_a_session_rsvp_session_index` adds the covering `session_id` index required by the post-DDL performance advisor.
+
+---
+
+## CLASS[Λ] post-class guarded email claim — 18 October 2026
+
+**GitHub changes:** PR #135 (CLASS[Λ] shared dark email design), PR #136 (persisted-claim guard), PR #137 (governed database handoff and ambiguous provider failure quarantine). This ledger section records observed production state; it is not an assertion that a particular learner received an email.
+
+**Applied Supabase migration:** `20261018165100 class_a_postclass_governed_claim_handoff`. Its canonical reviewed SQL is `drizzle/migrations/20261018170000_class_a_postclass_governed_claim_handoff.sql`.
+
+Verified directly against Supabase project `the-last-bench` on 18 October 2026:
+- The `private.class_a_fail_closed_legacy_post_class()` function now allows `skipped -> processing` only for previously quarantined, never-sent post-class records backed by a genuine registration, attended enrollment, trusted completion evidence, past session end, and an HTTPS after-class pack URL.
+- The same function holds `processing -> processing` for provider-uncertain delivery and requires a previous processing claim, `sent_at` and `external_ref` before `sent`.
+- `trg_class_a_fail_closed_legacy_post_class` remains enabled; blanket legacy sends are not unlocked.
+- `class-a-postclass-completion-worker` was deployed ACTIVE as version **3**, JWT verification enabled; production source readback contains persisted-claim validation, common dark email renderer, and transport/5xx uncertainty handling.
+- Other dark-email worker deployments: `class-a-course-confirmation-worker` v3; `class-a-notification-worker` v5; `class-a-payment-receipt-worker` v4.
+- At verification time, post-class records remained **2 skipped, 0 processing, 0 sent**; no rows met the completion-and-pack eligibility check. There was no authorized recipient delivery test and no proof of inbox delivery.
+- The separate `PARLIAMENT_RECEIPT_RENDERER_APPROVED = false` lock remains enforced. Generic receipt PDFs must not be issued.
+
+**Remaining independent gates:** A real eligible post-class transition with explicit authorized test delivery and provider/inbox receipt; mobile/desktop email-client visual review against the owner's original screenshot references; receipt-specific Parliament PDF asset/visual/financial approval. GitHub CI and preview generation alone do not demonstrate those outcomes. Do not fabricate payment, enrollment, delivery or attendance evidence.
