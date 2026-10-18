@@ -2,7 +2,7 @@
   <img src="./landing/assets/logo-full.png" alt="Last Bench" width="320" />
 </p>
 
-<h1 align="center">Last Bench</h1>
+<h1 align="center">L Λ S T B E N C H</h1>
 
 <p align="center"><strong>The Company · Two Labs · One Intelligence Loop</strong></p>
 
