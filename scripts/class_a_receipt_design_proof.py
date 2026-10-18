@@ -8,7 +8,7 @@ The output is fictional, flattened and invalid for financial issuance.
 Requires Pillow (pip install Pillow) and a local DejaVu Sans font.
 """
 from __future__ import annotations
-import argparse, hashlib
+import argparse, hashlib, io
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
@@ -58,7 +58,7 @@ def proof(reference: Path, out: Path, learner: str, email: str, regid: str):
     data=reference.read_bytes()
     if hashlib.sha256(data).hexdigest()!=APPROVED_SANITIZED_SHA256:
         raise ValueError("Refusing image: approved sanitized reference SHA256 mismatch")
-    im=Image.open(reference).convert("RGB")
+    im=Image.open(io.BytesIO(data)).convert("RGB")
     if im.size!=(1024,1536):
         raise ValueError("Reference dimensions mismatch")
     dr=ImageDraw.Draw(im)
