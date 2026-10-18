@@ -137,7 +137,8 @@ async function sendEmail(to:string,subject:string,html:string) {
   });
   const body=await res.json().catch(()=>({}));
   if(!res.ok) throw new Error(`email_failed:${body.message||res.status}`);
-  return String(body.id||"resend");
+  if(!body.id) throw new Error("provider_email_id_missing_delivery_uncertain");
+  return String(body.id);
 }
 
 function completionEvidenceOk(rows:Row[]|null|undefined) {
@@ -348,8 +349,8 @@ Deno.serve(async (req:Request)=>{
       report.email.sent++;
     }catch(err){
       await db.from("class_a_session_notifications")
-        .update({status:"failed",attempts:(Number(item.attempts)||0)+1,last_error:String(err)})
-        .eq("id",item.id);
+         .update({status:String(err).includes("delivery_uncertain")?"processing":"failed",attempts:String(err).includes("delivery_uncertain")?item.attempts:(Number(item.attempts)||0)+1,last_error:String(err)})
+        .eq("id",item.id).eq("status","processing");
       report.email.failed++;
     }
   }
