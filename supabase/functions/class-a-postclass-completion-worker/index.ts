@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import {createClient} from "npm:@supabase/supabase-js@2";
+import {escapeClassAHtml,safeClassAUrl,classAButton,classAInlineLink,renderClassAEmail,classAPlainText} from "../_shared/class-a-email.ts";
 
 const FROM=Deno.env.get("CLASS_A_EMAIL_FROM")||"CLASS[Λ] <info@lastbenchbd.com>";
 const COURSE="https://lastbenchbd.com/class-a/course.html";
@@ -14,22 +15,28 @@ function db(){
   return createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});
 }
 
-function button(label:string,url:string){
-  return url?`<p><a href="${url}">${label}</a></p>`:"";
-}
-
 async function send(to:string,name:string,session:any){
   const key=Deno.env.get("RESEND_API_KEY")||"";
   if(!key) throw new Error("missing_email_transport");
   const pack=String(session?.analysis_summary?.after_class_pack_url||"");
   const recording=String(session?.recording_url||"");
   const transcript=String(session?.transcript_url||"");
-  if(!pack) throw new Error("after_class_pack_not_ready");
-  const html=`<p>Hi ${name},</p><p>Thank you for completing the CLASS[Λ] live session.</p><p>Your approved after-class materials are ready.</p>${button("OPEN AFTER-CLASS PACK",pack)}${button("WATCH CLASS RECORDING",recording)}${button("OPEN NOTES / TRANSCRIPT",transcript)}${button("EXPLORE THE 20-CLASS PROGRAM",COURSE)}<p>Participant-specific personal or company materials remain private unless explicitly approved for sharing.</p>`;
-  const r=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:`Bearer ${key}`,"Content-Type":"application/json"},body:JSON.stringify({from:FROM,to:[to],subject:"CLASS[Λ] — your after-class pack",html})});
-  const body=await r.json().catch(()=>({}));
-  if(!r.ok) throw new Error(`email_failed:${body.message||r.status}`);
-  return String(body.id||"resend");
+  if(!safeClassAUrl(pack)) throw new Error("after_class_pack_not_ready");
+  const secondary=[
+    classAInlineLink("WATCH CLASS RECORDING",recording),
+    classAInlineLink("OPEN NOTES / TRANSCRIPT",transcript),
+    classAInlineLink("EXPLORE THE 20-CLASS PROGRAM",COURSE)
+  ].filter(Boolean).join("<br>");
+  const body='<p>Hi '+escapeClassAHtml(name)+',</p>'+
+    '<p>Thank you for completing the CLASS[Λ] live session. Your approved after-class materials are ready.</p>'+
+    classAButton("OPEN AFTER-CLASS PACK",pack)+
+    (secondary?'<p style="margin-top:20px">'+secondary+'</p>':"")+
+    '<p>Participant-specific personal or company materials remain private unless explicitly approved for sharing.</p>';
+  const html=renderClassAEmail({title:"YOUR AFTER-CLASS\nPACK.",eyebrow:"AFTER-CLASS MATERIALS",body});
+  const r=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:"Bearer "+key,"Content-Type":"application/json"},body:JSON.stringify({from:FROM,to:[to],subject:"CLASS[Λ] — your after-class pack",html,text:classAPlainText(html)})});
+  const response=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error("email_failed:"+(response.message||r.status));
+  return String(response.id||"resend");
 }
 
 Deno.serve(async(req)=>{
