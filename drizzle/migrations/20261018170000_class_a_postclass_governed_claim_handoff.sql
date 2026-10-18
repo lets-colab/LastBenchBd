@@ -26,6 +26,20 @@ begin
       return new;
     end if;
 
+    -- Provider acceptance can be uncertain after a timeout or 5xx. The
+    -- dedicated sender then updates only its error details while keeping
+    -- PROCESSING, which is deliberately not selectable for automatic retry.
+    if tg_op = 'UPDATE' then
+      if old.notification_type = 'post_class_followup'
+         and old.status = 'processing'
+         and new.status = 'processing'
+         and new.sent_at is null
+         and new.external_ref is null
+         and new.last_error like 'completion_gate_moved_to_governed_followup:send_failed:%delivery_uncertain%' then
+        return new;
+      end if;
+    end if;
+
     -- The only processing exception is a previously quarantined,
     -- never-sent post-class notification with verified attendance and pack.
     if tg_op = 'UPDATE' then
