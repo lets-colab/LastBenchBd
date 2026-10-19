@@ -100,3 +100,12 @@ workflow = Path(".github/workflows/class-a-receipt-safety.yml").read_text(encodi
 assert "'scripts/class_a_receipt_design_proof.py'" in workflow, "FAIL: proof-script changes do not trigger receipt-safety CI"
 print("PASS: receipt CI path filter includes private synthetic proof script")
 print("PASS: Parliament preview proof source, PII/test guards, SHA-pinned input and distinct PNG/PDF outputs")
+
+# Preserve founder evidence already recorded in private canonical systems.
+continuity = Path("brand/class-a/PAYMENT_EVIDENCE_NO_REPEAT_RUNBOOK.md").read_text(encoding="utf-8")
+assert "second time" in continuity
+assert "provider reconciliation" in continuity
+assert "JEVGate HOLD" in continuity
+assert "Parliament-themed receipt" in continuity
+assert "PAYMENT_EVIDENCE_NO_REPEAT_RUNBOOK.md" in receipt_lock
+print("PASS: evidence continuity and no-repeat receipt handoff")
