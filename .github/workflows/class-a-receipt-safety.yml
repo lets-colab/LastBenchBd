@@ -7,6 +7,7 @@ on:
       - 'scripts/class_a_receipt_design_proof.py'
       - 'brand/class-a/BRAND_BLUEPRINT.md'
       - 'brand/class-a/PARLIAMENT_RECEIPT_LOCK.md'
+      - 'brand/class-a/PAYMENT_EVIDENCE_NO_REPEAT_RUNBOOK.md'
       - '.github/workflows/class-a-receipt-safety.yml'
   workflow_dispatch:
 jobs:
