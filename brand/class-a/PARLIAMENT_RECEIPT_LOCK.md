@@ -22,6 +22,10 @@
 8. Lower band: darker lower-left city/trees with **Thank you for being part of Last Bench.** in white handwritten lettering, building/water on right, mission copy, green accent line, and dark footer/contact strip. Preserve the owner's instruction for a **darker lower section/lower-left**.
 9. Brand palette **green / black / white**, cinematic Bangladesh setting, matching proportions and balance of approved visual. No visual redesign, no divider added to the header, and no unapproved typography/layout change.
 
+## Existing payment evidence continuity
+
+Before requesting a repeated screenshot, amount, transaction reference, or founder confirmation, read existing private finance evidence and its audit trail first. The procedure is in [PAYMENT_EVIDENCE_NO_REPEAT_RUNBOOK.md](PAYMENT_EVIDENCE_NO_REPEAT_RUNBOOK.md). Do not ask the founder to resupply known details just because provider reconciliation authority is not configured. Keep official receipt verification safeguards intact.
+
 ## Dynamic information and financial safeguards
 
 - The original reference is for a different student. **Never reuse its receipt number, date, identity, email, batch date, reference, status, or transaction ID.** Every value must be loaded from the relevant authorized student registration and payment record.
