@@ -692,6 +692,14 @@ export const appRouter = router({
   // ADMIN ROUTES
   // ============================================================================
   admin: router({
+    automationOverview: adminProcedure.query(async () => {
+      const { getAutomationOverview } = await import("./jevAutomation");
+      return getAutomationOverview();
+    }),
+    automationProbe: adminProcedure.mutation(async ({ ctx }) => {
+      const { executeSyntheticAutomationProbe } = await import("./jevAutomation");
+      return executeSyntheticAutomationProbe(ctx.user.id);
+    }),
     // Update application status (admin only)
     updateApplicationStatus: adminProcedure
       .input(
