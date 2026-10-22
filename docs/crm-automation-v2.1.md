@@ -1,3 +1,29 @@
+# LAST BENCH CRM Automation — Live Runtime Update (2026-10-22)
+
+## Verified state
+- Supabase project `the-last-bench`: automation schema and v2.1/v2.2/v2.3 migrations applied.
+- pg_cron job `lastbench-jev-crm-dryrun-minute` executes each minute.
+- Synthetic event `13d7dc0e-8367-446f-b48b-89f92a60f380` finished `completed`, one run, no last error.
+- Transaction rollback test: duplicate idempotency key yields same ID; dry-run completes with an audit; normal JWT role fails authorization.
+- App admin console is under PR #157, not certified deployed until CI, merge and founder-authenticated smoke.
+
+## Operator steps
+1. Sign in with an authorized application **admin** account.
+2. Open **Operations → Automations**.
+3. Review run counts, workflows and connector status.
+4. Press **Run safe synthetic test** to enqueue a health event only.
+5. Refresh after the next minute; confirm a completed health-probe run.
+
+## Security and integration readiness
+- The only enabled workflow is `jev-health-probe` with execution mode `dry_run`.
+- HubSpot, Notion and Slack are **not** automatically written to from this engine. Provider checks are read-only and require separately configured server-side credentials.
+- Do not import 212 pending prospects or 195 campus research records, resolve identity conflicts, or send messages without separate qualification and consent gates.
+- Real CRM synchronization remains **not verified**; do not present it as operational.
+- Basic Memory/XMemo are retrieval summaries, not company identity authority. KinicMemory connector is anonymous public-memory read-only.
+- If the operator console reports database unavailable, verify production API `DATABASE_URL` points to the verified Supabase project. Never expose a database password in the browser.
+- The cron executor does not run AI reasoning or external vendor calls. Human-approved, deterministic adapter execution remains a separate gated milestone.
+
+---
 # LAST BENCH CRM automation v2.1
 
 Status: **implementation proposal**, not deployed. This change is isolated to a feature branch pending review.
