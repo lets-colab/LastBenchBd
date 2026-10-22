@@ -45,6 +45,15 @@ export default function AutomationControlRoom() {
           <Metric label="Dead letters" value={Number(c?.dead_letter??0)} />
         </View>
         <View className="px-6 gap-3 pb-7">
+          <Text className="text-xl font-bold text-foreground">Existing CLASS[Λ] Sync</Text>
+          <Text className="text-sm text-muted">Read-only status from the existing signup outbox; synchronization markers are not destination read-back proof.</Text>
+          <View className="flex-row flex-wrap gap-3">
+            <Metric label="Signup events" value={data?.existingOutbox.events??0}/>
+            <Metric label="HubSpot marked" value={data?.existingOutbox.hubspotRecorded??0}/>
+            <Metric label="Notion marked" value={data?.existingOutbox.notionRecorded??0}/>
+          </View>
+        </View>
+        <View className="px-6 gap-3 pb-7">
           <Text className="text-xl font-bold text-foreground">Integration Health</Text>
           {(data?.providers??[]).map(p=><View key={p.provider} className="bg-surface border border-border rounded-xl p-4 flex-row justify-between items-center">
             <Text className="text-foreground font-semibold">{p.provider}</Text>
