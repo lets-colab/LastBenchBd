@@ -45,6 +45,13 @@ export default function AutomationControlRoom() {
           <Metric label="Dead letters" value={Number(c?.dead_letter??0)} />
         </View>
         <View className="px-6 gap-3 pb-7">
+          <Text className="text-xl font-bold text-foreground">Integration Health</Text>
+          {(data?.providers??[]).map(p=><View key={p.provider} className="bg-surface border border-border rounded-xl p-4 flex-row justify-between items-center">
+            <Text className="text-foreground font-semibold">{p.provider}</Text>
+            <Text className="text-muted text-xs font-bold">{p.status.replace("_"," ").toUpperCase()}</Text>
+          </View>)}
+        </View>
+        <View className="px-6 gap-3 pb-7">
           <Text className="text-xl font-bold text-foreground">Workflow Registry</Text>
           {(data?.workflows??[]).map(w=><View key={`${w.id}@${w.version}`} className="bg-surface border border-border rounded-xl p-4 gap-2">
             <View className="flex-row justify-between gap-3"><Text className="text-base font-bold text-foreground flex-1">{w.id}</Text><Text className="text-xs font-semibold text-primary">{w.enabled?"ENABLED":"DISABLED"}</Text></View>
