@@ -123,6 +123,7 @@ export default function AdminDashboardScreen() {
           </View>
           <View className="flex-row gap-3">
             <NavCard emoji="💸" title="Payouts" subtitle="Approve & pay commissions" onPress={() => router.push("/admin/payouts")} />
+            <NavCard emoji="⚙️" title="Automations" subtitle="JEV Gate workflows & diagnostics" onPress={() => router.push("/admin/automations")} />
           </View>
         </View>
 
