@@ -6,7 +6,8 @@ async function check(provider:string, token:string|undefined, url:string, extraH
   if (!token?.trim()) return {provider,status:"not_configured",checkedAt};
   try {
     const response=await fetch(url,{method:"GET",headers:{"Authorization":`Bearer ${token}`,...extraHeaders},signal:AbortSignal.timeout(2500)});
-    return {provider,status:response.ok?"reachable":"unreachable",checkedAt};
+    const applicationOk=provider==="Slack" ? Boolean(response.ok && (await response.json().catch(()=>({ok:false}))).ok) : response.ok;
+    return {provider,status:applicationOk?"reachable":"unreachable",checkedAt};
   } catch {return {provider,status:"unreachable",checkedAt};}
 }
 
