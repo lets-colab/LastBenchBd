@@ -20,7 +20,7 @@ export default function AutomationControlRoom() {
   const utils=trpc.useUtils();
   const probe=trpc.admin.automationProbe.useMutation({
     onSuccess:async result=>{
-      setFeedback(result.status==="completed" ? `Synthetic probe passed: ${result.eventId}` : `Probe requires review: ${result.status}`);
+      setFeedback(result.status==="pending" ? `Synthetic probe queued: ${result.eventId}. Refresh after the next scheduled run to verify completion.` : `Probe status: ${result.status}`);
       await utils.admin.automationOverview.invalidate();
     },
     onError:err=>setFeedback(`Probe failed: ${err.message}`)
