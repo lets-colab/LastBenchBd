@@ -7,14 +7,16 @@ import { getJevProviderHealth } from "./jevIntegrationHealth";
 export async function getAutomationOverview() {
   const db = await getDb();
   if (!db) throw new Error("Automation database connection unavailable");
-  const [counts, workflows, runs] = await Promise.all([
+  const [counts, workflows, runs, legacySync] = await Promise.all([
     db.execute(sql`select count(*) filter(where status='pending')::int as pending, count(*) filter(where status='processing')::int as processing, count(*) filter(where status='completed')::int as completed, count(*) filter(where status='blocked')::int as blocked, count(*) filter(where status='dead_letter')::int as dead_letter from automation.events`),
     db.execute(sql`select id,version,enabled,definition->'trigger'->>'event' as event_type,definition->>'execution_mode' as execution_mode from automation.workflow_definitions order by id,version`),
-    db.execute(sql`select id::text as id,workflow_id,mode,status,started_at,completed_at from automation.runs order by started_at desc limit 25`)
+    db.execute(sql`select id::text as id,workflow_id,mode,status,started_at,completed_at from automation.runs order by started_at desc limit 25`),
+    db.execute(sql`select count(*)::int as events,count(*) filter(where hubspot_synced_at is not null)::int as hubspot_recorded,count(*) filter(where notion_synced_at is not null)::int as notion_recorded from public.class_a_signup_events`)
   ]);
   const providers = await getJevProviderHealth();
   return {
     providers,
+    existingOutbox: { events:Number(legacySync[0]?.events??0),hubspotRecorded:Number(legacySync[0]?.hubspot_recorded??0),notionRecorded:Number(legacySync[0]?.notion_recorded??0) },
     counts: (counts[0] ?? {pending:0,processing:0,completed:0,blocked:0,dead_letter:0}) as Record<string, number>,
     workflows: workflows.map(x=>({ id:String(x.id), version:Number(x.version), enabled:Boolean(x.enabled), eventType:String(x.event_type??""), executionMode:String(x.execution_mode??"") })),
     runs: runs.map(x=>({ id:String(x.id), workflowId:String(x.workflow_id), mode:String(x.mode), status:String(x.status), startedAt:new Date(String(x.started_at)).toISOString(), completedAt:x.completed_at?new Date(String(x.completed_at)).toISOString():null })),
