@@ -27,9 +27,8 @@ export async function executeSyntheticAutomationProbe(adminUserId:number) {
   return db.transaction(async tx=>{
     await tx.execute(sql`select set_config('request.jwt.claim.role','service_role',true)`);
     const submitted=await tx.execute(sql`select public.jev_enqueue_event('system.health_probe','admin_console',${key},${JSON.stringify({synthetic:true,requested_by_admin_user_id:adminUserId})}::jsonb,1)::text as id`);
-    const outcome=await tx.execute(sql`select public.jev_process_batch(20) as outcome`);
     const id=String(submitted[0]?.id??"");
-    const event=await tx.execute(sql`select status from automation.events where id=${id}::uuid`);
-    return {eventId:id,status:String(event[0]?.status??"unknown"),outcome:outcome[0]?.outcome};
+    // Cron owns execution. Never process unrelated events from a UI action.
+    return {eventId:id,status:"pending",outcome:{execution_mode:"dry_run",delivery:"scheduled"}};
   });
 }
