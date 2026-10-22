@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { sql } from "drizzle-orm";
 import { getDb } from "./db";
+import { getJevProviderHealth } from "./jevIntegrationHealth";
 
 /** Strictly server-side and callable only from the application adminProcedure. */
 export async function getAutomationOverview() {
@@ -11,7 +12,9 @@ export async function getAutomationOverview() {
     db.execute(sql`select id,version,enabled,definition->'trigger'->>'event' as event_type,definition->>'execution_mode' as execution_mode from automation.workflow_definitions order by id,version`),
     db.execute(sql`select id::text as id,workflow_id,mode,status,started_at,completed_at from automation.runs order by started_at desc limit 25`)
   ]);
+  const providers = await getJevProviderHealth();
   return {
+    providers,
     counts: (counts[0] ?? {pending:0,processing:0,completed:0,blocked:0,dead_letter:0}) as Record<string, number>,
     workflows: workflows.map(x=>({ id:String(x.id), version:Number(x.version), enabled:Boolean(x.enabled), eventType:String(x.event_type??""), executionMode:String(x.execution_mode??"") })),
     runs: runs.map(x=>({ id:String(x.id), workflowId:String(x.workflow_id), mode:String(x.mode), status:String(x.status), startedAt:new Date(String(x.started_at)).toISOString(), completedAt:x.completed_at?new Date(String(x.completed_at)).toISOString():null })),
