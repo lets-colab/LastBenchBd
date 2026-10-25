@@ -43,7 +43,7 @@
     "drizzle-orm": "^0.45.2",
     "expo": "~54.0.29",
     "expo-audio": "~1.1.0",
-    "expo-build-properties": "^1.0.10",
+    "expo-build-properties": "^58.0.11",
     "expo-constants": "~18.0.12",
     "expo-font": "~57.0.4",
     "expo-haptics": "~15.0.8",
