@@ -1,18 +1,20 @@
 # Last Bench — Product & Experience Design Constitution
 
+> 25 October 2026 founder direction: CLASS[Λ] uses **Skill Laboratory** as its current public descriptor. This supersedes the earlier lab descriptor; the proof-led program and lab boundaries remain in force.
+
 > Read `PRODUCT.md`, `FOUNDATION_LOCK.md`, the canonical brand system, and this document together. If they conflict, current verified business/product truth and locked brand assets win over older mockups or historical design notes.
 
 ## 1. Corporate identity
 
-**Company:** Last Bench  
-**Architecture descriptor:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X  
+**Company:** Last Bench
+**Architecture descriptor:** CLASS[Λ] Skill Laboratory · co.lab Business Lab · Co.MPASS · Dr. X
 **Brand promise:** **From where you are. To what you can build.**
 
 Last Bench is the company. Malaysia is an active service within Education & Mobility, not the corporate backbone.
 
 The current JEV 2026.09.29 architecture is:
 
-1. **CLASS[Λ] — Human Lab / Learn to Build**: builds practical capability through skill, execution and proof.
+1. **CLASS[Λ] — Skill Laboratory / Learn to Build**: builds practical capability through skill, execution and proof.
 2. **co.lab — Business Lab / Build & Get Accelerated**: Ventures · Projects · Services · Community. ProjectX is one incubated student product associated with Abdul Moontakim (Moon Takim), not the Projects category or co.lab itself; Community contains Influencers · Ambassadors · Creators · Advisors.
 3. **Co.MPASS — Business Dashboard**: converges governed company evidence into context, clarity and direction.
 4. **Dr. X — Founder Second Brain / Twin**: governed memory, founder context, JEV judgment and reasoning.
@@ -45,7 +47,7 @@ A Last Bench corporate surface should explain the ecosystem in this order:
 
 1. **Brand truth** — the starting point is not the ceiling.
 2. **Company** — Last Bench is the company.
-3. **Two laboratories** — CLASS[Λ] Human Lab and co.lab Business Lab.
+3. **Two laboratories** — CLASS[Λ] Skill Laboratory and co.lab Business Lab.
 4. **Intelligence loop** — Co.MPASS converges governed evidence; Dr. X is the Founder Second Brain / Twin.
 5. **Multiple entry points** — people enter through the problem they actually have.
 6. **Proof and trust** — distinguish verified current operations from roadmap or proposed capability.
@@ -101,7 +103,7 @@ Avoid guaranteed visa approval, guaranteed scholarship percentages, guaranteed a
 
 ## 5. CLASS[Λ] design boundary
 
-CLASS[Λ] is the Human Lab and a distinct visual/product namespace.
+CLASS[Λ] is the Skill Laboratory and a distinct visual/product namespace.
 
 Current product hierarchy:
 
@@ -322,7 +324,7 @@ If those answers are unclear, do not add the feature to a primary user journey y
 
 ## 16. Cross-surface cinematic experience law
 
-The Last Bench company should feel like one premium product family without turning the Human Lab, Business Lab or operating/service domains into visual clones.
+The Last Bench company should feel like one premium product family without turning the Skill Laboratory, Business Lab or operating/service domains into visual clones.
 
 ### Shared cinematic grammar
 

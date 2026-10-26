@@ -13,18 +13,17 @@ describe('Company gateway and Malaysia route separation',()=>{
   expect(page).toContain('href="class-a/"');
   expect(page).toContain('https://co-lab-growth-os.lovable.app/');
   expect(page).toContain('Malaysia · Student Mobility');
-  expect(page).toContain('CLASS[Λ] · HUMAN LAB');
-  expect(page).toContain('co.lab · BUSINESS LAB');
+  expect(page).toContain('CLASS[Λ] · SKILL LABORATORY');
+  expect(page).toContain('CO.LAB · BUSINESS LAB');
   expect(page).not.toMatch(/<canvas|<x-dc|three\.min|bench-ai|claude-design-support/);
  });
 
- it('keeps Co.MPASS and Dr. X below the public service/lab gates',()=>{
+ it('keeps private intelligence out of the public route selector',()=>{
   const page=read('landing/index.html');
-  expect(page).toContain('Founder intelligence layer');
-  expect(page).toContain('<b>Co.MPASS</b>');
-  expect(page).toContain('<b>Dr. X</b>');
-  expect(page).toContain('Co.MPASS and Dr. X are not public service routes');
-  expect(page).toContain('Founder access');
+  const controller=read('landing/cinematic.mjs');
+  expect(page).toContain('href="#intelligence"');
+  expect(controller).toContain('Private workspace access is not connected');
+  expect(controller).toContain('No agent operation is implied');
   expect(page).not.toContain('href="https://co-mpass.onrender.com');
   expect(page).not.toContain('href="https://drx.lastbenchbd.com');
  });
