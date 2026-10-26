@@ -49,3 +49,5 @@ No production release approval is inferred from a passing test suite. The produc
 - Keep changes in a draft review branch. Cost: the new experience is not live until remaining acceptance checks and release authorization are satisfied.
 
 No minor independent-review findings were deferred. No external team messages, new scheduled tasks, paid services, database migrations or production deployments were performed.
+
+Final desktop inspection: added a restrained dark glass backing to portal labels so the co.lab caption remains readable against its bright environment. This is a visual readability correction, not a full contrast or accessibility certification.
