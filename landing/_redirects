@@ -17,6 +17,7 @@
 /app/onboarding /app/index.html 200
 /app/profile /app/index.html 200
 /app/universities /app/index.html 200
+/app/admin/automations /app/index.html 200
 /app/admin/* /app/index.html 200
 /app/cohort/* /app/index.html 200
 /app/tutor/* /app/index.html 200
