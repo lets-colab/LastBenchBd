@@ -65,6 +65,7 @@ const checks = [
     ],
   },
   { name: "Student app", url: `${webOrigin}/app/`, expectHtml: true },
+  { name: "CRM automation console entry", url: `${webOrigin}/app/admin/automations/`, expectHtml: true },
   { name: "CLASS signup hub", url: `${webOrigin}/class-a/`, expectHtml: true },
   {
     name: "CLASS masterclass",
