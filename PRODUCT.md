@@ -1,16 +1,18 @@
 # Last Bench — Product Constitution
 
+> 25 October 2026 founder direction: CLASS[Λ] uses **Skill Laboratory** as its current public descriptor. This supersedes the earlier lab descriptor; the proof-led program and lab boundaries remain in force.
+
 ## Canonical category
 
 **Last Bench — the company.**
 
-**Operating model:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain.
+**Operating model:** CLASS[Λ] Skill Laboratory · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain.
 
 **Brand promise:** **From where you are. To what you can build.**
 
 Last Bench is the company. Its current locked architecture is a learning flywheel rather than a three-engine hierarchy.
 
-1. **CLASS[Λ] — Human Lab / Learn to Build:** builds practical capability through skill, execution and proof.
+1. **CLASS[Λ] — Skill Laboratory / Learn to Build:** builds practical capability through skill, execution and proof.
 2. **co.lab — Business Lab / Build & Get Accelerated:** helps ventures and businesses build, commercialize, systemize and accelerate through four doors:
    - **Ventures:** businesses incubated or accelerated from the CLASS[Λ] founder pathway or admitted independently when appropriate.
    - **Projects:** defined build work. **ProjectX is one incubated student product associated with Abdul Moontakim (Moon Takim); it is not the Projects category and it is not co.lab itself.**
@@ -95,9 +97,9 @@ The relationship should not reset after the flight lands:
 
 Community after arrival is part of the current Malaysia service promise. Progression into CLASS[Λ], co.lab or another opportunity pathway should only be shown when it is relevant, active and real.
 
-## CLASS[Λ] — Human Lab
+## CLASS[Λ] — Skill Laboratory
 
-CLASS[Λ] is the Human Lab inside Last Bench. It builds builders through practical capability, execution and proof, and may be an independent entry point.
+CLASS[Λ] is the Skill Laboratory inside Last Bench. It builds builders through practical capability, execution and proof, and may be an independent entry point.
 
 Current product contract:
 

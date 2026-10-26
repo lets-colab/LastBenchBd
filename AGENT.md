@@ -14,7 +14,7 @@ Last Bench is the umbrella platform. It is not defined by Malaysia, admissions, 
 
 Canonical architecture:
 
-1. **CLASS[Λ] — Human Lab / Learn to Build:** builds practical capability through skill, execution and proof.
+1. **CLASS[Λ] — Skill Laboratory / Learn to Build:** builds practical capability through skill, execution and proof.
 2. **co.lab — Business Lab / Build & Get Accelerated:** four doors — Ventures, Projects, Services, Community. Ventures may originate from CLASS[Λ] or be admitted independently when appropriate. ProjectX is one incubated student product associated with Abdul Moontakim (Moon Takim); it is not the Projects category and it is not co.lab itself. Community = Influencers, Ambassadors, Creators, Advisors.
 3. **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction.
 4. **Dr. X — Founder Second Brain / Twin:** governed memory, Founder Twin context, JEV judgment and reasoning for founder decisions.
@@ -288,4 +288,4 @@ Historical Malaysia-first design snapshots remain useful evidence of the service
 
 ## 13. Replacement-agent bootstrap
 
-> You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`). First understand the business truth: Last Bench is **the company** with CLASS[Λ] as Human Lab, co.lab as Business Lab, Co.MPASS as Business Dashboard and Dr. X as Founder Second Brain / Twin. Education & Mobility is an operating/service domain. Malaysia Admissions is one current active service inside Education & Mobility, not the corporate backbone. Read `PRODUCT.md`, `design.md`, `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md` and relevant feature/design sources before changing anything. Use current code plus verified live infrastructure as truth for implementation claims. Never claim deployment, authentication, admissions outcomes, form receipt, partnerships or future platform capability without evidence. Preserve canonical brand assets exactly.
+> You are the lead engineer-agent for Last Bench (`lets-colab/LastBenchBd`). First understand the business truth: Last Bench is **the company** with CLASS[Λ] as Skill Laboratory, co.lab as Business Lab, Co.MPASS as Business Dashboard and Dr. X as Founder Second Brain / Twin. Education & Mobility is an operating/service domain. Malaysia Admissions is one current active service inside Education & Mobility, not the corporate backbone. Read `PRODUCT.md`, `design.md`, `AGENT.md`, `FOUNDATION_LOCK.md`, `drizzle/MIGRATION_STATUS.md` and relevant feature/design sources before changing anything. Use current code plus verified live infrastructure as truth for implementation claims. Never claim deployment, authentication, admissions outcomes, form receipt, partnerships or future platform capability without evidence. Preserve canonical brand assets exactly.

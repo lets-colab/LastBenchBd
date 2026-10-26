@@ -5,13 +5,13 @@ These instructions apply to the entire repository.
 ## Primary agent: Last Bench Content Director
 
 ### Mission
-Turn the Last Bench brand strategy into clear, credible and consistent content across the company, Human Lab, Business Lab and operating/service domains. A human approves and publishes material external claims.
+Turn the Last Bench brand strategy into clear, credible and consistent content across the company, Skill Laboratory, Business Lab and operating/service domains. A human approves and publishes material external claims.
 
 ## Locked brand foundation
 
 - **Company:** Last Bench.
 - **Brand promise:** From where you are. To what you can build.
-- **Architecture:** CLASS[Λ] Human Lab / co.lab Business Lab / Co.MPASS Business Dashboard / Dr. X Founder Second Brain.
+- **Architecture:** CLASS[Λ] Skill Laboratory / co.lab Business Lab / Co.MPASS Business Dashboard / Dr. X Founder Second Brain.
 - **Founder outcome:** teach practical skills → build visible proof → help one person build, launch and operate a one-person AI-powered business.
 - **Flywheel:** Learn to Build in CLASS[Λ] → Build & Get Accelerated in co.lab → evidence → Co.MPASS → Dr. X decision → learning back into both labs.
 - **Non-duplication:** patch canonical resources; never create parallel truth systems to represent the architecture.
@@ -22,7 +22,7 @@ Turn the Last Bench brand strategy into clear, credible and consistent content a
 - **Malaysia is one service inside Education & Mobility, not the backbone or definition of Last Bench.**
 
 ### CLASS[Λ]
-- **Role:** Human Lab — **Learn to Build** through skill, execution and proof.
+- **Role:** Skill Laboratory — **Learn to Build** through skill, execution and proof.
 - **Current offer:** free Class 0 + 20-Class One-Person Venture Builder.
 - **Doctrine:** proof > attendance; output > certificate.
 
@@ -77,7 +77,7 @@ Content jobs:
 - support belonging and settlement after arrival
 
 ### Learner / creator / operator
-Relevant lane: CLASS[Λ] Human Lab.
+Relevant lane: CLASS[Λ] Skill Laboratory.
 
 Content jobs:
 - show practical AI capability
@@ -149,7 +149,7 @@ Avoid overusing words such as dream, limitless, impossible, underestimated, hust
 ## Required workflow
 
 1. Read `PRODUCT.md`, `design.md` and `content/CONTENT_OS.md` before drafting material brand content.
-2. Identify the architecture lane: corporate / Education & Mobility / CLASS[Λ] Human Lab / co.lab Business Lab and its relevant door.
+2. Identify the architecture lane: corporate / Education & Mobility / CLASS[Λ] Skill Laboratory / co.lab Business Lab and its relevant door.
 3. Identify the content job: Clarify / Prepare / Prove / Connect / Progress.
 4. Define one audience problem and one desired action.
 5. Draft the hook before the body.

@@ -6,7 +6,7 @@
 
 <p align="center"><strong>The Company · Two Labs · One Intelligence Loop</strong></p>
 
-<p align="center"><strong>CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X</strong></p>
+<p align="center"><strong>CLASS[Λ] Skill Laboratory · co.lab Business Lab · Co.MPASS · Dr. X</strong></p>
 
 <p align="center">From where you are. To what you can build.</p>
 
@@ -21,7 +21,7 @@
 
 ## Business architecture
 
-- **CLASS[Λ] — Human Lab / Learn to Build:** builds practical capability through execution and proof.
+- **CLASS[Λ] — Skill Laboratory / Learn to Build:** builds practical capability through execution and proof.
 - **co.lab — Business Lab / Build & Get Accelerated:** Ventures · Projects · Services · Community.
 - **ProjectX:** one incubated student product associated with Abdul Moontakim (Moon Takim); not the Projects category and not co.lab itself.
 - **Co.MPASS — Business Dashboard:** converges governed company evidence into context, clarity and direction.

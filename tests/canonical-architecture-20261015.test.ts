@@ -23,7 +23,8 @@ describe('15 October 2026 founder architecture lock',()=>{
     expect(page).toContain('Learn to Build');
     expect(page).toContain('Build &amp; Get Accelerated');
     expect(page).toContain('one-person AI-powered business');
-    expect(page).toContain('Co.MPASS and Dr. X are not public service routes');
+    expect(page).toContain('href="#intelligence"');
+    expect(read('landing/cinematic.mjs')).toContain('No agent operation is implied');
   });
 
   it('keeps ProjectX as one incubated student product, never the co.lab Projects category',()=>{
@@ -45,8 +46,16 @@ describe('15 October 2026 founder architecture lock',()=>{
 
   it('keeps public Dr. X routing consistent with the same architecture',()=>{
     const drx=read('landing/bench-ai.js');
-    expect(drx).toContain('CLASS[Λ] is the Last Bench Human Lab — Learn to Build');
+    expect(drx).toContain('CLASS[Λ] is the Last Bench Skill Laboratory — Learn to Build');
     expect(drx).toContain('co.lab is the Last Bench Business Lab — Build & Get Accelerated');
     expect(drx).toContain('ProjectX is one incubated student product, not co.lab itself');
+  });
+
+  it('carries the 25 October Skill Laboratory direction through the handoff',()=>{
+    for(const file of ['landing/index.html','landing/class-a/index.html','PRODUCT.md','design.md','content/CONTENT_OS.md']){
+      const text=read(file);
+      expect(text,file).toMatch(/Skill Laboratory/i);
+      expect(text,file).not.toMatch(/Human Lab/i);
+    }
   });
 });
