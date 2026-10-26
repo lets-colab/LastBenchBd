@@ -2,6 +2,8 @@
 
 Status: **reviewable implementation draft; not merged, deployed or accepted as 10.5/10.**
 
+Draft review: https://github.com/lets-colab/LastBenchBd/pull/169 — open, draft and unmerged; GitHub reports no merge conflict.
+
 ## Source reconciliation
 
 The cinematic build is reconciled with repository main `9468cc814f46f6a7eb354bd26a521b21d84d52cd`. The seven incoming files include dependency updates and an administrator automation deep link. They merged without conflicts. Dependencies were installed with the repository-pinned pnpm 9.12.0 and the frozen current lockfile; no extra design dependency was added.
