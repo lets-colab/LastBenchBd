@@ -20,3 +20,7 @@ Final: fixed static content routes — semantic fallback anchors and mobile navi
 Final: fixed empty approved-project view — explicit empty state after filtering; no private/unapproved record can render.
 Final: additional lifecycle cleanup — stale async scenes discarded, failed textures release renderer, paused scene reveals static artwork.
 Final: no minor review findings deferred. Acceptance gaps are recorded in docs/cinematic-verification-2026-10-25.md.
+
+27 October reconciliation: fetched main 9468cc8 and merged locally without conflicts; installed its updated dependencies using pinned pnpm9/frozen lockfile. Fresh combined suite 112/112, TypeScript passed, lint 0 errors/3 existing warnings, web build 13 exact routes/25 local assets. Original Claude archive rematerialized and CRC/SHA verified; both desktop/mobile rendered and basic navigation/language inspected. Latest evidence and costs are in docs/cinematic-handoff-2026-10-27.md.
+
+27 October audit: production threshold audit returned 0 critical / 35 high / 22 moderate / 1 low. Dependencies are identical to current main, so these are inherited advisories; production clearance is not asserted.
