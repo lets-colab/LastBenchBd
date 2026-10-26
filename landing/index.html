@@ -6,6 +6,7 @@
 <title>Last Bench — Choose Your Path</title>
 <meta name="description" content="Last Bench is the company. Enter through Malaysia Student Mobility, CLASS[Λ] — Learn to Build, or co.lab — Build & Get Accelerated. Co.MPASS and Dr. X power the founder intelligence layer underneath.">
 <meta name="theme-color" content="#050806">
+<meta name="color-scheme" content="dark light">
 <link rel="icon" href="assets/logo-icon.png">
 <style>
 :root{
@@ -38,9 +39,9 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:24px}
 .logo{width:auto;height:48px;display:block}
 .system-line{font-size:10px;letter-spacing:.16em;color:#8fa198;white-space:nowrap}
-.hero{padding:clamp(64px,10vh,122px) 0 44px;max-width:930px}
+.hero{padding:clamp(64px,10vh,122px) 0 44px;max-width:1100px}
 .eyebrow{font-size:10px;font-weight:700;letter-spacing:.22em;color:var(--green-bright);text-transform:uppercase}
-.hero h1{margin:16px 0 22px;font-size:clamp(52px,8vw,104px);line-height:.9;letter-spacing:-.07em;font-weight:760;max-width:14ch}
+.hero h1{margin:16px 0 22px;font-size:clamp(44px,7vw,92px);line-height:.98;letter-spacing:-.035em;font-weight:760;max-width:16ch;text-wrap:balance}
 .hero h1 span{color:var(--green)}
 .hero p{max-width:700px;margin:0;color:#a2ada6;font-size:clamp(15px,1.6vw,18px);line-height:1.72}
 .hero .thesis{display:inline-flex;margin-top:24px;padding:9px 12px;border:1px solid rgba(0,200,83,.22);border-radius:999px;color:#dff7e7;background:rgba(0,200,83,.055);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
@@ -62,7 +63,9 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
   transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease;
   isolation:isolate;
 }
-.gate:focus-visible,.gate:hover{outline:none;transform:translateY(-5px);border-color:rgba(0,230,118,.58);box-shadow:0 34px 100px rgba(0,0,0,.34)}
+.gate:focus-visible,.gate:hover{outline:2px solid rgba(0,230,118,.85);outline-offset:3px;transform:translateY(-5px);border-color:rgba(0,230,118,.58);box-shadow:0 34px 100px rgba(0,0,0,.34)}
+.gate:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.38;pointer-events:none;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.09) 50%,transparent 65%);background-size:260% 100%;background-position:100% 0;transition:background-position .8s ease,opacity .4s ease}
+.gate:hover:before,.gate:focus-visible:before{background-position:0 0;opacity:.62}
 .gate:after{content:"";position:absolute;inset:auto -20% -28% 20%;height:52%;border-radius:50%;filter:blur(44px);opacity:.55;z-index:-1}
 .gate-malaysia{background:linear-gradient(155deg,#0b1b11 0%,#061009 65%,#030704 100%)}
 .gate-malaysia:after{background:rgba(0,200,83,.24)}
@@ -131,7 +134,7 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
   .logo{height:42px}
   .system-line{display:none}
   .hero{padding:72px 0 38px}
-  .hero h1{font-size:clamp(50px,14vw,76px)}
+  .hero h1{font-size:clamp(40px,10vw,68px)}
   .gates{grid-template-columns:1fr}
   .gate{min-height:245px}
   .intelligence{grid-template-columns:1fr}
@@ -142,7 +145,8 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .gate{transition:none}
+  .gate,.gate:before{transition:none}
+  .gate:before{display:none}
   .gate:hover{transform:none}
 }
 </style>
