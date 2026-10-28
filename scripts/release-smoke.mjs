@@ -44,6 +44,7 @@ for (const [name, value] of origins) {
 
 const checks = [
   { name: "API custom-domain health", url: `${apiOrigin}/api/health`, expectJson: true, dnsOnFailure: true },
+  { name: "CRM admin API denies anonymous users", url: `${apiOrigin}/api/trpc/admin.automationOverview`, expectForbidden: true },
   ...(renderOrigin ? [{ name: "API Render-origin health", url: `${renderOrigin}/api/health`, expectJson: true }] : []),
   {
     name: "Corporate landing",
@@ -156,7 +157,12 @@ async function verify(check) {
   const response = await fetch(check.url, { redirect: "follow", headers: { "user-agent": "lastbench-release-smoke/3.5", "cache-control": "no-cache" } });
   const type = response.headers.get("content-type") ?? "";
   let semanticOk = response.ok;
-  if (check.expectJson) {
+  if (check.expectForbidden) {
+    // Real API must return a tRPC authorization error, not a host-level HTML 403/404.
+    const body = type.includes("application/json") ? await response.json().catch(() => null) : null;
+    const errorCode = body?.error?.data?.code ?? body?.error?.json?.data?.code;
+    semanticOk = response.status === 403 && errorCode === "FORBIDDEN";
+  } else if (check.expectJson) {
     semanticOk = semanticOk && type.includes("application/json");
     if (semanticOk) { const body = await response.json(); semanticOk = body?.ok === true; }
   } else {
