@@ -63,7 +63,7 @@
     "express-rate-limit": "^8.6.1",
     "jose": "6.1.0",
     "nativewind": "^4.2.1",
-    "postgres": "^3.4.5",
+    "postgres": "^4.0.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
