@@ -1,5 +1,8 @@
 # Issue #173 — backend migration readiness (DIAGNOSTIC ONLY)
 
+> **Decision update (2026-11-02):** Owner explicitly requested retirement of Render and Netlify; **do not re-propose Render** as Last Bench's target API host. This supersedes earlier legacy hosting preference but **does not establish that a replacement runtime is deployed**. Current API DNS still points to legacy Render. Preserve service continuity until a verified $0 replacement and separately approved, reversible cutover. Cloudflare Workers is a candidate only, not proven compatible; Google Cloud Run requires verified no-spend billing eligibility before consideration; no new paid service is authorized. Use GitHub Pages for web, Supabase for Auth/data, Cloudflare for DNS/edge. This issue's stated gate remains binding for routes, auth, SQL, privacy, cost, rollback and final acceptance.
+
+
 Source pin: `lets-colab/LastBenchBd@71dcccd9fd597e73e03ffe717ea566dcd0a604ae`
 Date: 2026-10-30 UTC. Scope: Last Bench CRM v2.2. This document does **not** authorize deployment, DNS change, billing, database writes, or Render retirement.
 
