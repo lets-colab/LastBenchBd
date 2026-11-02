@@ -1,5 +1,8 @@
 # AGENT.md — Operating Manual for AI Agents Working on Last Bench
 
+> **Owner correction — 2026-11-02 (target vs observed state).** Render and Netlify are **retirement targets**, not approved future Last Bench infrastructure. Keep the existing GitHub Pages web, Supabase Auth/database, and Cloudflare DNS/control-plane boundaries. The public API `api.lastbenchbd.com` **still resolves to the legacy Render service today**; this is a documented migration blocker, **not** permission to retain or recommend Render as the target. A replacement API runtime (Cloudflare Workers or another demonstrably $0, compatible platform) remains **UNVERIFIED**. Do not switch DNS, disable/decommission the old API, change credentials/billing, or claim migration completed until route/auth/DB parity, cost and rollback have independent proof and founder/JEV release approval. Track the existing [issue #173 migration readiness](./docs/incidents/173-backend-migration-readiness.md) and [foundation gates](./FOUNDATION_LOCK.md); this owner correction supersedes dated hosting recommendations below but does not rewrite historical observed facts.
+
+
 This file is the handoff brief for any AI agent working on this repository. Read it first. Before any production-sensitive change also read `PRODUCT.md`, `design.md`, `FOUNDATION_LOCK.md`; for database work read `drizzle/MIGRATION_STATUS.md`.
 
 ---
@@ -94,9 +97,9 @@ The parent runtime must align to JEV 2026.09.29. Malaysia remains a focused Educ
 - Do **not** add Wrangler configuration, Worker entrypoints or duplicate Cloudflare deployment code merely to make those legacy checks green. The correct remediation is to disconnect those Worker Git integrations in Cloudflare unless the production architecture is explicitly changed and re-approved.
 - Canonical runtime evidence remains GitHub Pages build/deploy + production smoke for the web, Render health for the API, and Supabase health/migration evidence for data/auth.
 
-### API
+### API — historically observed legacy runtime, not the approved target
 
-- Hosting: Render
+- Hosting: Render (legacy, pending verified replacement)
 - Canonical working service: `last-bench-api-v2`
 - Region: Singapore
 - Direct origin: `https://last-bench-api-v2.onrender.com`
