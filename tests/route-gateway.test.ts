@@ -50,7 +50,7 @@ describe('Company gateway and Malaysia route separation',()=>{
  it('preserves one cinematic gateway document without the legacy overlapping homepage',()=>{
   const page=read('landing/index.html');
   for(const [label,pattern] of [
-   ['head',/<head\\b/g],['body',/<body\\b/g],['main',/<main\\b/g],['description',/<meta name="description"/g]
+   ['head',/<head\b/g],['body',/<body\b/g],['main',/<main\b/g],['description',/<meta name="description"/g]
   ] as const)expect([...page.matchAll(pattern)].length,label).toBe(1);
   expect(page).not.toMatch(/Human Lab/i);
   expect(page).not.toContain('<main class="shell">');
