@@ -11,7 +11,7 @@ describe("Cloudflare API candidate pre-cutover safety gate", () => {
       cwd: root,
       encoding: "utf8",
       timeout: 15_000,
-      env: { PATH: process.env.PATH || "" },
+      env: { NODE_ENV: "test", PATH: process.env.PATH || "" },
     });
 
     expect(run.error?.message).toBeUndefined();
