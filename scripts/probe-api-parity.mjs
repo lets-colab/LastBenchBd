@@ -34,7 +34,7 @@ const checks = [
   { name: 'anonymous-admin-denied', path: '/api/trpc/admin.automationOverview', expectedStatus: 403, validate: j => codeOf(j) === 'FORBIDDEN' },
   {
     name: 'public-trpc-read', path: '/api/trpc/system.health', expectedStatus: 200,
-    query: () => \`?input=\${encodeURIComponent(JSON.stringify({json:{timestamp:Date.now()}}))}\`,
+    query: () => `?input=${encodeURIComponent(JSON.stringify({json:{timestamp:Date.now()}}))}`,
     validate: j => j?.result?.data?.json?.ok === true,
   },
   { name: 'anonymous-student-denied', path: '/api/trpc/student.getProfile', expectedStatus: 401, validate: j => codeOf(j) === 'UNAUTHORIZED' },
