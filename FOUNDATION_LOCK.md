@@ -1,5 +1,8 @@
 # Last Bench Foundation Lock
 
+> **Owner direction, 2026-11-02: Retire Render and Netlify from Last Bench.** The website stays on GitHub Pages, data/auth on Supabase, and Cloudflare remains the DNS/edge control-plane. The backend replacement is **not yet validated or cut over**; the public API currently resolves to the legacy Render origin. Any Render references below document historical/observed runtime only, **not a recommendation, authorized long-term host, or completion of the retirement decision**. A zero-incremental-cost replacement must pass full endpoint, Supabase session, administrator authorization, rate-limit/CORS, database, functional and rollback checks before any DNS cutover/decommission. The owner direction outranks the September hosting recommendation; live routing facts remain true until actually changed. See [backend migration readiness](./docs/incidents/173-backend-migration-readiness.md).
+
+
 This document is the production-trust contract for Last Bench. It separates verified infrastructure facts from remaining release gates.
 
 ## Principle
