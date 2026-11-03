@@ -46,4 +46,19 @@ describe('Company gateway and Malaysia route separation',()=>{
   expect(read('scripts/promote-claude-design-homepage.py')).toContain('TARGET = LANDING / "malaysia" / "index.html"');
   expect(read('landing/lastbench-blueprint.js')).toContain("setAttribute('href','/')");
  });
+
+ it('preserves one cinematic gateway document without the legacy overlapping homepage',()=>{
+  const page=read('landing/index.html');
+  for(const [label,pattern] of [
+   ['head',/<head\\b/g],['body',/<body\\b/g],['main',/<main\\b/g],['description',/<meta name="description"/g]
+  ] as const)expect([...page.matchAll(pattern)].length,label).toBe(1);
+  expect(page).not.toMatch(/Human Lab/i);
+  expect(page).not.toContain('<main class="shell">');
+  for(const id of ['hub-view','world-view','content-view','chat-dialog'])expect(page).toContain('id="'+id+'"');
+ });
+ it('blocks all preview JavaScript instead of using incomplete HTML script stripping',()=>{
+  const preview=read('tools/cinematic-preview/server.mjs');
+  expect(preview).toContain("script-src 'none'");
+  expect(preview).not.toContain(".replace(/<script");
+ });
 });
