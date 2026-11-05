@@ -1,9 +1,9 @@
 # Last Bench — Canonical Website Blueprint
 
-**Status:** CURRENT SOURCE OF TRUTH  
-**Date:** 29 September 2026  
-**Primary live interactive profile:** `https://last-bench-interactive-profile.lastbenchbd.chatgpt.site`  
-**Corporate domain target:** `https://lastbenchbd.com`  
+**Status:** CURRENT SOURCE OF TRUTH
+**Date:** 29 September 2026
+**Primary live interactive profile:** `https://last-bench-interactive-profile.lastbenchbd.chatgpt.site`
+**Corporate domain target:** `https://lastbenchbd.com`
 **Authority:** Read with `PRODUCT.md`, `design.md`, `FOUNDATION_LOCK.md`, canonical brand assets, and current release evidence. Latest explicit founder instruction overrides older website framing.
 
 ---
@@ -16,9 +16,9 @@
 
 ### Public descriptor
 
-**CLASS[Λ] — Learn to Build.**  
-**co.lab — Build & Get Accelerated.**  
-**Co.MPASS converges company evidence.**  
+**CLASS[Λ] — Learn to Build.**
+**co.lab — Build & Get Accelerated.**
+**Co.MPASS converges company evidence.**
 **Dr. X is the Founder Second Brain / Twin.**
 
 ### Brand promise
@@ -37,10 +37,10 @@ Last Bench is the umbrella opportunity-acceleration platform. It is **not** defi
 
 Last Bench uses **two primary laboratories and one intelligence loop**:
 
-1. **CLASS[Λ] — Human Lab / Learn to Build**  
+1. **CLASS[Λ] — Skill Laboratory / Learn to Build**
    Builds practical capability through skill, execution and proof.
 
-2. **co.lab — Business Lab / Build & Get Accelerated**  
+2. **co.lab — Business Lab / Build & Get Accelerated**
    Four doors: **Ventures · Projects · Services · Community**.
    - Ventures = businesses incubated / accelerated from CLASS[Λ] or admitted independently when appropriate.
    - Projects = defined build work.
@@ -48,10 +48,10 @@ Last Bench uses **two primary laboratories and one intelligence loop**:
    - Services = repeatable brand, business and growth capabilities.
    - Community = Influencers · Ambassadors · Creators · Advisors.
 
-3. **Co.MPASS — Business Dashboard**  
+3. **Co.MPASS — Business Dashboard**
    Converges governed evidence into company context, clarity and direction.
 
-4. **Dr. X — Founder Second Brain / Twin**  
+4. **Dr. X — Founder Second Brain / Twin**
    Uses governed memory, Founder Twin context, JEV judgment and reasoning to support founder decisions.
 
 ### Founder outcome — 15 October 2026 lock
@@ -76,7 +76,7 @@ The interactive profile must do five things exceptionally well:
 
 1. Make the Last Bench belief emotionally clear before explaining the company.
 2. Reveal the **two labs + intelligence loop** only after the name and problem make the company model feel inevitable.
-3. Explain the Human Lab → Business Lab → evidence → intelligence flywheel without forcing every visitor through the same path.
+3. Explain the Skill Laboratory → Business Lab → evidence → intelligence flywheel without forcing every visitor through the same path.
 4. Route visitors to the operating/service path that matches their real need.
 5. Distinguish current reality from roadmap ambition and expose Co.MPASS/Dr. X only where their role improves understanding.
 
@@ -90,16 +90,16 @@ The live ChatGPT Site should follow this order. This is the web equivalent of th
 
 ### 01 — HERO / PROMISE
 
-**FROM WHERE YOU ARE.**  
+**FROM WHERE YOU ARE.**
 **TO WHAT YOU CAN BUILD.**
 
-Small architecture cue: **HUMAN LAB · BUSINESS LAB · INTELLIGENCE**
+Small architecture cue: **SKILL LABORATORY · BUSINESS LAB · INTELLIGENCE**
 
 Support line:
 
 > Last Bench connects credible opportunity to the capability, systems and relationships that help people turn it into progress.
 
-Primary CTA: **CHOOSE YOUR PATH**  
+Primary CTA: **CHOOSE YOUR PATH**
 Secondary CTA: **SEE HOW LAST BENCH WORKS**
 
 Do not lead with Malaysia, admissions, CLASS[Λ], or co.lab individually.
@@ -110,9 +110,9 @@ Do not lead with Malaysia, admissions, CLASS[Λ], or co.lab individually.
 
 **YOUR STARTING POINT SHOULD NEVER DEFINE HOW FAR YOU CAN GO.**
 
-Beyond grades.  
-Beyond borders.  
-Beyond labels.  
+Beyond grades.
+Beyond borders.
+Beyond labels.
 Beyond what others expected.
 
 > Last Bench exists for people ready to turn opportunity into progress — and progress into something they can own.
@@ -150,7 +150,7 @@ Close with:
 
 **LAST BENCH IS THE COMPANY.**
 
-**CLASS[Λ] builds builders. co.lab builds businesses.**  
+**CLASS[Λ] builds builders. co.lab builds businesses.**
 **Co.MPASS converges evidence. Dr. X supports founder decisions.**
 
 > Two laboratories connected by one governed learning-and-intelligence flywheel.
@@ -161,7 +161,7 @@ Close with:
 
 **TWO LABS. ONE INTELLIGENCE LOOP.**
 
-- **CLASS[Λ]** — Human Lab — builds builders
+- **CLASS[Λ]** — Skill Laboratory — builds builders
 - **co.lab** — Business Lab — Ventures · Projects · Services · Community
 - **Co.MPASS** — Business Dashboard — context · evidence · clarity · direction
 - **Dr. X** — Founder Second Brain / Twin — reasoning · judgment · decision support
@@ -172,8 +172,8 @@ Education & Mobility remains a focused operating/service route. Each customer-fa
 
 ### 07 — ECOSYSTEM FLYWHEEL
 
-**BUILDERS LEARN.**  
-**BUSINESSES MOVE.**  
+**BUILDERS LEARN.**
+**BUSINESSES MOVE.**
 **EVIDENCE RETURNS.**
 
 Visual loop:
@@ -360,13 +360,13 @@ Future platform monetization begins only after the capability is real, useful an
 
 **THREE MANDATES. ONE SHARED STANDARD.**
 
-**Sayem Ahmed — Co-founder & CEO**  
+**Sayem Ahmed — Co-founder & CEO**
 Vision · capital · academic partnerships · public trust
 
-**Fahim Shahbaz Mahmud — Co-founder & COO**  
+**Fahim Shahbaz Mahmud — Co-founder & COO**
 Operations · delivery · guidance quality · repeatable journey
 
-**Erfan Uddin — Co-founder & CBIO**  
+**Erfan Uddin — Co-founder & CBIO**
 Business innovation · ecosystem architecture · growth systems
 
 Governance rule:

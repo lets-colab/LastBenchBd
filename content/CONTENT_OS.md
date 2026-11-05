@@ -1,8 +1,10 @@
 # Last Bench Content Operating System
 
+> 25 October 2026 founder direction: CLASS[Λ] uses **Skill Laboratory** as its current public descriptor. This supersedes the earlier lab descriptor; the proof-led program and lab boundaries remain in force.
+
 ## 1. Content objective
 
-Build Last Bench as **the company** while keeping the Human Lab, Business Lab and operating/service domains commercially clear.
+Build Last Bench as **the company** while keeping the Skill Laboratory, Business Lab and operating/service domains commercially clear.
 
 Company model:
 
@@ -10,7 +12,7 @@ Company model:
 
 Architecture descriptor:
 
-**CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X**
+**CLASS[Λ] Skill Laboratory · co.lab Business Lab · Co.MPASS · Dr. X**
 
 Brand promise:
 
@@ -99,7 +101,7 @@ Examples:
 
 ## 4. CLASS[Λ] content stream
 
-Positioning: **Human Lab — builds builders through skill, execution and proof.**
+Positioning: **Skill Laboratory — builds builders through skill, execution and proof.**
 
 Current offer:
 
@@ -156,7 +158,7 @@ Do not mix all engines randomly in one week. Use clear campaign windows, series 
 
 ## 8. First 12 corporate + engine-aligned posts
 
-1. **Who Last Bench is** — the company: CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS · Dr. X.
+1. **Who Last Bench is** — the company: CLASS[Λ] Skill Laboratory · co.lab Business Lab · Co.MPASS · Dr. X.
 2. **The philosophy** — From where you are. To what you can build.
 3. **The architecture** — two labs + evidence → Co.MPASS → Dr. X → decisions → learning flywheel.
 4. **Multiple entry points** — you do not need to be a Malaysia student to enter Last Bench.

@@ -40,7 +40,7 @@ for(const file of activeFiles){
  }
 }
 const required={
- 'PRODUCT.md':['Last Bench is the company','CLASS[Λ] — Human Lab','co.lab — Business Lab','Co.MPASS','Founder Second Brain'],
+ 'PRODUCT.md':['Last Bench is the company','CLASS[Λ] — Skill Laboratory','co.lab — Business Lab','Co.MPASS','Founder Second Brain'],
  'README.md':['Last Bench is the company','CLASS[Λ]','Business Lab','Co.MPASS','Founder Second Brain'],
  'landing/lastbench-blueprint.js':["version:ALIGNMENT_VERSION","company:'Last Bench'","humanLab:'CLASS[Λ]'","businessLab:'co.lab'","dashboard:'Co.MPASS'","founderSecondBrain:'Dr. X'"]
 };
