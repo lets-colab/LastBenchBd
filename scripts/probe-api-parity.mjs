@@ -26,29 +26,63 @@ export function validateCandidate(input) {
 
 const codeOf = body => body?.error?.data?.code ?? body?.error?.json?.data?.code;
 const checks = [
-  { name: 'semantic-health', path: '/api/health', expectedStatus: 200, validate: j => j?.ok === true && j?.integrations?.authConfigured === true && j?.integrations?.storageConfigured === true },
+  {
+    name: 'semantic-health', path: '/api/health', expectedStatus: 200,
+    validate: j => j?.ok === true && j?.integrations?.authConfigured === true && j?.integrations?.storageConfigured === true,
+  },
   { name: 'anonymous-session-denied', path: '/api/auth/me', expectedStatus: 401, validate: () => true },
   { name: 'anonymous-admin-denied', path: '/api/trpc/admin.automationOverview', expectedStatus: 403, validate: j => codeOf(j) === 'FORBIDDEN' },
+  {
+    name: 'public-trpc-read', path: '/api/trpc/system.health', expectedStatus: 200,
+    query: () => `?input=${encodeURIComponent(JSON.stringify({json:{timestamp:Date.now()}}))}`,
+    validate: j => j?.result?.data?.json?.ok === true,
+  },
+  { name: 'anonymous-student-denied', path: '/api/trpc/student.getProfile', expectedStatus: 401, validate: j => codeOf(j) === 'UNAUTHORIZED' },
+  {
+    name: 'foreign-origin-denied', path: '/api/health', origin: 'https://evil.example.invalid', expectedStatus: 403,
+    corsMode: 'blocked', validate: j => j?.error === 'Origin is not allowed',
+  },
+  {
+    name: 'credentialed-preflight', path: '/api/trpc/system.health', method: 'OPTIONS', expectedStatus: 204,
+    corsMode: 'preflight', validate: () => true,
+  },
 ];
 
 export async function probeApi(origin, fetcher = fetch) {
   const results = [];
   for (const check of checks) {
     try {
-      const response = await fetcher(origin + check.path, {
-        method: 'GET',
-        headers: { Origin: WEB_ORIGIN, 'Cache-Control': 'no-cache' },
+      const response = await fetcher(origin + check.path + (check.query?.() || ''), {
+        method: check.method ?? 'GET',
+        headers: {
+          Origin: check.origin ?? WEB_ORIGIN,
+          'Cache-Control': 'no-cache',
+          ...(check.method === 'OPTIONS' ? {'Access-Control-Request-Method': 'GET'} : {}),
+        },
         signal: AbortSignal.timeout(12000),
       });
       const contentType = response.headers.get('content-type') || '';
       const allowOrigin = response.headers.get('access-control-allow-origin');
       const credentials = response.headers.get('access-control-allow-credentials');
-      const body = contentType.includes('application/json') ? await response.json().catch(() => null) : null;
-      const pass = response.status === check.expectedStatus && contentType.includes('application/json')
-        && allowOrigin === WEB_ORIGIN && credentials === 'true' && check.validate(body);
-      results.push({ name: check.name, status: response.status, pass, reason: pass ? null : 'status, JSON semantics, CORS or access-control mismatch' });
+      const allowedMethods = response.headers.get('access-control-allow-methods') || '';
+      const json = contentType.includes('application/json');
+      const body = json ? await response.json().catch(() => null) : null;
+      const semanticsOk = check.validate(body);
+      let corsOk;
+      if (check.corsMode === 'blocked') {
+        corsOk = !allowOrigin && !credentials && json;
+      } else if (check.corsMode === 'preflight') {
+        corsOk = allowOrigin === WEB_ORIGIN && credentials === 'true'
+          && allowedMethods.split(',').some(x => x.trim() === 'GET');
+      } else {
+        corsOk = json && allowOrigin === WEB_ORIGIN && credentials === 'true';
+      }
+      const pass = response.status === check.expectedStatus && corsOk && semanticsOk;
+      results.push({ name: check.name, status: response.status, pass,
+        reason: pass ? null : 'status, JSON semantics, CORS or access-control mismatch' });
     } catch (error) {
-      results.push({ name: check.name, pass: false, reason: error instanceof Error ? error.name : 'request failure' });
+      results.push({ name: check.name, pass: false,
+        reason: error instanceof Error ? error.name : 'request failure' });
     }
   }
   return { results, pass: results.every(x => x.pass) };
