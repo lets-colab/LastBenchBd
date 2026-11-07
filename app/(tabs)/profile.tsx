@@ -58,10 +58,11 @@ export default function ProfileScreen() {
           Your workspace could not connect to Last Bench services. Please try again in a moment.
         </Text>
         <TouchableOpacity
+          accessibilityRole="button"
           onPress={() => void refreshAuth()}
           className="bg-primary rounded-lg px-5 py-3 active:opacity-80"
         >
-          <Text className="text-background font-bold">Retry connection</Text>
+          <Text className="text-primary-foreground font-bold">Retry connection</Text>
         </TouchableOpacity>
       </ScreenContainer>
     );
