@@ -7,7 +7,8 @@ const bundleId = "com.lastbenchbd.app";
 
 const env = {
   appName: "Last Bench",
-  appSlug: "last-bench-mobile",
+  // Must match the slug registered for extra.eas.projectId in EAS.
+  appSlug: "llstbench-bd",
   scheme: "lastbench",
   iosBundleId: bundleId,
   androidPackage: bundleId,
@@ -60,6 +61,7 @@ const config: ExpoConfig = {
   },
   plugins: [
     "expo-router",
+    "expo-font",
     [
       "expo-audio",
       {

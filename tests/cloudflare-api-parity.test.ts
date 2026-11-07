@@ -7,7 +7,7 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 describe("Cloudflare API candidate pre-cutover safety gate", () => {
   it("runs the read-only Node parity regression tests as part of project CI", () => {
-    const run = spawnSync(process.execPath, ["--test", "scripts/probe-api-parity-checks.mjs"], {
+    const run = spawnSync(process.execPath, ["--test", "--test-reporter=tap", "scripts/probe-api-parity-checks.mjs"], {
       cwd: root,
       encoding: "utf8",
       timeout: 15_000,
