@@ -66,6 +66,13 @@ export default function DiscoverScreen() {
     return (
       <ScreenContainer className="p-6 justify-center items-center">
         <Text className="text-xl font-bold text-foreground">Please sign in to continue</Text>
+        <TouchableOpacity
+          accessibilityRole="button"
+          onPress={() => router.push("/auth")}
+          className="mt-6 min-h-12 justify-center rounded-xl bg-primary px-6 py-3"
+        >
+          <Text className="text-base font-bold text-primary-foreground">Sign in</Text>
+        </TouchableOpacity>
       </ScreenContainer>
     );
   }
