@@ -56,7 +56,8 @@ export default function UniversitiesScreen() {
           </Text>
           <Text style={{ color: CINE.dim }} className="text-sm leading-relaxed">
             Explore names, locations, and broad study areas. Verify current programmes, fees, and entry
-            requirements with official sources before applying.
+            requirements with official sources before applying. Open a campus map,
+            official virtual tour where available, or a city arrival preview to plan your next question.
           </Text>
         </View>
 
@@ -115,12 +116,15 @@ export default function UniversitiesScreen() {
 
                   <View className="flex-row gap-2 flex-wrap">
                     <TouchableOpacity
+                      accessibilityRole="button"
+                      accessibilityLabel={"Explore campus and city for " + uni.name}
+                      accessibilityState={{ expanded: isOpen }}
                       onPress={() => setOpenCampus(isOpen ? null : uni.shortName)}
                       className="flex-1 rounded-full py-2.5 items-center"
                       style={{ minWidth: 110, backgroundColor: "rgba(0,200,83,.12)", borderWidth: 1, borderColor: "rgba(0,200,83,.4)" }}
                     >
                       <Text style={{ color: CINE.brightGreen }} className="text-[11.5px] font-bold">
-                        Campus map
+                        Explore campus + city
                       </Text>
                     </TouchableOpacity>
                     {user && (
@@ -138,6 +142,8 @@ export default function UniversitiesScreen() {
                     <CampusView
                       query={`${uni.name}, ${uni.location}`}
                       title={uni.name}
+                      shortName={uni.shortName}
+                      location={uni.location}
                       onClose={() => setOpenCampus(null)}
                     />
                   )}
