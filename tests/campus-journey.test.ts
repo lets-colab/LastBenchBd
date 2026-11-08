@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { createCampusJourney } from "../lib/campus-journey";
 
 describe("Malaysia campus and city exploration", () => {
@@ -67,5 +69,20 @@ describe("Malaysia campus and city exploration", () => {
     expect(new URL(journey.housingSearchUrl).searchParams.get("query")).toContain("student housing near");
     expect(new URL(journey.transitSearchUrl).searchParams.get("query")).toContain("public transport near");
     expect(new URL(journey.foodSearchUrl).searchParams.get("query")).toContain("food near");
+  });
+
+  it("wires campus and city exploration into the existing university route on web and native", () => {
+    const screen = readFileSync(resolve("app/(tabs)/universities.tsx"), "utf8");
+    const webView = readFileSync(resolve("components/campus-view.web.tsx"), "utf8");
+    const nativeView = readFileSync(resolve("components/campus-view.tsx"), "utf8");
+    const illustration = readFileSync(resolve("components/city-journey.tsx"), "utf8");
+
+    expect(screen).toContain("Explore campus + city");
+    expect(screen).toContain("shortName={uni.shortName}");
+    expect(screen).toContain("location={uni.location}");
+    expect(webView).toContain("<CityJourney journey={journey} />");
+    expect(nativeView).toContain("<CityJourney journey={journey} />");
+    expect(illustration).toContain("NOT A LIVE 3D MAP");
+    expect(illustration).toContain("not verified housing, safety or transport recommendations");
   });
 });
