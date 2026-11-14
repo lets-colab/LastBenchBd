@@ -59,6 +59,28 @@
 .product-packshot{position:relative;z-index:2;max-width:76%;max-height:82%;object-fit:contain;filter:drop-shadow(15px 25px 14px rgba(0,37,54,.25));transform:translate3d(0,0,24px) rotateY(-7deg);transition:transform .7s cubic-bezier(.2,.8,.2,1)}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.product:hover .product-packshot{transform:translate3d(0,-15px,65px) rotateY(12deg) rotateX(-5deg)}}
 @media(prefers-reduced-motion:reduce){.product-packshot{transform:none!important;transition:none!important}}
+
+/* CINEMATIC 2.0 — botanical-to-jar scroll choreography. Original CSS illustration, not a photographed SKU or 3D mesh. */
+.cinema{height:440vh;background:#f8e8e8}.cinema-sticky{min-height:0;height:100svh;background:radial-gradient(ellipse at 55% 40%,#fff8f2 0%,#f7dfe0 55%,#e5c8c8 100%);color:#273b3c}
+.cinema #cinema3d{opacity:0!important;pointer-events:none}
+.cinema-film-glow{background:radial-gradient(circle at 53% 44%,transparent 0%,rgba(247,221,225,.15) 48%,rgba(104,67,77,.16) 100%)}
+.cinema-chapter{left:max(5vw,22px);top:70%;width:min(570px,90vw);z-index:7}
+.cinema-chapter h2{color:#173f43;text-shadow:none;font-size:clamp(2.2rem,5vw,5.8rem)}
+.cinema-chapter h2 em{color:#087f83}.cinema-chapter p{color:#32575a}.cinema-counter{z-index:8;color:#24565a}
+.botanical-stage{position:absolute;inset:0;z-index:3;perspective:1200px;pointer-events:none;overflow:hidden}
+.botanical-stage:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 53% 45%,rgba(255,255,255,.8),transparent 57%)}
+.bloom{position:absolute;left:53%;top:43%;width:min(74vmin,720px);aspect-ratio:1;transform:translate(-50%,-50%) scale(calc(1.18 - var(--scene-progress,0)*.65)) rotate(calc(var(--scene-progress,0)*-65deg));transform-style:preserve-3d;filter:drop-shadow(0 30px 35px rgba(116,58,77,.17));transition:filter .2s}
+.petal{position:absolute;left:50%;top:50%;width:37%;height:58%;transform-origin:50% 92%;border-radius:72% 8% 68% 12% / 74% 15% 75% 12%;background:radial-gradient(ellipse at 34% 25%,#fffaf5 0%,#ffdde0 27%,#ed9fac 67%,#a55c78 100%);box-shadow:inset 7px 10px 22px #fff8,inset -12px -15px 30px #8e4b6540,0 8px 17px #7e46542b;opacity:calc(1 - var(--scene-progress,0)*.95);transform:translate(-50%,-93%) rotate(calc(var(--i)*30deg)) rotateX(calc(var(--scene-progress,0)*-70deg)) scale(calc(1 - var(--scene-progress,0)*.17));}
+.petal:nth-child(even){width:33%;height:51%;background:radial-gradient(ellipse at 36% 26%,#fffaf8,#f8beca 49%,#bf728d)}
+.cosmetic-jar{position:absolute;left:53%;top:43%;width:clamp(130px,22vmin,260px);height:clamp(140px,23vmin,280px);transform:translate(-50%,-40%) translateY(calc((1 - var(--scene-progress,0))*85px)) scale(calc(.35 + var(--scene-progress,0)*1.15)) rotateY(calc(var(--scene-progress,0)*280deg));opacity:clamp(0,calc(var(--scene-progress,0)*3 - .32),1);transform-style:preserve-3d;filter:drop-shadow(20px 34px 22px #4d53534a)}
+.jar-body{position:absolute;inset:20% 3% 0;border-radius:20% 20% 27% 27% / 10% 10% 20% 20%;background:linear-gradient(105deg,#f8fffe,#d1f2ec 17%,#fff 39%,#a9dcd4 74%,#f8fffd 100%);border:2px solid #f9fffd;box-shadow:inset -15px -5px 28px #247b7c38,inset 10px 4px 24px #fff,0 6px 8px #205e6b25}
+.jar-label{position:absolute;top:43%;left:10%;right:10%;text-align:center;color:#135c62;font:600 clamp(10px,1.7vmin,16px)/1.3 sans-serif;letter-spacing:.13em}
+.jar-label small{display:block;font-size:.58em;letter-spacing:.24em;margin-top:10px}
+.jar-lid{position:absolute;left:1%;right:1%;top:11%;height:24%;border-radius:50% 50% 16% 16% / 38% 38% 20% 20%;background:linear-gradient(95deg,#86c6c2,#fafffc 38%,#b3e2da 76%,#77b6b5);border:2px solid #e8fffb;box-shadow:inset 0 10px 10px #fff9,0 8px 13px #185d6655;transform:translateY(calc(max(0,var(--scene-progress,0) - .55)*-420px)) rotate(calc(max(0,var(--scene-progress,0) - .55)*-35deg));transform-origin:20% 50%;z-index:3}
+.jar-cream{position:absolute;left:12%;right:12%;top:22%;height:15%;border-radius:50%;background:radial-gradient(ellipse,#fff 35%,#e7f7f2 65%,#91bdb9);opacity:clamp(0,calc((var(--scene-progress,0) - .56)*5),1)}
+.botanical-stage .stage-caption{position:absolute;right:5vw;top:12%;font:500 11px sans-serif;letter-spacing:.22em;color:#42676c;text-transform:uppercase}
+@media(max-width:760px){.bloom{left:50%;top:38%;width:94vmin}.cosmetic-jar{left:50%;top:38%}.cinema-chapter{top:75%;left:6vw}.cinema-chapter h2{font-size:clamp(2rem,9vw,3.7rem)}.cinema-chapter p{font-size:13px}.botanical-stage .stage-caption{top:10%;right:7%}}
+@media(prefers-reduced-motion:reduce){.bloom{transform:translate(-50%,-50%) scale(.7)!important}.petal{opacity:.35!important;transform:translate(-50%,-93%) rotate(calc(var(--i)*30deg))!important}.cosmetic-jar{opacity:1!important;transform:translate(-50%,-40%)!important}.jar-lid{transform:translateY(-55px)!important}}
 </style>
 </head>
 <body>
@@ -70,11 +92,11 @@
 
 <section class="cinema" id="cinema" aria-label="Scroll-controlled three-dimensional concept sequence">
  <div class="cinema-sticky">
-  <canvas id="cinema3d" aria-hidden="true"></canvas>
+  <canvas id="cinema3d" aria-hidden="true"></canvas><div class="botanical-stage" aria-hidden="true"><span class="stage-caption">A botanical study · concept film</span><div class="bloom"><i class="petal" style="--i:0" aria-hidden="true"></i><i class="petal" style="--i:1" aria-hidden="true"></i><i class="petal" style="--i:2" aria-hidden="true"></i><i class="petal" style="--i:3" aria-hidden="true"></i><i class="petal" style="--i:4" aria-hidden="true"></i><i class="petal" style="--i:5" aria-hidden="true"></i><i class="petal" style="--i:6" aria-hidden="true"></i><i class="petal" style="--i:7" aria-hidden="true"></i><i class="petal" style="--i:8" aria-hidden="true"></i><i class="petal" style="--i:9" aria-hidden="true"></i><i class="petal" style="--i:10" aria-hidden="true"></i><i class="petal" style="--i:11" aria-hidden="true"></i></div><div class="cosmetic-jar"><div class="jar-body"><div class="jar-label">THE SKIN NEEDS CO.<small>BOTANICAL RITUAL · CONCEPT</small></div></div><div class="jar-cream"></div><div class="jar-lid"></div></div></div>
   <div class="cinema-film-glow" aria-hidden="true"></div>
-  <div class="cinema-chapter visible" data-chapter="0"><div class="eyebrow">01 / ELEMENT</div><h2>Every ritual<br><em>begins with a drop.</em></h2><p>Explore an immersive interpretation of The Skin Needs Co.'s water-drop identity.</p></div>
-  <div class="cinema-chapter" data-chapter="1"><div class="eyebrow">02 / TRANSFORMATION</div><h2>Beauty, seen<br><em>from another angle.</em></h2><p>A sculpted three-dimensional study. The effect is decorative, not a depiction of any item for sale.</p></div>
-  <div class="cinema-chapter" data-chapter="2"><div class="eyebrow">03 / DISCOVERY</div><h2>Look closer.<br><em>Discover precisely.</em></h2><p>Continue into the photographed product archive, where uncertainty is made visible.</p><a href="#collections" class="primary">Explore the product archive <span aria-hidden="true">↗</span></a></div>
+  <div class="cinema-chapter visible" data-chapter="0"><div class="eyebrow">01 / ELEMENT</div><h2>From nature.<br><em>Into ritual.</em></h2><p>Explore an immersive interpretation of The Skin Needs Co.'s water-drop identity.</p></div>
+  <div class="cinema-chapter" data-chapter="1"><div class="eyebrow">02 / TRANSFORMATION</div><h2>A bloom becomes<br><em>a beauty ritual.</em></h2><p>A sculpted three-dimensional study. The effect is decorative, not a depiction of any item for sale.</p></div>
+  <div class="cinema-chapter" data-chapter="2"><div class="eyebrow">03 / DISCOVERY</div><h2>The reveal.<br><em>Beyond the ordinary.</em></h2><p>Continue into the photographed product archive, where uncertainty is made visible.</p><a href="#collections" class="primary">Explore the product archive <span aria-hidden="true">↗</span></a></div>
   <div class="cinema-counter"><span id="sceneProgress">01 / 03</span><div class="cinema-track"><i id="sceneBar"></i></div><span>SCROLL TO TRANSFORM</span></div>
   <div class="cinema-fallback" aria-hidden="true"></div>
  </div>
