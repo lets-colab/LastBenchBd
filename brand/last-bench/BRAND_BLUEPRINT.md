@@ -1,18 +1,18 @@
 # Last Bench — Canonical Brand Blueprint
 
-Status: **canonical parent-brand reference**  
+Status: **canonical parent-brand reference**
 Repository: `lets-colab/LastBenchBd`
 
 ## 1. Brand definition
 
-**Name:** Last Bench  
-**Category:** Company / opportunity-building ecosystem  
-**Architecture descriptor:** CLASS[Λ] Human Lab · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain  
-**Brand promise:** **From where you are. To what you can build.**  
-**Official tagline:** **Creating a Lasting Benchmark**  
+**Name:** Last Bench
+**Category:** Company / opportunity-building ecosystem
+**Architecture descriptor:** CLASS[Λ] Skill Laboratory · co.lab Business Lab · Co.MPASS Business Dashboard · Dr. X Founder Second Brain
+**Brand promise:** **From where you are. To what you can build.**
+**Official tagline:** **Creating a Lasting Benchmark**
 **Approved slogan in the current design system:** **From Last Bench. To The World.**
 
-Last Bench is the company. CLASS[Λ] is the Human Lab where people **Learn to Build**; co.lab is the Business Lab where ventures **Build & Get Accelerated**; Co.MPASS converges governed company evidence into context and direction; Dr. X is the Founder Second Brain / Twin that reasons and supports decisions. Education & Mobility remains an operating/service domain rather than a separate top-level engine in the locked architecture.
+Last Bench is the company. CLASS[Λ] is the Skill Laboratory where people **Learn to Build**; co.lab is the Business Lab where ventures **Build & Get Accelerated**; Co.MPASS converges governed company evidence into context and direction; Dr. X is the Founder Second Brain / Twin that reasons and supports decisions. Education & Mobility remains an operating/service domain rather than a separate top-level engine in the locked architecture.
 
 ## 2. Brand architecture
 
@@ -22,7 +22,7 @@ Helps Bangladeshi students navigate the journey to study, settle and succeed in 
 
 ### CLASS[Λ]
 
-Human Lab inside Last Bench. It builds builders through skill, execution and proof and keeps its own visual namespace.
+Skill Laboratory inside Last Bench. It builds builders through skill, execution and proof and keeps its own visual namespace.
 
 ### co.lab
 
