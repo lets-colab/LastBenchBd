@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Expo SDK compatibility
+        run: pnpm exec expo install --check
+
       - name: Design system contract
         run: pnpm design:check
 

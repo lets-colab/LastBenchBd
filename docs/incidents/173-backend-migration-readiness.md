@@ -1,5 +1,7 @@
 # Issue #173 — backend migration readiness (DIAGNOSTIC ONLY)
 
+> **Verification update, 18 November 2026:** GitHub issue #173 is closed as a historical smoke-gate issue. That is not evidence of backend migration completion. Fresh API DNS still points to legacy Render. See [the dated release status](../release-status-2026-11-18.md) for current observations and remaining cutover requirements.
+
 > **Decision update (2026-11-02):** Owner explicitly requested retirement of Render and Netlify; **do not re-propose Render** as Last Bench's target API host. This supersedes earlier legacy hosting preference but **does not establish that a replacement runtime is deployed**. Current API DNS still points to legacy Render. Preserve service continuity until a verified $0 replacement and separately approved, reversible cutover. Cloudflare Workers is a candidate only, not proven compatible; Google Cloud Run requires verified no-spend billing eligibility before consideration; no new paid service is authorized. Use GitHub Pages for web, Supabase for Auth/data, Cloudflare for DNS/edge. This issue's stated gate remains binding for routes, auth, SQL, privacy, cost, rollback and final acceptance.
 
 
