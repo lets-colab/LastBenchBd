@@ -27,6 +27,8 @@ Continue the recorded direction: GitHub Pages for web, Supabase for Auth/data, C
 
 GitHub access failed during the earlier session and was restored on resume; final PR and run verification was repeated. Five referenced private conversations still have empty previews and no available `read_thread` tool. No unseen conversation decision or newer private AI Studio/Claude source is claimed to be incorporated.
 
+GitHub's push response also reported 98 default-branch dependency alerts (50 high, 38 moderate, 10 low). Advisory inspection through the current integration returned HTTP 403, so these reported counts have not been independently triaged for current packages or runtime exposure. Dependency security review remains an acceptance item.
+
 ## Evidence
 
 - UI repair: https://github.com/lets-colab/LastBenchBd/pull/194
