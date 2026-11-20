@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
-  Pressable,
+  TouchableOpacity,
   Text,
   TextInput,
   View,
@@ -146,7 +146,8 @@ export default function AuthScreen() {
               </View>
             )}
 
-            <Pressable
+            <TouchableOpacity
+              activeOpacity={0.8}
               accessibilityRole="button"
               accessibilityState={{ disabled: busy, busy }}
               onPress={submit}
@@ -156,9 +157,10 @@ export default function AuthScreen() {
               <Text className="text-base font-bold text-primary-foreground">
                 {busy ? "Please wait..." : mode === "sign-in" ? "Sign in" : "Create account"}
               </Text>
-            </Pressable>
+            </TouchableOpacity>
 
-            <Pressable
+            <TouchableOpacity
+              activeOpacity={0.8}
               accessibilityRole="button"
               accessibilityState={{ disabled: busy }}
               onPress={() => {
@@ -174,7 +176,7 @@ export default function AuthScreen() {
                   ? "New to Last Bench? Create an account"
                   : "Already have an account? Sign in"}
               </Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
