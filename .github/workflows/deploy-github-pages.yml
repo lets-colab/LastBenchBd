@@ -76,6 +76,8 @@ jobs:
         with:
           name: lastbench-production-dist
           path: dist
+          # Expo exports fonts/icons beneath assets/node_modules/.pnpm/.
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
 
@@ -83,6 +85,7 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: dist
+          include-hidden-files: true
 
   deploy:
     environment:
