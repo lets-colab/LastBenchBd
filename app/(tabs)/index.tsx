@@ -164,10 +164,11 @@ export default function HomeScreen() {
                 moment.
               </Text>
               <TouchableOpacity
+                accessibilityRole="button"
                 onPress={() => void refreshAuth()}
                 className="bg-primary rounded-lg px-5 py-3 mt-1 active:opacity-80"
               >
-                <Text className="text-background font-bold text-sm">Retry connection</Text>
+                <Text className="text-primary-foreground font-bold text-sm">Retry connection</Text>
               </TouchableOpacity>
             </View>
           </View>

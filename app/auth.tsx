@@ -91,6 +91,7 @@ export default function AuthScreen() {
                 <View>
                   <Text className="mb-2 text-sm font-medium text-foreground">Full name</Text>
                   <TextInput
+                    accessibilityLabel="Full name"
                     value={name}
                     onChangeText={setName}
                     autoComplete="name"
@@ -104,6 +105,7 @@ export default function AuthScreen() {
               <View>
                 <Text className="mb-2 text-sm font-medium text-foreground">Email</Text>
                 <TextInput
+                  accessibilityLabel="Email"
                   value={email}
                   onChangeText={setEmail}
                   autoCapitalize="none"
@@ -119,6 +121,7 @@ export default function AuthScreen() {
               <View>
                 <Text className="mb-2 text-sm font-medium text-foreground">Password</Text>
                 <TextInput
+                  accessibilityLabel="Password"
                   value={password}
                   onChangeText={setPassword}
                   secureTextEntry
@@ -132,7 +135,7 @@ export default function AuthScreen() {
             </View>
 
             {error && (
-              <View className="mt-4 rounded-xl border border-error/30 bg-error/10 px-4 py-3">
+              <View accessibilityRole="alert" accessibilityLiveRegion="polite" className="mt-4 rounded-xl border border-error/30 bg-error/10 px-4 py-3">
                 <Text className="text-sm leading-5 text-error">{error}</Text>
               </View>
             )}
@@ -144,6 +147,8 @@ export default function AuthScreen() {
             )}
 
             <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ disabled: busy, busy }}
               onPress={submit}
               disabled={busy}
               className={`mt-6 h-14 items-center justify-center rounded-2xl bg-primary ${busy ? "opacity-60" : ""}`}
@@ -154,6 +159,8 @@ export default function AuthScreen() {
             </Pressable>
 
             <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ disabled: busy }}
               onPress={() => {
                 setMode(mode === "sign-in" ? "create" : "sign-in");
                 setError(null);
