@@ -24,6 +24,8 @@ on:
       - "tailwind.config.js"
       - "global.css"
       - "scripts/build-site.mjs"
+      - "scripts/release-provenance.mjs"
+      - "scripts/verify-live-release.mjs"
       - "scripts/validate-public-env.mjs"
       - "scripts/validate-design-system.mjs"
       - "scripts/validate-brand-lock.mjs"
@@ -45,6 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
+      CI: "1"
       EXPO_PUBLIC_API_BASE_URL: https://api.lastbenchbd.com
       EXPO_PUBLIC_SUPABASE_URL: https://tocxdyqlrvzthpexnmxe.supabase.co
       EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_uLq6k_t3B-dnNJW9d1Kh-Q_3kyoSUa_
@@ -68,8 +71,10 @@ jobs:
       - name: Build exact production site
         run: pnpm build:web:production
 
-      - name: Configure custom domain artifact
-        run: printf '%s\n' 'lastbenchbd.com' > dist/CNAME
+      - name: Verify exact source and custom domain artifact
+        run: |
+          test "$(cat dist/CNAME)" = 'lastbenchbd.com'
+          node --input-type=module -e 'import { verifyRelease } from "./scripts/release-provenance.mjs"; verifyRelease("dist", process.env.GITHUB_SHA);'
 
       - name: Upload immutable build evidence
         uses: actions/upload-artifact@v7

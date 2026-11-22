@@ -67,14 +67,14 @@ export default function AuthScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-background">
+    <SafeAreaView nativeID="auth-screen" className="flex-1 bg-background">
       <KeyboardAvoidingView
         className="flex-1"
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <View className="flex-1 justify-center px-6 py-10">
           <View className="mx-auto w-full max-w-md">
-            <Text className="text-sm font-semibold uppercase tracking-[3px] text-primary">
+            <Text className="text-sm font-semibold uppercase tracking-[3px] text-foreground">
               LAST BENCH
             </Text>
             <Text className="mt-3 text-4xl font-bold leading-tight text-foreground">
@@ -97,7 +97,7 @@ export default function AuthScreen() {
                     autoComplete="name"
                     placeholder="Your name"
                     placeholderTextColor="#6B6F76"
-                    className="h-14 rounded-2xl border border-border bg-card px-4 text-base text-foreground"
+                    className="h-14 rounded-2xl border border-border bg-card px-4 text-base text-foreground placeholder:text-muted"
                   />
                 </View>
               )}
@@ -114,7 +114,7 @@ export default function AuthScreen() {
                   autoComplete="email"
                   placeholder="you@example.com"
                   placeholderTextColor="#6B6F76"
-                  className="h-14 rounded-2xl border border-border bg-card px-4 text-base text-foreground"
+                  className="h-14 rounded-2xl border border-border bg-card px-4 text-base text-foreground placeholder:text-muted"
                 />
               </View>
 
@@ -129,7 +129,7 @@ export default function AuthScreen() {
                   autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
                   placeholder="At least 6 characters"
                   placeholderTextColor="#6B6F76"
-                  className="h-14 rounded-2xl border border-border bg-card px-4 text-base text-foreground"
+                  className="h-14 rounded-2xl border border-border bg-card px-4 text-base text-foreground placeholder:text-muted"
                 />
               </View>
             </View>

@@ -1,4 +1,39 @@
-# Last Bench release verification — 20 November 2026
+# Current Last Bench release verification
+
+## 22 November 2026 — scoped website candidate
+
+**State: implementation and local verification; production deployment pending.** This section supersedes the dated status below for this website task. It does not certify the full cinematic/LMS/twin brief.
+
+| Gate | Observed state |
+| --- | --- |
+| Existing production | Pages run `44735383811`, source `84306e12a7bba8b1c439bf61e43732683b8f163e`. Homepage byte match and fresh anonymous homepage, Malaysia and sign-in browser checks completed. Authenticated admissions and enquiry delivery are unverified without approved smoke identities. |
+| Rollback | Full 112-file artifact preserved locally with SHA-256 manifest and a ZIP; original artifact expires 27 November. Recovery must use the artifact/source above, not default `main`. |
+| Scoped website changes | Direct navigation, mobile choices, public source atlas, Business Lab/public Co.MPASS overview, Work clearance boundary, public-only Dr. X guide, privacy-preserving city-map action and observed contrast repairs. No production database changes or new private records. |
+| Cinematic entry | BLOCKED: `48834.png`, named scene/decision/video archives and exact white-logo master unavailable. Current approved artwork/marks retained; no new approach shot or 30 fps hardware result claimed. |
+| CLASS learner acceptance | BLOCKED: complete original portal references, approved content/rubrics, enrollment mapping, secure learner/reviewer identities and actual human review unavailable. No new proof backend or fictional progress is published. Existing admissions sign-in is preserved; it is not presented as the new CLASS portal. |
+| Public evidence | Atlas uses existing first-party public programme/journey sources. No new client clearance is available; Work lists no client cases. Project X remains withheld. No private Cortex data is loaded. |
+| Profile and maps | Exact outgoing People/Map URLs retained. Plain HTTP clients returned 403, but fresh Chromium contexts loaded both domains with HTTP 200. Profile title, visible portrait, CV/proof links and original portrait resources were baselined. The map fixture separately verifies URL/referrer/opener isolation, not spatial-map functionality. |
+| Voice and avatar | Readable public profile HTML, JavaScript, knowledge projection, styles, CV/proof pages and four portrait assets were recovered with checksums. This is a public-production snapshot, not an authenticated Sites export or source-equivalence certificate. The current profile provides curated answers and optional device read-aloud/on-device AI; live voice/avatar acceptance and verified realtime entitlement remain unproven. No realtime, voice, microphone or avatar session was activated. Profile deployment authority remains separate. |
+| Profile text guide | Existing curated-guide answer matched the published `capabilities` knowledge entry with its CV source label; zero network attempts during the question. This is deterministic retrieval, not generative inference. No audible voice, microphone or speaking-avatar session was tested. |
+| Quality observations | Local browser checks cover 390×844 and 1440×1000 emulation, route links, no overflow, guide Escape/focus return, sign-in mode switching and map privacy. Physical OPPO A78 performance, actual screen reader and human five-second choice are UNOBSERVED. |
+| Separate work | Native beta/signing/stores, five-phase learner brain, YouTube learning, Lovable Skill Builder, broader integrations, Netlify cleanup and Render retirement stay outside this release. API health timed out in the fresh baseline check; prior data-query failures are not declared repaired. |
+
+PROXY sequence remains **Erfan public example first → learner-owned template later**, with **Enroll → Learn → Build → Publish PROXY**, an opt-in shareable AI-builder profile and Join CLASS[Λ] entry. Coursework stays private by default.
+
+Pinned audit executed **CLI 4.9.2 / engine 0.1.28+engine**, official engine SHA-256 `bf0524d3b44a199953d70ba10548ba48c5ab50d6ad260eeaa84ed8945c10a721`. The final source scan has **219 findings**: reviewed exact fingerprints classify **P0 0 / P1 0 / P2 144 / P3 75 for this scoped release**. P2 includes existing readability/static-model findings needing further rendered review; P3 retains source/brand-intent styling findings. This is not a site-wide accessibility or full-brief acceptance claim. Unreviewed fingerprints, operational failures, malformed reports and version mismatches now fail the audit job.
+
+Local verification: **120 tests passed**, types and canonical design/brand/boundary checks passed. Lint has zero errors and three pre-existing `server/_core/llm.ts` warnings. Rendered entry, public routes, Malaysia and sign-in checks passed after fixing observed contrast failures. Operator Markdown and source archives are excluded from the public artifact; originals stay in Git.
+
+The [source inventory](website-reference-inventory-2026-11-22.json) records missing originals and exact recovered-Claude duplicate hashes. Source roles remain: homepage master → Gemini CLASS structure → historical Claude admissions design → supporting handoff boards. Existing canonical production marks remain unchanged.
+
+**Required owner handoff:** one accessible approved release-source index/bundle with the missing originals/publication clearances and secure environment references for approved learner/reviewer smoke identities, named human reviewer and any existing free realtime entitlement. Credentials must stay in the authorized secret store/environment. No ChatGPT Space access or synchronization is claimed.
+
+### Recovery procedure
+
+Cancel an in-flight bad Pages rollout before restoring. Rerun the known-good workflow run `44735383811` through the existing GitHub Actions workflow, or restore the preserved exact artifact through the same Pages deployment mechanism. Verify source `84306e1`, homepage SHA-256 `cbe29377e92f029124d477d6a07ae6242de7ef0cbd2e0976d77227071f60fbf3`, and admissions/sign-in/deep-link recovery. No database rollback is needed for this scoped release. A local restoration rehearsal is recorded separately from an actual production rollback.
+
+## Historical verification — 20 November 2026
+
 
 Application source: `84306e12a7bba8b1c439bf61e43732683b8f163e`. This updates the 18 November status; it is not a complete product or store acceptance certificate.
 

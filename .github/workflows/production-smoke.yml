@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   issues: write
 
 concurrency:
@@ -21,6 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
+      CI: "1"
+      EXPECTED_DEPLOY_SHA: ${{ github.event.workflow_run.head_sha || '' }}
+      EXPECTED_DEPLOY_RUN: ${{ github.event.workflow_run.id || '' }}
       WEB_ORIGIN: https://lastbenchbd.com
       API_ORIGIN: https://api.lastbenchbd.com
       RENDER_ORIGIN: https://last-bench-api-v2.onrender.com
@@ -29,12 +33,40 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Require successful production deploy
         if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success'
         run: |
           echo "Production Pages deployment did not succeed; smoke verification is blocked."
           exit 1
+
+      - name: Verify published source and artifact integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          target_sha="$EXPECTED_DEPLOY_SHA"
+          if [[ -z "$target_sha" ]]; then
+            target_sha="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow deploy-github-pages.yml --branch main --status success --limit 1 --json headSha --jq '.[0].headSha')"
+          fi
+          if [[ -f scripts/verify-live-release.mjs ]]; then
+            args=(--source-sha "$target_sha" --origin "$WEB_ORIGIN/")
+            if [[ -n "$EXPECTED_DEPLOY_RUN" ]]; then
+              export VERIFIED_ARTIFACT_DIR="$RUNNER_TEMP/source-bound-artifact"
+              gh run download "$EXPECTED_DEPLOY_RUN" --repo "$GITHUB_REPOSITORY" --name lastbench-production-dist --dir "$VERIFIED_ARTIFACT_DIR"
+              node --input-type=module -e 'import {verifyRelease} from "./scripts/release-provenance.mjs"; verifyRelease(process.env.VERIFIED_ARTIFACT_DIR, process.env.EXPECTED_DEPLOY_SHA);'
+              digest="$(node --input-type=module -e 'import fs from "node:fs"; console.log(JSON.parse(fs.readFileSync(process.env.VERIFIED_ARTIFACT_DIR+"/release.json", "utf8")).manifestSha256);')"
+              args+=(--manifest-sha256 "$digest")
+            fi
+            node scripts/verify-live-release.mjs "${args[@]}"
+          elif [[ "$target_sha" == '84306e12a7bba8b1c439bf61e43732683b8f163e' ]]; then
+            actual="$(curl --fail --silent --show-error --connect-timeout 10 --max-time 20 "$WEB_ORIGIN/?__rollback_verify=$target_sha" | sha256sum | cut -d ' ' -f 1)"
+            test "$actual" = 'cbe29377e92f029124d477d6a07ae6242de7ef0cbd2e0976d77227071f60fbf3'
+          else
+            echo 'No source verification contract exists for this revision.'
+            exit 1
+          fi
 
       - name: Run production smoke gate
         id: smoke

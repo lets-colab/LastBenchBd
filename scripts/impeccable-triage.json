@@ -1,0 +1,1377 @@
+{
+  "reviewDate": "2026-11-22",
+  "scope": "Exact source-detector findings for the scoped public-navigation release. This is not acceptance of the blocked cinematic/LMS/twin brief or a site-wide accessibility certificate.",
+  "priorities": {
+    "P0": "Security, privacy or data loss",
+    "P1": "Verified essential journey/accessibility regression",
+    "P2": "Existing/readability or static-model findings retained for rendered review",
+    "P3": "Stylistic findings retained against canonical brand direction"
+  },
+  "findings": {
+    "c923d917b18ec193adcca581093176993ebefa30cb096e2bd7c6b7aca8352c07": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/attendance.html",
+      "rule": "overused-font",
+      "snippet": "Primary font: inter"
+    },
+    "5d5930a680d8502bfe2ddb4323b00741c2904552d7b328a7cec11221587a83de": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/attendance.html",
+      "rule": "kicker-above-heading",
+      "snippet": "kicker \"CLASS[Λ] · 0.01% BUILDERS\" above h1 \"Register your attendance\""
+    },
+    "e50a50497ba88e3861c53b15881ebe4e6fbd50156e9c7f2f08c7bc2e97ec1f61": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/course.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#00e676)"
+    },
+    "39b5a9d3719748722ec3a3e5e81aab732c11c0240dc3cbccb86aee1f297b2b3e": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/index.html",
+      "rule": "buried-raster",
+      "snippet": "<img> at opacity 0"
+    },
+    "9da7a26f291fa2e1cd11a0e86b67ff7a6eb3554fbb3e335d717c9395d1aff392": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/index.html",
+      "rule": "tiny-text",
+      "snippet": "11px body text"
+    },
+    "05580ca16090c5f3f24dd2cb9eaadae4788840123fffadb830b2fbdd870a857c": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#00e676)"
+    },
+    "97476b06f08875c9141a49c831191a93c52502a3de5a147bb9bba2683e6d41d0": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"CLASS[Λ] · 0.01% BUILDERS MASTERCLASS\" above h1 \"LIVE BUILD LAB\""
+    },
+    "d9b597a953cc21247788ba8b3ba63b862356e437c754327f3af5a179b6814fcd": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/raisa/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#00c853)"
+    },
+    "a47815e295bc16e3a9c1bc1bc80ad5b40b46af30e6a4a0a97aa9c07dbbb801a6": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/raisa/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"AFIA SAIRA RAISA · CAREEROS\" above h1 \"I TURN RESEARCH INTO CLEAR, USEFUL DECISIONS.\""
+    },
+    "87bdf2ce177eae7094cb05c6a295dda3c9c17ad7423fdd67fa461924f09feea3": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/raisa/index.html",
+      "rule": "overused-font",
+      "snippet": "Primary font: inter"
+    },
+    "ab8d1d9dfde83a8022bc9d9ac7839fa2c44659c954cd6125424f7937410ad40a": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/raisa/index.html",
+      "rule": "kicker-above-heading",
+      "snippet": "kicker \"BEFORE → AFTER\" above h2 \"From a document to a career operating system.\""
+    },
+    "feb750dedf3aa543f8c52e97d8b2c08852ae71fc2dde4fa8cc44849c2a533a90": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/raisa/index.html",
+      "rule": "kicker-above-heading",
+      "snippet": "kicker \"PROOF, NOT CLAIMS\" above h2 \"What can be defended today.\""
+    },
+    "589689fb7c57a98098926354af5569598ba6710d2784b39667dee40e00a74734": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/raisa/index.html",
+      "rule": "kicker-above-heading",
+      "snippet": "kicker \"VISITOR-FACING ASSISTANT\" above h2 \"Ask Afia’s verified portfolio.\""
+    },
+    "8abfc353cc25966c36e0c2c7bc7b2439689c12c5099d3cff2723a5fce3f53d35": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/raisa/index.html",
+      "rule": "kicker-above-heading",
+      "snippet": "kicker \"OPPORTUNITY INTAKE\" above h2 \"Turn interest into a next action.\""
+    },
+    "d65e09fcb339c1399b73b736c721f7182b46c46e0f283859063f1ae3142809eb": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/raisa/index.html",
+      "rule": "radial-halo",
+      "snippet": "radial-gradient halo (#0d2a1b → transparent) on dark page"
+    },
+    "bdf11aa83de176f9bc2d08fd94b8e5d1093f9cec25c9b7d58d7b4271ed6d96a9": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/team-talent/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"RAJIB / TEAM GROUP · RECRUITMENT CO-PILO\" above h1 \"RAW CVs IN.EXPLAINABLE SHORTLIST OUT.\""
+    },
+    "ae51f4cedc618cb64a6e79c719c6f2e20bbdb6bc3d88ca82abd97a2f5d03f640": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/team-talent/index.html",
+      "rule": "overused-font",
+      "snippet": "Primary font: inter"
+    },
+    "d1f9868a37f2883b094f69acbc101a7e11c5d2d326de7d7500d84e4aa5f69bac": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/team-talent/index.html",
+      "rule": "flat-type-hierarchy",
+      "snippet": "Role sizes: body 16px, h2 16px, h3 16px (largest adjacent step 1.00:1; target 1.25:1)"
+    },
+    "43ebe6d348c27d03845a8f6d891c154eca9dc4b9cb6c58bbbb9cd786b3c9cccb": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/team-talent/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"01 · JOB DNA\" beside h2 \"Define success for the role.\" (3 on page)"
+    },
+    "4a76986912171367acad1e6fac9887f5818aec3a0affd1594acfba453305e4ca": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/team-talent/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"02 · CANDIDATES\" beside h2 \"Paste or load text evidence.\" (3 on page)"
+    },
+    "08313852ea916f51e68b93bacecf208fd8262d0f8ec53458501164892eb5acf8": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/team-talent/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"03 · EXPLAINABLE SHORTLI\" beside h2 \"Rank by visible job evidence. Match score and evidence stren\" (3 on page)"
+    },
+    "a46534e226f836df1f772e8524bc02ca92cfcd1938df0319e42ad22a24eeddf8": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/lab/team-talent/index.html",
+      "rule": "skipped-heading",
+      "snippet": "<h1> \"RAW CVs IN.EXPLAINABLE SHORTLIST OUT.\" followed by <h3> \"Before: manual screening\" (missing h2)"
+    },
+    "b4eb3c7fbf4f0dc689754d4b9105e6332f86979df37db2f33d0931c0ebff141e": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/lab/team-talent/index.html",
+      "rule": "radial-halo",
+      "snippet": "radial-gradient halo (#11341f → transparent) on dark page"
+    },
+    "4b78e23f7202e251b4ee9c7dfb8fb37e69a00b9c20e175d1c159b03574e8d5e1": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/masterclass.html",
+      "rule": "low-contrast",
+      "snippet": "3.7:1 (need 4.5:1) — text #636971 on #050607"
+    },
+    "4d2122f5e091513f69f99507a2764ddc0a3d107003d346d38b2ece3aab5cb5f6": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/masterclass.html",
+      "rule": "low-contrast",
+      "snippet": "4.2:1 (need 4.5:1) — text #6f767e on #031009"
+    },
+    "dcc67c68359c9aaa18bbbb6e78c8dafb97d9396c1675b780a7b269d0e021da8e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/masterclass.html",
+      "rule": "low-contrast",
+      "snippet": "1.3:1 (need 4.5:1) — text #232528 on #050607 (and 4 more)"
+    },
+    "1304d8b72922adc2ab2a6b575251ecf74c163eca1d6c5061b2ce2b2a6053ab64": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/masterclass.html",
+      "rule": "low-contrast",
+      "snippet": "2.0:1 (need 4.5:1) — text #404142 on #050607 (and 4 more)"
+    },
+    "1800775c235d8a6a12a7e596e50cf2b860b788b22ce1dfce462ea657bad7969b": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/masterclass.html",
+      "rule": "low-contrast",
+      "snippet": "3.8:1 (need 4.5:1) — text #666b72 on #020304 (and 1 more)"
+    },
+    "a409888ee35c7fffcd0f3dc2dd36ec9e5ad75f42c93d67f25652727b56a73407": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/masterclass.html",
+      "rule": "low-contrast",
+      "snippet": "placeholder \"Your full name\" 2.7:1 (need 3:1) — text #555b63 on #141516 (gradient on form.signup-shell)"
+    },
+    "1131b2179ee1c83f90672160a55d18ea342312533dcd86520250c33667afd898": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/masterclass.html",
+      "rule": "low-contrast",
+      "snippet": "placeholder \"+880…\" 2.7:1 (need 3:1) — text #555b63 on #141516 (gradient on form.signup-shell)"
+    },
+    "279ba48ea38a797bf57681b248ebb2af261cf697758808bf3c152b5d5e6c260a": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/class-a/masterclass.html",
+      "rule": "low-contrast",
+      "snippet": "placeholder \"you@example.com\" 2.7:1 (need 3:1) — text #555b63 on #141516 (gradient on form.signup-shell)"
+    },
+    "4073ed0e0836a78765f03d7d7bcb2c70220fb215484a4b799a1193b398c224bf": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/rsvp.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"Tonight · RSVP\" above h1 \"CONFIRMYOUR PLAN.\""
+    },
+    "5897ba506c7b5ff1fda0408e82b3aacac30498cf5e3ef0b0221c110c60be4282": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/rsvp.html",
+      "rule": "overused-font",
+      "snippet": "Primary font: arial"
+    },
+    "a8342469f10df02198b862902c4e0ac3ad1fea36a0d98ad62492c7f0d5b8ae1b": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/class-a/rsvp.html",
+      "rule": "codex-grid-background",
+      "snippet": "two-axis grid-line gradient background"
+    },
+    "bd7c7889667c3a5d6da35df1de5013250adc609618ba29f471c5484cbf2dac3d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 4.5:1) — text #000000 on #0d1b13 (and 16 more)"
+    },
+    "2bf95b0afcfbe74062aebf821e3dd6e0a7c25c4f6dd38542082a1b851d76c6b0": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "2.2:1 (need 4.5:1) — text #00c853 on #ffffff"
+    },
+    "0d97d5519029a49dfe2ff43ce24859e130b40caad47e59be634c9a9eeeef1c10": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.3:1 (need 4.5:1) — text #000000 on #112418 (and 11 more)"
+    },
+    "1124e6bff646368f2f72737c999a82cf62b90918c8a0b995252ab11c23393f10": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "2.0:1 (need 4.5:1) — text #aebab4 on #ffffff (and 3 more)"
+    },
+    "ffedf5deb608b818ffb8b5409de103f51ebe707c22e259df335ffb67f2b16b11": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.0:1 (need 3:1) — text #f4fff7 on #ffffff (and 2 more)"
+    },
+    "47a088baf6080beadc8ede764b178e6327d77e3bac44abc9789836e402a61d3f": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.0:1 (need 4.5:1) — text #f4fff7 on #ffffff (and 4 more)"
+    },
+    "9dd968f8f855cda2d2f793969d33d3bf02dcadf27f4929e1ff8dd7405a181bba": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 4.5:1) — text #000000 on #071d11"
+    },
+    "667665fa2aec70b3f83197ec6553a3c48d70436869078927511e085f51068468": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "2.2:1 (need 4.5:1) — text #075c28 on #0c1911"
+    },
+    "1e5b7f62258ceb6fdaf000c4297b4149f18ba0c3bf122c56fb60a25040e7ecd2": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 4.5:1) — text #000000 on #0c1911 (and 5 more)"
+    },
+    "6f36cb7a5a2d7649016b14f96d18f9739a75ff9abfec51bfda64a7b6c6dab9a3": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.3:1 (need 4.5:1) — text #000000 on #0d261a (and 1 more)"
+    },
+    "fbe9f73194477606f04bd5291cb04da8086012b8a232c20da491ca20fcdb42bd": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/classa/orientation-00/bn/index.html",
+      "rule": "flat-type-hierarchy",
+      "snippet": "Role sizes: body 17px, h3 18px, h2 21px (largest adjacent step 1.17:1; target 1.25:1)"
+    },
+    "73f77f9b28b97031f06b706238478d86a1aa2d2991d0532c7589803c0a5d1f57": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 4.5:1) — text #000000 on #0d1b13 (and 16 more)"
+    },
+    "bf670d684e49de1e748c7e700088c80d9c053f85ef418fc6b7f14a265ccfff36": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "2.2:1 (need 4.5:1) — text #00c853 on #ffffff"
+    },
+    "dfd65ac72d5969e069b1f0d5b2edc5fd3da2d803262785927e21377a47a93e84": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.3:1 (need 4.5:1) — text #000000 on #112418 (and 11 more)"
+    },
+    "2c2b7d0ce6980049f5b5169eaf2ffad301a93008e602da2afaa7c080c5911b04": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "2.0:1 (need 4.5:1) — text #aebab4 on #ffffff (and 3 more)"
+    },
+    "14dcaa7389455860bcae15aa3be4f16e94be08ba6ba2e2bd1685ec42b8c2ceca": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.0:1 (need 3:1) — text #f4fff7 on #ffffff (and 2 more)"
+    },
+    "9d51f8b02daa5687dbb209857b57b377e462c7c1e1cc14e18a561001b38a1db0": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.0:1 (need 4.5:1) — text #f4fff7 on #ffffff (and 4 more)"
+    },
+    "8a7c103e8b260b796fe7c9a05e810c46eeef0c1f52c35f56d0afc0b2d1cae07c": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 4.5:1) — text #000000 on #071d11"
+    },
+    "2247ac9c2b8cba65a4dd7c3bf0fd2f89c17309e14b8324979d6a648a5c88936a": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "2.2:1 (need 4.5:1) — text #075c28 on #0c1911"
+    },
+    "8e349ee150b9b2c83ff0946e31cfcd41b0e25f09c9a351471012d0346fd676c1": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 4.5:1) — text #000000 on #0c1911 (and 5 more)"
+    },
+    "d8b68a2df77bc59de504f551726917b05fc30cd257b1a1a85864a6211c3f0f0c": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.3:1 (need 4.5:1) — text #000000 on #0d261a (and 1 more)"
+    },
+    "b5953efc3e18b17b889aba9760ff41bed0b008831a811ea782968177e7cbd158": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/classa/orientation-00/index.html",
+      "rule": "flat-type-hierarchy",
+      "snippet": "Role sizes: body 17px, h3 18px, h2 21px (largest adjacent step 1.17:1; target 1.25:1)"
+    },
+    "666c3a0ecacb17cce5ce98632712312a6359aad0775a8c8c4225c14073e0a524": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "low-contrast",
+      "snippet": "3.9:1 (need 4.5:1) — text #69716c on #05100a"
+    },
+    "6e242daaa5526f0309d4a1342ac700f0b368fb0734d5a455279484391427e2bb": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "low-contrast",
+      "snippet": "4.2:1 (need 4.5:1) — text #6f7a73 on #04140b (and 1 more)"
+    },
+    "a5d9c3ff630a4e77c74f1be6ac6e6f3ae2fb222ac2441ffebd31c59b041c2b30": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "low-contrast",
+      "snippet": "4.2:1 (need 4.5:1) — text #717579 on #070b16 (and 2 more)"
+    },
+    "5384ce9215a9d9bc6f4ea48b6fb019b7c1a7838e50100c00d29090ceec8ec979": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#00c853) on dark background"
+    },
+    "eca3120cab0dcf4db3f30eab62acdb1cc617690aae1920afb16f85cc610acb04": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#00c853)"
+    },
+    "b2ab3a9ec7d25f7ea8f1038abbb3702d4c54b23e07298e90a416b498ad097d6d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "wide-tracking",
+      "snippet": "letter-spacing: 0.08em on body text"
+    },
+    "af01146f201317489b83230dd32e3747413fc5528fef5bfb61521279d4c72379": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "cramped-padding",
+      "snippet": "<div>: children flush against border+bg on top/right/left (no inset)"
+    },
+    "1d23e70be57c44cdd9b8c4c649658811b20805cb214bab8b8e599517387ab2e0": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "tiny-text",
+      "snippet": "11.5px body text"
+    },
+    "0800737297c47a651a08597b611db65780e4e83401d64a57cb3de05919feb9d6": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "tight-leading",
+      "snippet": "line-height 1.14x (need >=1.3)"
+    },
+    "89379f909dbda68362879afe338f2b2469974ca65b9cc96357803eda5aaad5fa": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "cramped-padding",
+      "snippet": "<div>: children flush against border+bg on all sides (no inset)"
+    },
+    "4971cdff0223f842a20532369e247bf7efb029fd519d0e7519eb86104917179d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "tiny-text",
+      "snippet": "10.5px body text"
+    },
+    "8bfa4dd036f7308c7988306af1adfd63fde557eeba4999ed4cd1e9b7b028e8b3": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#00c853) on dark page"
+    },
+    "86ed7f62b88db5416c2c1bb2bc0f8546c764cd912d879e7cf1d87482c7a81ffc": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/claude-design-preview.html",
+      "rule": "radial-halo",
+      "snippet": "radial-gradient halo (#142c4a → transparent) on dark page"
+    },
+    "9c10e6827fd2548c6c784673abb120264c14d5aa4b8bbd2c96642d79aaa9e944": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/co-lab/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"co.lab · Business Laboratory\" above h1 \"Build & Get Accelerated.\""
+    },
+    "37f511005544597bab60f07fb48a343d46a0167685a9bf40c6feb4d9387f239a": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/explore/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"Cortex Atlas · Public evidence\" above h1 \"Follow the work.Find the source.\""
+    },
+    "40115c2c86f2825bbecea476968b7866a105bff83d83d8a9fa99229d9dd4b16d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/index.html",
+      "rule": "low-contrast",
+      "snippet": "2.1:1 (need 4.5:1) — text #3f4f44 on #091521 (gradient on a.gate) (and 4 more)"
+    },
+    "7402ab15c33eeb83c2d2ee6feaefa62bc8757dd8df05e9ad94d6303e8d624df4": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/index.html",
+      "rule": "low-contrast",
+      "snippet": "2.4:1 (need 4.5:1) — text #1750a5 on #091521 (gradient on a.gate) (and 1 more)"
+    },
+    "71c96afb6c2ec9f4cc14ed433511445e7c7336b819c59dba81a374da644afd7c": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.0:1 (need 3:1) — text #111820 on #091521 (gradient on a.gate)"
+    },
+    "ec3c4562be3641eccc0da53bd6c742887c47120600f5d774ba20bdc69b2d5820": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/index.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#0d1c30) on dark background"
+    },
+    "80257729d6d60e8145dd024cc0767366b1ba426bbf1aa2ce0c3a80d79e279947": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/index.html",
+      "rule": "overused-font",
+      "snippet": "Primary font: inter"
+    },
+    "89f350658e1d085ccd48e1ea6ff470bb8dc0579fbaaf91f96836668f010b23d3": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/index.html",
+      "rule": "kicker-above-heading",
+      "snippet": "kicker \"START WHERE YOU ARE\" above h1 \"ONE STARTING POINT.MANY POSSIBLE FUTURES.\""
+    },
+    "c17b9bd4eb81af64a1eb322edd770a75abea966e19d0b800a231b6535714a661": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/index.html",
+      "rule": "kicker-above-heading",
+      "snippet": "kicker \"Founder intelligence layer\" above h3 \"The intelligence sits underneath the journeys.\""
+    },
+    "ff5a5fd34aa4deab47a8793a163112bfd08990c56a53d6e4a8fcaa5ae6526c63": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/index.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#0d1c30) on dark page"
+    },
+    "69215bf958aa0d75d19afcdd726b8e54c91e0cc81d53e3a59c14b66f4cd40f69": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "low-contrast",
+      "snippet": "3.9:1 (need 4.5:1) — text #69716c on #05100a"
+    },
+    "1a5b90fead5aeca7470aa4b04d919c70a354d58106e41b910335f09955082a64": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "low-contrast",
+      "snippet": "4.2:1 (need 4.5:1) — text #6f7a73 on #04140b (and 1 more)"
+    },
+    "b3351bbcaee9db184cc4b108e8f0c44dabd6ca99c8d8a74b0688f89f5b235f67": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/malaysia/index.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#00c853) on dark background"
+    },
+    "b0bba4f8783d0d23331271c7531e8e6ae7b171d23f3a30367370ea37a5e8d506": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/malaysia/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#00c853)"
+    },
+    "774d232a40e21b421b1295821e555e39ca096868a72268aa66be365d6663f920": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "wide-tracking",
+      "snippet": "letter-spacing: 0.08em on body text"
+    },
+    "563fcb40c7544fd219f2431ab508a9afeb25a1d68bd19225503ba06cafff417e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Powered by Dr. X\" (below 11px floor)"
+    },
+    "8aaa365b8dce4f58aa8fab3ee219d461d8f329a9f45f583af047d5dc4614603f": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10.5px functional text \"{{ fl.label }} ↗\" (below 11px floor)"
+    },
+    "b37d3bdc3e042f6fd937e9166060c436257f92c30ce3768cd23c85e34245b59d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "wide-tracking",
+      "snippet": "letter-spacing: 0.10em on body text"
+    },
+    "3420b6e3f69a7960d9149d8f1e4eacc6c1aa956f34872a995ccc5a925cfa93c7": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<div>: children flush against border+bg on top/right/left (no inset)"
+    },
+    "670d27ab171a599ecbf8e9c23f3dd5f1dbfafd5a114f47e30ad27313dfc4ef5d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "tiny-text",
+      "snippet": "11.5px body text"
+    },
+    "fdde19c670e087c11d54b810727bc1fb6df4c698338181764c78c883f60c39a1": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "tight-leading",
+      "snippet": "line-height 1.14x (need >=1.3)"
+    },
+    "6849a96d44f0986c8146a79f3c6eff7fb679adf14d35cc58c436daf5d7642f7d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<div>: children flush against border+bg on all sides (no inset)"
+    },
+    "0ef51e855cc6fb526c6e8d6d54acd3d429943df54ea88be16bef10c5f92d6c57": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/malaysia/index.html",
+      "rule": "tiny-text",
+      "snippet": "10.5px body text"
+    },
+    "cd01b985b5ea1e9e8473254110d1e0997225df3cc9a3af90a43c29b47a3d5021": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/malaysia/index.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#00c853) on dark page"
+    },
+    "3701937676af9a1e514d4bab5cf3cdbd4019f64271bafce83c55a01c60360c7f": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/malaysia/index.html",
+      "rule": "radial-halo",
+      "snippet": "radial-gradient halo (#142c4a → transparent) on dark page"
+    },
+    "b7ebfaab3256a08f6050224c1a93ef62bf228955ae89a6e13a75455a665a0bd2": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "low-contrast",
+      "snippet": "3.0:1 (need 4.5:1) — text #988267 on #eee8dc"
+    },
+    "e223c4b0a2fa353f2ff905037f63f631f84d3c6f847111ba0a9d4c1dd363b1c7": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "gray-on-color",
+      "snippet": "text #4c604d on bg #d7c7a8"
+    },
+    "7d96ff80da5d0bb3582277ae3b9b8a91e7a30b6e530dd32e63a9bb3f19cce0f3": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "low-contrast",
+      "snippet": "4.1:1 (need 4.5:1) — text #4c604d on #d7c7a8"
+    },
+    "ca6c62e06d154efc956c1bdb8e9a207b22335d473a93f34db974ba45a389209e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "gray-on-color",
+      "snippet": "text #485648 on bg #d7c7a8"
+    },
+    "26b68f1d1a1df014890849e7303e4ecf6467ee9eb50194ea68e5c7f4b9ea9d15": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#d3bd8e)"
+    },
+    "c90f9bf9cc633c06b97c20b2b33f12c8695ed331a76e2e1865a360bc5cb47c89": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#f8dfa2)"
+    },
+    "95da7ce7ebc7778554b38bb74881c05749fc4ab2eefdd4bc556d39e79b145c3c": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#d8b582)"
+    },
+    "ac0a04ddfac3795e9396821f43ee0dbb060b9e66cb525a1a2b0056fddb4e21f9": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "6px functional text \"THE ART OF THE UNFORGETTABLE\" (below 11px floor)"
+    },
+    "912f248bffc7585bba8c64653c0555815c2c35d9f0f9756a68eb07cedf4ed9fe": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Experience\" (below 11px floor)"
+    },
+    "c083c824eeca22fa15d8df0b529d7ae227347488fd0d533651ed20eeb2fcc85b": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Collection\" (below 11px floor)"
+    },
+    "242463665205712c78baa7330f1fac719869868e4ca36dc7626756b3fa455335": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Business\" (below 11px floor)"
+    },
+    "dd082bcb0c26fd5364c4c259dbfe7f585931a70855fd09169e9395f1ef00cded": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "9px functional text \"Current store ↗\" (below 11px floor)"
+    },
+    "5ce327fa021c30ec695bb0de7c9cb63b506609124a49532a9abecf1b19aa2d96": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Enigma / An original Project X concept\" (below 11px floor)"
+    },
+    "319c93843b5da24cbda2fc0ee910d0fd69ed3cfbbcfec35d8d6e1e22d3dcf46e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Explore the collection\" (below 11px floor)"
+    },
+    "97786026b675d1335f0117fb214acd2d6633da7d39461efbfc45d53b32e17a4d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Enter the experience\" (below 11px floor)"
+    },
+    "f6808be6e1e852f0c91acd5253be18045dae517bcabe26cd1d083b647c2844df": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"SCROLL TO EXPLORE\" (below 11px floor)"
+    },
+    "2d9df86bff3b6876d62596a20cdb677b871322a8e130141350b9c2ac50df6d4e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "tiny-text",
+      "snippet": "9px body text"
+    },
+    "e60c4348d800a7dd7c1a005f56879ec7d1201c20079d7584d413e8bfde7cc4d8": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<div> \"strip\": children flush against border-top/bottom+bg on right/left (no inset)"
+    },
+    "8fa5d2c2ad82190d34f258d86a4965f6602be0a3eb2b305c83c8a2fe2740111b": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"01\" (below 11px floor)"
+    },
+    "9b264a7f3d32404ccfd6a637f9c3a4fc9753e04eb252be6a011e63de6eb464ac": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"02\" (below 11px floor)"
+    },
+    "f0ef3ac180efb2eb8f44685b841cfe501f0f65e86cb1e9ef06f0dfef656b9126": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"03\" (below 11px floor)"
+    },
+    "b6c71a6ebc48e903e73c5a46ec7761d780d2169cff19e0e4da7ba060aa9914d2": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<section> \"section\": children flush against bg on right/left (no inset)"
+    },
+    "5db3d2b904687150afb7091ce265dc4102f6b3a29b10fafde03bfe6d928a07bf": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"01 / The experience\" (below 11px floor)"
+    },
+    "898a20357603119d0387ceed1afdc1216106ac639890f39b47e854afc9e15e3e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Nocturne\" (below 11px floor)"
+    },
+    "9f54563e2bac62728ed4aab05cbdb72823bd1ce52d6337c13590a5ba8cab9f29": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Solstice\" (below 11px floor)"
+    },
+    "36619a08fdf29daad95a23aa9afbfa1ddb230ce33d6d84911aefbf6682d7df69": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Afterglow\" (below 11px floor)"
+    },
+    "cc2fdffed68c73d775156b36ad357b1bd23286dd22a8d1fe53f70aff1749ecd0": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "tiny-text",
+      "snippet": "11px body text"
+    },
+    "64246dbc1ecf611303455380526d2111315f6558633ae738faca70bc34d9a607": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"02 / The collection\" (below 11px floor)"
+    },
+    "56ae16cc652c454842b18e061bf5bd94e540ff3fcc867ed189c81e5a431f94d2": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Visit current store\" (below 11px floor)"
+    },
+    "0ea5800b5a71cc25306de2e02d1d2deb37d199b0724efc65da2604fe21ea8f39": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"03 / Enigma for business\" (below 11px floor)"
+    },
+    "46138351d124c8674b28c9c69d223784edbc5230369d210069060f31f6008bf9": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "9px functional text \"Proposed commercial concept / Owner appr\" (below 11px floor)"
+    },
+    "ff673c976902a143a3cf0fe141b1df4eaf359d2288c8e0749d74786ad9284411": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<div> \"gift-art\": children flush against border on all sides (no inset)"
+    },
+    "a20ccb8eb966ccd60efff9e6457dd097345e894b186672cb856c75c0ad67be6c": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<section> \"closing\": children flush against bg on right/left (no inset)"
+    },
+    "7116858b10c3c6c3ac3deee56759f92dfcf0895a02ecb28e239d41dea63a53a7": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"An invitation to discover\" (below 11px floor)"
+    },
+    "cb71c1364846114a613df10e2307d97d46c58e47f6c674d736226ede030f90f4": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "6px functional text \"A WORLD OF FRAGRANCE\" (below 11px floor)"
+    },
+    "a8fc5936540cea2de0ed21430f53675741e64ed9bc4c3a0bfac5c637784fae57": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "kicker-above-heading",
+      "snippet": "kicker \"An invitation to discover\" above h2 \"Leave a littlemystery behind.\""
+    },
+    "fa23f333852528f3d424610cf62b34e47ddbbba752f0cf29bf2a90e698aadc3d": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"01 / The experience\" beside h2 \"A fragrance is morethan a name.\" (3 on page)"
+    },
+    "6dd5b79323abafea3b9537fe773aab6b1453c63adf93f0686b285a7d7f9a726c": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"02 / The collection\" beside h2 \"Names that invitediscovery.\" (3 on page)"
+    },
+    "83cd86685fb668d9df731973e5e03481da39c42cc46fecfe32423392f7d1621d": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"03 / Enigma for business\" beside h2 \"Make an impression.Keep the connection.\" (3 on page)"
+    },
+    "712dbc2a132d499845fa594eaaed3e3c32376ce4356467961653190f80e75d36": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#e6bc6e)"
+    },
+    "d4a9076be2bd5a73bcc297bc07532611f6390dd438779b92ea968b9351f17c62": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "radial-halo",
+      "snippet": "radial-gradient halo (#a38256 → transparent) on dark page"
+    },
+    "aaf252385935b71a8727cf22e705958ed7404a2accb7e4177a4fd90c4988c518": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/enigma/index.html",
+      "rule": "repeating-stripes-gradient",
+      "snippet": "repeating-gradient decorative stripes"
+    },
+    "28543d5e06ba0c37b9a2ae659e6a067070483b90df9b544b323fffec67d718a3": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.0:1 (need 4.5:1) — text #effaf8 on #eff8f5 (and 3 more)"
+    },
+    "7037d7b6dae113aca2d77fb62bf0aaca203d0aaa9815e461b1e0ae5288bd500d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.1:1 (need 4.5:1) — text #8ee7fa on #b7ecf5 (gradient on section#home)"
+    },
+    "a887d0f0c2756a687064f783e6c94f2a32e6f28c7cfca60400cc2524ce9c6bf8": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 3:1) — text #f0f9f7 on #b7ecf5 (gradient on section#home)"
+    },
+    "2bac61c07533a62aaae8a86af0e90eece3199c2769449a78aaae1d8f51c6cec0": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 3:1) — text #8be0f6 on #b7ecf5 (gradient on section#home)"
+    },
+    "e2772afb0b329527b36887aa0d6ecfbc47ff87be6bcbd1810601953014187122": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.1:1 (need 4.5:1) — text #bcdbd8 on #b7ecf5 (gradient on section#home)"
+    },
+    "84c3ee39da5cdf5a74355cdbf6303e9859267440e206b8b7113e25abd2a4eb1d": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.5:1 (need 4.5:1) — text #9ac6c4 on #b7ecf5 (gradient on section#home)"
+    },
+    "8e2f4079a07128d1a8a3791dc5f91d6ff5ac42c1652fa26c4b592525208e8a73": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 4.5:1) — text #acd7d2 on #b7ecf5 (gradient on section#home)"
+    },
+    "369437435aa5b153df4e2e73b9749e7b2f29b86f5dec2d4af06957f9c61e1454": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "1.2:1 (need 4.5:1) — text #abd6d0 on #b7ecf5 (gradient on section#home)"
+    },
+    "fe1f20a8a858ed4dab8fbe4ec4d416a6f87753bb9e29ef4ac711f6ce260b315e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "3.8:1 (need 4.5:1) — text #8ee7fa on #0e7590 (gradient on div.cinema-sticky) (and 2 more)"
+    },
+    "e781e2858af8e06bea00a556fd7375e5a33db32eecd1ba5061870c15b77f6375": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "3.6:1 (need 4.5:1) — text #8ae2f5 on #0e7590 (gradient on div.cinema-sticky) (and 2 more)"
+    },
+    "d5f28e7b3634b7fe389b30c6d284e8e4df490a8d849e6d928ef3d59c4a74e748": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "4.1:1 (need 4.5:1) — text #c6e8f0 on #0e7590 (gradient on div.cinema-sticky) (and 2 more)"
+    },
+    "67a8b64f853f0dc8023ea346ecf05e1a99a8902a602e6d682027cd26845479ee": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "4.48:1 (need 4.5:1) — text #147b9b on #eff8f5"
+    },
+    "6e693441d3bba82d2ea19189c73adc26badcc014806d509c592514888b83589b": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "4.3:1 (need 4.5:1) — text #147b9b on #e6f5f9"
+    },
+    "71ef89fbac89e0047ec62f27f1255a5e37bbe75fc7e01fa5716f228c8d94a6fb": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "4.2:1 (need 4.5:1) — text #5d787a on #e6f5f9"
+    },
+    "9707a78323d565fecefa0c2de2fd6e3756e27d1b61ca6cd69245fb6a3883b7e1": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "4.4:1 (need 4.5:1) — text #617a7b on #f8fbf9 (and 2 more)"
+    },
+    "cca0cda2d32f9ed2679436337d1f68a06a47275715cd0ce19584e36b519fc69a": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "low-contrast",
+      "snippet": "4.48:1 (need 4.5:1) — text #377c7b on #eff8f5"
+    },
+    "64a44c148970a94bfc597af34ba7df35fe6fce7c19b70354c06d535477efe1cc": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#61ebe0)"
+    },
+    "344cc737f90aeed1aaf920d7c577faf0bc867d66aa07d1eac5563e36d8fd6861": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#e0fff9)"
+    },
+    "de6dd0f8c53dca698ddc253e5f1576b662d59a840c3f2c7b942c24c0b8ea73f8": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "dark-glow",
+      "snippet": "Zero-offset box-shadow glow (#b7fff9)"
+    },
+    "1e49fd8c135d95bd17f03b0c33959500fb86e8108e03dfb8be106b44a94c97b1": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "italic-serif-display",
+      "snippet": "italic serif h1 (georgia) at 61px \"Beauty,in its element.\""
+    },
+    "f42cca32e14348caf4c20e85a11a098930d0660dd8000dfcbe9f5428ce5973a5": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"A new dimension of everyday care\" above h1 \"Beauty,in its element.\""
+    },
+    "698f32373e2828396d1a74301742184280f6b2fe62f2b2873a2b24dd46ea63a2": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "9px functional text \"Explore the edit ↗\" (below 11px floor)"
+    },
+    "6d13ce8dd1a2677e2178360347ab20a4e091ca9b28c71013540dda54437e37ac": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"A new dimension of everyday care\" (below 11px floor)"
+    },
+    "b09c5db1f39fa1624015478edda48ceb10d70d2e4777b388c143c478c82421db": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Enter the experience\" (below 11px floor)"
+    },
+    "01486310ca8a70d2dee551d03b8b5544e342b171def6c7952a6895e1bf834382": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "9px functional text \"Element 01 / Pure discovery\" (below 11px floor)"
+    },
+    "90830c3fec251c20426ee4c8776e5b41ab656c12e6e64a9d2388062f7293e8de": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "8px functional text \"Scroll to explore\" (below 11px floor)"
+    },
+    "84303689eb06479689443e34a9264423dc25a9086cf978fb3aaceeb541984c24": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<section> \"cinema\": children flush against bg on all sides (no inset)"
+    },
+    "324efed4ee3a20c2c6bbe359575f69101c35441515e06fec50e07c6acde2972a": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"01 / ELEMENT\" (below 11px floor)"
+    },
+    "482b4e8ccba9a1fb9e0ec61092844845f057f2fcbf06438be083543a5e8b940e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"02 / TRANSFORMATION\" (below 11px floor)"
+    },
+    "d1724835d7376ebe3acf8f4849361fd6b6c17f492489d044ca452670c8d5239c": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"03 / DISCOVERY\" (below 11px floor)"
+    },
+    "7f697881f9944818a7e72766123387d650169aa9cad6d71816144f6da931ecf2": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Explore the product archive\" (below 11px floor)"
+    },
+    "7794738abcdd43bedae522f66c50a7a73c7f7784e8f792b25fb9267b5b9491b1": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"01 / 03\" (below 11px floor)"
+    },
+    "08f48c5a7a6e0ebe53a31779163a45dc083479e5c1a8bd395994655c6eba16c7": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "8px functional text \"SCROLL TO TRANSFORM\" (below 11px floor)"
+    },
+    "4e116a861288ac3f15739b1ea047a0b68aa0be5cfe3b88b20537dd535b375fe3": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<div> \"ticker\": children flush against border-bottom+bg on right/left (no inset)"
+    },
+    "19cf77e311b606caf0fc4dbe4d0584d79e7368313167aa22abe531ca32089e4b": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Face care\" (below 11px floor)"
+    },
+    "0670353fab5e900f5d0a502bd7560e0cba89a1b0fe7ced758071ccfb1247fd95": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Fragrance\" (below 11px floor)"
+    },
+    "a5e92b0080cbcca7e4a1459ddbd5ba4ab1cf2c6b507b1474543d21d52091ad50": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Hair rituals\" (below 11px floor)"
+    },
+    "1cb14089c24b4354acab9a4e32d43ff5205f23ff202f3d0a3644161f3ba9ffa4": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Makeup\" (below 11px floor)"
+    },
+    "b24061f5e5ad56675976865ccd43193e01b0386cc7ea82416f89651c58ac30b9": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Personal care\" (below 11px floor)"
+    },
+    "6e202fa8246209464cae38c2c048b798714609a3173830e89e89fdd01650dbc6": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Baby & family\" (below 11px floor)"
+    },
+    "0613ab1689e0b14f6fc04d770afbbcac011f8e21471066db9d9c39a6b5fdec6a": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"The opportunity / 001\" (below 11px floor)"
+    },
+    "7f345aa69f07b32a82e625db59b408974a42b83d473e5950e8ddc5360e5b0511": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "8px functional text \"Observed departments\" (below 10px floor)"
+    },
+    "9779e6e03916782e6222117f00367fd894fd302f4e8c20b7d5c30fab7fdcf2c9": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<section> \"collection\": children flush against bg on right/left (no inset)"
+    },
+    "9dea199498fced2afcd5956d720efda28d5c2b5b1611ce3a039ae94253419b20": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"The archive / 002\" (below 11px floor)"
+    },
+    "c7d67f74a30b4d2c337cb66cd49ec2e684db1054c9ab7ccce7dbf5af310e6a5f": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"See more observed lines ↓\" (below 11px floor)"
+    },
+    "fdf3dc8b1e957ebc227043cf97cd9cbb1e36ec0710c5f6e0c611ed17efd02345": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<section> \"story\": children flush against bg on right/left (no inset)"
+    },
+    "a0806008a6d2c8a3496055afe2cbd64ac33611b1cb9ea007bb170d3fbab624c4": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Beyond the visual / 003\" (below 11px floor)"
+    },
+    "17b26f8261dd0f358951053d35d56127b6e12378898a23ab0c6a1b18342f8912": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<section> \"roadmap\": children flush against bg on right/left (no inset)"
+    },
+    "355955d7886348c394c1c327a9e18183229d1ae297b9619b1639cdf7f90eae67": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"From concept to commerce / 004\" (below 11px floor)"
+    },
+    "59ba8ddfbf85fd5a6a5443c67c4d8851d275226302a164b70042854cd8163b2e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "9px functional text \"Concept prepared under For owner review \" (below 10px floor)"
+    },
+    "58892ca036670ffe882ba1b3332288c89d9329c1d88cc90ce4519693e50cc16e": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "9px functional text \"Last Bench\" (below 11px floor)"
+    },
+    "87fb41205463420df64dd1768f27c60e8970eebd49cbc65998a170f7f88a84a1": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Save to local review shortlist +\" (below 11px floor)"
+    },
+    "7f47f2ed896552945a75ac42b968a624a2075995b44bab8ce82946b39f54466e": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"01 / ELEMENT\" beside h2 \"Every ritualbegins with a drop.\" (3 on page)"
+    },
+    "a3ad5e1c9517fcebf7113124876f2cc4541f0a9909ee1fcbe06dabc6355eeeea": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"02 / TRANSFORMATION\" beside h2 \"Beauty, seenfrom another angle.\" (3 on page)"
+    },
+    "6697a4db17b55addbbc6116969dbebb70d5af86a04f6e580d7c8c02b7149dee6": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"03 / DISCOVERY\" beside h2 \"Look closer.Discover precisely.\" (3 on page)"
+    },
+    "a14ce4cd8985a6915eebd49bf7f2c35ea10143d83da9402273e1bb99e6293b6f": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/showcase/skin-needs/index.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#045357) on dark page"
+    },
+    "ce1d2ce5cf4ca958a2e7192734504b719a9e77a04dd166986fcb4d0f6b2e6c65": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/umme-humaira/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<section> \"light-section\": children flush against bg on top/bottom (no inset)"
+    },
+    "193dd7577351cf34a2fd05dce08db12e4c2a7277939cf4f2115d88e3e43b63e4": {
+      "priority": "P2",
+      "reason": "Retained exact source finding for further legacy-surface/rendered review. Actual contrast failures on the release-tested entry, sign-in and Malaysia pages were repaired and rechecked; other pages are not certified. See canonical release record and browser evidence.",
+      "file": "landing/umme-humaira/index.html",
+      "rule": "cramped-padding",
+      "snippet": "<section> \"research\": children flush against bg on top/bottom (no inset)"
+    },
+    "22ee914fc26c4f142f4fd7958bb47125834f15962f79d437bed7c74e86fae56e": {
+      "priority": "P3",
+      "reason": "Stylistic detector finding reviewed against the locked source/brand direction. Existing typography, depth, green light and editorial hierarchy are retained; this finding is not evidence of a broken interaction. See canonical release record.",
+      "file": "landing/work/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"Work · co.lab\" above h1 \"Work, with evidence.\""
+    }
+  }
+}

@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* The preflight :placeholder-shown rule otherwise dims empty native-web inputs. */
+#auth-screen input:placeholder-shown { color: var(--color-foreground); }
+#auth-screen input::placeholder { color: var(--color-muted); opacity: 1; }
