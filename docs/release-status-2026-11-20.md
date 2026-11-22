@@ -1,5 +1,13 @@
 # Current Last Bench release verification
 
+## 22 November 2026 — recovered CLASS portal sources
+
+The owner supplied complete Gemini portal variant 2, the 3D decisions note, an AI Studio API example, and inline views of the skyline master and bench mark. The Drive link in the note yielded the original Claude Design export, verified against the repository SHA-256 and ZIP checksums. The inventory records file hashes and duplicate groups. The Claude dashboard and mobile app belong to the historical Malaysia admissions design. The source files for the inline images and the other two LMS variants are still outstanding.
+
+The CLASS hub now links to a public **Learner portal demo** at `/class-a/portal/`. The layout follows the supplied portal’s navigation, next class, roadmap and PROXY panel. Its five phase links use the existing public curriculum. Both the Malaysia route and demo dashboard offer the on-demand private Map link. Production learner records, enrollment, reviewer decisions and audio/video sessions require the outstanding acceptance inputs. The supplied HTML uses browser-local sample records and experimental provider integrations. The Python attachment is an API invocation template with a placeholder input.
+
+For this change the prior live rollback revision is `1b7e441b590782aa0cd333bf3f7a01974d5d0f64` (Pages run 45044226485). Use the actual successful Pages deployment receipt and public release manifest for the current served revision. The evidence and hashes below describe the preceding deployment.
+
 ## 22 November 2026 — verified scoped website release
 
 **State: scoped website deployed and verified live at https://lastbenchbd.com/.** Released source: `1b7e441b590782aa0cd333bf3f7a01974d5d0f64` (PR #196). The full cinematic, authenticated LMS and realtime twin brief remains incomplete. This section supersedes the dated status below for this website task. It does not certify the full cinematic/LMS/twin brief.

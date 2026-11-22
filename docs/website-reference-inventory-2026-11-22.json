@@ -4,7 +4,7 @@
   "requested_references": [
     {
       "name": "48834.png",
-      "status": "missing_original",
+      "status": "skyline_reference_visible_inline_original_bytes_unavailable",
       "role": "homepage_visual_master"
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "name": "Recovered_3D_Experience_Decisions",
-      "status": "missing_original",
+      "status": "received_file",
       "role": "source_reference"
     },
     {
@@ -44,7 +44,7 @@
     },
     {
       "name": "CLASS LMS/PROXY HTML variant 2",
-      "status": "missing_original",
+      "status": "received_file",
       "role": "source_reference"
     },
     {
@@ -59,8 +59,8 @@
     }
   ],
   "gemini_portal": {
-    "status": "partial",
-    "source": "User-pasted HTML/CSS fragment in this conversation; not one of three complete original files"
+    "status": "complete_variant_2",
+    "source": "User-provided HTML. Includes per-learner localStorage demo, client-side review flags, proof forms and optional Gemini/Simli sessions. No authoritative enrollment or review receipts established."
   },
   "recovered_claude": {
     "file_count": 33,
@@ -119,7 +119,52 @@
           "design-source/claude-design/2026-09-08/ds/tokens/tokens.css"
         ]
       }
-    ]
+    ],
+    "original_archive": {
+      "name": "LASTBENCH 3D.zip",
+      "sha256": "658020389ad977a436e6308fe2fa7948f1d7e3a79547be18f290459ec6df9ff9",
+      "zip_members": 45,
+      "files": 45,
+      "duplicate_groups": {
+        "80f5b31794758bcaac91b8a4b50bf2e3e2f8725fe506dc5d2455261b529ba73c": [
+          "Last Bench Dashboard.dc.html",
+          "design_handoff_journey_and_dashboard/Last Bench Dashboard.dc.html",
+          "design_handoff_last_bench/Last Bench Dashboard.dc.html"
+        ],
+        "4b6df4933ce74af4e3845afba5e5b5103ae73e41cda7896c5a5713664a8f88f6": [
+          "_ds/design-system-e48d1fb3-af2d-4eaf-8457-fcbdcd9d040c/styles.css",
+          "ds/styles.css"
+        ],
+        "b14ee21cfd2d3cd45d81dbaa5a38ede5c938a12bcd67d33a0a91c5f0162ee232": [
+          "_ds/design-system-e48d1fb3-af2d-4eaf-8457-fcbdcd9d040c/tokens/tokens.css",
+          "ds/tokens/tokens.css"
+        ],
+        "2d558325ec2ed04c63745f2b4152a69d5f5ee9bb95a174513ff5b6c75decbfdb": [
+          "assets/logo-full.png",
+          "design_handoff_last_bench/assets/logo-full.png"
+        ],
+        "e65a0b21cd79172c9f78b59e28cf990f06a3c766f1ccb3aba1191892501e5553": [
+          "assets/logo-icon.png",
+          "design_handoff_journey_and_dashboard/assets/logo-icon.png",
+          "design_handoff_last_bench/assets/logo-icon.png"
+        ],
+        "d797f41b7d66c445a7ddddc1f7d2871dfc0e996eee2b7a3dbab4c7a7d6c5d234": [
+          "design_handoff_journey_and_dashboard/image-slot.js",
+          "design_handoff_last_bench/image-slot.js",
+          "image-slot.js"
+        ],
+        "c60c49083997f51a592df118c0068475337afd20b8cfd8e1cd9d5eb0c7e254f6": [
+          "design_handoff_journey_and_dashboard/support.js",
+          "design_handoff_last_bench/support.js",
+          "support.js"
+        ],
+        "fb4de1f850cb85fe5eeb78207f3f219f4ae1bb7e706368a4f07d0ea4626f4226": [
+          "uploads/assets-1783280728495.png",
+          "uploads/last_bench logo(2).png"
+        ]
+      },
+      "source": "Drive file in repository PROVENANCE.md and newly supplied recovery note. Distinct archive names in the brief remain unverified."
+    }
   },
   "unchanged_production_marks": [
     {
@@ -225,5 +270,19 @@
     ],
     "baseline_http": 200,
     "repository_source_equivalence": "Not verified; current erfan-profile main remains the handoff-only commit 16f5822d00e2a5c6042c33d5aa6ef5dcc5f1562c"
+  },
+  "subsequent_user_handoff": {
+    "CLASS_Λ_ LMS _ PROXY Portal _2_.html": {
+      "bytes": 162794,
+      "sha256": "bcbba7ad34713053bb9374f70667bd532727866331292c1714538adf8e2c4f25"
+    },
+    "Recovered_3D_Experience_Decisions _1_.md": {
+      "bytes": 9311,
+      "sha256": "58ca9bfebc7b8c611626e2c1ef5b94d9b523060af29da608811e9f4df7acd9da"
+    },
+    "ai_studio_code.py": {
+      "bytes": 509,
+      "sha256": "7fd96b4278f8c78fb8565a90d5ad594d65f83d22bb7c7e226a26069168675c1a"
+    }
   }
 }
