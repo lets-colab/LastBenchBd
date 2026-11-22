@@ -1,22 +1,23 @@
 # Current Last Bench release verification
 
-## 22 November 2026 — scoped website candidate
+## 22 November 2026 — verified scoped website release
 
-**State: implementation and local verification; production deployment pending.** This section supersedes the dated status below for this website task. It does not certify the full cinematic/LMS/twin brief.
+**State: scoped website deployed and verified live at https://lastbenchbd.com/.** Released source: `1b7e441b590782aa0cd333bf3f7a01974d5d0f64` (PR #196). The full cinematic, authenticated LMS and realtime twin brief remains incomplete. This section supersedes the dated status below for this website task. It does not certify the full cinematic/LMS/twin brief.
 
 | Gate | Observed state |
 | --- | --- |
-| Existing production | Pages run `44735383811`, source `84306e12a7bba8b1c439bf61e43732683b8f163e`. Homepage byte match and fresh anonymous homepage, Malaysia and sign-in browser checks completed. Authenticated admissions and enquiry delivery are unverified without approved smoke identities. |
+| Existing production | Pages run `45044226485` deployed `1b7e441b590782aa0cd333bf3f7a01974d5d0f64`. Fresh browser contexts verified that SHA on all seven desktop/phone page cases. All 112 publicly indexed files independently match the immutable GitHub artifact. Authenticated admissions and actual enquiry delivery remain unverified without approved smoke identities. |
 | Rollback | Full 112-file artifact preserved locally with SHA-256 manifest and a ZIP; original artifact expires 27 November. Recovery must use the artifact/source above, not default `main`. Monitoring resolves the active successful Pages deployment receipt, including older workflow reruns, and checks out that source’s smoke contract. Integrity failures feed the existing incident reporter. |
-| Scoped website changes | Direct navigation, mobile choices, public source atlas, Business Lab/public Co.MPASS overview, Work clearance boundary, public-only Dr. X guide, privacy-preserving city-map action and observed contrast repairs. No production database changes or new private records. |
+| Scoped website changes | Verified live: direct navigation, ordered mobile choices, public source atlas, Business Lab/public Co.MPASS overview, Work clearance boundary, public-only Dr. X guide, privacy-preserving city-map action and observed contrast repairs. No production database changes or new private records. |
 | Cinematic entry | BLOCKED: `48834.png`, named scene/decision/video archives and exact white-logo master unavailable. Current approved artwork/marks retained; no new approach shot or 30 fps hardware result claimed. |
 | CLASS learner acceptance | BLOCKED: complete original portal references, approved content/rubrics, enrollment mapping, secure learner/reviewer identities and actual human review unavailable. No new proof backend or fictional progress is published. Existing admissions sign-in is preserved; it is not presented as the new CLASS portal. |
 | Public evidence | Atlas uses existing first-party public programme/journey sources. No new client clearance is available; Work lists no client cases. Project X remains withheld. No private Cortex data is loaded. |
 | Profile and maps | Exact outgoing People/Map URLs retained. Plain HTTP clients returned 403, but fresh Chromium contexts loaded both domains with HTTP 200. Profile title, visible portrait, CV/proof links and original portrait resources were baselined. The map fixture separately verifies URL/referrer/opener isolation, not spatial-map functionality. |
 | Voice and avatar | Readable public profile HTML, JavaScript, knowledge projection, styles, CV/proof pages and four portrait assets were recovered with checksums. This is a public-production snapshot, not an authenticated Sites export or source-equivalence certificate. The current profile provides curated answers and optional device read-aloud/on-device AI; live voice/avatar acceptance and verified realtime entitlement remain unproven. No realtime, voice, microphone or avatar session was activated. Profile deployment authority remains separate. |
 | Profile text guide | Existing curated-guide answer matched the published `capabilities` knowledge entry with its CV source label; zero network attempts during the question. This is deterministic retrieval, not generative inference. No audible voice, microphone or speaking-avatar session was tested. |
-| Quality observations | Local browser checks cover 390×844 and 1440×1000 emulation, route links, no overflow, guide Escape/focus return, sign-in mode switching and map privacy. Physical OPPO A78 performance, actual screen reader and human five-second choice are UNOBSERVED. |
-| Separate work | Native beta/signing/stores, five-phase learner brain, YouTube learning, Lovable Skill Builder, broader integrations, Netlify cleanup and Render retirement stay outside this release. API health timed out in the fresh baseline check; prior data-query failures are not declared repaired. |
+| Dependency advisory review | The 22 November GitHub push still reports 98 default-branch dependency alerts: 50 high, 38 moderate, 10 low. The existing production critical-only audit passed; that does not triage these alerts or certify exposure. Advisory inspection via the integration previously returned 403. No dependency upgrades are claimed in this scoped release. |
+| Quality observations | Final live browser checks passed at 390×844 and 1440×1000 emulation: correct source SHA, ordered choices, 44px primary targets, route links, no overflow, guide Escape/focus return, sign-in mode switching, on-demand map privacy and zero observed automated WCAG violations/page errors. Synthetic loading/503/401 checks passed without real authentication or data writes. Offline hard reload is unavailable; returning online recovered the page. Physical OPPO A78 performance, actual screen reader and human five-second choice are UNOBSERVED. |
+| Separate work | Native beta/signing/stores, five-phase learner brain, YouTube learning, Lovable Skill Builder, broader integrations, Netlify cleanup and Render retirement stay outside this release. The initial plain-HTTP health probe timed out, but final production smoke passed custom API health 200, Render-origin health 200 and anonymous admin denial 403. Database-backed learner acceptance remains separate; prior data-query failures are not declared repaired. |
 
 PROXY sequence remains **Erfan public example first → learner-owned template later**, with **Enroll → Learn → Build → Publish PROXY**, an opt-in shareable AI-builder profile and Join CLASS[Λ] entry. Coursework stays private by default.
 
@@ -27,6 +28,28 @@ Local verification: **127 tests passed**, types and canonical design/brand/bound
 The [source inventory](website-reference-inventory-2026-11-22.json) records missing originals and exact recovered-Claude duplicate hashes. Source roles remain: homepage master → Gemini CLASS structure → historical Claude admissions design → supporting handoff boards. Existing canonical production marks remain unchanged.
 
 **Required owner handoff:** one accessible approved release-source index/bundle with the missing originals/publication clearances and secure environment references for approved learner/reviewer smoke identities, named human reviewer and any existing free realtime entitlement. Credentials must stay in the authorized secret store/environment. No ChatGPT Space access or synchronization is claimed.
+
+### Final receipts
+
+- Website: https://lastbenchbd.com/
+- Released commit: `1b7e441b590782aa0cd333bf3f7a01974d5d0f64`; rollback commit: `84306e12a7bba8b1c439bf61e43732683b8f163e`.
+- Merge: https://github.com/lets-colab/LastBenchBd/pull/196
+- Main CI: https://github.com/lets-colab/LastBenchBd/actions/runs/45044226512
+- Pages build/deploy: https://github.com/lets-colab/LastBenchBd/actions/runs/45044226485
+- Production source/integrity and functional smoke: https://github.com/lets-colab/LastBenchBd/actions/runs/45044370840
+- Pinned Impeccable: https://github.com/lets-colab/LastBenchBd/actions/runs/45044226499
+- CodeQL: https://github.com/lets-colab/LastBenchBd/actions/runs/45044226492
+- Public manifest SHA-256: `3cf0fc7aa3dd4c69e602935236eb84fc984137f3135ec19188e2360bf37b88b1`.
+- Full artifact inventory SHA-256 (private inventory retained in CI): `d6d94502d4a3f31868ef9ed9738924af985100358116ceac9987cab309ef76a3`.
+
+Fresh live browser and independent managed-HTTPS hash verification passed. Local direct Node fetch was refused by the execution environment; the production GitHub Node verifier passed and Python HTTPS independently verified the same artifact. No rollback was needed. The preserved 112-file known-good artifact passed checksum and local restoration checks, including original choices and sign-in controls.
+
+Workspace evidence: `/workspace/release-evidence/2026-11-22/`. `release-receipt.json` classifies each observed/unobserved outcome; `live-home-390.png`, `live-home-1440.png` and the other route screenshots show the served revision. `website-1b7e441-verification.zip` contains receipts/screenshots/logs; `rollback-84306e1.zip` preserves the known-good artifact. A GitHub upload attempt returned HTTP 401 at the upload host; its empty task-created draft was removed. No claim is made that those ZIPs were uploaded. GitHub workflow receipts and immutable build/audit/smoke artifacts remain available under the runs above; retention is time-limited.
+
+Workspace archive SHA-256:
+
+- `website-1b7e441-verification.zip`: `0a6997207c7b7b1303910e4881c45ead276774e78f7b76aee8b49276a22aa88c`.
+- `rollback-84306e1.zip`: `cecc75c172850c86db939549c67a83145da8df523602873d082e3b83d3d40ce1`.
 
 ### Recovery procedure
 
