@@ -18,6 +18,7 @@ import {
 import { spawnSync } from "child_process";
 import path from "path";
 import { fileURLToPath } from "url";
+import { isPublicSiteAsset, stampRelease, verifyRelease } from "./release-provenance.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dist = path.join(root, "dist");
@@ -193,11 +194,22 @@ try {
   const exclude = new Set(["CNAME"]);
   for (const entry of readdirSync(landing)) {
     if (exclude.has(entry)) continue;
-    cpSync(path.join(landing, entry), path.join(buildDir, entry), { recursive: true });
+    cpSync(path.join(landing, entry), path.join(buildDir, entry), {
+      recursive: true,
+      filter: (source) => statSync(source).isDirectory() || isPublicSiteAsset(source),
+    });
   }
 
   materializeGitHubPagesAppRoutes(buildDir);
   verifyLocalAssetReferences(buildDir);
+  const revision = process.env.GITHUB_SHA || spawnSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).stdout?.trim();
+  const workflowRunUrl = process.env.GITHUB_RUN_ID
+    ? `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`
+    : null;
+  // CNAME belongs to the same immutable artifact and is included in its inventory.
+  if (process.env.GITHUB_ACTIONS === "true") writeFileSync(path.join(buildDir, "CNAME"), "lastbenchbd.com\n");
+  stampRelease(buildDir, { sourceSha: revision, workflowRunUrl, fullInventoryPath: process.env.LASTBENCH_ARTIFACT_INVENTORY });
+  verifyRelease(buildDir, revision);
 } catch (error) {
   rmSync(buildDir, { recursive: true, force: true });
   throw error;

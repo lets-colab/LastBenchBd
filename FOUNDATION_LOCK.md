@@ -1,5 +1,7 @@
 # Last Bench Foundation Lock
 
+> **Current website verification, 22 November 2026:** See the [canonical release record](docs/release-status-2026-11-20.md). The full cinematic, authenticated CLASS and realtime twin acceptance remain gated; dated deployment success must not imply those capabilities are complete.
+
 > **Verification update, 20 November 2026:** The [20 November release record](docs/release-status-2026-11-20.md) supersedes the 18 November branch/deployment status below. The mobile/UI source repairs are now on `main` and the final sign-in screen is verified live on GitHub Pages. Netlify cleanup, backend replacement and complete native/store acceptance remain unfinished; the dated record identifies the separate evidence and gates.
 
 > **Verification update, 18 November 2026:** See [current release status](docs/release-status-2026-11-18.md). GitHub Pages hosting is verified, but Netlify preview integration is still active and cleanup is incomplete. API DNS still points to legacy Render, and the mobile/UI repair branch has not reached production `main`. Dated foundation claims below must not be read as fresh acceptance evidence.

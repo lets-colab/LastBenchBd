@@ -18,6 +18,8 @@ on:
       - "skills/last-bench-brand-source-lock/**"
       - "design-system/brand-lock.json"
       - ".github/workflows/impeccable-design-qa.yml"
+      - "scripts/impeccable*"
+      - "scripts/run-impeccable.mjs"
   pull_request:
     branches: [main]
     paths:
@@ -30,6 +32,8 @@ on:
       - "CLAUDE_DESIGN_PHONE_HANDOFF.md"
       - ".agents/skills/impeccable/**"
       - ".github/workflows/impeccable-design-qa.yml"
+      - "scripts/impeccable*"
+      - "scripts/run-impeccable.mjs"
   workflow_dispatch:
 
 permissions:
@@ -39,6 +43,8 @@ jobs:
   detect:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      CI: "1"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -48,34 +54,19 @@ jobs:
         with:
           node-version: 22.14.0
 
-      - name: Run Impeccable detector
+      - name: Run pinned Impeccable detector and reviewed release gate
         id: detector
-        shell: bash
-        run: |
-          set +e
-          npx --yes impeccable@latest detect --json landing > impeccable-report.json
-          status=$?
-          set -e
-          cat impeccable-report.json
-          echo "detector_exit=$status" >> "$GITHUB_OUTPUT"
-          if [[ "$status" != "0" && "$status" != "2" ]]; then
-            echo "::error::Impeccable detector failed unexpectedly with exit $status"
-            exit "$status"
-          fi
+        run: node scripts/run-impeccable.mjs --output-dir "$RUNNER_TEMP/impeccable"
 
       - name: Upload detector report
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: impeccable-design-report
-          path: impeccable-report.json
-          if-no-files-found: error
+          path: |
+            ${{ runner.temp }}/impeccable/findings.json
+            ${{ runner.temp }}/impeccable/versions.json
+            ${{ runner.temp }}/impeccable/summary.json
+            ${{ runner.temp }}/impeccable/diagnostics.log
+          if-no-files-found: warn
           retention-days: 14
-
-      - name: Summarize detector state
-        shell: bash
-        run: |
-          if [[ "${{ steps.detector.outputs.detector_exit }}" == "0" ]]; then
-            echo "Impeccable detector found no deterministic issues."
-          else
-            echo "Impeccable detector found reviewable issues. This diagnostic job remains green until findings are triaged against the locked brand system."
-          fi

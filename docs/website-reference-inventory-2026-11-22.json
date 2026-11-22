@@ -1,0 +1,229 @@
+{
+  "observed_date": "2026-11-22",
+  "workspace_search": "Selected repositories, retrieved-designs, library-files, shared and temporary workspace; filenames plus relevant HTML content markers. No connected Space/Drive source-index tool available.",
+  "requested_references": [
+    {
+      "name": "48834.png",
+      "status": "missing_original",
+      "role": "homepage_visual_master"
+    },
+    {
+      "name": "White Welcome back sign-in reference",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "Dark Build. Prove. Ship. dashboard reference",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "52048.mp4 or numbered variant",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "Recovered_3D_Experience_Decisions",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "LASTBENCH 3D-project.zip",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "Claude Design projects.zip",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "CLASS LMS/PROXY HTML variant 1",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "CLASS LMS/PROXY HTML variant 2",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "CLASS LMS/PROXY HTML variant 3",
+      "status": "missing_original",
+      "role": "source_reference"
+    },
+    {
+      "name": "Last Bench Logo White.jpeg",
+      "status": "missing_original",
+      "role": "source_reference"
+    }
+  ],
+  "gemini_portal": {
+    "status": "partial",
+    "source": "User-pasted HTML/CSS fragment in this conversation; not one of three complete original files"
+  },
+  "recovered_claude": {
+    "file_count": 33,
+    "source_provenance": "design-source/claude-design/2026-09-08/PROVENANCE.md",
+    "exact_duplicate_groups": [
+      {
+        "sha256": "d797f41b7d66c445a7ddddc1f7d2871dfc0e996eee2b7a3dbab4c7a7d6c5d234",
+        "paths": [
+          "design-source/claude-design/2026-09-08/image-slot.js",
+          "design-source/claude-design/2026-09-08/design_handoff_journey_and_dashboard/image-slot.js",
+          "design-source/claude-design/2026-09-08/design_handoff_last_bench/image-slot.js"
+        ]
+      },
+      {
+        "sha256": "80f5b31794758bcaac91b8a4b50bf2e3e2f8725fe506dc5d2455261b529ba73c",
+        "paths": [
+          "design-source/claude-design/2026-09-08/Last Bench Dashboard.dc.html",
+          "design-source/claude-design/2026-09-08/design_handoff_journey_and_dashboard/Last Bench Dashboard.dc.html",
+          "design-source/claude-design/2026-09-08/design_handoff_last_bench/Last Bench Dashboard.dc.html"
+        ]
+      },
+      {
+        "sha256": "c60c49083997f51a592df118c0068475337afd20b8cfd8e1cd9d5eb0c7e254f6",
+        "paths": [
+          "design-source/claude-design/2026-09-08/support.js",
+          "design-source/claude-design/2026-09-08/design_handoff_journey_and_dashboard/support.js",
+          "design-source/claude-design/2026-09-08/design_handoff_last_bench/support.js"
+        ]
+      },
+      {
+        "sha256": "2d558325ec2ed04c63745f2b4152a69d5f5ee9bb95a174513ff5b6c75decbfdb",
+        "paths": [
+          "design-source/claude-design/2026-09-08/assets/logo-full.png",
+          "design-source/claude-design/2026-09-08/design_handoff_last_bench/assets/logo-full.png"
+        ]
+      },
+      {
+        "sha256": "e65a0b21cd79172c9f78b59e28cf990f06a3c766f1ccb3aba1191892501e5553",
+        "paths": [
+          "design-source/claude-design/2026-09-08/assets/logo-icon.png",
+          "design-source/claude-design/2026-09-08/design_handoff_journey_and_dashboard/assets/logo-icon.png",
+          "design-source/claude-design/2026-09-08/design_handoff_last_bench/assets/logo-icon.png"
+        ]
+      },
+      {
+        "sha256": "4b6df4933ce74af4e3845afba5e5b5103ae73e41cda7896c5a5713664a8f88f6",
+        "paths": [
+          "design-source/claude-design/2026-09-08/ds/styles.css",
+          "design-source/claude-design/2026-09-08/_ds/design-system-e48d1fb3-af2d-4eaf-8457-fcbdcd9d040c/styles.css"
+        ]
+      },
+      {
+        "sha256": "b14ee21cfd2d3cd45d81dbaa5a38ede5c938a12bcd67d33a0a91c5f0162ee232",
+        "paths": [
+          "design-source/claude-design/2026-09-08/_ds/design-system-e48d1fb3-af2d-4eaf-8457-fcbdcd9d040c/tokens/tokens.css",
+          "design-source/claude-design/2026-09-08/ds/tokens/tokens.css"
+        ]
+      }
+    ]
+  },
+  "unchanged_production_marks": [
+    {
+      "path": "landing/assets/logo-full.png",
+      "sha256": "2d558325ec2ed04c63745f2b4152a69d5f5ee9bb95a174513ff5b6c75decbfdb"
+    },
+    {
+      "path": "landing/assets/logo-icon.png",
+      "sha256": "e65a0b21cd79172c9f78b59e28cf990f06a3c766f1ccb3aba1191892501e5553"
+    },
+    {
+      "path": "brand/class-a/class-a-logo.jpg",
+      "sha256": "73e85c06af9595d34ac5ec0c0fc66720bc83f1833e367e59308951416c91338e"
+    }
+  ],
+  "profile_public_recovery": {
+    "classification": "Public production resources, not an authenticated Sites export",
+    "files": [
+      {
+        "path": "app.js",
+        "http": 200,
+        "bytes": 17747,
+        "sha256": "3b37b62bde90a12a5f4a8e455b330f3299fc5cd94826bef3734d8c9e264fd8d4",
+        "saved": true
+      },
+      {
+        "path": "styles.css",
+        "http": 200,
+        "bytes": 26574,
+        "sha256": "f6ac8b0e709209030300cafc13b14879aad45faa021da26ad9380857b5fdf2df",
+        "saved": true
+      },
+      {
+        "path": "cv.html",
+        "http": 200,
+        "bytes": 5998,
+        "sha256": "d5cdd8d8dedeeeda54386e1ba9862d8219c4df3e41308260337b373551964d57",
+        "saved": true
+      },
+      {
+        "path": "proof.html",
+        "http": 200,
+        "bytes": 8289,
+        "sha256": "4ebf87a37ce49632ba96d2d16db53c2f4deef00e68f23a409e367b9b30a9ca3b",
+        "saved": true
+      },
+      {
+        "path": "assets/erfan-avatar.png",
+        "http": 200,
+        "bytes": 2005830,
+        "sha256": "98c9c7d58574ff3a6c54ce17d1ccf4013253e5fd0503fbbc4b0e1f377246b46d",
+        "saved": true
+      },
+      {
+        "path": "assets/portraits/erfan-standing-original.png",
+        "http": 200,
+        "bytes": 230076,
+        "sha256": "3c2905cd9868b84d9fc97061f063c9e21b53d5afb30b1d809bb332add4fdd5d4",
+        "saved": true
+      },
+      {
+        "path": "assets/portraits/erfan-seated-original.png",
+        "http": 200,
+        "bytes": 233149,
+        "sha256": "829e0df8eef45bf5d0edcf8c9032bf3a2376745f7feae2001fe00107aa37b319",
+        "saved": true
+      },
+      {
+        "path": "assets/portraits/erfan-desk-original.png",
+        "http": 200,
+        "bytes": 218796,
+        "sha256": "a06f1ea924c18d282ff691e1fc150ca45b2fc02a0b40aa77b1705743041c9cd6",
+        "saved": true
+      },
+      {
+        "path": "profile-logic.js",
+        "http": 200,
+        "bytes": 2972,
+        "sha256": "5be79b1ff83cd17def76a0d3175b0cc6112b275562a9266b199c19ae43adbed1",
+        "saved": true
+      },
+      {
+        "path": "profile-data.json",
+        "http": 200,
+        "bytes": 22437,
+        "sha256": "d7870833486f39a46d8e3e6ad5800477db8f9f3754f2446ec3cdf1a24338c42e",
+        "saved": true
+      },
+      {
+        "path": "assets/inter.css",
+        "http": 200,
+        "bytes": 1085,
+        "sha256": "a86d46ce25ae3ffb60bb852ed97151ae4c2bdf5ab2ace737cb7c52d621801163",
+        "saved": true
+      },
+      {
+        "path": "assets/headline.css",
+        "http": 200,
+        "bytes": 158,
+        "sha256": "bdf633901daf86e2c2af09bab4e6f25dbbbbbb34a51efbb72bb1db116f306d89",
+        "saved": true
+      }
+    ],
+    "baseline_http": 200,
+    "repository_source_equivalence": "Not verified; current erfan-profile main remains the handoff-only commit 16f5822d00e2a5c6042c33d5aa6ef5dcc5f1562c"
+  }
+}

@@ -151,23 +151,35 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
 }
 </style>
 <script src="company-routes.js" defer></script>
+<link rel="stylesheet" href="public-navigation.css">
+<script src="site-guide.js" defer></script>
 </head>
 <body>
+<a class="lb-skip" href="#paths">Skip to your choices</a>
 <main class="shell">
   <header class="topbar">
     <img class="logo" src="assets/logo-full.png" alt="Last Bench">
     <span class="system-line">MULTIPLE ENTRY POINTS · ONE FORWARD MOTION</span>
+    <nav class="lb-nav" aria-label="Primary navigation">
+      <a href="#paths">Choose your path</a>
+      <a href="explore/">Explore</a>
+      <a href="https://erfanuddin.lastbenchbd.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">People</a>
+      <a href="work/">Work</a>
+      <a href="app/auth/" aria-label="Sign in to your student journey">Sign in</a>
+      <button type="button" data-skip-motion aria-pressed="false">Skip motion</button>
+      <a href="explore/" data-site-guide>Ask Dr.X</a>
+    </nav>
   </header>
 
   <section class="hero" aria-labelledby="hero-title">
     <div class="eyebrow">START WHERE YOU ARE</div>
-    <h1 id="hero-title">One starting point.<br><span>Many possible futures.</span></h1>
-    <p><strong style="color:#dce5df">Choose the gate. Enter the journey.</strong> Malaysia opens the Student Mobility route. CLASS[Λ] is where you learn to build through practical proof. co.lab is where ventures build and get accelerated. The long-term founder outcome is one capable person able to build, launch and operate a one-person AI-powered business.</p>
+    <h1 id="hero-title">ONE STARTING POINT.<br><span>MANY POSSIBLE FUTURES.</span></h1>
+    <p><strong style="color:#dce5df">Choose the gate. Enter the journey.</strong> Study in Malaysia, build AI skills, or build a business. Start with the path that fits you.</p>
     <span class="thesis">Opportunity should compound, not reset.</span>
   </section>
 
   <div class="section-kicker">Public entry gates</div>
-  <section class="gates" aria-label="Last Bench public entry gates">
+  <section class="gates" id="paths" tabindex="-1" aria-label="Last Bench public entry gates">
     <a class="gate gate-malaysia" id="studentPath" href="malaysia/">
       <div class="gate-top">
         <span class="gate-num">01 · EDUCATION & MOBILITY</span>
@@ -175,7 +187,8 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
       </div>
       <div>
         <p class="gate-label">Malaysia · Student Mobility</p>
-        <h2>Study. Move. Arrive.</h2>
+        <h2>Study in Malaysia</h2>
+        <span class="lb-path-name">Study &amp; Move</span>
         <p>A focused Bangladesh → Malaysia journey for education decisions, applications, preparation, arrival and continuity after the flight lands.</p>
       </div>
       <div class="route">
@@ -191,7 +204,8 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
       </div>
       <div>
         <p class="gate-label">Learn to Build</p>
-        <h2>Build skills. Ship proof.</h2>
+        <h2>Build AI skills</h2>
+        <span class="lb-path-name">CLASS[Λ]</span>
         <p>Enter the CLASS[Λ] Human Lab: AI Driver → Builder → Creator → Operator → Founder, learning by producing visible work instead of passive attendance.</p>
       </div>
       <div class="route">
@@ -200,14 +214,15 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
       </div>
     </a>
 
-    <a class="gate gate-colab" href="https://co-lab-growth-os.lovable.app/" target="_blank" rel="noopener" aria-label="co.lab · BUSINESS LAB — enter the white gallery journey">
+    <a class="gate gate-colab" href="co-lab/">
       <div class="gate-top">
-        <span class="gate-num">03 · CO.LAB · BUSINESS LAB</span>
+        <span class="gate-num">03 · co.lab · BUSINESS LAB</span>
         <span class="live-dot">White gallery</span>
       </div>
       <div>
         <p class="gate-label">Build &amp; Get Accelerated</p>
-        <h2>Build. Launch. Accelerate.</h2>
+        <h2>Build a business</h2>
+        <span class="lb-path-name">co.lab</span>
         <p>The co.lab Business Lab helps ventures and businesses move from build to market, systems and acceleration through its white-gallery Growth OS experience.</p>
       </div>
       <div class="route">
@@ -233,7 +248,7 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
           <span class="intel-copy"><b>Co.MPASS</b><span>Business Dashboard · evidence → clarity → direction</span></span>
           <span class="lock">Founder access</span>
         </summary>
-        <div class="intel-body"><strong>Co.MPASS converges governed company evidence.</strong> The founder surface remains permissioned; public investor evidence, where used, must stay sanitized, verified and read-only.</div>
+        <div class="intel-body"><a href="co-lab/#compass">Read the public Co.MPASS overview →</a><br><strong>Co.MPASS converges governed company evidence.</strong> The founder surface remains permissioned; public investor evidence, where used, must stay sanitized, verified and read-only.</div>
       </details>
 
       <details class="intel">
@@ -249,8 +264,10 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
 
   <div class="partner">
     <a href="app/">Track my student journey →</a>
+    <a href="https://co-lab-growth-os.lovable.app/" target="_blank" rel="noopener noreferrer">Existing co.lab Business Lab →</a>
     <a href="mailto:info@lastbenchbd.com?subject=Last%20Bench%20Partnership">Partner / institution? Start a conversation →</a>
   </div>
+  <p class="lb-purpose">Learn to build visible proof. Build &amp; Get Accelerated. The founder pathway supports a one-person AI-powered business; it does not guarantee commercial outcomes.</p>
 
   <footer class="footer">
     <span>Last Bench is the company · Education & Mobility is an operating/service domain · CLASS[Λ] and co.lab are independent entry points.</span>
