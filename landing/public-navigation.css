@@ -11,6 +11,7 @@
 .footer,.partner{font-size:12px}.gate p{color:#b9c6be}.gate .enter{color:#b7f5cb}.intel-mark{color:#dbe2dd}
 .partner a,.intel-body a{display:inline-flex;align-items:center;min-height:44px}
 .gate-num,.gate-label,.live-dot,.stages,.thesis,.eyebrow,.intel-copy span,.lock{font-size:12px}.intel-body{font-size:14px}.footer{font-size:14px;text-transform:none;letter-spacing:0}
+.gate-num{text-transform:uppercase}
 .gate-colab h2{color:#111820}.gate-colab p,.gate-colab .gate-num,.gate-colab .stages,.gate-colab .live-dot,.gate-colab .lb-path-name{color:#3f4f44}.gate-colab .enter{color:#1750a5}
 .gate-colab .gate-label{color:#1750a5}.hero .thesis{font-size:12px}.intelligence-head p{font-size:14px}.gate h2{line-height:1.08}
 html[data-motion="off"]{scroll-behavior:auto}html[data-motion="off"] *,html[data-motion="off"] *::before,html[data-motion="off"] *::after{animation:none!important;transition:none!important}

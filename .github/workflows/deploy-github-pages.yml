@@ -70,6 +70,8 @@ jobs:
 
       - name: Build exact production site
         run: pnpm build:web:production
+        env:
+          LASTBENCH_ARTIFACT_INVENTORY: ${{ runner.temp }}/lastbench-artifact-inventory.json
 
       - name: Verify exact source and custom domain artifact
         run: |
@@ -91,6 +93,14 @@ jobs:
         with:
           path: dist
           include-hidden-files: true
+
+      - name: Retain private full artifact integrity inventory
+        uses: actions/upload-artifact@v7
+        with:
+          name: lastbench-production-integrity
+          path: ${{ runner.temp }}/lastbench-artifact-inventory.json
+          if-no-files-found: error
+          retention-days: 7
 
   deploy:
     environment:

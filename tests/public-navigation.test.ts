@@ -13,6 +13,7 @@ describe("public release navigation and privacy", () => {
     expect(page).toContain('href="https://erfanuddin.lastbenchbd.com/"');
     expect(page).toContain('href="app/auth/"');
     expect(page).toContain('id="paths"');
+    expect(page.match(/<a\b[^>]*class="gate gate-colab"[^>]*>/)?.[0]).not.toContain("aria-label");
   });
   it("opens only the exact approved city map with no referrer or credentials", () => {
     const page = read("landing/malaysia/index.html");
@@ -21,6 +22,8 @@ describe("public release navigation and privacy", () => {
     expect(anchors[0]).toContain('target="_blank"');
     expect(anchors[0]).toContain('rel="noopener noreferrer"');
     expect(anchors[0]).toContain('referrerpolicy="no-referrer"');
+    expect(page).toContain("শহরের মানচিত্র খুলুন");
+    expect(page).not.toContain("মানচিত্রে বাস্তব কেএলসিসি বেঞ্চ খুলুন");
   });
   it("offers public first-party evidence without exposing private founder systems", () => {
     const atlas = read("landing/explore/index.html");

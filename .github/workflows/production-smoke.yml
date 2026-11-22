@@ -11,6 +11,7 @@ on:
 permissions:
   contents: read
   actions: read
+  deployments: read
   issues: write
 
 concurrency:
@@ -23,18 +24,16 @@ jobs:
     timeout-minutes: 10
     env:
       CI: "1"
-      EXPECTED_DEPLOY_SHA: ${{ github.event.workflow_run.head_sha || '' }}
-      EXPECTED_DEPLOY_RUN: ${{ github.event.workflow_run.id || '' }}
       WEB_ORIGIN: https://lastbenchbd.com
       API_ORIGIN: https://api.lastbenchbd.com
       RENDER_ORIGIN: https://last-bench-api-v2.onrender.com
       GH_TOKEN: ${{ github.token }}
-
     steps:
-      - name: Checkout repository
+      - name: Checkout current verification tools
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          ref: main
+          persist-credentials: false
 
       - name: Require successful production deploy
         if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success'
@@ -42,69 +41,106 @@ jobs:
           echo "Production Pages deployment did not succeed; smoke verification is blocked."
           exit 1
 
-      - name: Verify published source and artifact integrity
+      - name: Resolve active Pages deployment and preserve verifiers
+        id: target
+        continue-on-error: true
         shell: bash
         run: |
           set -euo pipefail
-          target_sha="$EXPECTED_DEPLOY_SHA"
-          if [[ -z "$target_sha" ]]; then
-            target_sha="$(gh run list --repo "$GITHUB_REPOSITORY" --workflow deploy-github-pages.yml --branch main --status success --limit 1 --json headSha --jq '.[0].headSha')"
-          fi
-          if [[ -f scripts/verify-live-release.mjs ]]; then
-            args=(--source-sha "$target_sha" --origin "$WEB_ORIGIN/")
-            if [[ -n "$EXPECTED_DEPLOY_RUN" ]]; then
-              export VERIFIED_ARTIFACT_DIR="$RUNNER_TEMP/source-bound-artifact"
-              gh run download "$EXPECTED_DEPLOY_RUN" --repo "$GITHUB_REPOSITORY" --name lastbench-production-dist --dir "$VERIFIED_ARTIFACT_DIR"
-              node --input-type=module -e 'import {verifyRelease} from "./scripts/release-provenance.mjs"; verifyRelease(process.env.VERIFIED_ARTIFACT_DIR, process.env.EXPECTED_DEPLOY_SHA);'
-              digest="$(node --input-type=module -e 'import fs from "node:fs"; console.log(JSON.parse(fs.readFileSync(process.env.VERIFIED_ARTIFACT_DIR+"/release.json", "utf8")).manifestSha256);')"
-              args+=(--manifest-sha256 "$digest")
+          mkdir -p "$RUNNER_TEMP/lastbench-verification"
+          cp scripts/release-provenance.mjs scripts/verify-live-release.mjs "$RUNNER_TEMP/lastbench-verification/"
+          timeout 120s node scripts/resolve-pages-deployment.mjs --repo "$GITHUB_REPOSITORY" --github-output > "$RUNNER_TEMP/deployment.outputs" 2> "$RUNNER_TEMP/source-resolution.log"
+          cat "$RUNNER_TEMP/deployment.outputs" >> "$GITHUB_OUTPUT"
+          cat "$RUNNER_TEMP/deployment.outputs"
+
+      - name: Checkout the source actually serving production
+        if: steps.target.outcome == 'success'
+        id: source
+        continue-on-error: true
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ steps.target.outputs.source_sha }}
+          persist-credentials: false
+
+      - name: Verify published source and artifact integrity
+        if: steps.target.outcome == 'success' && steps.source.outcome == 'success'
+        id: integrity
+        continue-on-error: true
+        shell: bash
+        env:
+          DEPLOYED_SHA: ${{ steps.target.outputs.source_sha }}
+          DEPLOYED_RUN: ${{ steps.target.outputs.run_id }}
+          VERIFICATION_MODE: ${{ steps.target.outputs.verification_mode }}
+        run: |
+          set -euo pipefail
+          {
+            if [[ "$VERIFICATION_MODE" == 'legacy-known' ]]; then
+              actual="$(curl --fail --silent --show-error --connect-timeout 10 --max-time 20 "$WEB_ORIGIN/?__rollback_verify=$DEPLOYED_SHA" | sha256sum | cut -d ' ' -f 1)"
+              test "$actual" = 'cbe29377e92f029124d477d6a07ae6242de7ef0cbd2e0976d77227071f60fbf3'
+              echo "Known legacy rollback homepage checksum verified."
+            else
+              args=(--source-sha "$DEPLOYED_SHA" --origin "$WEB_ORIGIN/")
+              if [[ "$GITHUB_EVENT_NAME" == 'workflow_run' ]]; then
+                test -n "$DEPLOYED_RUN"
+                export VERIFIED_ARTIFACT_DIR="$RUNNER_TEMP/source-bound-artifact"
+                gh run download "$DEPLOYED_RUN" --repo "$GITHUB_REPOSITORY" --name lastbench-production-dist --dir "$VERIFIED_ARTIFACT_DIR"
+                node --input-type=module -e 'import {pathToFileURL} from "node:url"; const {verifyRelease}=await import(pathToFileURL(process.env.RUNNER_TEMP+"/lastbench-verification/release-provenance.mjs")); verifyRelease(process.env.VERIFIED_ARTIFACT_DIR, process.env.DEPLOYED_SHA);'
+                digest="$(node --input-type=module -e 'import fs from "node:fs"; console.log(JSON.parse(fs.readFileSync(process.env.VERIFIED_ARTIFACT_DIR+"/release.json", "utf8")).manifestSha256);')"
+                args+=(--manifest-sha256 "$digest")
+              fi
+              node "$RUNNER_TEMP/lastbench-verification/verify-live-release.mjs" "${args[@]}"
             fi
-            node scripts/verify-live-release.mjs "${args[@]}"
-          elif [[ "$target_sha" == '84306e12a7bba8b1c439bf61e43732683b8f163e' ]]; then
-            actual="$(curl --fail --silent --show-error --connect-timeout 10 --max-time 20 "$WEB_ORIGIN/?__rollback_verify=$target_sha" | sha256sum | cut -d ' ' -f 1)"
-            test "$actual" = 'cbe29377e92f029124d477d6a07ae6242de7ef0cbd2e0976d77227071f60fbf3'
-          else
-            echo 'No source verification contract exists for this revision.'
-            exit 1
-          fi
+          } 2>&1 | tee "$RUNNER_TEMP/integrity.log"
 
       - name: Run production smoke gate
+        if: steps.target.outcome == 'success' && steps.source.outcome == 'success'
         id: smoke
         continue-on-error: true
+        shell: bash
         run: |
           set -o pipefail
-          node scripts/release-smoke.mjs 2>&1 | tee production-smoke.log
+          node scripts/release-smoke.mjs 2>&1 | tee "$RUNNER_TEMP/production-smoke.log"
+
+      - name: Retain smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lastbench-smoke-evidence
+          path: |
+            ${{ runner.temp }}/source-resolution.log
+            ${{ runner.temp }}/integrity.log
+            ${{ runner.temp }}/production-smoke.log
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Report production smoke state
+        if: always()
         shell: bash
         run: |
           set -euo pipefail
           title="Production smoke gate"
-          issue_number="$(gh issue list --state open --search 'Production smoke gate in:title' --json number,title --jq '.[] | select(.title == "Production smoke gate") | .number' | head -n 1)"
-
-          if [[ "${{ steps.smoke.outcome }}" != "success" ]]; then
+          issue_number="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search 'Production smoke gate in:title' --json number,title --jq '.[] | select(.title == "Production smoke gate") | .number' | head -n 1)"
+          if [[ "${{ steps.target.outcome }}" != "success" || "${{ steps.source.outcome }}" != "success" || "${{ steps.integrity.outcome }}" != "success" || "${{ steps.smoke.outcome }}" != "success" ]]; then
             {
-              echo "Automated production smoke verification failed."
-              echo
+              echo "Automated production source/integrity or functional smoke verification failed."
               echo "Run: https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
-              echo "Commit: ${GITHUB_SHA}"
-              echo
+              echo "Published source: ${{ steps.target.outputs.source_sha }}"
+              echo "Resolution: ${{ steps.target.outcome }}; checkout: ${{ steps.source.outcome }}; integrity: ${{ steps.integrity.outcome }}; smoke: ${{ steps.smoke.outcome }}"
               echo '```text'
-              cat production-smoke.log
+              for log in source-resolution.log integrity.log production-smoke.log; do
+                if [[ -f "$RUNNER_TEMP/$log" ]]; then cat "$RUNNER_TEMP/$log"; fi
+              done
               echo '```'
-              echo
-              echo "This issue is maintained automatically and will be closed after a later smoke run succeeds."
-            } > /tmp/production-smoke-issue.md
-
+              echo "Maintained automatically; closes after all gates recover."
+            } > "$RUNNER_TEMP/production-smoke-issue.md"
             if [[ -n "$issue_number" ]]; then
-              gh issue comment "$issue_number" --body-file /tmp/production-smoke-issue.md
+              gh issue comment "$issue_number" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/production-smoke-issue.md"
             else
-              gh issue create --title "$title" --body-file /tmp/production-smoke-issue.md
+              gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file "$RUNNER_TEMP/production-smoke-issue.md"
             fi
             exit 1
           fi
-
           if [[ -n "$issue_number" ]]; then
-            gh issue comment "$issue_number" --body "Production smoke verification recovered on commit ${GITHUB_SHA}. Closing automatically."
-            gh issue close "$issue_number" --reason completed
+            gh issue comment "$issue_number" --repo "$GITHUB_REPOSITORY" --body "All production gates recovered for source ${{ steps.target.outputs.source_sha }}. Closing automatically."
+            gh issue close "$issue_number" --repo "$GITHUB_REPOSITORY" --reason completed
           fi

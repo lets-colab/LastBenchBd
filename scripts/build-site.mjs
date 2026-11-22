@@ -208,7 +208,7 @@ try {
     : null;
   // CNAME belongs to the same immutable artifact and is included in its inventory.
   if (process.env.GITHUB_ACTIONS === "true") writeFileSync(path.join(buildDir, "CNAME"), "lastbenchbd.com\n");
-  stampRelease(buildDir, { sourceSha: revision, workflowRunUrl });
+  stampRelease(buildDir, { sourceSha: revision, workflowRunUrl, fullInventoryPath: process.env.LASTBENCH_ARTIFACT_INVENTORY });
   verifyRelease(buildDir, revision);
 } catch (error) {
   rmSync(buildDir, { recursive: true, force: true });

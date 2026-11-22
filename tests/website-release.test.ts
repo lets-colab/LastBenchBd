@@ -46,4 +46,21 @@ describe("immutable website release evidence", () => {
     stampRelease(root, { sourceSha: sha });
     expect(() => verifyRelease(root, "a".repeat(40))).toThrow(/revision/i);
   });
+  it("keeps uncleared concept paths out of the public index but verifies the full private artifact", () => {
+    const root = fixture();
+    const privateRoot = fixture();
+    mkdirSync(join(root, "showcase/skin-needs"), { recursive: true });
+    writeFileSync(join(root, "showcase/skin-needs/index.html"), "<html><head></head><body>Private concept</body></html>");
+    const fullInventoryPath = join(privateRoot, "inventory.json");
+    stampRelease(root, { sourceSha: sha, fullInventoryPath });
+    expect(readFileSync(join(root, "release-manifest.json"), "utf8")).not.toContain("skin-needs");
+    expect(readFileSync(fullInventoryPath, "utf8")).toContain("showcase/skin-needs/index.html");
+    expect(verifyRelease(root, sha).sourceSha).toBe(sha);
+    writeFileSync(join(root, "showcase/skin-needs/index.html"), "altered");
+    expect(() => verifyRelease(root, sha)).toThrow(/inventory/i);
+  });
+  it("rejects a private inventory destination inside the public output", () => {
+    const root = fixture();
+    expect(() => stampRelease(root, { sourceSha: sha, fullInventoryPath: join(root, "private.json") })).toThrow(/outside/i);
+  });
 });
