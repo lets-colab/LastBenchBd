@@ -11,10 +11,10 @@ describe('Company gateway and Malaysia route separation',()=>{
   const page=read('landing/index.html');
   expect(page).toContain('href="malaysia/"');
   expect(page).toContain('href="class-a/"');
-  expect(page).toContain('https://co-lab-growth-os.lovable.app/');
-  expect(page).toContain('Malaysia · Student Mobility');
-  expect(page).toContain('CLASS[Λ] · HUMAN LAB');
-  expect(page).toContain('co.lab · BUSINESS LAB');
+  expect(page).toContain('href="co-lab/"');
+  expect(page).toContain('Study in Malaysia');
+  expect(page).toContain('CLASS[Λ]');
+  expect(page).toContain('Build a business');
   expect(page).not.toMatch(/<canvas|<x-dc|three\.min|bench-ai|claude-design-support/);
  });
 
