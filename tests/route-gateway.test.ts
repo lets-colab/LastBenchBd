@@ -15,6 +15,15 @@ describe('Company gateway and Malaysia route separation',()=>{
   expect(lab).toContain('href="/co-lab/growth-os/"');
   expect(app).toContain('/co-lab/growth-os/assets/');
   expect(app).toContain('The Growth Operating System for Modern Brands');
+  const creators=read('landing/co-lab/growth-os/creators/index.html');
+  const preview=read('landing/co-lab/growth-os/lab-preview.html');
+  expect(creators).toContain('The Growth Operating System for Modern Brands');
+  expect(preview).not.toContain('co-lab-growth-os.lovable.app');
+  const paths=[...app.matchAll(/(?:src|href)="(\/co-lab\/growth-os\/assets\/[^"]+)"/g)].map(m=>m[1]);
+  expect(paths.length).toBeGreaterThan(0);
+  for(const publicPath of paths) {
+   expect(existsSync(resolve(root,'landing',publicPath.slice(1))),publicPath).toBe(true);
+  }
  });
 
  it('retains a working legacy CLASS[Λ] alias',()=>{
