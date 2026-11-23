@@ -1567,6 +1567,382 @@
       "rule": "hero-eyebrow-chip",
       "snippet": "eyebrow chip (tracked-caps) \"Work · co.lab\" above h1 \"Work, with evidence.\"",
       "maxOccurrences": 1
+    },
+    "236b6850f6f3a37623def780c0a6c049223af0bbb357ce6316bfc6110cd2f04d": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/assets/index-iQSm7zzg.css",
+      "rule": "overused-font",
+      "snippet": "font-family:Space Grotesk",
+      "maxOccurrences": 1
+    },
+    "521b8a7d367e7ec4a63648f997f953717c7445d1a9444b5acbd1cc5245720f5e": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/assets/index-iQSm7zzg.css",
+      "rule": "overused-font",
+      "snippet": "Google Fonts: space grotesk",
+      "maxOccurrences": 1
+    },
+    "ceaa6a68a6660ebc59c5b439bdd6e4f699126de57387c72a79062dca8b5bb729": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/assets/index-iQSm7zzg.css",
+      "rule": "codex-grid-background",
+      "snippet": "two-axis grid-line gradient background",
+      "maxOccurrences": 1
+    },
+    "fa8eff942c15bc303f724c7a662174f6b5451a8acfc8dc3ce2b3c7aa1e632bc3": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "low-contrast",
+      "snippet": "3.7:1 (need 4.5:1) — text #2d7cff on #fafbfc (and 1 more)",
+      "maxOccurrences": 1
+    },
+    "6be0b2b408853244423f4517a1caa9d54444a5556fa1c53c2b112719e17b6779": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"CO.LAB · GROWTH OPERATING SYSTEM\" above h1 \"Collaboration.Connection.Community.\"",
+      "maxOccurrences": 1
+    },
+    "e4b506f9a463cfcebfd1869060cc80b425c7cc0e43918e820bc07468e973809a": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "tiny-text",
+      "snippet": "11px body text",
+      "maxOccurrences": 1
+    },
+    "f42b441f95899f9a137cab8eeb8da657a7a6c0ffdb3f5331ed7088d573de23c5": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "extreme-negative-tracking",
+      "snippet": "letter-spacing: -0.07em at 16px — \"Collaboration.Connection.Community.\"",
+      "maxOccurrences": 1
+    },
+    "e413a786cf99a7fb892d87261c419b86eb7d2ff0ed47a36705aab4bfba45b0e0": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "tiny-text",
+      "snippet": "10px body text",
+      "maxOccurrences": 1
+    },
+    "ddf1995148e182f59c0315f914f26208573771b4639cd294cbda6754c8d3905d": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "overused-font",
+      "snippet": "Primary font: inter",
+      "maxOccurrences": 1
+    },
+    "1c2392cc63bfa5a827e9896fe49e843db6060f8c3e36e27061973ebb47d112e7": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#1c2d44) on dark page",
+      "maxOccurrences": 1
+    },
+    "2b3a65591e505c30d28564cd50411a617d2d6dbf063618d4cc122514d350f5a5": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "radial-halo",
+      "snippet": "radial-gradient halo (#e5edfd → transparent) on dark page",
+      "maxOccurrences": 1
+    },
+    "84600091115dafa21bdd5a0b63b97cbb5aa5a69e7a83d7734c1a442ff9731fbb": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "repeating-stripes-gradient",
+      "snippet": "repeating-gradient decorative stripes",
+      "maxOccurrences": 1
+    },
+    "13f26946963abbb1674ff3f16fd28a43523d4748c793e703903fd7be9b115d0b": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/creators/index.html",
+      "rule": "codex-grid-background",
+      "snippet": "two-axis grid-line gradient background",
+      "maxOccurrences": 1
+    },
+    "112da46fa1319df3d8731515d70d46ddd991ca4b9fffb7b1ff24c288d25090b2": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "low-contrast",
+      "snippet": "3.7:1 (need 4.5:1) — text #2d7cff on #fafbfc (and 1 more)",
+      "maxOccurrences": 1
+    },
+    "1fe449c3b0f0bc7958ad4f98109f02b6cc7fd0ef1a8c0bac74f21cd3ed771885": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"CO.LAB · GROWTH OPERATING SYSTEM\" above h1 \"Collaboration.Connection.Community.\"",
+      "maxOccurrences": 1
+    },
+    "0f42b5c9a3eba65033bc9b99ebe03aefacb85fe083879552454b59055189ed29": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "tiny-text",
+      "snippet": "11px body text",
+      "maxOccurrences": 1
+    },
+    "e156aead52847d20cbfc67b27523bba1f503f91b15e6a60a1e853bca0328d2e1": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "extreme-negative-tracking",
+      "snippet": "letter-spacing: -0.07em at 16px — \"Collaboration.Connection.Community.\"",
+      "maxOccurrences": 1
+    },
+    "1bcaee504587bf5ae041127b4d8ea1436bf7497a4fdde90a269d2b301860ef86": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "tiny-text",
+      "snippet": "10px body text",
+      "maxOccurrences": 1
+    },
+    "68458067a7bac22187d7262c611f0ca9198695aeea2643148216747baa487971": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "overused-font",
+      "snippet": "Primary font: inter",
+      "maxOccurrences": 1
+    },
+    "27feeb778c303cc478408de80c0bd0004ef778ae3a34ad7e5711c95d61c7a823": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#1c2d44) on dark page",
+      "maxOccurrences": 1
+    },
+    "949d76acf28029d93f8720c8d8ca9de2e5524a0c5e9adff7b49a88aed25c3905": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "radial-halo",
+      "snippet": "radial-gradient halo (#e5edfd → transparent) on dark page",
+      "maxOccurrences": 1
+    },
+    "4ec0f65fbb84e99a43632c040c0b6c1e86a1fcadd4ded0b794fbe3a9c960f26b": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "repeating-stripes-gradient",
+      "snippet": "repeating-gradient decorative stripes",
+      "maxOccurrences": 1
+    },
+    "304ad517722ef5f04c1c7924337272393df9dd52c375cb67e41d1ce25b51ade1": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/index.html",
+      "rule": "codex-grid-background",
+      "snippet": "two-axis grid-line gradient background",
+      "maxOccurrences": 1
+    },
+    "9ea991b353e18a46c2c82f1671ed6953be53ab78a7652f2cbace2fc20209db52": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "low-contrast",
+      "snippet": "1.6:1 (need 4.5:1) — text #c2c9d0 on #f9faf9",
+      "maxOccurrences": 1
+    },
+    "70e99aaffda077b28e7f0add4da66d666bf2a72587a98c5d2dc671f47390030a": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "low-contrast",
+      "snippet": "3.7:1 (need 4.5:1) — text #2d7cff on #f9faf9",
+      "maxOccurrences": 1
+    },
+    "393b0279cefe670fe44ca11d4f0c82ba8293b1fce7c4393c7acd71c23b24b94b": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "low-contrast",
+      "snippet": "3.9:1 (need 4.5:1) — text #ffffff on #2d7cff",
+      "maxOccurrences": 1
+    },
+    "bd1c36331f5bfae7e2aa00f9f46e027be2bbd27be290c96ba6042bcaeb6f8e6b": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "low-contrast",
+      "snippet": "4.4:1 (need 4.5:1) — text #66778a on #f9faf9",
+      "maxOccurrences": 1
+    },
+    "96de8a065900c5e36867ae5e7fefd5cadcc0ea4211aad5459e4ba0014cad2726": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "hero-eyebrow-chip",
+      "snippet": "eyebrow chip (tracked-caps) \"00 / THE LABORATORY\" above h1 \"Ideas don't grow.They're built.\"",
+      "maxOccurrences": 1
+    },
+    "986118a139e60f7571322b3e1a59c39b2f71a603ee799b8b389b516071f3a19f": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"BOOK SESSION ↗\" (below 11px floor)",
+      "maxOccurrences": 1
+    },
+    "9e3ff3358855ddedd8dd49024430f98139cd69435444024d569be01ad25d8278": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "undersized-ui-text",
+      "snippet": "9px functional text \"00 / THE LABORATORY\" (below 11px floor)",
+      "maxOccurrences": 1
+    },
+    "9c427628bdffd8f3fdf6caf55a0be680d5bfdfb65a719eef3d2d287074de1ef1": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "extreme-negative-tracking",
+      "snippet": "letter-spacing: -0.08em at 16px — \"Ideas don't grow.They're built.\"",
+      "maxOccurrences": 1
+    },
+    "9b32c4ab05a58d8027b5e144af3fa505272215223419484172c1d6ac7f705889": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "undersized-ui-text",
+      "snippet": "9px functional text \"co.lab · THE GROWTH OPERATING SYSTEM FOR\" (below 11px floor)",
+      "maxOccurrences": 1
+    },
+    "0f8b61c34ceaf0717d001080b115ee556b45cf5614d21eca4faa4c99b57d4448": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "tiny-text",
+      "snippet": "10px body text",
+      "maxOccurrences": 1
+    },
+    "8b778518412f73f019806bc2ef9c4b0c30e01f35080073459cdecc14b77975c2": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"Controlled forward motion\" (below 11px floor)",
+      "maxOccurrences": 1
+    },
+    "c5bc4f61bfb2d425059c9b86d1b8455002751163e94e8c3d8e620931980a498f": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "extreme-negative-tracking",
+      "snippet": "letter-spacing: -0.08em at 16px — \"The lab hasfour doors.\"",
+      "maxOccurrences": 1
+    },
+    "c81dd8be8422cfcd0d59ba06b7e30d46d61d852634a20204a83d29428e524daf": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "extreme-negative-tracking",
+      "snippet": "letter-spacing: -0.08em at 16px — \"Test ideas.Prove progress.\"",
+      "maxOccurrences": 1
+    },
+    "0d35e58b28044137a08dac5d24dcbf6a7a8cfaf72cccad4d4b9261070306b732": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "extreme-negative-tracking",
+      "snippet": "letter-spacing: -0.08em at 16px — \"Let's buildwhat's next.\"",
+      "maxOccurrences": 1
+    },
+    "cea7fd47528c09aee11681befcf594d01a354e0d99d784463d6cb964ffcf629b": {
+      "priority": "P2",
+      "reason": "Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "undersized-ui-text",
+      "snippet": "10px functional text \"MOTION ON\" (below 11px floor)",
+      "maxOccurrences": 1
+    },
+    "af6e8f8e86eb58b343c2443ebe2f5b1535b6bd0471cffcaa0b4e45212f30a277": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "overused-font",
+      "snippet": "Primary font: space grotesk",
+      "maxOccurrences": 1
+    },
+    "1381b1afd1187d91e1bc7a7da96c21fde89ed29c5798e58d0e69ae79d02cf2ac": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"01 / THE EXPERIMENT CHAM\" beside h2 \"Clarity isthe catalyst.\" (6 on page)",
+      "maxOccurrences": 1
+    },
+    "56d9988e267077a220cedd6c716f13c9c01a29fd123636c9d7aebaafc6e066bc": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"02 / THE SYSTEMS LAB\" beside h2 \"Strategy.In motion.\" (6 on page)",
+      "maxOccurrences": 1
+    },
+    "84c7c4c892dff259f4e59ae16aa2622c780d9401c0d1d906916f230a1f127049": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"03 / THE LIVING NETWORK\" beside h2 \"People arethe engine.\" (6 on page)",
+      "maxOccurrences": 1
+    },
+    "82ccee003bade75f780623a67c30b11fa30752d4906b34f2db9e5b222c07af77": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"04 / FOUR DIVISIONS\" beside h2 \"The lab hasfour doors.\" (6 on page)",
+      "maxOccurrences": 1
+    },
+    "57f1bd1d2a5f415be682e01990ed1c7013a90a39b329b732ac2dedc16b1d9abc": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"05 / WORK & EVIDENCE\" beside h2 \"Test ideas.Prove progress.\" (6 on page)",
+      "maxOccurrences": 1
+    },
+    "8f8dc0505a1502bdc9e1de32a44eb3fa2fc19b78e3fe2dd20c47070c7d69cad2": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "numbered-section-labels",
+      "snippet": "tiny numbered label \"06 / THE LAUNCH CHAMBER\" beside h2 \"Let's buildwhat's next.\" (6 on page)",
+      "maxOccurrences": 1
+    },
+    "06f81bcc73a01c77e04374b98e4f20d581eb53e72692a9f1697d652b9e5cc047": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "dark-glow",
+      "snippet": "Colored box-shadow glow (#2d7cff) on dark page",
+      "maxOccurrences": 1
+    },
+    "55d5bdc8a5c548bbae705ed66ef642603218d4d850aacc3f7ac09955ebcc237b": {
+      "priority": "P3",
+      "reason": "Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.",
+      "file": "landing/co-lab/growth-os/lab-preview.html",
+      "rule": "repeating-stripes-gradient",
+      "snippet": "repeating-gradient decorative stripes",
+      "maxOccurrences": 1
     }
   }
 }

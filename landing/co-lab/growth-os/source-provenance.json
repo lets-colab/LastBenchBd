@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "site": "co.lab Growth Operating System",
+  "sourceRepository": "lets-colab/letscolab",
+  "sourceVisibility": "private",
+  "sourceMainCommit": "b97703d2e6cab126e5d636461290b3f2c6559d3f",
+  "exportCommit": "d5b8096113408ef0df3ab84bc0b6b111b79c7704",
+  "exportWorkflowRun": "https://github.com/lets-colab/letscolab/actions/runs/45174803832",
+  "exportArtifactDigest": "sha256:37c85a6e23fea6a58ef30764886396215b3046c7968315d0ec2b2f974013b316",
+  "publicBundleImportRun": "https://github.com/lets-colab/LastBenchBd/actions/runs/45175967336",
+  "deploymentTarget": "https://lastbenchbd.com/co-lab/growth-os/",
+  "generation": "Vite static export, deployed files only; editing remains in the private co.lab repository",
+  "externalBackend": "Supabase chat remains an external service and has not been migrated to GitHub Pages",
+  "privacy": "Do not copy private source, .env files, or owner-only controls into this public website"
+}

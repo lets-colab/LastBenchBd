@@ -6,7 +6,7 @@ The previous Business Lab CTA opened a Lovable “Project not found” page. The
 
 Two identical copies of LASTBENCH 3D-project.zip were mounted. Of its 44 members, 41 matched the earlier design archive by path and SHA-256. No embedded image matched the outdoor reference. The owner’s 48834.webp Library URL returned HTTP 401 on download. The homepage continues to use the documented atrium plate. The [source inventory](website-reference-inventory-2026-11-22.json) contains the hashes and original lab provenance.
 
-Pre-release baseline and rollback: `a47ff7b141366513c12b917c5d65d8671ff65ca2`, [Pages run 45144952572](https://github.com/lets-colab/LastBenchBd/actions/runs/45144952572). Private-course submissions and independent human reviews still need server-side enrollment and approved identities. Neither browser fixtures nor the public design archive supply them.
+The concurrent first-party Growth OS import is preserved at `/co-lab/growth-os/` with its creator route. The outdated lab preview URL now forwards to the working laboratory and preserves chapter links. Pre-release baseline and rollback: `9f70b205856e1f25daf9b4b931985e08118a4168`, [Pages run 45178077765](https://github.com/lets-colab/LastBenchBd/actions/runs/45178077765). Private-course submissions and independent human reviews still need server-side enrollment and approved identities. Neither browser fixtures nor the public design archive supply them.
 
 ## 23 November 2026 — architectural approach and dashboard routing
 

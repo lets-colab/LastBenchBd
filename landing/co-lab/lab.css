@@ -35,3 +35,5 @@ summary { cursor: pointer; padding: 10px; min-height: 44px; border-bottom: 1px s
   header nav { gap: 0 .65rem; }
   .chapters { gap: 2rem; }
 }
+
+.growth-link { margin: .35rem .6rem; }
