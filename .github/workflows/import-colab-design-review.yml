@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Import exact pinned design findings with explicit open-accessibility status
         env:
-          AUDIT_ZIP_URL: "https://sdmntprindiasocentral.oaiusercontent.com/files/00000000-7b08-8211-b7e0-152ca60a29a6/raw?se=2026-11-23T12%3A49%3A50Z&sp=r&sv=2026-06-06&sr=b&scid=dba0fff9-0556-5c85-82a0-ec42b6ef64e2&skoid=c094fe1e-1dc0-485a-8de0-10ab942be48f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-23T00%3A56%3A35Z&ske=2026-11-24T00%3A56%3A35Z&sks=b&skv=2026-06-06&sig=uIrFBQILSEspOCywpO6WHMahqUWA%2B14UbVsbWGVWusg%3D"
+          AUDIT_ZIP_URL: "https://sdmntprindiasocentral.oaiusercontent.com/files/00000000-14a0-8211-82bb-5b95af3f4bc3/raw?se=2026-11-23T12%3A52%3A18Z&sp=r&sv=2026-06-06&sr=b&scid=53d5ebdb-cb7f-5533-b863-a83d6e9d9609&skoid=c094fe1e-1dc0-485a-8de0-10ab942be48f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-23T00%3A44%3A51Z&ske=2026-11-24T00%3A44%3A51Z&sks=b&skv=2026-06-06&sig=0puK%2Bv0MXr6AZgqJKy2gFGWXwv30YcPEIb%2Bp3c9QWJw%3D"
         run: |
           set -euo pipefail
           curl -fLsS --retry 1 --max-time 45 "$AUDIT_ZIP_URL" -o /tmp/audit.zip
@@ -45,7 +45,7 @@ jobs:
               else:
                   triage['findings'][ident]=value
                   edits+=1
-          assert edits==48, f'Expected 48 isolated newly observed Co.Lab findings; got {edits}'
+          assert len(seen)==48 and edits==47, f'Expected 48 total Co.Lab findings with 47 new; got {len(seen)} and {edits}'
           path.write_text(json.dumps(triage,indent=2,ensure_ascii=False)+'\n')
           print(f'Preserved 48 exact findings; P2 accessibility issues remain open.')
           PY
