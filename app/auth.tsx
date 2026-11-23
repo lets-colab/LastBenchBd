@@ -74,7 +74,7 @@ export default function AuthScreen() {
       >
         <View className="flex-1 justify-center px-6 py-10">
           <View className="mx-auto w-full max-w-md">
-            <Text className="text-sm font-semibold uppercase tracking-[3px] text-foreground">
+            <Text nativeID="auth-brand" className="text-sm font-semibold uppercase tracking-[3px] text-foreground">
               LAST BENCH
             </Text>
             <Text className="mt-3 text-4xl font-bold leading-tight text-foreground">

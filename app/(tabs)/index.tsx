@@ -150,6 +150,16 @@ export default function HomeScreen() {
           </Text>
         </View>
 
+        {Platform.OS === "web" && (
+          <View className="px-6 pb-4">
+            <a href="https://godseyeview.ai/" target="_blank" rel="noopener noreferrer"
+              referrerPolicy="no-referrer" style={{ color: colors.foreground, minHeight: 44,
+                display: "inline-flex", alignItems: "center", alignSelf: "flex-start" }}>
+              Open city map (new tab)
+            </a>
+          </View>
+        )}
+
         {authLoading ? (
           <View className="py-12 items-center">
             <BenchLoader />
@@ -188,9 +198,10 @@ export default function HomeScreen() {
                   <Text className="text-background font-bold text-sm">Sign in securely</Text>
                 </TouchableOpacity>
               ) : (
-                <Text className="text-xs text-amber-700 dark:text-amber-300">
-                  Sign-in is not connected on this deployment yet.
-                </Text>
+                <TouchableOpacity accessibilityRole="button" onPress={() => router.push("/auth")}
+                  className="bg-primary rounded-lg px-5 py-3 mt-1">
+                  <Text className="text-primary-foreground font-bold">Sign in with email</Text>
+                </TouchableOpacity>
               )}
             </View>
           </View>

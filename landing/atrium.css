@@ -1,0 +1,37 @@
+/* One source plate, projected at distinct depths around the middle doorway. */
+.hero.arrival {
+  max-width: none;
+  margin: 18px 0 12px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #f6f4ee;
+  color: #101511;
+}
+.arrival-copy { padding: 24px 16px 16px; text-align: center; }
+.arrival .arrival-copy h1 { margin: 0; line-height: .99; font-size: clamp(32px,4.5vw,65px); }
+.arrival-copy h1 span { color: #007832; }
+.arrival-choice { display: inline-flex; min-height: 44px; align-items: center; padding: 0 20px; margin-top: 12px; border-radius: 32px; background: #00c853; color: #071009; font-weight: 700; text-decoration: none; }
+.atrium { position: relative; overflow: hidden; height: clamp(200px,30vw,430px); background: #22231f; isolation: isolate; }
+.atrium-camera { position: absolute; width: 100%; aspect-ratio: 450/320; top: 50%; translate: 0 -50%; }
+.atrium-layer { position: absolute; inset: 0; background: url("assets/cinematic/hub-atrium.webp") center/100% 100%; transform-origin: 54% 60%; }
+.atrium-city { --travel: 1.015; }
+.atrium-door { clip-path: ellipse(14% 34% at 53% 44%); --travel: 1.055; }
+.atrium-glass { clip-path: polygon(78% 19%,100% 7%,100% 69%,78% 66%); --travel: 1.045; }
+.atrium-floor { clip-path: polygon(0 67%,37% 65%,37% 72%,78% 67%,100% 70%,100% 100%,0 100%); --travel: 1.095; }
+.atrium-floor::after, .atrium-floor::before { content: ""; position: absolute; inset: 0; }
+.atrium-floor::before { background: #54f794; clip-path: polygon(49% 66%,49.3% 66%,37% 100%,36% 100%); }
+.atrium-floor::after { background: #7bbdff; clip-path: polygon(86% 68%,86.3% 68%,61% 100%,60% 100%); }
+@media (prefers-reduced-motion:no-preference) {
+  html:not([data-motion="off"]) .atrium-layer { animation: arrive 4s ease-out both; }
+}
+@keyframes arrive { from { transform: scale(1); } to { transform: scale(var(--travel)); } }
+@media (max-width:860px) {
+  .hero.arrival { margin: 10px 0; }
+  .arrival-copy { padding: 12px 6px 8px; }
+  .arrival .arrival-copy h1 { font-size: clamp(22px,6.3vw,36px); }
+  .arrival-choice { margin-top: 5px; }
+  .atrium { height: clamp(104px,28vw,180px); }
+}
+.lb-nav [hidden] { display: none; }
+.lb-nav [aria-pressed="true"] { border-color: #00c853; }

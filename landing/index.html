@@ -153,6 +153,7 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
 <script src="company-routes.js" defer></script>
 <link rel="stylesheet" href="public-navigation.css">
 <script src="site-guide.js" defer></script>
+<link rel="stylesheet" href="atrium.css">
 </head>
 <body>
 <a class="lb-skip" href="#paths">Skip to your choices</a>
@@ -167,18 +168,26 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
       <a href="work/">Work</a>
       <a href="app/auth/" aria-label="Sign in to your student journey">Sign in</a>
       <button type="button" data-skip-motion aria-pressed="false">Skip motion</button>
+      <button type="button" data-route-sound aria-pressed="false" hidden>Route sound</button>
       <a href="explore/" data-site-guide>Ask Dr.X</a>
     </nav>
   </header>
 
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="eyebrow">START WHERE YOU ARE</div>
-    <h1 id="hero-title">ONE STARTING POINT.<br><span>MANY POSSIBLE FUTURES.</span></h1>
-    <p><strong style="color:#dce5df">Choose the gate. Enter the journey.</strong> Study in Malaysia, build AI skills, or build a business. Start with the path that fits you.</p>
-    <span class="thesis">Opportunity should compound, not reset.</span>
+  <section class="hero arrival" aria-labelledby="hero-title">
+    <div class="arrival-copy">
+      <h1 id="hero-title">ONE STARTING POINT.<br><span>MANY POSSIBLE FUTURES.</span></h1>
+      <a class="arrival-choice" href="#paths">Choose your path →</a>
+    </div>
+    <div class="atrium" role="img" aria-label="Kuala Lumpur skyline to the left of the central CLASS laboratory, with a white-glass business laboratory on the right.">
+      <div class="atrium-camera" aria-hidden="true">
+        <div class="atrium-layer atrium-city"></div>
+        <div class="atrium-layer atrium-door"></div>
+        <div class="atrium-layer atrium-glass"></div>
+        <div class="atrium-layer atrium-floor"></div>
+      </div>
+    </div>
   </section>
 
-  <div class="section-kicker">Public entry gates</div>
   <section class="gates" id="paths" tabindex="-1" aria-label="Last Bench public entry gates">
     <a class="gate gate-malaysia" id="studentPath" href="malaysia/">
       <div class="gate-top">
