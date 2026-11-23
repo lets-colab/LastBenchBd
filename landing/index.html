@@ -167,29 +167,37 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
       <a href="https://erfanuddin.lastbenchbd.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">People</a>
       <a href="work/">Work</a>
       <a href="app/auth/" aria-label="Sign in to your student journey">Sign in</a>
-      <button type="button" data-skip-motion aria-pressed="false">Skip motion</button>
-      <button type="button" data-route-sound aria-pressed="false" hidden>Route sound</button>
-      <a href="explore/" data-site-guide>Ask Dr.X</a>
     </nav>
   </header>
 
   <section class="hero arrival" aria-labelledby="hero-title">
     <div class="arrival-copy">
       <h1 id="hero-title">ONE STARTING POINT.<br><span>MANY POSSIBLE FUTURES.</span></h1>
-      <a class="arrival-choice" href="#paths">Choose your path →</a>
+      <p class="arrival-promise">From where you are. To what you can build.</p>
+      <a class="arrival-choice" href="#paths">Choose your path <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
-    <div class="atrium" role="img" aria-label="Kuala Lumpur skyline to the left of the central CLASS laboratory, with a white-glass business laboratory on the right.">
-      <div class="atrium-camera" aria-hidden="true">
+    <div class="atrium">
+      <div class="atrium-camera" role="img" aria-label="Kuala Lumpur skyline to the left of the central CLASS laboratory, with a white-glass business laboratory on the right.">
         <div class="atrium-layer atrium-city"></div>
         <div class="atrium-layer atrium-door"></div>
         <div class="atrium-layer atrium-glass"></div>
         <div class="atrium-layer atrium-floor"></div>
       </div>
+      <nav class="atrium-doors" aria-label="Doors in the atrium">
+        <a class="door door-study" href="malaysia/"><b>Study &amp; Move</b><span>Malaysia · Student Mobility <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="door door-class" href="class-a/"><b>CLASS[Λ]</b><span>Human Lab <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+        <a class="door door-colab" href="co-lab/"><b>co.lab</b><span>Business Lab <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+      </nav>
+    </div>
+    <div class="arrival-controls">
+      <button type="button" data-skip-motion aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg>Skip motion</button>
+      <button type="button" data-route-sound aria-pressed="false" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>Route sound</button>
     </div>
   </section>
 
   <section class="gates" id="paths" tabindex="-1" aria-label="Last Bench public entry gates">
     <a class="gate gate-malaysia" id="studentPath" href="malaysia/">
+      <span class="gate-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11.2V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.8"/><path d="M22 9v6"/></svg></span>
       <div class="gate-top">
         <span class="gate-num">01 · EDUCATION & MOBILITY</span>
         <span class="live-dot">Current market</span>
@@ -204,9 +212,11 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
         <span class="stages">Discover → Match → Apply → Secure → Prepare → Arrive</span>
         <span class="enter">ENTER JOURNEY →</span>
       </div>
+      <svg class="gate-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
 
     <a class="gate gate-class" href="class-a/">
+      <span class="gate-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5z"/><path d="m3 12.5 9 5 9-5"/><path d="m3 16.5 9 5 9-5"/></svg></span>
       <div class="gate-top">
         <span class="gate-num">02 · CLASS[Λ] · HUMAN LAB</span>
         <span class="live-dot">Proof-led</span>
@@ -221,9 +231,11 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
         <span class="stages">Command → Build → Create → Sell → Launch</span>
         <span class="enter">ENTER CLASS[Λ] →</span>
       </div>
+      <svg class="gate-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
 
     <a class="gate gate-colab" href="co-lab/">
+      <span class="gate-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6.2L4.6 18.4A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.6-2.6L14 9.2V3"/><path d="M7.4 15h9.2"/></svg></span>
       <div class="gate-top">
         <span class="gate-num">03 · co.lab · BUSINESS LAB</span>
         <span class="live-dot">White gallery</span>
@@ -238,6 +250,7 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
         <span class="stages">Collaboration → Connection → Community</span>
         <span class="enter">ENTER co.lab →</span>
       </div>
+      <svg class="gate-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
   </section>
 
@@ -283,5 +296,6 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
     <span>Co.MPASS → Dr. X → decision → better operating evidence.</span>
   </footer>
 </main>
+<a class="lb-ask" href="explore/" data-site-guide><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>Ask Dr. X<svg class="lb-ask-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 </body>
 </html>

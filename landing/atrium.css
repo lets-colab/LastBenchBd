@@ -1,19 +1,31 @@
-/* One source plate, projected at distinct depths around the middle doorway. */
+/* One source plate, projected at distinct depths around the middle doorway.
+   The headline sits on the plate itself (dark for emotion), the three doors are
+   named where they stand, and the cards below remain the full, readable routes. */
 .hero.arrival {
+  position: relative;
+  display: grid;
+  grid-template-areas: "stage";
   max-width: none;
-  margin: 18px 0 12px;
+  margin: 18px 0 14px;
   padding: 0;
   overflow: hidden;
-  border-radius: 18px;
-  background: #f6f4ee;
-  color: #101511;
+  border-radius: 24px;
+  background: #0b0d0c;
+  color: #f5f8f5;
+  isolation: isolate;
+  box-shadow: 0 30px 90px rgba(0,0,0,.38);
 }
-.arrival-copy { padding: 24px 16px 16px; text-align: center; }
-.arrival .arrival-copy h1 { margin: 0; line-height: .99; font-size: clamp(32px,4.5vw,65px); }
-.arrival-copy h1 span { color: #007832; }
-.arrival-choice { display: inline-flex; min-height: 44px; align-items: center; padding: 0 20px; margin-top: 12px; border-radius: 32px; background: #00c853; color: #071009; font-weight: 700; text-decoration: none; }
-.atrium { position: relative; overflow: hidden; height: clamp(200px,30vw,430px); background: #22231f; isolation: isolate; }
-.atrium-camera { position: absolute; width: 100%; aspect-ratio: 450/320; top: 50%; translate: 0 -50%; }
+.hero.arrival > * { grid-area: stage; }
+
+/* Plate */
+.atrium { position: relative; overflow: hidden; height: clamp(520px, 60vw, 760px); z-index: 0; }
+.atrium::after {
+  /* Scrim: legibility for the headline on the ceiling, depth toward the floor. */
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background:
+    linear-gradient(180deg, rgba(5,8,6,.9) 0%, rgba(5,8,6,.8) 30%, rgba(5,8,6,.34) 47%, rgba(5,8,6,0) 60%, rgba(5,8,6,0) 78%, rgba(5,8,6,.45) 100%);
+}
+.atrium-camera, .atrium-doors { position: absolute; left: 0; width: 100%; aspect-ratio: 450/320; top: 50%; translate: 0 -50%; }
 .atrium-layer { position: absolute; inset: 0; background: url("assets/cinematic/hub-atrium.webp") center/100% 100%; transform-origin: 54% 60%; }
 .atrium-city { --travel: 1.015; }
 .atrium-door { clip-path: ellipse(14% 34% at 53% 44%); --travel: 1.055; }
@@ -22,16 +34,113 @@
 .atrium-floor::after, .atrium-floor::before { content: ""; position: absolute; inset: 0; }
 .atrium-floor::before { background: #54f794; clip-path: polygon(49% 66%,49.3% 66%,37% 100%,36% 100%); }
 .atrium-floor::after { background: #7bbdff; clip-path: polygon(86% 68%,86.3% 68%,61% 100%,60% 100%); }
-@media (prefers-reduced-motion:no-preference) {
-  html:not([data-motion="off"]) .atrium-layer { animation: arrive 4s ease-out both; }
+
+/* Doors: each path is named where it stands on the plate. */
+.atrium-doors { z-index: 3; margin: 0; padding: 0; list-style: none; }
+.door {
+  position: absolute;
+  translate: -50% 0;
+  display: grid;
+  gap: 4px;
+  min-width: 168px;
+  padding: 14px 16px 13px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(8,12,10,.86);
+  color: #f5f8f5;
+  text-decoration: none;
+  box-shadow: 0 18px 44px rgba(0,0,0,.42);
+  transition: translate .35s cubic-bezier(.16,1,.3,1), border-color .25s ease, background-color .25s ease;
+}
+.door::before { content: ""; width: 26px; height: 3px; border-radius: 2px; background: #00c853; margin-bottom: 6px; }
+.door b { font-size: 21px; line-height: 1.1; letter-spacing: -.03em; font-weight: 760; }
+.door span { display: flex; white-space: nowrap; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #b7f5cb; }
+.door svg { width: 14px; height: 14px; flex: none; transition: translate .35s cubic-bezier(.16,1,.3,1); }
+.door:hover, .door:focus-visible { translate: -50% -4px; border-color: rgba(0,230,118,.7); background: rgba(8,14,10,.94); }
+.door:hover svg, .door:focus-visible svg { translate: 3px 0; }
+.door-study { left: 21%; top: 61%; }
+.door-class { left: 54%; top: 69%; }
+.door-class::before { background: #dce1e5; }
+.door-class span { color: #dce1e5; }
+.door-colab { left: 87%; top: 58%; background: rgba(250,251,253,.94); color: #111820; border-color: rgba(255,255,255,.85); }
+.door-colab::before { background: #2d7cff; }
+.door-colab span { color: #1750a5; }
+.door-colab:hover, .door-colab:focus-visible { background: #fff; border-color: rgba(45,124,255,.6); }
+
+/* Copy on the ceiling */
+.arrival-copy { position: relative; z-index: 4; align-self: start; padding: clamp(34px, 5.5vw, 68px) 24px 0; text-align: center; pointer-events: none; }
+.arrival-copy > * { pointer-events: auto; }
+.arrival .arrival-copy h1 { margin: 0 auto; max-width: none; line-height: .98; font-size: clamp(38px, 5vw, 72px); letter-spacing: -.04em; color: #f5f8f5; text-wrap: balance; }
+.arrival-copy h1 span { color: #00c853; }
+.arrival .arrival-promise { margin: 18px auto 0; max-width: 46ch; color: #e3ebe5; text-shadow: 0 1px 14px rgba(0,0,0,.6); font-size: clamp(15px, 1.4vw, 18px); line-height: 1.6; }
+.arrival-choice { display: inline-flex; gap: 10px; min-height: 48px; align-items: center; padding: 0 24px; margin-top: 22px; border-radius: 32px; background: #00c853; color: #071009; font-weight: 750; letter-spacing: .01em; text-decoration: none; box-shadow: 0 14px 30px rgba(0,0,0,.4); transition: background-color .2s ease, translate .35s cubic-bezier(.16,1,.3,1); }
+.arrival-choice svg { width: 16px; height: 16px; }
+.arrival-choice:hover, .arrival-choice:focus-visible { background: #00e676; translate: 0 -2px; }
+
+/* Motion controls sit on the plate, out of the primary navigation. */
+.arrival-controls { position: relative; z-index: 4; align-self: end; justify-self: start; display: flex; gap: 8px; padding: 0 0 18px 18px; }
+.arrival-controls button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.22); background: rgba(5,8,6,.74); color: #e1e9e3; font: 600 13px/1 system-ui, sans-serif; cursor: pointer; }
+.arrival-controls button:hover { border-color: #00c853; }
+.arrival-controls svg { width: 14px; height: 14px; }
+.arrival-controls [hidden], .lb-nav [hidden] { display: none; }
+.arrival-controls [aria-pressed="true"], .lb-nav [aria-pressed="true"] { border-color: #00c853; }
+
+/* Mobile path cards: icon, name, arrow. Desktop keeps the full cards. */
+.gate-icon, .gate-go { display: none; }
+
+/* Ask Dr. X, always within reach. */
+.lb-ask {
+  position: fixed; z-index: 60;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 52px; padding: 0 18px 0 16px;
+  border-radius: 999px; border: 1px solid #00c853;
+  background: #0b120d; color: #f2f8f4;
+  font: 650 15px/1 Inter, ui-sans-serif, system-ui, sans-serif; text-decoration: none;
+  box-shadow: 0 16px 40px rgba(0,0,0,.45);
+  transition: background-color .2s ease, translate .35s cubic-bezier(.16,1,.3,1);
+}
+.lb-ask svg { width: 18px; height: 18px; color: #00e676; }
+.lb-ask .lb-ask-go { width: 15px; height: 15px; color: #b7f5cb; }
+.lb-ask:hover, .lb-ask:focus-visible { background: #12201a; translate: 0 -2px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="off"]) .atrium-layer { animation: arrive 4s cubic-bezier(.16,1,.3,1) both; }
+  html:not([data-motion="off"]) .door { animation: door-in .9s cubic-bezier(.16,1,.3,1) both; }
+  html:not([data-motion="off"]) .door-study { animation-delay: 1.1s; }
+  html:not([data-motion="off"]) .door-class { animation-delay: 1.3s; }
+  html:not([data-motion="off"]) .door-colab { animation-delay: 1.5s; }
 }
 @keyframes arrive { from { transform: scale(1); } to { transform: scale(var(--travel)); } }
-@media (max-width:860px) {
-  .hero.arrival { margin: 10px 0; }
-  .arrival-copy { padding: 12px 6px 8px; }
-  .arrival .arrival-copy h1 { font-size: clamp(22px,6.3vw,36px); }
-  .arrival-choice { margin-top: 5px; }
-  .atrium { height: clamp(104px,28vw,180px); }
+@keyframes door-in { from { opacity: 0; filter: blur(6px); } to { opacity: 1; filter: none; } }
+
+@media (max-width: 1100px) {
+  .door { min-width: 0; padding: 12px 13px 11px; }
+  .door b { font-size: 18px; }
+  .door span { font-size: 11px; letter-spacing: .08em; }
 }
-.lb-nav [hidden] { display: none; }
-.lb-nav [aria-pressed="true"] { border-color: #00c853; }
+
+@media (max-width: 860px) {
+  body { padding-bottom: 84px; }
+  .hero.arrival { display: flex; flex-direction: column; margin: 12px 0 14px; border-radius: 20px; }
+  .arrival-copy { order: 1; padding: 28px 18px 22px; text-align: left; }
+  .arrival .arrival-copy h1 { margin: 0; font-size: clamp(32px, 9vw, 44px); line-height: 1.02; max-width: none; }
+  .arrival .arrival-promise { margin: 12px 0 0; font-size: 16px; }
+  .arrival-choice { margin-top: 18px; }
+  .atrium { order: 2; height: clamp(200px, 60vw, 380px); }
+  .atrium::after { background: linear-gradient(180deg, rgba(11,13,12,.55) 0%, rgba(11,13,12,0) 28%, rgba(11,13,12,0) 80%, rgba(11,13,12,.35) 100%); }
+  .atrium-doors { display: none; }
+  .arrival-controls { order: 3; align-self: stretch; padding: 12px 14px 14px; }
+  .arrival-controls button { min-height: 44px; font-size: 13px; }
+
+  .gate { display: grid; grid-template-columns: 44px minmax(0,1fr) 22px; align-items: center; column-gap: 14px; }
+  .gate-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(0,230,118,.38); color: #00e676; background: rgba(0,200,83,.07); }
+  .gate-icon svg { width: 22px; height: 22px; }
+  .gate-go { display: block; width: 20px; height: 20px; color: #b7f5cb; }
+  .gate-class .gate-icon { border-color: rgba(220,225,229,.32); color: #dce1e5; background: rgba(255,255,255,.04); }
+  .gate-colab .gate-icon { border-color: rgba(23,80,165,.3); color: #1750a5; background: rgba(45,124,255,.07); }
+  .gate-colab .gate-go { color: #1750a5; }
+
+  .lb-ask { min-height: 50px; font-size: 14px; }
+}

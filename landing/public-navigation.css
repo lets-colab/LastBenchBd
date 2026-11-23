@@ -28,3 +28,14 @@ html[data-motion="off"] .gate:hover,html[data-motion="off"] .gate:focus-visible{
 
 .hero h1{max-width:none;font-size:clamp(44px,5.5vw,76px)}
 @media(max-width:860px){.hero h1{font-size:clamp(27px,7vw,38px)}.gate h2{max-width:none}}
+
+/* Small screens: one Menu button instead of a wrapped link list (enabled by site-guide.js). */
+.lb-menu{display:none}
+@media(max-width:860px){
+.lb-menu-ready .lb-menu{display:inline-flex;align-items:center;gap:8px;margin-left:auto;min-height:44px;padding:0 16px;border:1px solid var(--lb-line);border-radius:999px;background:transparent;color:#e1e9e3;font:600 15px/1 system-ui,sans-serif;cursor:pointer}
+.lb-menu-ready .lb-menu svg{width:20px;height:20px}
+.lb-menu-ready .lb-menu[aria-expanded="true"]{border-color:var(--lb-green)}
+.lb-menu-ready .lb-nav{display:none}
+.lb-menu-ready .lb-nav.is-open{display:flex;flex-direction:column;align-items:stretch;gap:2px;width:100%;margin:4px 0 0;padding:8px;border:1px solid var(--lb-line);border-radius:14px;background:var(--lb-surface)}
+.lb-menu-ready .lb-nav.is-open a,.lb-menu-ready .lb-nav.is-open button{justify-content:flex-start;padding:12px 12px;font-size:16px}
+}
