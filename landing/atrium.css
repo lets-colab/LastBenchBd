@@ -18,7 +18,7 @@
 .hero.arrival > * { grid-area: stage; }
 
 /* Plate */
-.atrium { position: relative; overflow: hidden; height: clamp(520px, 60vw, 760px); z-index: 0; }
+.atrium { position: relative; overflow: hidden; height: clamp(440px, calc(100svh - 200px), 760px); z-index: 0; }
 .atrium::after {
   /* Scrim: legibility for the headline on the ceiling, depth toward the floor. */
   content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
@@ -85,8 +85,6 @@
 .arrival-controls [hidden], .lb-nav [hidden] { display: none; }
 .arrival-controls [aria-pressed="true"], .lb-nav [aria-pressed="true"] { border-color: #00c853; }
 
-/* Mobile path cards: icon, name, arrow. Desktop keeps the full cards. */
-.gate-icon, .gate-go { display: none; }
 
 /* Ask Dr. X, always within reach. */
 .lb-ask {
@@ -121,26 +119,53 @@
   .door span { font-size: 11px; letter-spacing: .08em; }
 }
 
+/* Path cards (from the first-screen layout on main): three compact entries. */
+.gates .gate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 12px;
+  align-content: center;
+  align-items: center;
+  min-height: 82px;
+  padding: 14px 22px;
+  border-radius: 14px;
+}
+.gate-name { font-size: clamp(24px, 2.45vw, 36px); font-weight: 750; line-height: 1.1; letter-spacing: -.035em; }
+.gate-purpose { grid-column: 1; font-size: 14px; line-height: 1.35; }
+.gate-arrow { grid-column: 2; grid-row: 1 / 3; font-size: 24px; }
+.gate-colab .gate-arrow { color: #174e9c; }
+
+/* Short desktop windows: the cards below carry the routes; keep the headline clear. */
+@media (min-width: 861px) and (max-height: 700px) {
+  .atrium-doors { display: none; }
+}
+
 @media (max-width: 860px) {
   body { padding-bottom: 84px; }
-  .hero.arrival { display: flex; flex-direction: column; margin: 12px 0 14px; border-radius: 20px; }
-  .arrival-copy { order: 1; padding: 28px 18px 22px; text-align: left; }
-  .arrival .arrival-copy h1 { margin: 0; font-size: clamp(32px, 9vw, 44px); line-height: 1.02; max-width: none; }
-  .arrival .arrival-promise { margin: 12px 0 0; font-size: 16px; }
-  .arrival-choice { margin-top: 18px; }
-  .atrium { order: 2; height: clamp(200px, 60vw, 380px); }
-  .atrium::after { background: linear-gradient(180deg, rgba(11,13,12,.55) 0%, rgba(11,13,12,0) 28%, rgba(11,13,12,0) 80%, rgba(11,13,12,.35) 100%); }
+  .lb-nav a[href="#paths"] { display: none; }
+  /* Keep all three paths on the first screen: compact copy, short plate. */
+  .hero.arrival { position: relative; display: flex; flex-direction: column; margin: 10px 0; border-radius: 18px; }
+  .arrival-copy { order: 1; padding: 18px 16px 14px; text-align: left; }
+  .arrival .arrival-copy h1 { margin: 0; font-size: clamp(28px, 8vw, 38px); line-height: 1.02; max-width: none; }
+  .arrival .arrival-promise { margin: 8px 0 0; font-size: 15px; line-height: 1.45; }
+  .arrival-choice { min-height: 44px; margin-top: 12px; padding: 0 18px; }
+  .atrium { order: 2; height: clamp(100px, 22svh, 205px); }
+  .atrium::after { background: linear-gradient(180deg, rgba(11,13,12,.5) 0%, rgba(11,13,12,0) 30%, rgba(11,13,12,0) 70%, rgba(11,13,12,.45) 100%); }
   .atrium-doors { display: none; }
-  .arrival-controls { order: 3; align-self: stretch; padding: 12px 14px 14px; }
-  .arrival-controls button { min-height: 44px; font-size: 13px; }
-
-  .gate { display: grid; grid-template-columns: 44px minmax(0,1fr) 22px; align-items: center; column-gap: 14px; }
-  .gate-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(0,230,118,.38); color: #00e676; background: rgba(0,200,83,.07); }
-  .gate-icon svg { width: 22px; height: 22px; }
-  .gate-go { display: block; width: 20px; height: 20px; color: #b7f5cb; }
-  .gate-class .gate-icon { border-color: rgba(220,225,229,.32); color: #dce1e5; background: rgba(255,255,255,.04); }
-  .gate-colab .gate-icon { border-color: rgba(23,80,165,.3); color: #1750a5; background: rgba(45,124,255,.07); }
-  .gate-colab .gate-go { color: #1750a5; }
-
+  .arrival-controls { position: absolute; left: 0; bottom: 0; z-index: 5; padding: 0 0 8px 8px; }
+  .arrival-controls button { min-height: 44px; padding: 0 12px; font-size: 13px; }
+  .arrival-controls [data-route-sound] { display: none; }
+  .gates .gate { min-height: 55px; padding: 8px 16px; }
+  .gates { gap: 6px; }
+  .gate-name { font-size: 22px; }
   .lb-ask { min-height: 50px; font-size: 14px; }
+}
+@media (max-height: 660px) and (max-width: 860px) {
+  .shell { padding-top: 8px; }
+  .topbar { gap: 4px; }
+  .topbar .logo { height: 32px; }
+  .hero.arrival { margin: 4px 0; }
+  .arrival .arrival-promise { display: none; }
+  .atrium { height: 66px; }
+  .gates .gate { min-height: 48px; padding-block: 5px; }
 }
