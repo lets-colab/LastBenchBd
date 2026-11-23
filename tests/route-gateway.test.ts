@@ -7,11 +7,28 @@ const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const read=(p:string)=>readFileSync(resolve(root,p),'utf8');
 
 describe('Company gateway and Malaysia route separation',()=>{
+ it('serves the Co.Lab Growth OS from GitHub Pages rather than the retired Lovable address',()=>{
+  const home=read('landing/index.html');
+  const lab=read('landing/co-lab/index.html');
+  const app=read('landing/co-lab/growth-os/index.html');
+  expect(home).not.toContain('co-lab-growth-os.lovable.app');
+  expect(lab).toContain('href="/co-lab/growth-os/"');
+  expect(app).toContain('/co-lab/growth-os/assets/');
+  expect(app).toContain('The Growth Operating System for Modern Brands');
+ });
+
+ it('retains a working legacy CLASS[Λ] alias',()=>{
+  const alias=read('landing/classa/index.html');
+  expect(alias).toContain('window.location.replace');
+  expect(alias).toContain('/class-a/');
+  expect(existsSync(resolve(root,'landing/classa/orientation-00/index.html'))).toBe(true);
+ });
+
  it('loads no cinematic runtime until a public route is chosen',()=>{
   const page=read('landing/index.html');
   expect(page).toContain('href="malaysia/"');
   expect(page).toContain('href="class-a/"');
-  expect(page).toContain('https://co-lab-growth-os.lovable.app/');
+  expect(page).toContain('href="/co-lab/growth-os/"');
   expect(page).toContain('Malaysia · Student Mobility');
   expect(page).toContain('CLASS[Λ] · HUMAN LAB');
   expect(page).toContain('co.lab · BUSINESS LAB');
