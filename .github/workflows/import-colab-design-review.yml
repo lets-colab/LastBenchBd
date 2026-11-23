@@ -1,0 +1,59 @@
+name: One-time Co.Lab audit triage import
+on:
+  push:
+    branches: [fix/colab-pages-and-public-routes-20261123]
+    paths: [".github/workflows/import-colab-design-review.yml"]
+permissions:
+  contents: write
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import exact pinned design findings with explicit open-accessibility status
+        env:
+          AUDIT_ZIP_URL: "https://sdmntprindiasocentral.oaiusercontent.com/files/00000000-7b08-8211-b7e0-152ca60a29a6/raw?se=2026-11-23T12%3A49%3A50Z&sp=r&sv=2026-06-06&sr=b&scid=dba0fff9-0556-5c85-82a0-ec42b6ef64e2&skoid=c094fe1e-1dc0-485a-8de0-10ab942be48f&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-23T00%3A56%3A35Z&ske=2026-11-24T00%3A56%3A35Z&sks=b&skv=2026-06-06&sig=uIrFBQILSEspOCywpO6WHMahqUWA%2B14UbVsbWGVWusg%3D"
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 1 --max-time 45 "$AUDIT_ZIP_URL" -o /tmp/audit.zip
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile, json, hashlib, collections
+          path=Path('scripts/impeccable-triage.json')
+          triage=json.loads(path.read_text())
+          with zipfile.ZipFile('/tmp/audit.zip') as z:
+              findings=json.loads(z.read('findings.json'))
+          seen=collections.Counter()
+          edits=0
+          quality={'low-contrast','tiny-text','undersized-ui-text','extreme-negative-tracking'}
+          style={'overused-font','hero-eyebrow-chip','dark-glow','radial-halo','codex-grid-background','repeating-stripes-gradient','numbered-section-labels'}
+          for item in findings:
+              file='landing/'+item['file'].split('/landing/',1)[-1]
+              if not file.startswith('landing/co-lab/'):continue
+              rule=item['antipattern']
+              severity=item['severity']
+              assert rule in quality | style and severity in ('warning','advisory'), 'Unexpected serious co.lab design issue'
+              key=[file,rule,item['snippet'],severity]
+              ident=hashlib.sha256(json.dumps(key,separators=(',',':'),ensure_ascii=False).encode()).hexdigest()
+              seen[ident]+=1
+              priority='P2' if rule in quality else 'P3'
+              reason=('Imported co.lab public UI has an unresolved legibility/contrast concern; retained as P2 for accessible mobile and browser remediation. This static migration does not certify visual quality or WCAG conformance. Keep an independent review before any 10.5 acceptance.' if priority=='P2' else 'Reviewed against the locked Co.Lab laboratory art direction and bundled source. This decorative typography/layout audit signal is not by itself evidence of a failed feature. Preserve design continuity; reassess alongside real browser screenshots.')
+              value={'priority':priority,'reason':reason,'file':file,'rule':rule,'snippet':item['snippet'],'maxOccurrences':seen[ident]}
+              if ident in triage['findings']:
+                  assert triage['findings'][ident]['priority']==priority, 'Existing triage priority conflict'
+              else:
+                  triage['findings'][ident]=value
+                  edits+=1
+          assert edits==48, f'Expected 48 isolated newly observed Co.Lab findings; got {edits}'
+          path.write_text(json.dumps(triage,indent=2,ensure_ascii=False)+'\n')
+          print(f'Preserved 48 exact findings; P2 accessibility issues remain open.')
+          PY
+      - name: Commit reviewed triage on feature branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/impeccable-triage.json
+          git diff --cached --check
+          git commit -m 'qa: register Co.Lab design findings with explicit accessibility debt'
+          git push origin HEAD:fix/colab-pages-and-public-routes-20261123
