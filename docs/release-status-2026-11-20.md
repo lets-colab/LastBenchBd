@@ -1,5 +1,13 @@
 # Current Last Bench release verification
 
+## 23 November 2026 — first-screen choices and the Business Laboratory
+
+The previous Business Lab CTA opened a Lovable “Project not found” page. The homepage now names all three routes on compact tap targets and opens the first-party laboratory at `/co-lab/`. The restored lab uses the original co.lab architectural shader, protected logo, and seven chapters. Visitors can enter Collaboration, open a division, and visit the public Co.MPASS overview. The still works independently of JavaScript and WebGL. Client cases await clearance. The active SHA and Pages deployment link are available in the [production release receipt](https://lastbenchbd.com/release.json).
+
+Two identical copies of LASTBENCH 3D-project.zip were mounted. Of its 44 members, 41 matched the earlier design archive by path and SHA-256. No embedded image matched the outdoor reference. The owner’s 48834.webp Library URL returned HTTP 401 on download. The homepage continues to use the documented atrium plate. The [source inventory](website-reference-inventory-2026-11-22.json) contains the hashes and original lab provenance.
+
+The concurrent first-party Growth OS import is preserved at `/co-lab/growth-os/` with its creator route. The outdated lab preview URL now forwards to the working laboratory and preserves chapter links. Pre-release baseline and rollback: `9f70b205856e1f25daf9b4b931985e08118a4168`, [Pages run 45178077765](https://github.com/lets-colab/LastBenchBd/actions/runs/45178077765). Private-course submissions and independent human reviews still need server-side enrollment and approved identities. Neither browser fixtures nor the public design archive supply them.
+
 ## 23 November 2026 — architectural approach and dashboard routing
 
 Production baseline and rollback source: `614270be0c59e5f054de42ed899b99a2021eb554`, deployed from `lets-colab/LastBenchBd:main` by [GitHub Pages run 45079823687](https://github.com/lets-colab/LastBenchBd/actions/runs/45079823687). Seven fresh browser cases passed before editing. Admissions sign-in and create-account controls opened. Partnership enquiries use email. This check did not deliver an enquiry or use real student credentials. The [live release receipt](https://lastbenchbd.com/release.json) identifies the active source and Pages run.

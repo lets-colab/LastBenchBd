@@ -106,7 +106,7 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
 .gate-colab .enter{color:#2d7cff}
 .intelligence-wrap{margin-top:44px;padding-top:26px;border-top:1px solid rgba(255,255,255,.085)}
 .intelligence-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:14px}
-.intelligence-head h3{margin:0;font-size:clamp(22px,2.2vw,30px);letter-spacing:-.04em}
+.intelligence-head h2{margin:0;font-size:clamp(22px,2.2vw,30px);letter-spacing:-.04em}
 .intelligence-head p{margin:0;max-width:560px;color:#76837b;font-size:11px;line-height:1.6;text-align:right}
 .intelligence{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .intel{
@@ -160,7 +160,6 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
 <main class="shell">
   <header class="topbar">
     <img class="logo" src="assets/logo-full.png" alt="Last Bench">
-    <span class="system-line">MULTIPLE ENTRY POINTS · ONE FORWARD MOTION</span>
     <nav class="lb-nav" aria-label="Primary navigation">
       <a href="#paths">Choose your path</a>
       <a href="explore/">Explore</a>
@@ -188,64 +187,28 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
     </div>
   </section>
 
-  <section class="gates" id="paths" tabindex="-1" aria-label="Last Bench public entry gates">
-    <a class="gate gate-malaysia" id="studentPath" href="malaysia/">
-      <div class="gate-top">
-        <span class="gate-num">01 · EDUCATION & MOBILITY</span>
-        <span class="live-dot">Current market</span>
-      </div>
-      <div>
-        <p class="gate-label">Malaysia · Student Mobility</p>
-        <h2>Study in Malaysia</h2>
-        <span class="lb-path-name">Study &amp; Move</span>
-        <p>A focused Bangladesh → Malaysia journey for education decisions, applications, preparation, arrival and continuity after the flight lands.</p>
-      </div>
-      <div class="route">
-        <span class="stages">Discover → Match → Apply → Secure → Prepare → Arrive</span>
-        <span class="enter">ENTER JOURNEY →</span>
-      </div>
+  <nav class="gates" id="paths" tabindex="-1" aria-label="Choose your path">
+    <a class="gate gate-malaysia" id="studentPath" href="malaysia/" title="Malaysia · Student Mobility">
+      <span class="gate-name">Study &amp; Move</span>
+      <span class="gate-purpose">Study in Malaysia</span>
+      <span class="gate-arrow" aria-hidden="true">→</span>
     </a>
-
-    <a class="gate gate-class" href="class-a/">
-      <div class="gate-top">
-        <span class="gate-num">02 · CLASS[Λ] · HUMAN LAB</span>
-        <span class="live-dot">Proof-led</span>
-      </div>
-      <div>
-        <p class="gate-label">Learn to Build</p>
-        <h2>Build AI skills</h2>
-        <span class="lb-path-name">CLASS[Λ]</span>
-        <p>Enter the CLASS[Λ] Human Lab: AI Driver → Builder → Creator → Operator → Founder, learning by producing visible work instead of passive attendance.</p>
-      </div>
-      <div class="route">
-        <span class="stages">Command → Build → Create → Sell → Launch</span>
-        <span class="enter">ENTER CLASS[Λ] →</span>
-      </div>
+    <a class="gate gate-class" href="class-a/" title="Enter CLASS[Λ] — Learn to Build">
+      <span class="gate-name">CLASS[Λ]</span>
+      <span class="gate-purpose">Build AI skills</span>
+      <span class="gate-arrow" aria-hidden="true">→</span>
     </a>
-
     <a class="gate gate-colab" href="co-lab/">
-      <div class="gate-top">
-        <span class="gate-num">03 · co.lab · BUSINESS LAB</span>
-        <span class="live-dot">White gallery</span>
-      </div>
-      <div>
-        <p class="gate-label">Build &amp; Get Accelerated</p>
-        <h2>Build a business</h2>
-        <span class="lb-path-name">co.lab</span>
-        <p>The co.lab Business Lab helps ventures and businesses move from build to market, systems and acceleration through its white-gallery Growth OS experience.</p>
-      </div>
-      <div class="route">
-        <span class="stages">Collaboration → Connection → Community</span>
-        <span class="enter">ENTER co.lab →</span>
-      </div>
+      <span class="gate-name">co.lab</span>
+      <span class="gate-purpose">Build a business</span>
+      <span class="gate-arrow" aria-hidden="true">→</span>
     </a>
-  </section>
+  </nav>
 
   <section class="intelligence-wrap" aria-labelledby="intelligence-title">
     <div class="intelligence-head">
       <div>
-        <div class="section-kicker">Founder intelligence layer</div>
-        <h3 id="intelligence-title">The intelligence sits underneath the journeys.</h3>
+        <h2 id="intelligence-title">Founder intelligence layer</h2>
       </div>
       <p>Co.MPASS and Dr. X are not public service routes. They govern company evidence, context and founder decisions behind the operating system.</p>
     </div>
@@ -273,7 +236,7 @@ button,summary,a{-webkit-tap-highlight-color:transparent}
 
   <div class="partner">
     <a href="app/">Track my student journey →</a>
-    <a href="/co-lab/growth-os/" target="_blank" rel="noopener noreferrer">Open co.lab Growth OS →</a>
+    <a href="/co-lab/growth-os/">Open co.lab Growth OS →</a>
     <a href="mailto:info@lastbenchbd.com?subject=Last%20Bench%20Partnership">Partner / institution? Start a conversation →</a>
   </div>
   <p class="lb-purpose">Learn to build visible proof. Build &amp; Get Accelerated. The founder pathway supports a one-person AI-powered business; it does not guarantee commercial outcomes.</p>

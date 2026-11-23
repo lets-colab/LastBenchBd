@@ -35,3 +35,40 @@
 }
 .lb-nav [hidden] { display: none; }
 .lb-nav [aria-pressed="true"] { border-color: #00c853; }
+
+/* Keep the three entries together beneath their corresponding apertures. */
+.atrium { height: clamp(130px, 35svh, 410px); }
+.gates .gate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 12px;
+  align-content: center;
+  align-items: center;
+  min-height: 82px;
+  padding: 14px 22px;
+  border-radius: 14px;
+}
+.gate-name { font-size: clamp(24px, 2.45vw, 36px); font-weight: 750; line-height: 1.1; letter-spacing: -.035em; }
+.gate-purpose { grid-column: 1; font-size: 14px; line-height: 1.35; }
+.gate-arrow { grid-column: 2; grid-row: 1 / 3; font-size: 24px; }
+.gate-colab .gate-arrow { color: #174e9c; }
+@media (max-width: 860px) {
+  .atrium { height: clamp(100px, 22svh, 205px); }
+  .gates .gate { min-height: 55px; padding: 8px 16px; }
+  .gates { gap: 6px; }
+  .gate-name { font-size: 22px; }
+}
+@media (max-height: 660px) and (max-width: 860px) {
+  .shell { padding-top: 8px; }
+  .topbar { gap: 4px; }
+  .topbar .logo { height: 32px; }
+  .hero.arrival { margin: 4px 0; }
+  .atrium { height: 78px; }
+}
+@media (max-width: 860px) {
+  .lb-nav a[href="#paths"] { display: none; }
+}
+@media (max-height: 660px) and (max-width: 860px) {
+  .atrium { height: 66px; }
+  .gates .gate { min-height: 48px; padding-block: 5px; }
+}

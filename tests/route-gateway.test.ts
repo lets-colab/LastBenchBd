@@ -19,6 +19,8 @@ describe('Company gateway and Malaysia route separation',()=>{
   const preview=read('landing/co-lab/growth-os/lab-preview.html');
   expect(creators).toContain('The Growth Operating System for Modern Brands');
   expect(preview).not.toContain('co-lab-growth-os.lovable.app');
+  expect(preview).not.toMatch(/Project[ -]?X|Moontakim/i);
+  expect(lab).not.toMatch(/Project[ -]?X|Moontakim/i);
   const paths=[...app.matchAll(/(?:src|href)="(\/co-lab\/growth-os\/assets\/[^"]+)"/g)].map(m=>m[1]);
   expect(paths.length).toBeGreaterThan(0);
   for(const publicPath of paths) {
@@ -39,8 +41,8 @@ describe('Company gateway and Malaysia route separation',()=>{
   expect(page).toContain('href="class-a/"');
   expect(page).toContain('href="/co-lab/growth-os/"');
   expect(page).toContain('Malaysia · Student Mobility');
-  expect(page).toContain('CLASS[Λ] · HUMAN LAB');
-  expect(page).toContain('co.lab · BUSINESS LAB');
+  expect(page).toContain('Build AI skills');
+  expect(page).toContain('Build a business');
   expect(page).not.toMatch(/<canvas|<x-dc|three\.min|bench-ai|claude-design-support/);
  });
 
