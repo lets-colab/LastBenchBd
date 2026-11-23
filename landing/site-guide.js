@@ -1,5 +1,39 @@
 // Public navigation only. No model, founder memory, recording or network calls.
 (() => {
+  const sound = document.querySelector('[data-route-sound]');
+  if (sound && window.AudioContext) {
+    let audio;
+    let enabled = false;
+    const chime = (frequency) => {
+      if (!enabled || audio.state !== 'running') return;
+      const tone = audio.createOscillator();
+      const volume = audio.createGain();
+      tone.frequency.value = frequency;
+      volume.gain.setValueAtTime(0.045, audio.currentTime);
+      volume.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.14);
+      tone.connect(volume).connect(audio.destination);
+      tone.onended = () => { tone.disconnect(); volume.disconnect(); };
+      tone.start();
+      tone.stop(audio.currentTime + 0.15);
+    };
+    sound.hidden = false;
+    sound.addEventListener('click', async () => {
+      enabled = !enabled;
+      sound.setAttribute('aria-pressed', String(enabled));
+      if (!enabled) return;
+      try {
+        audio ??= new AudioContext();
+        await audio.resume();
+        chime(330);
+      } catch {
+        enabled = false;
+        sound.setAttribute('aria-pressed', 'false');
+      }
+    });
+    document.querySelectorAll('.gates > a').forEach((route, i) => {
+      route.addEventListener('focus', () => chime([330, 440, 550][i]));
+    });
+  }
   let guide;
   let opener;
   const close = () => { guide.close(); opener?.focus(); };

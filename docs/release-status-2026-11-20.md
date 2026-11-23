@@ -1,5 +1,13 @@
 # Current Last Bench release verification
 
+## 23 November 2026 — architectural approach and dashboard routing
+
+Production baseline and rollback source: `614270be0c59e5f054de42ed899b99a2021eb554`, deployed from `lets-colab/LastBenchBd:main` by [GitHub Pages run 45079823687](https://github.com/lets-colab/LastBenchBd/actions/runs/45079823687). Seven fresh browser cases passed before editing. Admissions sign-in and create-account controls opened. Partnership enquiries use email. This check did not deliver an enquiry or use real student credentials. The [live release receipt](https://lastbenchbd.com/release.json) identifies the active source and Pages run.
+
+The architectural approach uses one original, compressed illustrative plate recovered from the first-party cinematic branch. Four independently transformed planes place the skyline behind glass, doorway and foreground stone. Route sound starts off. Skip motion and reduced motion show the still. The outdoor plaza composition and exact white-logo master await downloadable originals. Physical OPPO performance is unmeasured.
+
+The signed-out student dashboard offers email sign-in when OAuth is unavailable. Its city Map opens on demand. CLASS mobile navigation exposes Home, Learning, Builds, PROXY and Map. The three supplied portal prototypes staged synthetic evidence in isolated browsers. The Gemini and learning-workspace versions retained it in the same browser after reload. The design prototype lost it. These results establish no server enrollment, reviewer identity or cross-device learner record. Full hashes are in the [inventory](website-reference-inventory-2026-11-22.json).
+
 ## 22 November 2026 — recovered CLASS portal sources
 
 The owner supplied complete Gemini portal variant 2, the 3D decisions note, an AI Studio API example, and inline views of the skyline master and bench mark. The Drive link in the note yielded the original Claude Design export, verified against the repository SHA-256 and ZIP checksums. The inventory records file hashes and duplicate groups. The Claude dashboard and mobile app belong to the historical Malaysia admissions design. The source files for the inline images and the other two LMS variants are still outstanding.

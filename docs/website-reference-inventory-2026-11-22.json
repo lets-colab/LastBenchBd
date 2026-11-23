@@ -9,12 +9,12 @@
     },
     {
       "name": "White Welcome back sign-in reference",
-      "status": "missing_original",
+      "status": "visible_in_inline_supporting_board",
       "role": "source_reference"
     },
     {
       "name": "Dark Build. Prove. Ship. dashboard reference",
-      "status": "missing_original",
+      "status": "visible_in_inline_supporting_board",
       "role": "source_reference"
     },
     {
@@ -39,17 +39,17 @@
     },
     {
       "name": "CLASS LMS/PROXY HTML variant 1",
-      "status": "missing_original",
+      "status": "three_distinct_files_received_see_november_23",
       "role": "source_reference"
     },
     {
       "name": "CLASS LMS/PROXY HTML variant 2",
-      "status": "received_file",
+      "status": "three_distinct_files_received_see_november_23",
       "role": "source_reference"
     },
     {
       "name": "CLASS LMS/PROXY HTML variant 3",
-      "status": "missing_original",
+      "status": "three_distinct_files_received_see_november_23",
       "role": "source_reference"
     },
     {
@@ -284,5 +284,33 @@
       "bytes": 509,
       "sha256": "7fd96b4278f8c78fb8565a90d5ad594d65f83d22bb7c7e226a26069168675c1a"
     }
+  },
+  "november_23": {
+    "portal_comparison": [
+      {
+        "file": "CLASS_PROXY_LMS.html",
+        "staged": true,
+        "retained_after_reload": true
+      },
+      {
+        "file": "CLASS_Λ_ LMS _ PROXY Portal.html",
+        "staged": true,
+        "retained_after_reload": true
+      },
+      {
+        "file": "classa-lms-proxy.html",
+        "staged": true,
+        "retained_after_reload": false
+      }
+    ],
+    "files": {
+      "CLASS_PROXY_LMS.html": "28ba97c9157407e0e7a0caae85055c30ca65082ff695b3ffe88aaa8ec92b4c2d",
+      "classa-lms-proxy.html": "e2f385fc80ba22c0aba78e38a710f99dde3c936176bfb1ab2db5f62e8baee6ea",
+      "Recovered_3D_Experience_Decisions _1_.md": "58ca9bfebc7b8c611626e2c1ef5b94d9b523060af29da608811e9f4df7acd9da",
+      "ai_studio_code.py": "7fd96b4278f8c78fb8565a90d5ad594d65f83d22bb7c7e226a26069168675c1a",
+      "CLASS_Λ_ LMS _ PROXY Portal.html": "bcbba7ad34713053bb9374f70667bd532727866331292c1714538adf8e2c4f25"
+    },
+    "exact_duplicates": "CLASS_Λ_ LMS _ PROXY Portal.html matches the prior _2_ upload. The decisions note and Python example also match the earlier bytes. The three HTML variants are mutually distinct.",
+    "homepage_source": "Original illustrative hub-atrium.webp, unchanged from first-party cf128b4cf89fb0d5aa98536ae5bc19efaa8784fc. Seen master and mobile board remain inline references. This indoor approach differs from the outdoor plaza."
   }
 }
