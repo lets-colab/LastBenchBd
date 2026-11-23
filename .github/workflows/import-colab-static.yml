@@ -53,7 +53,7 @@ jobs:
               html=target/page
               if html.exists():
                   text=html.read_text(encoding='utf-8')
-                  html.write_text('\\n'.join(line.rstrip() for line in text.splitlines())+'\\n', encoding='utf-8')
+                  html.write_text('\n'.join(line.rstrip() for line in text.splitlines())+'\n', encoding='utf-8')
           all_files=list(target.rglob('*'))
           assert len([p for p in all_files if p.is_file()])>=8
           print('PASS static Co.Lab export with '+str(len(all_files))+' entries and no private repo source')
