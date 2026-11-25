@@ -2,6 +2,7 @@
 <html lang="en" data-experience="malaysia">
 <head>
 <link rel="canonical" href="https://lastbenchbd.com/malaysia/">
+<link rel="stylesheet" href="./experience.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../claude-design-support.js"></script>
@@ -177,10 +178,11 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
   </sc-if>
 
   <!-- HUD -->
-  <div style="position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px clamp(14px,3vw,28px);pointer-events:none;">
-    <div style="display:flex;align-items:center;gap:10px;min-width:0;">
-      <img src="../assets/logo-icon.png" alt="Last Bench" style="width:62px;height:auto;display:block;filter:drop-shadow(0 0 8px rgba(0,200,83,.55));">
-    </div>
+  <div class="my-hud" role="navigation" aria-label="Malaysia journey" style="position:fixed;top:0;left:0;right:0;z-index:6;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px clamp(14px,3vw,28px);pointer-events:none;">
+    <a class="my-home" href="../" aria-label="Last Bench home" style="pointer-events:auto;display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none;">
+      <img src="../assets/logo-icon.png" alt="Last Bench" style="width:62px;height:auto;display:block;">
+      <span class="my-brand-label">LAST BENCH<span>MALAYSIA / EDUCATION &amp; MOBILITY</span></span>
+    </a>
     <div style="display:flex;align-items:center;gap:12px;font-size:11.5px;font-weight:500;letter-spacing:.2em;color:rgba(242,247,243,.65);">
       <button onClick="{{ toggleRadio }}" aria-label="Toggle sound" aria-pressed="{{ soundOn }}" style="pointer-events:auto;display:flex;align-items:center;gap:8px;min-height:44px;background:rgba(5,16,10,.6);border:1px solid {{ radioBd }};border-radius:999px;padding:7px 13px;color:{{ radioFg }};font-family:'Sora','Hind Siliguri',sans-serif;font-size:11px;font-weight:600;letter-spacing:.18em;cursor:pointer;backdrop-filter:blur(8px);white-space:nowrap;" style-hover="border-color:#00E676;background:rgba(0,200,83,.12);">
         <sc-if value="{{ radioPlaying }}" hint-placeholder-val="{{ false }}">
@@ -199,7 +201,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
       <sc-if value="{{ hitzBlocked }}" hint-placeholder-val="{{ false }}">
         <button onClick="{{ openRadioPanel }}" style="pointer-events:auto;display:flex;align-items:center;min-height:44px;padding:0 13px;border:1px solid rgba(255,179,0,.5);border-radius:999px;color:#FFB300;background:rgba(5,16,10,.6);font-family:'Sora',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.16em;cursor:pointer;backdrop-filter:blur(8px);" style-hover="border-color:#FFB300;background:rgba(255,179,0,.12);">HITZ FM ↗</button>
       </sc-if>
-      <a href="../" aria-label="Choose your Last Bench path" style="pointer-events:auto;display:flex;align-items:center;flex:none;white-space:nowrap;min-height:48px;padding:0 20px;border-radius:999px;background:#00C853;color:#04140b;font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-decoration:none;box-shadow:0 6px 22px rgba(0,200,83,.32);" style-hover="background:#00E676;">{{ seatCta }}</a>
+      <a class="my-hud-cta" href="#signup" aria-label="{{ t.ctaSignup }}" style="pointer-events:auto;display:flex;align-items:center;flex:none;white-space:nowrap;min-height:48px;padding:0 20px;border-radius:999px;background:#00C853;color:#04140b;font-family:'Sora','Hind Siliguri',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-decoration:none;box-shadow:0 6px 22px rgba(0,200,83,.32);" style-hover="background:#00E676;">{{ seatCta }}</a>
       <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
         <span ref="{{ chapterRef }}" style="white-space:nowrap;">00 — DHAKA · DEPARTURE</span>
       </sc-if>
@@ -214,7 +216,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
     <div style="position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;padding:104px 22px 96px;">
       <canvas ref="{{ globeRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
       <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 46%, transparent 34%, rgba(4,20,11,.72) 76%);"></div>
-      <div ref="{{ legCopyRef }}" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none;will-change:opacity;padding:clamp(22px,4vh,46px) clamp(20px,4vw,54px);background:radial-gradient(ellipse 82% 116% at 50% 46%,rgba(2,9,5,.80) 0%,rgba(2,9,5,.56) 44%,rgba(2,9,5,.18) 72%,transparent 88%);">
+      <div ref="{{ legCopyRef }}" class="my-hero-copy" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none;will-change:opacity;padding:clamp(22px,4vh,46px) clamp(20px,4vw,54px);background:radial-gradient(ellipse 82% 116% at 50% 46%,rgba(2,9,5,.80) 0%,rgba(2,9,5,.56) 44%,rgba(2,9,5,.18) 72%,transparent 88%);">
         <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:18px;">{{ t.legKicker }}</div>
         <sc-if value="{{ isEN }}" hint-placeholder-val="{{ true }}">
           <h1 style="font-family:var(--lb-font-display);font-weight:700;font-size:clamp(30px,5.4vw,78px);line-height:1.04;letter-spacing:-.025em;margin:0;color:#fff;max-width:16ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);" aria-label="It starts in Bangladesh. It doesn’t end there.">IT <span style="white-space:nowrap;">ST<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>RTS</span> IN <span style="white-space:nowrap;">B<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>NGL<span aria-hidden="true" style="display:inline-block;line-height:1;transform:translateY(0.052em) rotate(180deg);">V</span>DESH.</span><br><span style="color:#00C853;">IT DOESN'T END THERE.</span></h1>
@@ -223,7 +225,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           <h1 style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(27px,4.8vw,66px);line-height:1.16;margin:0;color:#fff;max-width:17ch;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.9);">{{ t.legL1 }}<br><span style="color:#00C853;">{{ t.legL2 }}</span></h1>
         </sc-if>
         <p style="max-width:520px;font-size:clamp(14px,1.4vw,17px);line-height:1.62;color:rgba(242,247,243,.85);margin:24px 0 0;text-wrap:pretty;text-shadow:0 2px 18px rgba(0,0,0,.9);">{{ t.legSub }}</p>
-        <a class="lb-class-portal" href="../" aria-label="Choose your Last Bench path" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-height:50px;margin-top:24px;padding:0 28px;border:1px solid rgba(0,230,118,.64);border-radius:999px;background:rgba(0,200,83,.12);color:#00E676;font-family:'Sora','Hind Siliguri',sans-serif;font-size:12px;font-weight:700;letter-spacing:.11em;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(0,200,83,.14);" style-hover="background:rgba(0,200,83,.25);color:#fff;box-shadow:0 0 42px rgba(0,230,118,.25);">CHOOSE YOUR PATH →</a>
+        <div class="my-hero-actions"><a class="lb-class-portal my-primary" href="#signup" aria-label="{{ t.ctaSignup }}" style="pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-height:50px;margin-top:24px;padding:0 28px;border:1px solid rgba(0,230,118,.64);border-radius:999px;background:rgba(0,200,83,.12);color:#00E676;font-family:'Sora','Hind Siliguri',sans-serif;font-size:12px;font-weight:700;letter-spacing:.11em;text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 0 30px rgba(0,200,83,.14);" style-hover="background:rgba(0,200,83,.25);color:#fff;box-shadow:0 0 42px rgba(0,230,118,.25);">{{ t.ctaSignup }} <span aria-hidden="true">↗</span></a><a class="my-secondary" href="#universities">{{ t.campusCta }} <span aria-hidden="true">→</span></a></div>
       </div>
       <div ref="{{ benchCopyRef }}" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(14px);z-index:2;width:min(760px,88vw);text-align:center;opacity:0;pointer-events:none;will-change:opacity,transform;padding:clamp(20px,3.6vh,40px) clamp(18px,3.4vw,44px);background:radial-gradient(ellipse 80% 118% at 50% 50%,rgba(2,9,5,.82) 0%,rgba(2,9,5,.58) 44%,rgba(2,9,5,.2) 72%,transparent 88%);">
         <div style="font-size:11.5px;font-weight:600;letter-spacing:.3em;color:#00E676;margin-bottom:16px;">{{ t.benchKicker }}</div>
@@ -234,7 +236,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           <p style="font-family:'Hind Siliguri',sans-serif;font-weight:700;font-size:clamp(22px,3.2vw,42px);line-height:1.34;margin:0;color:#fff;text-wrap:balance;text-shadow:0 8px 60px rgba(0,0,0,.95);">{{ t.benchL1 }}<br><span style="color:#00C853;">{{ t.benchL2 }}</span></p>
         </sc-if>
       </div>
-      <div style="position:absolute;left:0;right:0;bottom:34px;z-index:2;display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,34px);flex-wrap:wrap;padding:0 22px;">
+      <div class="my-flight" style="position:absolute;left:0;right:0;bottom:34px;z-index:2;display:flex;align-items:center;justify-content:center;gap:clamp(12px,3vw,34px);flex-wrap:wrap;padding:0 22px;">
         <div style="text-align:right;min-width:96px;">
           <div style="font-family:var(--lb-font-display);font-weight:700;font-size:15px;color:#fff;letter-spacing:.04em;">{{ t.cityFrom }}</div>
           <div style="font-size:11px;font-weight:600;letter-spacing:.16em;color:rgba(242,247,243,.45);margin-top:4px;">23.81°N 90.41°E</div>
@@ -272,7 +274,7 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
   </section>
 
   <!-- ACT 2 · THE JOURNEY -->
-  <section data-screen-label="Jalan Alor — The Journey" style="position:relative;z-index:2;min-height:120vh;display:flex;align-items:center;padding:80px 22px;">
+  <section id="journey" data-screen-label="Jalan Alor — The Journey" style="position:relative;z-index:2;min-height:120vh;display:flex;align-items:center;padding:80px 22px;">
     <div style="max-width:1060px;margin:0 auto;width:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:clamp(32px,5vw,54px);align-items:center;">
       <div data-reveal>
         <div style="font-size:11px;font-weight:600;letter-spacing:.3em;color:#FFB300;margin-bottom:14px;animation:lbFlicker 5s linear infinite;">{{ t.a2Kicker }}</div>
@@ -284,8 +286,8 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
         </sc-if>
         <p style="font-size:15.5px;line-height:1.68;color:rgba(242,247,243,.85);max-width:440px;text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.85);">{{ t.a2Sub }}</p>
       </div>
-      <div data-reveal style="background:rgba(8,6,10,.72);border:1px solid rgba(255,179,0,.22);border-radius:18px;padding:clamp(22px,3vw,30px) clamp(22px,3vw,32px);backdrop-filter:blur(12px);">
-        <sc-for list="{{ stages }}" as="st" hint-placeholder-count="5">
+      <div class="my-journey-panel" data-reveal style="background:rgba(8,6,10,.72);border:1px solid rgba(255,179,0,.22);border-radius:18px;padding:clamp(22px,3vw,30px) clamp(22px,3vw,32px);backdrop-filter:blur(12px);">
+        <sc-for list="{{ stages }}" as="st" hint-placeholder-count="6">
           <div style="display:flex;gap:16px;">
             <div style="display:flex;flex-direction:column;align-items:center;">
               <div style="width:11px;height:11px;border-radius:50%;background:{{ st.dot }};box-shadow:0 0 12px {{ st.dot }};margin-top:5px;flex:none;"></div>
@@ -316,9 +318,9 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
         </sc-if>
         <p style="font-size:15.5px;line-height:1.68;color:rgba(242,247,243,.85);text-wrap:pretty;text-shadow:0 2px 16px rgba(0,0,0,.85);">{{ t.a3Sub }}</p>
       </div>
-      <div data-reveal style="display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 22px 16px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(0,200,83,.5) transparent;mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);">
+      <div class="my-campus-rail" data-reveal style="display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 22px 16px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(0,200,83,.5) transparent;mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);">
         <sc-for list="{{ unis }}" as="u" hint-placeholder-count="15">
-          <div onClick="{{ travelTo }}" onKeyDown="{{ travelToKey }}" onMouseEnter="{{ preloadCampus }}" data-uni="{{ u.k }}" role="button" tabIndex="0" aria-label="{{ u.aria }}" style="cursor:pointer;flex:0 0 clamp(238px,25vw,278px);scroll-snap-align:center;background:rgba(4,14,9,.82);border:1px solid rgba(0,200,83,.26);border-radius:16px;padding:18px;backdrop-filter:blur(9px);display:flex;flex-direction:column;gap:10px;min-height:206px;box-sizing:border-box;transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s ease,box-shadow .3s ease;" style-hover="border-color:rgba(0,230,118,.65);transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.5);">
+          <div onClick="{{ travelTo }}" onKeyDown="{{ travelToKey }}" onMouseEnter="{{ preloadCampus }}" class="my-campus" data-uni="{{ u.k }}" role="button" tabIndex="0" aria-label="{{ u.aria }}" style="cursor:pointer;flex:0 0 clamp(238px,25vw,278px);scroll-snap-align:center;background:rgba(4,14,9,.82);border:1px solid rgba(0,200,83,.26);border-radius:16px;padding:18px;backdrop-filter:blur(9px);display:flex;flex-direction:column;gap:10px;min-height:206px;box-sizing:border-box;transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s ease,box-shadow .3s ease;" style-hover="border-color:rgba(0,230,118,.65);transform:translateY(-4px);box-shadow:0 18px 44px rgba(0,0,0,.5);">
             <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;">
               <span style="font-family:var(--lb-font-display);font-weight:700;font-size:20px;letter-spacing:-.01em;color:#00E676;">{{ u.short }}</span>
               <span style="font-size:11px;font-weight:600;letter-spacing:.14em;color:rgba(242,247,243,.5);">{{ u.typeLabel }}</span>
@@ -412,14 +414,16 @@ button:focus-visible,a:focus-visible,[role="button"]:focus-visible,input:focus-v
           <button onClick="{{ openForm }}" style="min-height:48px;background:#00C853;color:#04140b;font-weight:600;font-size:14px;padding:14px 26px;border-radius:999px;border:0;cursor:pointer;font-family:var(--lb-font-display);box-shadow:0 0 30px rgba(0,200,83,.45);" style-hover="background:#00E676;">{{ t.ctaSignup }} →</button>
         </div>
       </sc-if>
-      <div data-reveal style="width:min(390px,100%);background:rgba(5,16,10,.82);border:1px solid rgba(0,200,83,.3);border-radius:20px;padding:22px 20px;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.55);box-sizing:border-box;display:{{ seatDisplay }};">
+      <div class="my-seat" data-reveal style="width:min(390px,100%);background:rgba(5,16,10,.82);border:1px solid rgba(0,200,83,.3);border-radius:20px;padding:22px 20px;backdrop-filter:blur(16px);box-shadow:0 24px 70px rgba(0,0,0,.55);box-sizing:border-box;display:{{ seatDisplay }};">
         <sc-if value="{{ notJoined }}" hint-placeholder-val="{{ true }}">
           <div style="display:flex;flex-direction:column;gap:10px;text-align:left;">
             <div style="font-family:var(--lb-font-display);font-weight:700;font-size:21px;letter-spacing:-.01em;color:#fff;">{{ t.signupTitle }}</div>
             <div style="font-size:12px;line-height:1.55;color:rgba(242,247,243,.65);">{{ t.signupSub }}</div>
             <input name="company" value="{{ seatCompany }}" onChange="{{ setSeatCompany }}" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0;pointer-events:none;">
-            <input value="{{ seatName }}" onChange="{{ setSeatName }}" placeholder="{{ t.phName }}" style="min-height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;" style-focus="border-color:#00C853;">
-            <input value="{{ seatContact }}" onChange="{{ setSeatContact }}" placeholder="{{ t.phEmail }}" style="min-height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;" style-focus="border-color:#00C853;">
+            <label class="my-field-label" for="my-seat-name">{{ t.phName }}</label>
+            <input id="my-seat-name" name="name" autocomplete="name" value="{{ seatName }}" onChange="{{ setSeatName }}" placeholder="{{ t.phName }}" style="min-height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;" style-focus="border-color:#00C853;">
+            <label class="my-field-label" for="my-seat-contact">{{ t.phEmail }}</label>
+            <input id="my-seat-contact" name="contact" autocomplete="off" value="{{ seatContact }}" onChange="{{ setSeatContact }}" placeholder="{{ t.phEmail }}" style="min-height:48px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:13px 15px;color:#fff;font-family:'Sora','Hind Siliguri',sans-serif;font-size:14px;outline:none;box-sizing:border-box;" style-focus="border-color:#00C853;">
             <div style="font-size:10.5px;line-height:1.55;color:rgba(242,247,243,.5);">{{ t.signupConsent }}</div>
             <sc-if value="{{ hasSeatErr }}" hint-placeholder-val="{{ false }}">
               <div role="alert" style="display:flex;align-items:center;gap:8px;font-size:12px;color:#FFB300;line-height:1.4;">
@@ -553,9 +557,9 @@ class Component extends DCLogic {
         heroKicker: 'LAST BENCH · HUMAN LAB · BUSINESS LAB · INTELLIGENCE',
         heroL1: 'FROM WHERE YOU ARE.', heroL2: 'TO WHAT YOU CAN BUILD.',
         heroSub: 'CLASS[Λ] builds builders. co.lab incubates and accelerates businesses. Governed evidence flows through Co.MPASS to Dr. X so decisions improve the next cycle.',
-        ctaSignup: 'BEGIN MY MALAYSIA JOURNEY', ctaExplore: 'See how Last Bench works', flyIn: 'ENTER',
+        ctaSignup: 'BEGIN MY MALAYSIA JOURNEY', ctaShort: 'GET STARTED', campusCta: 'EXPLORE UNIVERSITIES', ctaExplore: 'See how Last Bench works', flyIn: 'ENTER',
         legKicker: 'MALAYSIA · EDUCATION & MOBILITY SERVICE', legL1: '', legL2: '',
-        legSub: 'Malaysia is a focused Education & Mobility service route inside Last Bench — not a third engine and not part of CLASS[Λ]. Follow the journey from Bangladesh to Kuala Lumpur, then verify each decision with current sources and human guidance.',
+        legSub: 'Find a university that fits your goals. Get guidance on applications, documentation and preparing for life in Malaysia — from Bangladesh to arrival.',
         cityFrom: 'DHAKA', cityTo: 'KUALA LUMPUR', flightTime: '≈ 4H 30M NONSTOP', toGo: 'KM TO GO', arrived: 'ARRIVED',
         a2Kicker: '02 — JALAN ALOR, 11:48 PM', a2L1: 'THE CITY IS AWAKE.', a2L2: 'SO IS YOUR JOURNEY.',
         a2Sub: 'Your application becomes a journey with visible stages, updated by a named mentor. Never a black box — you always know where you stand and what comes next.',
@@ -580,11 +584,12 @@ class Component extends DCLogic {
         svHint: 'STREET VIEW 360 · DRAG TO LOOK AROUND', returnJourney: '← Return to the journey',
         sCost: 'TOTAL / YEAR', sIelts: 'IELTS', sEmgs: 'EMGS', sWeeks: 'PROCESSING', sGpa: 'GRADES',
         stages: [
-          { title: 'Documents received', meta: 'Logged and reviewed by a named mentor' },
-          { title: 'Profile reviewed', meta: 'You see the reasoning, not just the result' },
-          { title: 'University shortlist', meta: 'Matched to your grades, budget and goals' },
-          { title: 'Application submitted', meta: 'Tracked stage by stage' },
-          { title: 'Visa guidance', meta: 'EMGS-guided support through your application' },
+          { title: '01 / Discover', meta: 'Understand your options, budget and goals' },
+          { title: '02 / Match', meta: 'Research universities and suitable programmes' },
+          { title: '03 / Apply', meta: 'Prepare documents and submit your application' },
+          { title: '04 / Secure', meta: 'Review offer and student visa requirements' },
+          { title: '05 / Prepare', meta: 'Plan accommodation, travel and departure' },
+          { title: '06 / Arrive', meta: 'Settle in and connect with your community' },
         ],
         chapters: ['00 — DHAKA · DEPARTURE', '01 — KUALA LUMPUR · ARRIVAL', '02 — JALAN ALOR · 11:48 PM', '03 — ABOVE THE TOWERS · 5:14 AM', '04 — KLCC PARK · 7:03 AM', '05 — THE JOURNEY CONTINUES'],
         radioOff: 'OFF', radioTuning: 'TUNING…', hitzBlocked: 'NO LIVE STREAM · AMBIENCE', ambienceTag: 'AMBIENCE', liveTag: 'LIVE',
@@ -597,9 +602,9 @@ class Component extends DCLogic {
         heroKicker: 'অপরচুনিটি অ্যাক্সেলারেটর · শিক্ষা · সক্ষমতা · ব্যবসা',
         heroL1: 'আপনি যেখানে আছেন।', heroL2: 'সেখান থেকে যা গড়তে পারেন।',
         heroSub: 'শিক্ষা, সক্ষমতা ও ব্যবসাকে কমিউনিটি দিয়ে যুক্ত করে বিশ্বাসযোগ্য সুযোগকে বাস্তব অগ্রগতিতে রূপ দেওয়াই লাস্ট বেঞ্চের কাজ।',
-        ctaSignup: 'আমার মালয়েশিয়া যাত্রা শুরু করুন', ctaExplore: 'লাস্ট বেঞ্চ কীভাবে কাজ করে দেখুন', flyIn: 'প্রবেশ করুন',
+        ctaSignup: 'আমার মালয়েশিয়া যাত্রা শুরু করুন', ctaShort: 'শুরু করুন', campusCta: 'বিশ্ববিদ্যালয় দেখুন', ctaExplore: 'লাস্ট বেঞ্চ কীভাবে কাজ করে দেখুন', flyIn: 'প্রবেশ করুন',
         legKicker: 'পর্ব ০০ — যাত্রা শুরু', legL1: 'শুরু বাংলাদেশে।', legL2: 'শেষ সেখানেই নয়।',
-        legSub: 'দুই হাজার সাতশো কিলোমিটার। আকাশে প্রায় সাড়ে চার ঘণ্টা। আপনার ডিগ্রি যে পথে যায়, সেই পথটাই দেখুন।',
+        legSub: 'আপনার লক্ষ্য অনুযায়ী বিশ্ববিদ্যালয় খুঁজুন। আবেদন, কাগজপত্র ও মালয়েশিয়ায় নতুন জীবনের প্রস্তুতিতে বাংলাদেশ থেকে পৌঁছানো পর্যন্ত দিকনির্দেশনা নিন।',
         cityFrom: 'ঢাকা', cityTo: 'কুয়ালালামপুর', flightTime: '≈ ৪ ঘ ৩০ মি ননস্টপ', toGo: 'কিমি বাকি', arrived: 'পৌঁছে গেছি',
         a2Kicker: '০২ — জালান আলোর, রাত ১১:৪৮', a2L1: 'শহর জেগে আছে।', a2L2: 'আপনার যাত্রাও।',
         a2Sub: 'আপনার আবেদন হয়ে ওঠে দৃশ্যমান ধাপে ভরা একটি যাত্রা, যা একজন নির্দিষ্ট মেন্টর আপডেট করেন। কখনো অন্ধকার বাক্স নয় — আপনি সবসময় জানেন আপনি কোথায় আছেন।',
@@ -623,11 +628,12 @@ class Component extends DCLogic {
         svHint: 'স্ট্রিট ভিউ ৩৬০ · ঘুরে দেখতে টেনে দেখুন', returnJourney: '← যাত্রায় ফিরে যান',
         sCost: 'মোট / বছর', sIelts: 'IELTS', sEmgs: 'EMGS', sWeeks: 'প্রসেসিং', sGpa: 'গ্রেড',
         stages: [
-          { title: 'ডকুমেন্ট গৃহীত', meta: 'একজন নির্দিষ্ট মেন্টর দেখে নথিভুক্ত করেন' },
-          { title: 'প্রোফাইল পর্যালোচিত', meta: 'শুধু ফলাফল নয়, যুক্তিটাও আপনি দেখেন' },
-          { title: 'বিশ্ববিদ্যালয় শর্টলিস্ট', meta: 'আপনার গ্রেড, বাজেট ও লক্ষ্যের সাথে মেলানো' },
-          { title: 'আবেদন জমা', meta: 'ধাপে ধাপে ট্র্যাক করা' },
-          { title: 'ভিসা গাইডেন্স', meta: 'EMGS-নির্দেশিত সহায়তা আপনার আবেদন জুড়ে' },
+          { title: '০১ / জানুন', meta: 'আপনার সুযোগ, বাজেট ও লক্ষ্য বুঝুন' },
+          { title: '০২ / মিলিয়ে নিন', meta: 'বিশ্ববিদ্যালয় ও উপযুক্ত কোর্স খুঁজুন' },
+          { title: '০৩ / আবেদন', meta: 'কাগজপত্র প্রস্তুত করে আবেদন করুন' },
+          { title: '০৪ / নিশ্চিত করুন', meta: 'অফার ও শিক্ষার্থী ভিসার শর্ত যাচাই করুন' },
+          { title: '০৫ / প্রস্তুতি', meta: 'বাসস্থান, ভ্রমণ ও যাত্রার পরিকল্পনা করুন' },
+          { title: '০৬ / পৌঁছান', meta: 'নতুন পরিবেশে মানিয়ে নিন ও কমিউনিটির সাথে যুক্ত হন' },
         ],
         chapters: ['০০ — ঢাকা · যাত্রা শুরু', '০১ — কুয়ালালামপুর · পৌঁছানো', '০২ — জালান আলোর', '০৩ — টাওয়ারের উপরে', '০৪ — কেএলসিসি পার্ক', '০৫ — যাত্রা চলছে'],
         benchKicker: 'দ্য লাস্ট বেঞ্চ', benchL1: 'তোমার রেজাল্ট তোমার বেঞ্চমার্ক ঠিক করে না।', benchL2: 'তুমি যে ভবিষ্যৎ গড়বে, সেটাই করে।', arriveLine: 'ভর্তি হওয়াটা শুধু শুরু।',
@@ -814,7 +820,7 @@ class Component extends DCLogic {
       departRef: (el) => { this.departEl = el; },
       legCopyRef: (el) => { this.legCopyEl = el; },
       benchCopyRef: (el) => { this.benchCopyEl = el; },
-      seatCta: narrow ? 'PATHS' : 'CHOOSE YOUR PATH',
+      seatCta: t.ctaShort,
       globeRef: (el) => { if (el && el !== this.globeCanvas) { this.globeCanvas = el; this.initGlobe(); } },
       routeRef: (el) => { this.routeEl = el; },
       routeBarRef: (el) => { this.routeBarEl = el; },
