@@ -21,6 +21,8 @@ jobs:
           sudo apt-get install -y --no-install-recommends blender
           blender --version
       - name: Render 1080p scene
+        env:
+          LB_BLENDER_NO_OIDN: '1'
         run: |
           mkdir -p "$RUNNER_TEMP/malaysia-render"
           blender -b -t 4 --python-exit-code 1 -P landing/malaysia/blender_bench.py -- "$RUNNER_TEMP/malaysia-render"

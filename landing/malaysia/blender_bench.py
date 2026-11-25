@@ -5,6 +5,7 @@ The output is a design study; it is not auto-published or loaded by the page.
 """
 import bpy
 import math
+import os
 import sys
 from pathlib import Path
 from mathutils import Vector
@@ -35,6 +36,8 @@ def cube(name, xyz, dims, mat, bevel=0.03):
         mod=ob.modifiers.new("Machined edges", "BEVEL")
         mod.width=bevel
         mod.segments=3
+        if hasattr(ob.data, "use_auto_smooth"):
+            ob.data.use_auto_smooth = True
         ob.modifiers.new("Weighted normals", "WEIGHTED_NORMAL")
     return ob
 
@@ -89,8 +92,12 @@ aim(cam,(0,1.2,1.1))
 cam.data.lens=38
 scene.camera=cam
 scene.render.engine="CYCLES"
-scene.cycles.samples=64
-scene.cycles.use_denoising=True
+cloud_no_oidn = os.environ.get('LB_BLENDER_NO_OIDN') == '1'
+scene.cycles.samples=128 if cloud_no_oidn else 64
+scene.cycles.use_denoising=not cloud_no_oidn
+print('Render settings:', scene.cycles.samples, 'denoise:', scene.cycles.use_denoising)
+if cloud_no_oidn:
+    assert not scene.cycles.use_denoising and scene.cycles.samples >= 128
 scene.render.resolution_x=1920
 scene.render.resolution_y=1080
 scene.render.resolution_percentage=100
