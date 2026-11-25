@@ -9,4 +9,5 @@ for (const token of ['href="#signup"','href="#universities"','id="signup"','id="
 for (const token of ['.my-hero-copy','.my-campus','.my-seat','prefers-reduced-motion','#00c853']) assert.ok(css.includes(token),token);
 assert.equal((html.match(/id="my-seat-name"/g)||[]).length,1);
 assert.equal((html.match(/id="my-seat-contact"/g)||[]).length,1);
+assert.ok(html.includes('this.legCopyEl.inert = heroOpacity < 0.15'));
 console.log('Malaysia static contract passed; runtime not established.');
