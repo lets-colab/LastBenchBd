@@ -1767,9 +1767,12 @@ class Component extends DCLogic {
     if (leg !== this._leg) { this._leg = leg; this.retuneForLeg(leg); }
 
     if (this.legCopyEl) {
-      this.legCopyEl.style.opacity = (1 - sm(band(e, 0.10, 0.20))).toFixed(3);
+      const heroOpacity = this.reducedMotion ? 1 : 1 - sm(band(e, 0.10, 0.20));
+      this.legCopyEl.style.opacity = heroOpacity.toFixed(3);
+      this.legCopyEl.inert = heroOpacity < 0.15;
+      this.legCopyEl.style.visibility = heroOpacity < 0.15 ? 'hidden' : 'visible';
       if (this.benchCopyEl) {
-        const inB = sm(band(e, 0.15, 0.24)) * (1 - sm(band(e, 0.36, 0.45)));
+        const inB = this.reducedMotion ? 0 : sm(band(e, 0.15, 0.24)) * (1 - sm(band(e, 0.36, 0.45)));
         this.benchCopyEl.style.opacity = inB.toFixed(3);
         this.benchCopyEl.style.transform = 'translate(-50%,-50%) translateY(' + ((1 - inB) * 14).toFixed(1) + 'px)';
       }
