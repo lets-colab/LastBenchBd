@@ -33,4 +33,14 @@ describe("public release navigation and privacy", () => {
     expect(work).not.toMatch(/href="[^\"]*(?:projectx|showcase\/skin-needs)/i);
     expect(work).toContain("No client case studies are published here yet");
   });
+
+  it("keeps opt-in route sound available on mobile while hiding unsupported controls", () => {
+    const page = read("landing/index.html");
+    const style = read("landing/atrium.css");
+    const guide = read("landing/site-guide.js");
+    expect(page.match(/<button\b[^>]*data-route-sound[^>]*>/)?.[0]).toMatch(/\bhidden\b/);
+    expect(guide).toContain("sound.hidden = false");
+    expect(style).toMatch(/\.arrival-controls\s+\[hidden\][^{]*\{\s*display:\s*none/);
+    expect(style).not.toMatch(/\[data-route-sound\]\s*\{[^}]*display:\s*none/);
+  });
 });
