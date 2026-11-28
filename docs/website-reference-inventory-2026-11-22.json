@@ -5,7 +5,8 @@
     {
       "name": "48834.png",
       "status": "skyline_reference_visible_inline_original_bytes_unavailable",
-      "role": "homepage_visual_master"
+      "role": "homepage_visual_master",
+      "provided_webp": "48834.webp Library download returned HTTP 401; absent from mounted attachments and project ZIP."
     },
     {
       "name": "White Welcome back sign-in reference",
@@ -29,8 +30,11 @@
     },
     {
       "name": "LASTBENCH 3D-project.zip",
-      "status": "missing_original",
-      "role": "source_reference"
+      "status": "received_checked",
+      "role": "source_reference",
+      "sha256": "976a2003da3a432d0212e9bea16f245a183ab2975e63a9c8243f9d1422de1ec4",
+      "members": 44,
+      "matching_prior_claude_files": 41
     },
     {
       "name": "Claude Design projects.zip",
@@ -312,5 +316,14 @@
     },
     "exact_duplicates": "CLASS_Λ_ LMS _ PROXY Portal.html matches the prior _2_ upload. The decisions note and Python example also match the earlier bytes. The three HTML variants are mutually distinct.",
     "homepage_source": "Original illustrative hub-atrium.webp, unchanged from first-party cf128b4cf89fb0d5aa98536ae5bc19efaa8784fc. Seen master and mobile board remain inline references. This indoor approach differs from the outdoor plaza."
+  },
+  "co_lab_source": {
+    "source": "lets-colab/letscolab@df163ca97fe79c87bb8d8475ce77bf995160046c:public/lab-preview.html",
+    "reused": [
+      "protected logo bytes",
+      "raymarched architectural geometry",
+      "seven chapter structure"
+    ],
+    "still": "lets-colab/LastBenchBd@cf128b4cf89fb0d5aa98536ae5bc19efaa8784fc:landing/assets/cinematic/colab-laboratory.webp"
   }
 }

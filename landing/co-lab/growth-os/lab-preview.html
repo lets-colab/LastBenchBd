@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>co.lab Business Laboratory</title>
+  <link rel="canonical" href="https://lastbenchbd.com/co-lab/">
+  <script>
+    const chapters = ["entry", "collaboration", "connection", "community", "divisions", "work", "engage"];
+    const chapter = location.hash.replace(/^#(?:lab-)?/, "");
+    location.replace("/co-lab/" + (chapters.includes(chapter) ? "#" + chapter : ""));
+  </script>
+  <noscript><meta http-equiv="refresh" content="0;url=/co-lab/"></noscript>
+</head>
+<body><p><a href="/co-lab/">Enter the co.lab Business Laboratory</a></p></body>
+</html>

@@ -1,0 +1,110 @@
+name: Malaysia cloud render and visual evidence
+on:
+  push:
+    branches: [design/malaysia-cinematic-20261126]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: malaysia-render-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  render:
+    if: github.ref == 'refs/heads/design/malaysia-cinematic-20261126'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install free Blender CPU runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends blender
+          blender --version
+      - name: Render 1080p scene
+        env:
+          LB_BLENDER_NO_OIDN: '1'
+        run: |
+          mkdir -p "$RUNNER_TEMP/malaysia-render"
+          blender -b -t 4 --python-exit-code 1 -P landing/malaysia/blender_bench.py -- "$RUNNER_TEMP/malaysia-render"
+          python3 - <<'PY'
+          import os, struct, hashlib
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])/'malaysia-render'
+          png=root/'bench-blue-hour.png'
+          blend=root/'bench-blue-hour.blend'
+          assert png.stat().st_size > 10000 and blend.stat().st_size > 10000
+          with png.open('rb') as f:
+              h=f.read(24)
+          assert h[:8] == b'\x89PNG\r\n\x1a\n' and struct.unpack('>II',h[16:24]) == (1920,1080)
+          for p in (png,blend):
+              print(p.name,p.stat().st_size,hashlib.sha256(p.read_bytes()).hexdigest())
+          PY
+      - uses: actions/upload-artifact@v7
+        with:
+          name: malaysia-blender-render
+          path: ${{ runner.temp }}/malaysia-render/
+          retention-days: 7
+          if-no-files-found: error
+  browser:
+    if: github.ref == 'refs/heads/design/malaysia-cinematic-20261126'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v7
+      - name: Static contract
+        run: node landing/malaysia/experience-contract.cjs
+      - name: Install browser QA
+        run: |
+          mkdir -p /tmp/my-qa
+          cd /tmp/my-qa
+          npm install --no-audit --no-fund playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Capture and test staged route (no lead submissions)
+        run: |
+          python3 -m http.server 4173 --directory landing --bind 127.0.0.1 >/tmp/my-http.log 2>&1 &
+          mkdir -p "$RUNNER_TEMP/my-qa"
+          cat >/tmp/my-qa/check.mjs <<'JS'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          const browser=await chromium.launch({headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+          const results=[];
+          for(const [name,width,height,reduced] of [['desktop',1440,900,false],['mobile',390,844,false],['small',360,640,true],['tablet',768,1024,true]]){
+            const page=await browser.newPage({viewport:{width,height},reducedMotion:reduced?'reduce':'no-preference'});
+            const issues=[];
+            page.on('pageerror',e=>issues.push(e.message));
+            let row={name,issues};
+            try{
+              const res=await page.goto('http://127.0.0.1:4173/malaysia/',{waitUntil:'domcontentloaded',timeout:60000});
+              row.status=res.status();
+              await page.locator('.my-hud').waitFor({state:'attached',timeout:30000});
+              await page.waitForTimeout(1500);
+              const entry=page.getByRole('button',{name:/Enter Last Bench/i});
+              if(await entry.count() && await entry.first().isVisible()) await entry.first().click({timeout:5000});
+              await page.screenshot({path:process.env.RUNNER_TEMP+'/my-qa/'+name+'-hero.png'});
+              row.horizontalOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2);
+              row.cta=await page.locator('.my-hud-cta').getAttribute('href');
+              row.campusCount=await page.locator('.my-campus').count();
+              await page.locator('#universities').scrollIntoViewIfNeeded();
+              await page.waitForTimeout(700);
+              await page.screenshot({path:process.env.RUNNER_TEMP+'/my-qa/'+name+'-campus.png'});
+              await page.locator('#signup').scrollIntoViewIfNeeded();
+              await page.waitForTimeout(700);
+              await page.screenshot({path:process.env.RUNNER_TEMP+'/my-qa/'+name+'-signup.png'});
+            }catch(e){row.failure=e.message;}
+            results.push(row);
+            await page.close();
+          }
+          await browser.close();
+          fs.writeFileSync(process.env.RUNNER_TEMP+'/my-qa/report.json',JSON.stringify(results,null,2));
+          console.log(JSON.stringify(results,null,2));
+          if(results.some(r=>r.failure||r.status!==200||r.horizontalOverflow||r.cta!=='#signup'||r.campusCount!==15||r.issues.length))process.exitCode=1;
+          JS
+          cd /tmp/my-qa
+          node check.mjs
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: malaysia-browser-evidence
+          path: ${{ runner.temp }}/my-qa/
+          retention-days: 7
+          if-no-files-found: warn

@@ -1,0 +1,39 @@
+:root { color-scheme: light; font: 100%/1.55 system-ui, sans-serif; color: #152231; background: #f5f7f8; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+h1, h2 { line-height: 1.05; letter-spacing: -.04em; margin: 0; }
+h1 { font-size: clamp(2.8rem, 5.8vw, 5.8rem); }
+h1 em { color: #154d86; font-style: normal; }
+h2 { font-size: clamp(1.65rem, 3vw, 2.6rem); }
+a { color: #124c80; display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: .2em; }
+:focus-visible { outline: 3px solid #005bab; outline-offset: 3px; }
+.skip { position: absolute; left: 1rem; top: -12rem; z-index: 3; background: white; padding: .6rem; }
+.skip:focus { top: 1rem; }
+header, main { max-width: 1440px; margin: auto; }
+header { padding: .85rem 5%; display: flex; gap: 1rem; align-items: center; justify-content: space-between; }
+header img { width: 104px; display: block; }
+nav { display: flex; flex-wrap: wrap; gap: 0 1.3rem; }
+header a, .chapter-nav a { color: #1b2c40; }
+.entry { display: grid; grid-template-columns: minmax(0,.95fr) minmax(0,1.15fr); align-items: stretch; }
+.entry-copy { background: #e6edf2; padding: clamp(2rem,5vw,5rem); align-self: center; }
+.eyebrow { color: #1b507c; font-weight: 650; margin: 0 0 1rem; }
+.primary, button { padding: .7rem 1.2rem; border: 0; background: #173951; color: white; border-radius: .45rem; font: inherit; text-decoration: none; }
+.room { position: relative; min-height: 16rem; }
+.room img, .room canvas { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.room button { position: absolute; right: 1rem; bottom: 1rem; min-height: 44px; cursor: pointer; }
+#room-status:not(:empty) { position: absolute; left: 12px; bottom: 5rem; background: white; padding: 8px; }
+.chapter-nav { padding: 12px 5%; border-bottom: 1px solid #bfccd4; }
+.chapters { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 2.5rem; padding: 3rem 5%; }
+.chapters section { scroll-margin-top: 1rem; }
+.chapters p, .entry-copy p { max-width: 55ch; }
+summary { cursor: pointer; padding: 10px; min-height: 44px; border-bottom: 1px solid #b0bec7; }
+@media (max-width: 720px) {
+  .entry, .chapters { grid-template-columns: 1fr; }
+  .entry-copy { padding: 1.75rem 5%; }
+  .room { min-height: 15rem; }
+  header img { width: 78px; }
+  header nav { gap: 0 .65rem; }
+  .chapters { gap: 2rem; }
+}
+
+.growth-link { margin: .35rem .6rem; }
