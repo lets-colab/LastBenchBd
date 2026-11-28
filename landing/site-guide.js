@@ -1,4 +1,30 @@
 // Public navigation only. No model, founder memory, recording or network calls.
+// Small screens: collapse the primary navigation behind one Menu button.
+// Without JavaScript the navigation stays fully visible.
+(() => {
+  document.querySelectorAll('.lb-nav').forEach((nav, index) => {
+    if (nav.previousElementSibling?.classList.contains('lb-menu')) return;
+    nav.id ||= `lb-nav-${index}`;
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lb-menu';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', nav.id);
+    toggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span>';
+    const set = (open) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.lastChild.textContent = open ? 'Close' : 'Menu';
+      nav.classList.toggle('is-open', open);
+    };
+    toggle.addEventListener('click', () => set(toggle.getAttribute('aria-expanded') !== 'true'));
+    nav.addEventListener('click', (event) => { if (event.target.closest('a')) set(false); });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && nav.classList.contains('is-open')) { set(false); toggle.focus(); }
+    });
+    nav.before(toggle);
+  });
+  document.documentElement.classList.add('lb-menu-ready');
+})();
 (() => {
   const sound = document.querySelector('[data-route-sound]');
   if (sound && window.AudioContext) {
